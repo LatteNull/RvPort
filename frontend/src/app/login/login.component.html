@@ -1,0 +1,88 @@
+<div class="login-main">
+  <div class="bg-circle circle-1"></div>
+  <div class="bg-circle circle-2"></div>
+
+  <div class="login-container">
+
+    <div class="login-header">
+      <h1 class="logo-text">RISC-V 迁移工具</h1>
+      <p class="login-subtitle">专业的代码迁移和性能调优分析平台</p>
+    </div>
+
+    <div class="login-card">
+      <div class="card-header">
+        <h2 class="card-title">账号密码登录</h2>
+      </div>
+
+      <form class="login-form">
+        <div class="login-input-group">
+          <i class="font-paletx plx-ico-sm-user-16 input-icon"></i>
+          <input
+            id="user"
+            type="text"
+            class="login-input"
+            [(ngModel)]="username"
+            placeholder="请输入用户名"
+            name="user"
+            autocomplete="off"
+            required
+            (keyup.enter)="focusPassword()" />
+        </div>
+
+        <div class="login-input-group">
+          <i class="font-paletx plx-ico-lock-16 input-icon"></i>
+          <input
+            #passwordInput
+            id="pwd"
+            [type]="passwordFieldType"
+            class="login-input"
+            [(ngModel)]="password"
+            placeholder="请输入密码"
+            name="pwd"
+            autocomplete="off"
+            oncopy="return false"
+            oncut="return false"
+            onpaste="return false"
+            oncontextmenu="return false"
+            required
+            (keyup.enter)="onSubmit()"/>
+
+          <i class="font-paletx plx-ico-eye-closed-16 toggle-password"
+            *ngIf="passwordFieldType === 'password'"
+            (click)="togglePasswordVisibility()"></i>
+          <i class="font-paletx plx-ico-eye-16 toggle-password"
+            *ngIf="passwordFieldType === 'text'"
+            (click)="togglePasswordVisibility()"></i>
+        </div>
+
+        <button
+          type="button"
+          class="login-btn"
+          [disabled]="isLoginDisabled"
+          (click)="login()">
+          登录
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<ng-template #content2 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">修改密码</h4>
+    <button type="button" class="close" (click)="d('Cross click')">
+      <span class="plx-ico-close-16"></span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <plx-form [settings]="formSetting"></plx-form>
+  </div>
+  <div class="modal-footer">
+    <div class="form-group">
+      <div class="btnGroup modal-btn">
+        <button type="button" class="plx-btn plx-btn-primary" [disabled]="isSubmitDisabled" (click)="submit()">确定</button>
+        <button type="button" class="plx-btn" (click)="cancel()">取消</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

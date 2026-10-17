@@ -1,0 +1,12 @@
+<app-top-menu [title]="'RISC-V 迁移工具'" [tool]="'codemig'"></app-top-menu>
+<div class="guide-container">
+  <div class="guide-header">
+    <span class="guide-title">RISC-V 代码迁移工具 · 使用手册</span>
+    <button type="button" class="plx-btn guide-back-btn" (click)="goBack()">
+      <span class="plx-ico-arrow-left-16" style="margin-right: 4px;"></span>返回
+    </button>
+  </div>
+  <div class="guide-body" #guideBody (click)="onBodyClick($event)">
+    <markdown [src]="guideUrl" (load)="onMarkdownLoaded()"></markdown>
+  </div>
+</div>

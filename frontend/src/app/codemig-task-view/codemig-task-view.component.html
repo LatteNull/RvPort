@@ -1,0 +1,233 @@
+<div class="main-container">
+  <div class="task-cards-container">
+    <div class="task-card">
+      <div class="task-header">
+        <div><strong>任务名：</strong>{{ task_name }}</div>
+        <div><strong>创建时间：</strong>{{ created_time }}</div>
+      </div>
+      <div class="task-report">
+        <div>
+          <strong>下载报告：</strong>
+          <button
+            type="button"
+            class="plx-btn plx-btn-xs"
+            (click)="exportExcel()"
+          >
+            导出
+          </button>
+        </div>
+        <div>
+          <span 
+            class="help-icon" 
+            title="应用补丁帮助：&#10;&#10;1. 进入工程目录：&#10;   cd /path/to/project&#10;&#10;2. 应用补丁：&#10;   patch -p2 &lt; patch_file.patch&#10;&#10;"
+            style="cursor: help; color: #007bff; font-weight: bold; font-size: 100%;"
+            >下载补丁：</span>
+          <button
+            type="button"
+            class="plx-btn plx-btn-xs"
+            (click)="exportPatch()"
+          >
+            下载
+          </button>
+        </div>
+        <div class="rescan-action">
+          <span
+            class="help-icon"
+            title="重新扫描：&#10;&#10;基于当前任务目录重新触发扫描流程，仅针对 file_source='changed' 的文件重跑 18 种代码识别器 + AC 自动机。&#10;&#10;• 已有的人工选中段（is_manual=1）不会被覆盖。&#10;• AI 生成的旧建议（is_manual=0）会被新结果替换。&#10;• missing / 软件包等非 changed 数据不在本次扫描范围。&#10;• 与单文件保存的 rescan 语义一致。"
+            style="cursor: help; color: #007bff; font-weight: bold; font-size: 100%;"
+          >重新扫描：</span>
+          <button
+            type="button"
+            class="plx-btn plx-btn-xs"
+            (click)="rescanTask()"
+            [disabled]="isRescanning"
+          >
+            {{ isRescanning ? ('扫描中 ' + rescanProcessed + '/' + rescanTotal) : '执行' }}
+          </button>
+        </div>
+        <div class="migrate-action">
+          <span
+            class="help-icon migrate-label"
+            title="一键迁移：&#10;按下后，AI Agent 将自动迁移整个项目中所有需要适配 RISC-V 的文件。&#10;Agent 会按照依赖顺序逐个文件迁移，支持汇编/非汇编全类型。&#10;迁移过程中可查看实时输出和终止操作。"
+          >项目迁移：</span>
+          <button
+            type="button"
+            class="plx-btn plx-btn-primary migrate-btn"
+            (click)="migrateProject()"
+          >
+            一键迁移
+          </button>
+        </div>
+      </div>
+      <div class="task-paths">
+        <div class="section-title">路径列表：</div>
+        <ul>
+          <li *ngFor="let dir of directories">{{ dir }}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="section-title">问题统计摘要</div>
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>建议类型</th>
+            <th>问题数量</th>
+            <th>影响行数</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of summary_data">
+            <td>{{ item.type }}</td>
+            <td>{{ item.issues }}</td>
+            <td>{{ item.affectedLines == null ? "" : item.affectedLines }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="table-scroll-wrapper">
+    <plx-tabset [type]="'pills'" (tabChange)="tabChange($event)">
+      <ng-container *ngFor="let item of tabItems">
+        <plx-tab [id]="item.activeId" [title]="item.title" [blue]="true">
+          <ng-container [ngSwitch]="item.activeId">
+            <!-- 依赖包扫描信息 -->
+            <ng-template *ngSwitchCase="'依赖包扫描信息'" pxTabContent>
+              <div class="task-cards-container">
+                <div class="task-card">
+                  <div class="task-header">
+                    <div *ngIf="task_info && task_info[0]"><strong>python解释器：</strong>{{ task_info[0] }}</div>
+                    <div *ngIf="task_info && task_info[1]"><strong>python镜像源：</strong>{{ task_info[1] }}</div>
+                    <div *ngIf="task_info && task_info[2]"><strong>go安装路径：</strong>{{ task_info[2] }}</div>
+                    <div *ngIf="task_info && task_info[3]"><strong>go环境变量：</strong>{{ task_info[3] }}</div>
+                  </div>
+                   <!-- 扫描状态展示 -->
+                  <div class="scan-status-container">
+                    <!-- 扫描中状态 -->
+                    <div *ngIf="dependence_status === 1" class="scanning-status">
+                      <i class="loading-spinner"></i>
+                      <span>正在扫描依赖包中</span>
+                      <div style="margin-left: 10px;">
+                        <plx-progressbar
+                          [percentage]="uploadPercentage"
+                          [type]="'page'"
+                          [bartype]="'info'"
+                          [size]="'sm'"
+                          [width]="'300px'">
+                        </plx-progressbar>
+                      </div>
+                    </div>
+                    
+                    <!-- 扫描完成状态 -->
+                    <div *ngIf="dependence_status === 2" class="scan-result">
+                      <div style="display: flex;">
+                        <div class="section-title">依赖包扫描结果：</div>
+                        <div class="tab-header">
+                          <div 
+                            class="tab-title" 
+                            [class.active]="switch_status === 'success'"
+                            (click)="switchTab('success')">
+                            下载成功
+                          </div>
+                          <div 
+                            class="tab-title" 
+                            [class.active]="switch_status === 'fail'"
+                            (click)="switchTab('fail')">
+                            下载失败
+                          </div>
+                        </div>
+                      </div>              
+                      <table *ngIf="switch_status === 'success'" class="summary-table">
+                        <thead>
+                          <tr>
+                            <th style="width: 33.3%;">依赖包</th>
+                            <th style="width: 33.3%;">版本号</th>
+                            <th style="width: 33.3%;">问题个数</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of success_dependence_data;">
+                            <ng-container *ngIf="item[5] == 1 && item[9] > 0; else normalTd">
+                              <td><i  style="color: blue; text-decoration: underline; cursor: pointer" (click)="handleLinkClick(item)">{{ item[2] }}</i></td>
+                            </ng-container>
+                            <ng-template #normalTd>
+                              <td>
+                                {{ item[2] }}
+                              </td>
+                            </ng-template>
+                            <td>{{ item[3] }}</td>
+                            <td>{{ item[9] }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <table *ngIf="switch_status === 'fail'" class="summary-table">
+                        <thead>
+                          <tr>
+                            <th style="width: 25%;">依赖包</th>
+                            <th style="width: 15%;">版本号</th>
+                            <th style="width: 60%;">失败原因</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of fail_dependence_data;">
+                            <td>{{ item[2] }}</td>
+                            <td>{{ item[3] }}</td>
+                            <td>{{ item[6] }}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    
+                    <!-- 扫描失败状态 -->
+                    <div *ngIf="dependence_status === 3" class="scan-failed">
+                      <div class="error-message">
+                        <strong>扫描失败原因：</strong>
+                        <span>{{ fail_reason }}</span>
+                      </div>
+                    </div>
+                  </div>    
+                </div>
+                
+              </div>
+            </ng-template>
+   
+            <!-- 缺失文件信息 -->
+            <ng-template *ngSwitchCase="'缺失文件信息'" pxTabContent>
+              <plx-table
+                #plxTable
+                [data]="item.data"
+                [columns]="item.columns"
+                [showCheckBox]="false"
+                [showColFilterToggle]="false"
+                [showCustomCol]="false"
+                [isTreeTable]="true"
+                [childDisplayMax]="1000"
+                (onRowExpandCollapse)="onRowExpandCollapse($event)"
+                [showGlobalFilter]="false"
+                [loadingPlaceholder]="'加载中...'"
+                [showLoading]="showLoading"
+                [showPagination]="true"
+                [showNoDataMessage]="true"
+                [pageSize]="13">
+              </plx-table>
+            </ng-template>
+            
+            <ng-template *ngSwitchDefault pxTabContent>
+              <plx-table
+                [data]="item.data"
+                [columns]="item.columns"
+                [showCheckBox]="false"
+                [showColFilterToggle]="false"
+                [showCustomCol]="false"
+                [showGlobalFilter]="false"
+                [showPagination]="true"
+                [showNoDataMessage]="true"
+                [pageSize]="13">
+              </plx-table>
+            </ng-template>
+          </ng-container>
+        </plx-tab>
+      </ng-container>
+    </plx-tabset>
+  </div>
+</div>

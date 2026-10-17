@@ -1,0 +1,177 @@
+.proxy-config-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+  padding: 24px;
+}
+
+.proxy-config-container h2 {
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.85);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.loading-message {
+  padding: 12px;
+  margin-bottom: 16px;
+  background: #e6f7ff;
+  border: 1px solid #91d5ff;
+  border-radius: 4px;
+  color: #1890ff;
+  text-align: center;
+}
+
+.config-row {
+  margin-bottom: 24px;
+}
+
+.config-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.85);
+  margin-bottom: 8px;
+}
+
+.config-input {
+  width: 100%;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.85);
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  transition: all 0.3s;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #40a9ff;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.form-control:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.form-control::placeholder {
+  color: rgba(0, 0, 0, 0.45);
+  opacity: 1;
+}
+
+.form-control::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.45);
+  opacity: 1;
+}
+
+.form-control::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.45);
+  opacity: 1;
+}
+
+.form-control:-ms-input-placeholder {
+  color: rgba(0, 0, 0, 0.45);
+  opacity: 1;
+}
+
+textarea.form-control {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.error-message {
+  color: #ff4d4f;
+  font-size: 12px;
+  margin-top: 4px;
+  min-height: 20px;
+}
+
+.help-text {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.btn {
+  height: 36px;
+  padding: 0 15px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 1px solid transparent;
+  font-weight: 400;
+}
+
+.btn-primary {
+  background: #1890ff;
+  color: #fff;
+  border-color: #1890ff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #40a9ff;
+  border-color: #40a9ff;
+}
+
+.btn-primary:disabled {
+  background: #bae7ff;
+  border-color: #bae7ff;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: #fff;
+  color: rgba(0, 0, 0, 0.85);
+  border-color: #d9d9d9;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  color: #1890ff;
+  border-color: #1890ff;
+}
+
+.btn-secondary:disabled {
+  color: rgba(0, 0, 0, 0.25);
+  background: #f5f5f5;
+  border-color: #d9d9d9;
+  cursor: not-allowed;
+}
+
+.btn-info {
+  background: #13c2c2;
+  color: #fff;
+  border-color: #13c2c2;
+}
+
+.btn-info:hover:not(:disabled) {
+  background: #36cfc9;
+  border-color: #36cfc9;
+}
+
+.btn-info:disabled {
+  background: #b5f5ec;
+  border-color: #b5f5ec;
+  cursor: not-allowed;
+}

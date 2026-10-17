@@ -1,0 +1,98 @@
+<div class="editor-wrapper">
+  <div class="editor-toolbar">
+    <button class="plx-btn plx-btn-primary" (click)="goBack()">返回</button>
+    <button class="plx-btn plx-btn-primary" (click)="showModal()">生成</button>
+    <button class="plx-btn plx-btn-primary" (click)="saveFile()">保存</button>
+    <button class="plx-btn plx-btn-primary" (click)="saveAndRollback()">回退</button>
+    <span class="model-label" style="margin-left: 15px; margin-right: 2px;"> 模型：</span>
+    <plx-select
+      class="plx-select"
+      [placeholder]="modelSelectPlaceholder"
+      [(ngModel)]="selectedModel"
+      [options]="modelOptions"
+      (ngModelChange)="onModelChange($event)">
+    </plx-select>
+    <button class="plx-btn plx-btn-primary" (click)="goToApiKeyManagement()">管理 API Key</button>
+    <button class="plx-btn plx-btn-primary" (click)="cancelRequest()">
+      停止生成
+    </button>
+    <button class="plx-btn plx-btn-primary" (click)="toggleAIPanel()">
+      {{ showAIPanel ? '隐藏AI面板' : '显示AI面板' }}
+    </button>
+  </div>
+
+  <div class="editor-container">
+    <div class="editor-box" [style.flex]="leftPanelFlex" [ngClass]="{'editor-full-width': !showAIPanel}">
+      <ngx-monaco-diff-editor
+      style="height: 100%;"
+      [options]="editorOptions"
+      [originalModel]="originalModel"
+      [modifiedModel]="modifiedModel"
+      (onInit)="onEditorInit($event)">
+      </ngx-monaco-diff-editor>
+    </div>
+    <!-- 拖拽分割线 -->
+    <div *ngIf="showAIPanel" class="resize-handle" (mousedown)="startResize($event)"></div>
+    <!-- 右侧AI建议面板 - 简化版 -->
+    <div class="ai-suggestions-panel" [style.flex]="rightPanelFlex" *ngIf="showAIPanel">
+      <div class="panel-header">
+        <h3 style="font-size: 16px;">AI 建议</h3>
+        <button class="plx-ico-close-16 plx-card-close" (click)="toggleAIPanel()"></button>
+      </div>
+      <div #panelContent (scroll)="onPanelScroll()" *ngIf="suggestion; else elseBlock" class="panel-content">
+        <div #suggestionMarkdown class="suggestion-content" markdown [data]="suggestion" (ready)="onSuggestionRenderReady()"></div>
+        <div *ngIf="isGenerating" class="ai-loading-container">
+          <div class="loading-spinner">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+       </div>
+        <button *ngIf="suggestion" class="plx-ico-copy-16" [plxTooltip]="'复制'" (click)="copyContent()"
+        style="border: none; background: white; font-size: 16px; height: 25px; line-height: 25px;"></button>
+        <button *ngIf="suggestion" class="plx-ico-clear-16" [plxTooltip]="'清除建议'" (click)="clearContent()"
+        style="border: none; background: white; font-size: 16px; height: 25px;  line-height: 25px"></button>
+        <button *ngIf="suggestion" type="button" class="plx-ico-like-16 score-btn" 
+        [class.score-btn-liked]="isLiked" [plxTooltip]="isLiked ? '取消点赞' : '点赞'" (click)="likeContent()"
+        style="border: none; background: white; font-size: 16px; height: 25px;  line-height: 25px"></button>
+        <button *ngIf="suggestion" type="button" class="plx-ico-dislike-16 score-btn" 
+        [class.score-btn-disliked]="isDisliked" [plxTooltip]="isDisliked ? '取消点踩' : '点踩'" (click)="dislikeContent()"
+        style="border: none; background: white; font-size: 16px; height: 25px;  line-height: 25px"></button>
+      </div>
+      <ng-template #elseBlock>
+        <div *ngIf="isGenerating" class="ai-loading-container" style="min-height: 23vh;">
+          <div class="loading-spinner">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+       </div>
+        <div *ngIf="!isGenerating" class="panel-content">
+          <div class="plx-card-contentshow" style="text-align:center; margin-top: 6vh;" plx-empty [iconName]="'empty-display'"></div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<ng-template #treeModal let-c="close">
+  <div class="modal-header">
+    <h3 class="modal-title">选择参考文件架构</h3>
+  </div>
+  <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+    <div style="padding: 10px; border: 1px solid #eee;">
+      <plx-tree
+        [isSelectable]="true"
+        [value]="treeNodes"
+        [isNodeClickPropagateCkbox]="true"
+        [initCheckboxType]="'p2s'"
+        (selectionChange)="onTreeSelectionChange($event)"
+      >
+      </plx-tree>
+    </div>
+  </div>
+  <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 12px;">
+    <button class="plx-btn plx-btn-secondary" (click)="c('Close click')">取消</button>
+    <button class="plx-btn plx-btn-primary" (click)="generateFile()">确认并生成</button>
+  </div>
+</ng-template>

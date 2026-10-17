@@ -1,0 +1,528 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.dashboard {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding-bottom: 24px;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.header-content {
+    flex: 1;
+}
+
+.dashboard-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2c3e50; /* dark */
+    margin-bottom: 8px;
+}
+
+.dashboard-header p,
+.header-desc {
+    color: #7f8c8d; /* gray */
+    font-size: 15px;
+    margin: 0;
+    line-height: 1.5;
+    max-width: 720px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: rgba(46, 204, 113, 0.1); /* success alpha */
+    color: #2ecc71; /* success */
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+/* 1. 基础按钮样式优化 */
+.refresh-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* 图标与文字的间距 */
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #3498db, #2980b9); /* 渐变色更有质感 */
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3); /* 柔和阴影 */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 2. 悬停与点击状态 */
+.refresh-btn:hover {
+    background: linear-gradient(135deg, #5dade2, #3498db);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+}
+
+.refresh-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(52, 152, 219, 0.2);
+}
+
+.refresh-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* 统计周期条：与下方卡片、图表形成同一视觉块 */
+.dashboard-period-bar {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    border: 1px solid #eef2f6;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.period-bar-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.period-text {
+    flex: 1;
+    min-width: 260px;
+}
+
+.period-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0 0 8px 0;
+}
+
+.period-hint {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.55;
+    margin: 0;
+    max-width: 640px;
+}
+
+.period-hint-strong {
+    color: #334155;
+    font-weight: 500;
+}
+
+.stat-scope {
+    font-size: 12px;
+    color: #94a3b8;
+    margin: 4px 0 8px 0;
+    line-height: 1.3;
+}
+
+.analysis-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.chart-block {
+    margin-bottom: 0;
+}
+
+.chart-full {
+    width: 100%;
+}
+
+.chart-block-header {
+    margin-bottom: 16px;
+}
+
+.chart-echarts {
+    display: block;
+    width: 100%;
+}
+
+.chart-echarts-tall {
+    height: 520px;
+}
+
+.chart-echarts-pie {
+    height: 360px;
+}
+
+.dual-chart-tight {
+    margin-bottom: 0;
+}
+
+/* 业务切换：两张并列小卡片 */
+.panel-switch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 10px 0 18px 0;
+}
+
+/* 两个业务插件都未安装的整页空态 */
+.empty-plugin-state {
+    background: #ffffff;
+    border: 1px dashed #e2e8f0;
+    border-radius: 16px;
+    padding: 72px 24px;
+    text-align: center;
+    color: #64748b;
+}
+
+.empty-plugin-state .empty-plugin-icon {
+    font-size: 48px;
+    color: #cbd5e1;
+    display: block;
+    margin-bottom: 16px;
+}
+
+.empty-plugin-state h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 8px;
+}
+
+.empty-plugin-state p {
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 460px;
+    margin: 0 auto;
+}
+
+/* 插件未安装的页签：置灰并显示角标 */
+.panel-card.not-installed {
+    background: #f8fafc;
+}
+
+.panel-card-tag {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.12);
+}
+
+.panel-card {
+    text-align: left;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 14px 16px;
+    border: 1px solid #eef2f6;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.panel-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+}
+
+.panel-card:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.panel-card.active {
+    border-color: rgba(52, 152, 219, 0.55);
+    box-shadow: 0 10px 24px rgba(52, 152, 219, 0.18);
+}
+
+.panel-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1f2937;
+    letter-spacing: 0.2px;
+}
+
+.panel-card-subtitle {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+@media (max-width: 768px) {
+    .panel-switch {
+        grid-template-columns: 1fr;
+    }
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: #ffffff; /* white */
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+    border: 1px solid #f0f0f0;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.stat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff; /* white */
+    font-size: 20px;
+}
+
+.stat-icon.t1 {
+    background: linear-gradient(135deg, #3498db, #5dade2);
+}
+
+.stat-icon.t2 {
+    background: linear-gradient(135deg, #9b59b6, #bb8fce);
+}
+
+.stat-icon.t3 {
+    background: linear-gradient(135deg, #f39c12, #f8c471);
+}
+
+.stat-icon.t4 {
+    background: linear-gradient(135deg, #2ecc71, #58d68d);
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #7f8c8d;
+    font-weight: 500;
+}
+
+.dual-chart-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.chart-container {
+    flex: 1;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    border: 1px solid #f0f0f0;
+}
+
+.chart-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.chart-subtitle {
+    color: #7f8c8d;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.legend {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    margin-right: 8px;
+}
+
+.legend-color.user { background-color: #3498db; }
+.legend-color.task { background-color: #2ecc71; }
+
+.tasks-table {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f0f0f0;
+}
+
+.tasks-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+th {
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 600;
+    color: #7f8c8d;
+    font-size: 13px;
+    text-transform: uppercase;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+td {
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #3498db, #5dade2);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    font-weight: 600;
+}
+
+.task-name {
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.task-desc {
+    font-size: 13px;
+    color: #7f8c8d;
+    margin-top: 4px;
+}
+
+.status-processing { background-color: rgba(243, 156, 18, 0.1); color: #f39c12; }
+.status-completed { background-color: rgba(46, 204, 113, 0.1); color: #2ecc71; }
+.status-pending { background-color: rgba(52, 152, 219, 0.1); color: #3498db; }
+.status-queued { background-color: rgba(155, 89, 182, 0.1); color: #9b59b6; }
+
+/* 时间范围选择器样式 */
+.time-range-selector {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.date-picker-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.date-label {
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 500;
+    margin: 0;
+}
+
+.date-separator {
+    font-size: 14px;
+    color: #94a3b8;
+    font-weight: 500;
+    padding-bottom: 8px;
+    align-self: flex-end;
+}
+
+/* 日期选择器样式优化 */
+.time-range-selector ::ng-deep plx-datepicker {
+    min-width: 160px;
+}
+
+.time-range-selector ::ng-deep .plx-datepicker-input {
+    padding: 8px 12px;
+    font-size: 13px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    background: #ffffff;
+}
+
+.time-range-selector ::ng-deep .plx-datepicker-input:hover {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.time-range-selector ::ng-deep .plx-datepicker-input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+    outline: none;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .time-range-selector {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    .date-separator {
+        display: none;
+    }
+    
+    .date-picker-group {
+        width: 100%;
+    }
+    
+    .time-range-selector ::ng-deep plx-datepicker {
+        min-width: 100%;
+    }
+}

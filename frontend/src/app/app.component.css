@@ -1,0 +1,6 @@
+/* 页面垂直布局，顶部为 top-bar，剩下部分为 main-container */
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* 页面高度占满视口 */
+}

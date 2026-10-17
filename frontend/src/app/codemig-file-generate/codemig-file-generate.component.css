@@ -1,0 +1,76 @@
+.editor-wrapper {
+  padding: 16px;
+  position: relative;
+  z-index: 0;
+}
+
+.editor-toolbar {
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.editor-box {
+  border: 2px solid #e1e4e8;
+}
+.editor-box, .ai-suggestions-panel {
+  height: 85vh;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+/* 点赞/点踩按钮选中状态 */
+.score-btn.plx-ico-like-16.score-btn-liked,
+.score-btn.plx-ico-like-16.score-btn-liked:hover {
+  opacity: 1;
+  color: #1890ff;
+}
+.score-btn.plx-ico-dislike-16.score-btn-disliked,
+.score-btn.plx-ico-dislike-16.score-btn-disliked:hover {
+  opacity: 1;
+  color: #ff4d4f;
+}
+
+/* 编辑器容器 */
+.editor-container {
+  display: flex;
+  height: 100%;
+  position: relative;
+}
+
+.plx-btn {
+
+  &.plx-btn-off {
+    background-color: #1890ff;
+    color: white;
+    &:hover {
+      background-color: #40a9ff;
+    }
+  }
+
+  &.plx-btn-on {
+    background-color: #081e9c;
+    color: rgba(0, 0, 0, 0.45);
+    color: white; /* 字体颜色设置为白色 */
+    border: 2px solid #020308;
+    &:hover {
+      background-color: #1e5dd1;
+    }
+  }
+}
+
+.plx-select {
+  width: 100px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.model-label {
+  margin-left: 10px;
+  margin-right: 8px;
+  font-size: 14px;
+  color: #333;
+  line-height: 32px; /* 与按钮高度对齐 */
+}

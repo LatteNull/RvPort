@@ -1,0 +1,63 @@
+<div style="height: calc(100vh - 90px); overflow-y: auto;">
+    <div>
+        <button
+            class="batch-delete-btn"
+            class="plx-btn plx-btn-primary"
+            (click)="download_log()">
+            下载日志
+        </button>
+    </div>
+    <div style="margin-top: 20px;">
+        <plx-table [data]="data"
+                [columns]="columns"
+                [scroll] = "{y:'650px',keepHeight: true}"
+                [isPrepareDataOnLocal]="false"
+                [total]="total"
+                [tableType]="'large'"
+                [showColFilterToggle]="true"
+                [showCustomCol]="false"
+                [isRelatedCheckboxOnRowClick]="true"
+                [checkboxConfig]="checkboxConfig"
+                [showColFilter]="true"
+                [showPagination]="false"
+                [showGlobalFilter]="false"
+                [isShowZebra]="true"
+                [customFilters]="customFilters"
+                (filterInfoChange)="filterInfoChange($event)"
+        ></plx-table>
+    </div>
+    <div style="margin-top: 20px; float: right;">
+        <plx-pagination
+            [total]="total"
+            [maxPageIndex]="maxPageIndex"
+            [pageIndex]="pageIndex"
+            [pageSizeSelections]="pageSizeSelections"
+            (pageChangeOutput)="onPageChange($event)"
+            [size]="size"
+            [pageSize]="pageSize"
+        ></plx-pagination>
+    </div>
+</div>
+
+
+<!-- 查询日志 -->
+<ng-template #content let-c="close" let-d="dismiss" let-row="data">
+    <div class="modal-header">
+        <h4 class="modal-title">查询日志</h4>
+        <button type="button" class="close" (click)="d('Cross click')">
+            <span class="plx-ico-close-16"></span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <plx-form [settings]="formSetting"></plx-form>
+    </div>
+    <div class="modal-footer">
+        <div class="form-group">
+            <div class="btnGroup modal-btn"  style="margin-top: -16px;">
+                <button type="button" class="plx-btn plx-btn-primary" (click)="submit()">确定</button>
+                <button type="button" class="plx-btn" (click)="cancel()">取消</button>
+            </div>
+        </div>
+    </div>
+</ng-template>
+

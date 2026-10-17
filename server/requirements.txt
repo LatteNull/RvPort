@@ -1,0 +1,24 @@
+# 运行时依赖精确锁定（部署可复现用）；改版本保持本文件为权威并整体同步。
+# 传递依赖（Flask 的 Werkzeug/Jinja2 等、treelib 的 six、
+# APScheduler 的 tzlocal）不在此锁定，由 pip 解析。
+Flask==3.1.0
+sqlcipher3==0.5.4
+cryptography==50.0.2 # DB/AI key 的 AES-256-GCM 加解密（替代 libpfk_crypto.so）
+pyahocorasick==2.1.0
+requests==2.32.4
+openpyxl==3.1.5
+tomlkit==0.13.3
+packaging==25.0
+gunicorn==23.0.0
+APScheduler==3.11.0  # codemig 每日定时清理已删任务（codemig.py）
+treelib==1.8.0       # codemig cmake/macros solver 依赖树
+python-magic==0.4.27 # codemig source_file.py 文件类型识别
+chardet==5.2.0
+tree-sitter-python==0.25.0
+tree-sitter==0.25.2
+tree-sitter-rust==0.24.0
+tree-sitter-go==0.25.0
+SQLAlchemy==2.0.36  # 升级以支持 Python 3.13
+pymysql==1.1.2      # MySQL 部署形态（scripts/install/mysql）
+GitPython==3.1.46
+portalocker==3.2.0

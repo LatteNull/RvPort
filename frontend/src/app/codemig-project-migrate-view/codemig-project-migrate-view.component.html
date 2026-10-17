@@ -1,0 +1,341 @@
+<div class="editor-wrapper">
+  <div class="editor-toolbar">
+    <button class="plx-btn plx-btn-primary" (click)="goBack()">返回</button>
+
+    <!-- v4.1：右侧 modified 编辑器可手动保存/放弃修改 -->
+    <!-- isGenerating：AI 运行期间禁用，与 Agent 容器写入互斥（后端 /project_file_changesave 有同款守卫兜底） -->
+    <button class="plx-btn plx-btn-primary"
+            (click)="saveProjectFileChanges()"
+            [disabled]="!selectedFileId || !fileContentDirty[selectedFileId] || savingProjectChange || isGenerating"
+            title="保存对当前文件的修改到 git reflog">
+      {{ savingProjectChange ? '保存中...' : '保存修改' }}
+    </button>
+    <button class="plx-btn plx-btn-primary"
+            (click)="discardProjectFileChanges()"
+            [disabled]="!selectedFileId || !fileContentDirty[selectedFileId] || savingProjectChange || isGenerating"
+            title="放弃对当前文件的修改（还原为已保存版本）">
+      放弃修改
+    </button>
+
+    <span class="model-label">模型：</span>
+    <plx-select
+      class="plx-select"
+      [placeholder]="modelSelectPlaceholder"
+      [(ngModel)]="selectedModel"
+      [options]="modelOptions"
+      (ngModelChange)="onModelChange($event)">
+    </plx-select>
+    <button class="plx-btn plx-btn-primary" (click)="goToApiKeyManagement()">管理 API Key</button>
+
+    <!-- 空闲时置灰：迁移页的生成入口在左侧流程节点"运行"按钮，此按钮仅用于中止进行中的
+         生成（isGenerating=false 时无可停任务，置灰避免误导；stopWithConfirm 内部
+         还有 currentRequestUUID 空值守卫兜底） -->
+    <button class="plx-btn plx-btn-primary" (click)="stopWithConfirm()" [disabled]="!isGenerating"
+            title="停止当前正在运行的生成任务（清理 Docker 容器并丢弃结果）">
+      停止生成
+    </button>
+    <button class="plx-btn plx-btn-primary" (click)="toggleAIPanel()">
+      {{ showAIPanel ? '隐藏AI面板' : '显示AI面板' }}
+    </button>
+
+    <span class="model-label" style="margin-left: 10px;">历史版本：</span>
+    <plx-select
+      class="history-select"
+      placeholder="不选则使用默认行为"
+      [(ngModel)]="selectedHistoryHash"
+      [options]="historyOptions">
+    </plx-select>
+
+    <button class="plx-btn plx-btn-primary" (click)="rollbackProject()" [disabled]="isGenerating"
+      [title]="selectedHistoryHash ? '回退到选中的历史版本（可逆）' : '回退到最近一次迁移前'">
+      {{ selectedHistoryHash ? '回退到选中版本' : '回退迁移' }}
+    </button>
+    <button class="plx-btn plx-btn-primary" (click)="exportPatch()" [disabled]="isGenerating"
+      [title]="selectedHistoryHash ? '导出选中版本到当前的增量补丁' : '打开补丁导出弹窗'">
+      下载补丁
+    </button>
+  </div>
+
+  <div class="editor-container">
+    <!-- 左侧：运行流程面板 -->
+    <div class="file-list-panel">
+      <!-- 运行流程：外层标题（不可折叠） -->
+      <div class="flow-header">
+        <span class="flow-title">运行流程</span>
+        <span class="flow-summary" *ngIf="flowNodes.length > 0">{{ completedNodeCount }} / {{ flowNodes.length }} 完成</span>
+      </div>
+
+      <!-- 流程节点链（4 个阶段，按 skill 配置） -->
+      <div class="flow-nodes">
+        <div *ngFor="let node of flowNodes" class="flow-node" [attr.data-node-id]="node.id">
+          <!-- 节点 header：阶段名 + 进度 + 状态徽章 + 下三角 -->
+          <div class="flow-node-header" (click)="toggleFlowNode(node)">
+            <i class="plx-ico-down-16" *ngIf="!node.collapsed"></i>
+            <i class="plx-ico-up-16" *ngIf="node.collapsed"></i>
+            <span class="flow-node-index">{{ node.index }}</span>
+            <span class="flow-node-label" [title]="node.description">{{ node.label }}</span>
+            <span class="flow-node-count" *ngIf="getNodeItemCount(node) > 0">{{ getNodeItemCount(node) }}</span>
+            <span class="flow-node-status" [ngClass]="statusClass(node)">{{ statusLabel(node) }}</span>
+          </div>
+
+          <!-- 节点 body：阶段任务清单（不同节点不同组件） -->
+          <div class="flow-node-body" *ngIf="!node.collapsed">
+            <!-- ① 迁移：复用现有 file-list 渲染逻辑（保持原行为） -->
+            <ng-container *ngIf="node.id === 'migrate'">
+              <div *ngIf="fileList.length === 0 && !loadingFileList" class="file-list-empty">
+                暂无待迁移文件
+              </div>
+              <div
+                *ngFor="let f of fileList"
+                class="file-list-item"
+                [class.selected]="f.file_id === selectedFileId"
+                [class.disabled]="isGenerating || loadingFileList"
+                (click)="onFileClick(f.file_id)"
+              >
+                <div class="file-item-header">
+                  <div class="file-item-name"
+                       [class.file-name-missing]="f.file_source === 'missing'"
+                       [class.file-name-generated]="f.file_source === 'generated'"
+                       [title]="f.file_path">{{ f.file_name }}</div>
+                  <div class="file-item-actions">
+                    <span class="badge badge-changed" *ngIf="f.file_source === 'changed'">已修改</span>
+                    <span class="badge badge-missing" *ngIf="f.file_source === 'missing'">缺失</span>
+                    <span class="badge badge-generated" *ngIf="f.file_source === 'generated'">新增</span>
+                    <span class="badge badge-suggestions" *ngIf="f.totalSuggestions > 0">{{ f.totalSuggestions }} 条建议</span>
+                    <button
+                      class="toggle-btn"
+                      (click)="toggleFileExpand(f, $event); $event.stopPropagation();"
+                      [title]="f.expanded ? '收起建议' : '展开建议'"
+                      [disabled]="isGenerating || loadingFileList"
+                    >
+                      <i class="plx-ico-down-16" *ngIf="!f.expanded"></i>
+                      <i class="plx-ico-up-16" *ngIf="f.expanded"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="file-item-meta">
+                  <span class="file-item-type" *ngIf="f.solver_description">{{ f.solver_description }}</span>
+                  <span class="file-item-lines" *ngIf="f.num_changed_lines > 0">{{ f.num_changed_lines }} 行</span>
+                </div>
+                <div class="file-suggestions" *ngIf="f.expanded">
+                  <div class="suggestion-section">
+                    <div class="section-title">AI 建议</div>
+                    <div class="suggestion-list">
+                      <div
+                        *ngFor="let s of f.aiSuggestions"
+                        class="suggestion-row"
+                        (click)="revealLine(s.start_line)"
+                      >
+                        <span class="suggestion-line">行 {{ s.start_line }}-{{ s.end_line }}</span>
+                        <span class="suggestion-type">{{ s.type }}</span>
+                        <button class="remove-btn" (click)="removeSuggestion(f, s, $event)">
+                          <i class="plx-ico-close-16"></i>
+                        </button>
+                      </div>
+                      <div *ngIf="!f.aiSuggestions || f.aiSuggestions.length === 0" class="empty-suggestions">
+                        暂无 AI 建议
+                      </div>
+                    </div>
+                  </div>
+                  <div class="suggestion-section" *ngIf="f.manualSelections && f.manualSelections.length > 0">
+                    <div class="section-title">手动选中</div>
+                    <div class="suggestion-list">
+                      <div
+                        *ngFor="let m of f.manualSelections"
+                        class="suggestion-row manual-row"
+                        (click)="revealLine(m.start_line)"
+                      >
+                        <span class="suggestion-line">行 {{ m.start_line }}-{{ m.end_line }}</span>
+                        <button class="remove-btn" (click)="removeManualSelection(f, m, $event)">
+                          <i class="plx-ico-close-16"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="loadingFileList" class="file-list-loading">加载中...</div>
+            </ng-container>
+
+            <!-- ② 功能验证 -->
+            <ng-container *ngIf="node.id === 'ut_test'">
+              <!-- 有测试产物：按 test/<目标>/ 分组展示文件清单 -->
+              <div *ngIf="node.items.length > 0">
+                <div *ngFor="let item of node.items"
+                     class="file-list-item ut-test-item"
+                     (click)="onStageFileClick(item, 'ut_test')">
+                  <div class="file-item-header">
+                    <div class="file-item-name" [title]="item.path">{{ item.rel_path }}/{{ item.name }}</div>
+                    <div class="file-item-actions">
+                      <span class="badge badge-ut-cov" *ngIf="item.name === 'coverage.txt'">覆盖率报告</span>
+                      <span class="badge badge-ut-cov" *ngIf="item.name === 'report.md' || item.name === 'report.txt'">验证报告</span>
+                      <span class="badge badge-ut-pass" *ngIf="item.diff_passed === true && item.name === 'actual.out'">diff 通过</span>
+                      <span class="badge badge-ut-fail" *ngIf="item.diff_passed === false && item.name === 'actual.out'">diff 不一致</span>
+                    </div>
+                  </div>
+                  <div class="file-item-meta">
+                    <span class="file-item-type">{{ item.target_name }}</span>
+                    <span class="file-item-lines">{{ utTestFileSize(item.size) }}</span>
+                  </div>
+                </div>
+              </div>
+              <!-- 无测试产物：保留原占位文案 -->
+              <div *ngIf="node.items.length === 0 && !loadingUtTestFiles" class="flow-node-empty">
+                暂无待生成测试文件<br>
+                <small>需先完成「代码生成」阶段解锁；通过后为汇编文件生成单元测试并做 qemu 回归</small>
+              </div>
+              <div *ngIf="loadingUtTestFiles" class="file-list-loading">加载中...</div>
+            </ng-container>
+          </div>
+
+          <!-- 节点 footer：阶段运行按钮 -->
+          <div class="flow-node-footer">
+            <!-- ★ 串行门禁：未解锁（!runnable）时置灰，title 说明阻断原因。
+                 ★ v4.x 文案：未跑过=「运行X」；失败/成功过=「重新运行X」（成功后重跑需确认）。 -->
+            <button
+              class="plx-btn plx-btn-primary plx-btn-block"
+              (click)="runFlowNode(node); $event.stopPropagation();"
+              [disabled]="!node.runnable || node.running || isGenerating"
+              [title]="runTitle(node)"
+            >
+              <ng-container *ngIf="!node.running">{{ runButtonLabel(node) }}</ng-container>
+              <ng-container *ngIf="node.running">运行中…</ng-container>
+            </button>
+            <!-- ★ v4.x.0-RESUME：仅在 hasResumableSession=true 且未在运行时显示。
+                 点击复用 _streamSkillStage 启动 qwen --continue 接力会话。
+                 ★ v4.x：已成功的阶段隐藏「继续」（阶段已闭环，无会话可续；
+                 未跑成功过的阶段才可能存在中断会话需要接力）。
+                 串行门禁：与运行按钮同权，未解锁时同样置灰。 -->
+            <button
+              *ngIf="node.hasResumableSession && !node.running && node.status !== 'success'"
+              class="plx-btn plx-btn-secondary plx-btn-block"
+              style="margin-top: 8px;"
+              (click)="resumeNode(node); $event.stopPropagation();"
+              [disabled]="isGenerating || !node.runnable"
+              [title]="resumeButtonLabel(node)"
+            >
+              {{ resumeButtonLabel(node) }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 中间：Monaco Diff Editor -->
+    <div class="editor-box" [style.flex]="leftPanelFlex" [ngClass]="{'editor-full-width': !showAIPanel}">
+      <ngx-monaco-diff-editor
+        style="height: 100%;"
+        [options]="editorOptions"
+        [originalModel]="originalModel"
+        [modifiedModel]="modifiedModel"
+        (onInit)="onEditorInit($event)">
+      </ngx-monaco-diff-editor>
+    </div>
+
+    <!-- 拖拽分割线 -->
+    <div *ngIf="showAIPanel" class="resize-handle" (mousedown)="startResize($event)"></div>
+
+    <!-- 右侧AI建议面板 -->
+    <div class="ai-suggestions-panel" [style.flex]="rightPanelFlex" *ngIf="showAIPanel">
+      <div class="panel-header">
+        <h3 style="font-size: 16px;">AI 建议</h3>
+        <button class="plx-ico-close-16 plx-card-close" (click)="toggleAIPanel()"></button>
+      </div>
+      <div #panelContent (scroll)="onPanelScroll()" *ngIf="suggestion; else elseBlock" class="panel-content">
+        <div #suggestionMarkdown class="suggestion-content" markdown [data]="suggestion" (ready)="onSuggestionRenderReady()"></div>
+        <div *ngIf="suggestionRenderClipped && !suggestionRenderExpanded" class="suggestion-expand-hint">
+          内容过长已截断显示，渲染完整内容可能导致页面短暂卡顿。
+          <button class="suggestion-expand-btn" (click)="expandSuggestionRender()">展开完整内容</button>
+        </div>
+        <div *ngIf="isGenerating" class="ai-loading-container">
+          <div class="loading-spinner">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+       </div>
+        <button *ngIf="suggestion" class="plx-ico-copy-16" [plxTooltip]="'复制'" (click)="copyContent()"
+        style="border: none; background: white; font-size: 16px; height: 25px; line-height: 25px;"></button>
+        <button *ngIf="suggestion" class="plx-ico-clear-16" [plxTooltip]="'清除建议'" (click)="clearContent()"
+        style="border: none; background: white; font-size: 16px; height: 25px;  line-height: 25px"></button>
+      </div>
+      <ng-template #elseBlock>
+        <div *ngIf="isGenerating" class="ai-loading-container" style="min-height: 23vh;">
+          <div class="loading-spinner">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+       </div>
+        <div *ngIf="!isGenerating" class="panel-content">
+          <div class="plx-card-contentshow" style="text-align:center; margin-top: 6vh;" plx-empty [iconName]="'empty-display'"></div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <!-- 增量 Patch 导出弹窗 -->
+  <div class="patch-dialog-overlay" *ngIf="showPatchDialog" (click)="closePatchDialog()">
+    <div class="patch-dialog" (click)="$event.stopPropagation()">
+      <div class="patch-dialog-header">
+        <span>导出增量补丁</span>
+        <button class="patch-dialog-close" (click)="closePatchDialog()">×</button>
+      </div>
+      <div class="patch-dialog-body">
+        <div class="patch-field">
+          <label>补丁起点：</label>
+          <plx-select
+            class="patch-select"
+            placeholder="请选择起点版本"
+            [(ngModel)]="patchFromHash"
+            [options]="historyOptions">
+          </plx-select>
+        </div>
+        <div class="patch-field">
+          <label>补丁终点：</label>
+          <plx-select
+            class="patch-select"
+            placeholder="当前 HEAD"
+            [(ngModel)]="patchToHash"
+            [options]="patchToOptions">
+          </plx-select>
+        </div>
+        <div class="patch-hint">终点不选则默认为当前最新状态（HEAD）。</div>
+      </div>
+      <div class="patch-dialog-footer">
+        <button class="plx-btn" (click)="closePatchDialog()">取消</button>
+        <button class="plx-btn" (click)="exportFullPatch()" [disabled]="exportingPatch">导出全量（初始→当前）</button>
+        <button class="plx-btn plx-btn-primary" (click)="confirmExportPatch()" [disabled]="exportingPatch || !patchFromHash">
+          {{ exportingPatch ? '导出中...' : '导出增量' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- v4.1.8：删除 AI 建议二次确认弹窗（与单文件视图 codemig-file-change-view.component.html:133-155 一致） -->
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">删除</h4>
+    <button type="button" class="close" (click)="d('Cross click')">
+      <span class="plx-ico-close-16"></span>
+    </button>
+  </div>
+  <div class="modal-body" style="min-height: 54px;">
+    <div class="row alert-modal" style="min-height: 54px;">
+      <span class="tip-icon error plx-ico-dialog-risk-48"></span>
+      <div class="tip-info">
+        <div class="alert-title">确定删除第{{ deleteSuggestionOption?.suggestion?.start_line }}行该建议信息吗？</div>
+        <div class="alert-result">建议信息删除后将不能恢复。</div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="form-group">
+      <div class="btnGroup modal-btn">
+        <button type="button" class="plx-btn plx-btn-error" (click)="confirmDeleteSuggestion()">删除</button>
+        <button type="button" class="plx-btn" (click)="c('Close click')">取消</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

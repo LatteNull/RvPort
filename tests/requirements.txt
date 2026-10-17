@@ -1,0 +1,4 @@
+pytest==9.0.3
+pytest-mock==3.14.0
+coverage==7.6.11
+pytest-asyncio==1.4.0  # 连带升级：pytest 9 要求 pytest-asyncio>=1.3（0.26.0 上限 pytest<9）

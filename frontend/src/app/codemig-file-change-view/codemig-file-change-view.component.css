@@ -1,0 +1,56 @@
+.editor-wrapper {
+    padding: 16px;
+    position: relative;
+    z-index: 0;
+}
+
+.editor-toolbar {
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+
+.editor-box {
+    border: 2px solid #e1e4e8;
+}
+.editor-box, .ai-suggestions-panel {
+    height: 85vh;
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+
+/* 点赞/点踩按钮选中状态 */
+.score-btn.plx-ico-like-16.score-btn-liked,
+.score-btn.plx-ico-like-16.score-btn-liked:hover {
+  opacity: 1;
+  color: #1890ff;
+}
+.score-btn.plx-ico-dislike-16.score-btn-disliked,
+.score-btn.plx-ico-dislike-16.score-btn-disliked:hover {
+  opacity: 1;
+  color: #ff4d4f;
+}
+  /* 编辑器容器 */
+.editor-container {
+    display: flex;
+    height: 100%;
+    position: relative;
+  }
+
+/* 模型标签居中 */
+.model-label {
+    display: inline-flex;
+    align-items: center;
+    height: 32px;
+}
+
+/* 建议列表 placeholder：灰色 + 加粗（提示性文案重要，需醒目） */
+::ng-deep .suggestion-select .plx-select-placeholder,
+::ng-deep .suggestion-select .plx-select-value .plx-select-placeholder-single {
+    font-weight: 700;
+    color: #999;
+}

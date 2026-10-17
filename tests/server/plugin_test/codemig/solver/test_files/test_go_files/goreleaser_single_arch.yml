@@ -1,0 +1,13 @@
+# GoReleaser config with single architecture
+project_name: myapp
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+
+archives:
+  - format: tar.gz

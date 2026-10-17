@@ -1,0 +1,21 @@
+/* 主容器，包含侧边栏和编辑器 */
+.main-container {
+    display: flex;
+    flex: 1;  /* 占据剩余的空间 */
+    overflow: hidden;
+}
+
+.drag-right {
+    width: 100%;
+    padding: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - 38px);
+}
+
+/* 编辑器容器样式 */
+.editor-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}

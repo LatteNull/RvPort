@@ -1,0 +1,29 @@
+# GoReleaser config with multiple arch blocks
+project_name: myapp
+
+builds:
+  - id: linux-build
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    main: ./cmd/linux
+
+  - id: darwin-build
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+      - riscv64
+    main: ./cmd/darwin
+
+archives:
+  - format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_{{ .Os }}_{{ .Arch }}

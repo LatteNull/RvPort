@@ -1,0 +1,98 @@
+.main-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    padding: 0 10px;
+  }
+  
+  .task-cards-container {
+    display: flex;
+    gap: 20px; /* 卡片之间的间距 */
+    margin: 20px 0;
+    flex-wrap: wrap; /* 允许换行，适配小屏幕 */
+  }
+  
+  .task-card,
+  .summary-card {
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 16px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    font-family: Arial, sans-serif;
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .summary-card {
+    overflow-x: auto;
+  }
+  
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  
+  .summary-table th,
+  .summary-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .summary-table th {
+    background-color: #eef2f7;
+    font-weight: bold;
+  }
+  
+  .summary-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .summary-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .task-header div {
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+  
+  .task-paths {
+    margin-top: 12px;
+  }
+  
+  .task-report div {
+    margin-top: 12px;
+    font-size: 16px;
+  }
+  
+  .section-title {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+  
+  .task-paths ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .task-paths li {
+    padding: 6px 10px;
+    margin: 4px 0;
+    background-color: #fff;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+  
+  .table-scroll-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 650px;
+  }
+  

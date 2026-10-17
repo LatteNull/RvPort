@@ -1,0 +1,23 @@
+{
+    "telemetry": {
+        "enabled": false,
+        "target": "local",
+        "otlpEndpoint": "",
+        "outfile": ".telemetry.log"
+    },
+    "privacy": {
+        "usageStatisticsEnabled": false
+    },
+    "security": {
+        "auth": {
+          "selectedType": "openai"
+        }
+    },
+    "$version": 2,
+    "mcpServers": {
+        "riscv-doc-mcp": {
+            "command": "python3",
+            "args": ["-c", "from riscv_doc_mcp import main; main()"]
+        }
+    }
+}

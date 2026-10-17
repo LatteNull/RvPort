@@ -1,0 +1,43 @@
+<app-top-menu [title]="'RISC-V 迁移工具'" [tool]="'codemig'"></app-top-menu>
+<div class="main-container">
+  <div class="plx-menu-basic-border-color" style="width: 100%; position: absolute; top: 50px; bottom: 0px; display: flex;">
+    <div class="tree-container" style="height: 100%; width: 300px; padding: 15px; border-right: 1px solid;">
+        <plx-tree #tree
+          [value]="treeNodes"
+          [searchOptions]="searchOptions"
+          [optimizedNodesNumber]="10000"
+          (onNodeClick)="click($event)"
+          [isHeightLight]="true">
+        </plx-tree>
+    </div>
+    <div class="drag-right editor-container">
+      <router-outlet></router-outlet>
+    </div>
+  </div>  
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+      <h4 class="modal-title">删除</h4>
+      <button type="button" class="close" (click)="d('Cross click')">
+          <span class="plx-ico-close-16"></span>
+      </button>
+  </div>
+  <div class="modal-body" style="min-height: 54px;">
+      <div class="row alert-modal" style="min-height: 54px;">
+          <span class="tip-icon error plx-ico-dialog-risk-48"></span>
+          <div class="tip-info">
+              <div class="alert-title">确定删除 {{deleteNode?.label}} 任务吗？</div>
+              <div class="alert-result">任务删除后将不能恢复。</div>
+          </div>
+      </div>
+  </div>
+  <div class="modal-footer">
+      <div class="form-group">
+          <div class="btnGroup modal-btn">
+              <button type="button" class="plx-btn plx-btn-error" (click)="deleteclick(deleteNode)">删除</button>
+              <button type="button" class="plx-btn" (click)="c('Close click')">取消</button>
+          </div>
+      </div>
+  </div>
+</ng-template>

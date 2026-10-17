@@ -1,0 +1,49 @@
+
+edition = "2021"
+
+[package]
+name = "mypackage"
+version = "0.0.1"
+
+[dependencies]
+foo = "0.1"
+bar = { git = "https://github.com/example/project.git", package = "foo" }
+baz = { version = "0.1", registry = "custom", package = "foo" }
+
+
+[target.x86_64-unknown-linux-musl]
+rustflags = [
+  "-C", "target-feature=+crt-static,+lzcnt,+popcnt,-adx",
+  "-C", "link-self-contained=yes",
+]
+
+# rustflags=["-C", "target-feature=+pclmulqdq"]
+# rustflags=["-C", "target-feature=+lzcnt"]
+
+  [[build]]
+target = [
+  "x86_64-unknown-linux-gnu", 
+  "riscv64-unknown-linux-gnu"
+]
+
+
+[[build]]
+jobs = 1 
+rustflags=["-C", "target-feature=+lzcnt"]
+
+[target.riscv64gc-unknown-linux-gnu]
+linker = "riscv64-linux-gnu-gcc"
+
+[target.'cfg ( target_arch = "x86_64")'.dev-dependencies]
+syscalls = { version = "0.6.18", default-features = false }
+
+[target.'cfg(target_arch = "riscv64")'.dev-dependencies]
+syscalls = { version = "0.6.18", default-features = false }
+
+
+[target.my-special-i686-platform.dependencies]
+openssl = "1.0.1"
+native = { path = "native/i686" }
+
+[dev-dependencies]
+tempdir = "0.3"

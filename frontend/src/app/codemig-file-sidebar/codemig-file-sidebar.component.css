@@ -1,0 +1,127 @@
+/* 主容器，包含侧边栏和编辑器 */
+.main-container {
+    display: flex;
+    flex: 1;  /* 占据剩余的空间 */
+    overflow: hidden;
+}
+
+/* 文件树导航按钮区域 */
+.tree-navigation {
+    margin-bottom: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.nav-buttons {
+    display: flex;
+    align-items: end;
+    min-width: auto;
+    gap: 4px;
+    justify-content: center;
+    padding: 4px 8px;
+}
+
+/* 按钮基础样式 */
+.nav-buttons button {
+    min-width: 32px;
+    height: 32px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.nav-buttons button:hover:not(:disabled) {
+    background-color: #f5f5f5;
+    border-color: #40a9ff;
+    color: #40a9ff;
+}
+
+.nav-buttons button:active:not(:disabled) {
+    background-color: #e6f7ff;
+    border-color: #1890ff;
+    color: #1890ff;
+}
+
+/* 禁用状态 - 更明显的视觉区别 */
+.nav-buttons button:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    background-color: #f5f5f5;
+    border-color: #d9d9d9;
+    color: #bfbfbf;
+}
+
+.nav-buttons button:disabled span {
+    opacity: 0.5;
+    filter: grayscale(100%);
+}
+
+.drag-right {
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - 38px);
+}
+
+/* 编辑器容器样式 */
+.editor-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 文件来源样式 */
+.file-source-original {
+  color: #999999 !important;
+  opacity: 0.7;
+}
+
+.file-source-changed {
+  font-weight: bold;
+  color: #1890ff !important; /* 蓝色高亮 */
+}
+
+.file-source-missing :is(span, div){
+  color: #ff4d4f !important; /* 红色 */
+  font-style: italic;
+}
+
+.file-source-generate :is(span, div){
+  color: #17e232 !important;
+  font-style: italic;
+}
+
+/* 针对Paletx Tree节点的深度选择器 */
+::ng-deep .file-source-original,
+::ng-deep plx-tree .file-source-original,
+::ng-deep plx-tree [class*="file-source-original"] {
+  color: #999999 !important;
+  opacity: 0.7;
+}
+
+::ng-deep .file-source-changed,
+::ng-deep plx-tree .file-source-changed,
+::ng-deep plx-tree [class*="file-source-changed"] {
+  color: #1890ff !important;
+  font-weight: bold;
+}
+
+::ng-deep .file-source-missing,
+::ng-deep plx-tree .file-source-missing :is(span, div),
+::ng-deep plx-tree [class*="file-source-missing"] {
+  color: #ff4d4f !important;
+  font-style: italic;
+}
+
+::ng-deep .file-source-generate,
+::ng-deep plx-tree .file-source-generate :is(span, div),
+::ng-deep plx-tree [class*="file-source-generate"] {
+  color: #17e232 !important;
+  font-style: italic;
+}

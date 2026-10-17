@@ -1,0 +1,531 @@
+/* AI建议面板 */
+.ai-suggestions-panel {
+    flex: 1 1 auto;
+    margin-left: 1%;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #e1e4e8;
+    background: #f6f8fa;
+    height: 100%;
+  }
+  .resize-handle {
+    margin-left: 1%;
+    width: 4px;
+    cursor: col-resize;
+    background: #e1e4e8;
+    transition: background 0.2s;
+    flex: 0 0 auto;
+    position: relative;
+    z-index: -1;
+  }
+
+  .resize-handle:hover {
+    background: #0366d6;
+  }
+
+  /* 拖拽时的全局样式 */
+  body.resizing {
+    cursor: col-resize;
+    user-select: none;
+  }
+
+  .panel-header {
+    height: 5vh;
+    padding: 12px 15px;
+    border-bottom: 1px solid #e1e4e8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+  }
+
+  .panel-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #24292e;
+    display: flex;
+    align-items: center;
+  }
+
+  .panel-header h3:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2324292e"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>');
+    background-size: contain;
+    margin-right: 8px;
+  }
+
+  .plx-card-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #586069;
+    padding: 4px;
+  }
+
+  .panel-content {
+    min-height: 23vh;
+    max-height: 78.7vh;
+    flex: 1;
+    overflow-y: auto;
+    margin: 5px 5px;
+    padding: 10px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* 轻微阴影 */
+    color: #333; /* 深灰色更易读 */
+    overflow: auto;
+  }
+
+  .panel-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .collapse-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 10px;
+    background-color: #f1f5f9;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    user-select: none;
+    border-bottom: 1px solid #e0e6ed;
+    border-radius: 10px;
+  }
+
+  .collapse-header:hover {
+    background-color: #dfe7ee;
+  }
+
+  .collapse-header.active {
+    background-color: #3498db;
+    color: white;
+  }
+  .collapse-header.active .title {
+    color: white;
+  }
+
+  .collapse-header.active .icon {
+    transform: rotate(180deg);
+    color: white;
+  }
+
+  .title-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .icon-container {
+    background: #3498db15;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .panel-header.active .icon-container {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 14px;
+    color: #2c3e50;
+  }
+
+  .collapse-content {
+    width: 96%;
+    margin-left: 2%;
+    border-left: #e8e8e8 solid 3px;
+    background: #fcfcfc;
+  }
+
+  .think-content{
+    width: 95%;
+    margin-left: 2.5%;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: gray;
+    white-space: pre-line;
+  }
+
+  .suggestion-content{
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: black;
+    white-space: normal;
+  }
+
+  .suggestion-content ::ng-deep h1 {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .suggestion-content ::ng-deep h2 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .suggestion-content ::ng-deep h3 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .suggestion-content ::ng-deep h4 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .suggestion-content ::ng-deep h5 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .suggestion-content ::ng-deep p {
+  margin-top: 4px;    /* 从默认的 16px 缩小到 4px */
+  margin-bottom: 4px; /* 从默认的 16px 缩小到 4px */
+  line-height: 1.6;   /* 保持行高，保证可读性 */
+  }
+
+  .suggestion-content ::ng-deep pre {
+    background: #282c34; /* 深色背景 */
+    border-radius: 8px;
+    padding: 16px;
+    margin: 12px 0;
+    overflow-x: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    border-left: 4px solid #61afef; /* 高亮边线 */
+  }
+
+  .suggestion-content ::ng-deep pre code {
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #abb2bf;
+  display: block;
+  tab-size: 4;
+  }
+
+  /* 代码高亮颜色增强 */
+  .suggestion-content ::ng-deep pre code .token {
+  &.keyword { color: #c678dd; }      /* 关键字紫色 */
+  &.function { color: #61afef; }     /* 函数蓝色 */
+  &.number { color: #d19a66; }       /* 数字橙色 */
+  &.string { color: #98c379; }       /* 字符串绿色 */
+  &.comment { color: #5c6370; }      /* 注释灰色 */
+  &.operator { color: #56b6c2; }     /* 运算符青色 */
+  &.punctuation { color: #abb2bf; }  /* 标点浅灰 */
+  }
+
+  /* 添加语言标签 */
+  .suggestion-content ::ng-deep pre::after {
+  content: attr(data-lang);
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 12px;
+  color: #7f848e;
+  font-family: sans-serif;
+  }
+
+  /* 行号样式（可选） */
+  .suggestion-content ::ng-deep pre.line-numbers {
+  counter-reset: line;
+  }
+  .suggestion-content ::ng-deep pre.line-numbers code {
+  position: relative;
+  padding-left: 3.8em;
+  }
+  .suggestion-content ::ng-deep pre.line-numbers code .line::before {
+  counter-increment: line;
+  content: counter(line);
+  position: absolute;
+  left: 0;
+  width: 3em;
+  padding-right: 0.5em;
+  text-align: right;
+  color: #5c6370;
+  }
+
+  .suggestion-content ::ng-deep table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate; /* 改为separate实现更精致的边框效果 */
+  border-spacing: 0;
+  margin: 16px 0;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-radius: 8px; /* 圆角效果 */
+  overflow: hidden; /* 保证圆角不被内部元素破坏 */
+  font-size: 0.9em;
+  }
+
+  /* 表头样式 */
+  .suggestion-content ::ng-deep table th {
+  background: #f8f9fa; /* 浅灰背景 */
+  color: #495057;
+  font-weight: 600;
+  text-align: center;
+  padding: 12px 8px;
+  border-bottom: 2px solid #dee2e6; /* 更粗的下边框 */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  }
+
+  /* 单元格样式 */
+  .suggestion-content ::ng-deep table td {
+  padding: 10px 8px;
+  border: 1px solid #e9ecef; /* 更浅的边框色 */
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.4;
+  }
+
+  /* 斑马纹效果 */
+  .suggestion-content ::ng-deep table tr:nth-child(even) {
+  background-color: #f8fafc; /* 浅色条纹 */
+  }
+
+  /* 悬停效果 */
+  .suggestion-content ::ng-deep table tr:hover {
+  background-color: #f1f3f5;
+  transition: background 0.2s ease;
+  }
+
+  /* 首列特殊样式 */
+  .suggestion-content ::ng-deep table td:first-child,
+  .suggestion-content ::ng-deep table th:first-child {
+  font-weight: 500;
+  text-align: left;
+  padding-left: 16px;
+  }
+
+  /* 代码块特殊处理 */
+  .suggestion-content ::ng-deep table code {
+  background: rgba(175, 184, 193, 0.2);
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85em;
+  }
+
+  /* --- 思考过程 (details/summary) 深度定制 --- */
+
+  /* 1. 容器整体样式 */
+  .suggestion-content ::ng-deep details {
+  margin: 12px 0;
+  padding: 0;
+  border: 1px solid #e1e4e8;
+  border-radius: 8px;
+  background-color: #f9fbfe; /* 浅蓝色背景，区分于正文 */
+  overflow: hidden;
+  transition: all 0.3s ease;
+  }
+
+  .suggestion-content ::ng-deep details[open] {
+  background-color: #ffffff;
+  border-color: #61afef; /* 展开时变蓝色边框 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  /* 2. 摘要标题栏 (Summary) */
+  .suggestion-content ::ng-deep summary {
+  padding: 6px 16px;
+  list-style: none; /* 隐藏默认箭头 */
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 0.92em;
+  font-weight: 500;
+  color: #5c6370;
+  background: #f1f5f9;
+  border-bottom: 1px solid transparent;
+  user-select: none;
+  }
+
+  .suggestion-content ::ng-deep details[open] summary {
+  border-bottom: 1px solid #edf2f7;
+  color: #2c313a;
+  background: #ffffff;
+  }
+
+  .suggestion-content ::ng-deep summary::-webkit-details-marker {
+  display: none;
+  }
+
+  .suggestion-content ::ng-deep summary::before {
+  content: '▶';
+  display: inline-block;
+  margin-right: 10px;
+  font-size: 10px;
+  color: #abb2bf;
+  transition: transform 0.2s ease;
+  }
+
+  .suggestion-content ::ng-deep details[open] summary::before {
+  transform: rotate(90deg);
+  color: #61afef;
+  }
+
+
+  /* ============================================================
+  针对 details > div 内部 Markdown 内容的专属适配样式
+  ============================================================ */
+
+  .suggestion-content ::ng-deep details > div {
+  padding: 12px 16px;          /* 与你提供的 pre 边距保持一致 */
+  margin: 0;
+  font-size: 13px;             /* 稍微比 pre 大一点点，便于阅读正文 */
+  line-height: 1.3;
+  color: #4b5563;              /* 保持一致的灰色调 */
+
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #ffffff;   /* 内部背景 */
+  }
+
+
+  @keyframes details-show {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  }
+
+  .suggestion-content ::ng-deep summary strong {
+  color: #61afef;
+  margin: 0 4px;
+  }
+
+  /* 覆盖浏览器 UA stylesheet：s / strike / del 默认 text-decoration: line-through。
+     模型输出裸 <s>（如 HTML/JSP 源码被回显且未闭合）时，innerHTML 片段解析会把
+     其后所有兄弟节点吞成 <s> 的子元素，导致"后面所有文字全部带删除线"。
+     注：ngx-markdown 通过 element.nativeElement.innerHTML 注入渲染结果，这些
+     运行时元素不带 Angular 的 _ngcontent 属性；而本文件经 styleUrls 加载时，
+     Emulated 封装会给普通后代选择器（.panel s）也加上 [_ngcontent] 约束，
+     导致规则永远匹配不上。必须用 ::ng-deep 解除作用域（与上方
+     .suggestion-content ::ng-deep summary strong 同款写法）。 */
+  .suggestion-content ::ng-deep s,
+  .suggestion-content ::ng-deep strike,
+  .suggestion-content ::ng-deep del {
+  text-decoration: none;
+  }
+
+  .plx-btn {
+
+  &.plx-btn-off {
+    background-color: #1890ff;
+    color: white;
+    &:hover {
+      background-color: #40a9ff;
+    }
+  }
+
+  &.plx-btn-on {
+    background-color: #081e9c;
+    color: rgba(0, 0, 0, 0.45);
+    color: white; /* 字体颜色设置为白色 */
+    border: 2px solid #020308;
+    &:hover {
+      background-color: #1e5dd1;
+    }
+  }
+  }
+
+  .plx-select {
+  width: 100px;
+  margin-left: 10px;
+  margin-right: 10px;
+  }
+
+  /* --- AI 加载动画状态 --- */
+  .ai-loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #586069;
+  padding-top: 20px;
+  }
+
+  .loading-spinner {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  }
+
+  .dot {
+  width: 8px;
+  height: 8px;
+  margin: 0 4px;
+  background-color: #0366d6; /* 使用你的主色调 */
+  border-radius: 50%;
+  animation: bounce 1.4s infinite ease-in-out both;
+  }
+
+  .dot:nth-child(1) { animation-delay: -0.32s; }
+  .dot:nth-child(2) { animation-delay: -0.16s; }
+
+  @keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1.0); }
+  }
+
+  .loading-text {
+  font-size: 13px;
+  color: #6a737d;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+  }
+
+  /* --- 生成时的光标闪烁效果 --- */
+  .typing-cursor {
+  display: inline-block;
+  width: 6px;
+  height: 16px;
+  background-color: #0366d6;
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+  }
+
+  /* 修正原有 empty 状态的布局，确保居中 */
+  .empty-state {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }

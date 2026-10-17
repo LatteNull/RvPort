@@ -1,0 +1,61 @@
+<header class="top-bar">
+    <span class="title">{{title}}</span>
+    <div style="display: flex; align-items: center;">
+        <span *ngIf="is_goback" style="font-size: 20px; cursor: pointer;">
+            <button type="button" class="plx-btn" (click)="goBack()">{{ '返回选择工具' }}</button>
+        </span>
+        <span *ngIf="tool !== 'none'" style="font-size: 20px;cursor: pointer;">
+            <div plxDropdown class="plx-btn-more" #btnHelp>
+                <button class="plx-btn dropdown-toggle" plxDropdownToggle>帮助和支持</button>
+                <div class="dropdown-menu">
+                    <button *ngIf="tool === 'platform' || tool === 'codemig'" class="dropdown-item" (click)="openHelpManual()">帮助手册</button>
+                    <button class="dropdown-item" (click)="openAboutDialog()">关于</button>
+                </div>
+            </div>
+        </span>
+        <span style="font-size: 20px;cursor: pointer;">
+            <div plxDropdown class="plx-btn-more" #btnMore>
+                <button class="plx-btn dropdown-toggle" plxDropdownToggle>{{ user_name }}</button>
+                <div class="dropdown-menu">
+                    <button class="dropdown-item" (click)="logout()">登出</button>
+                    <button *ngIf="role != 'admin'" class="dropdown-item" (click)="modify_password(content)">修改密码</button>
+                </div> 
+            </div>
+        </span>
+        <span style="font-size: 20px; cursor: pointer;">
+            <button type="button" class="plx-btn" (click)="goSettings()">{{ '设置' }}</button>
+        </span>
+    </div>
+</header>
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">修改</h4>
+      <button type="button" class="close" (click)="d('Cross click')">
+        <span class="plx-ico-close-16"></span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <h4 style="margin-bottom: 20px;">用户名： {{user_name}}</h4>
+        <plx-form #form [settings]="formSetting"></plx-form>
+    </div>
+    <div class="modal-footer">
+    <div class="form-group">
+        <div class="btnGroup modal-btn"  style="margin-top: -16px;">
+            <button type="button" class="plx-btn plx-btn-primary" (click)="submit()" [disabled]="isSubmitDisabled">确定</button>
+            <button type="button" class="plx-btn" (click)="cancel()">取消</button>
+        </div>
+    </div>
+    </div>
+</ng-template>
+
+<ng-template #aboutContent let-c="close" let-d="dismiss">
+    <div class="about-modal-header">
+        <span class="plx-ico-close-16 about-close-btn" (click)="d('Cross click')"></span>
+    </div>
+    <div class="about-modal-body">
+        <div class="about-title">{{ toolLabel }}版本</div>
+        <div class="about-version">{{ masterVersion }}</div>
+    </div>
+</ng-template>
