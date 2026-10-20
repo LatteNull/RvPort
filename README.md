@@ -1,8 +1,8 @@
-# RISC-V Migration Tool (CodeMig)
+# RvPort
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
-Migrate x86 / ARM projects to RISC-V: scan source code, makefiles, and dependencies for architecture-specific migration points, generate fix suggestions from a built-in rule base, and optionally apply intelligent rewrites powered by LLMs.
+RvPort migrates x86 / ARM projects to RISC-V: it scans source code, makefiles, and dependencies for architecture-specific migration points, generates fix suggestions from a built-in rule base, and optionally applies intelligent rewrites powered by LLMs.
 
 ## Features
 
@@ -31,16 +31,14 @@ sudo apt install -y gcc make patchelf zlib1g-dev libffi-dev libssl-dev libbz2-de
 # yum install -y gcc make patchelf zlib-devel libffi-devel \
 #   openssl-devel bzip2-devel gdbm-devel libuuid-devel sqlite-devel sqlcipher-devel
 
-
 # 2. Install Python packages
 pip install -r requirements-dev.txt
 
-
 # 3. Initialize the database
 python scripts/install_db.py
-# For MySQL, first set DB_TYPE to "mysql" in server/config.json and add the
-# connection entries (MYSQL_HOST / MYSQL_PORT / MYSQL_USER / MYSQL_DATABASE),
-# then initialize with the password:
+# For MySQL: set DB_TYPE to "mysql" in server/config.json, add the connection
+# entries (MYSQL_HOST / MYSQL_PORT / MYSQL_USER / MYSQL_DATABASE), then initialize
+# with the password:
 echo -n '<password>' | python scripts/install_db.py db_type=mysql \
     mysql_host=127.0.0.1 mysql_port=3306 mysql_user=root mysql_database=codemig
 
@@ -49,19 +47,18 @@ cd frontend
 npm install --legacy-peer-deps
 npm run build
 mkdir -p ../server/static && cp -rf dist/frontend/browser/* ../server/static/
-
 ```
 
 ## Getting Started
 
-The backend entry point is `server/main.py` (run it from the `server` directory so that config.json can be located):
+The backend entry point is `server/main.py` (run it from the `server` directory so that `config.json` can be located):
 
 ```bash
 cd server
 python main.py
 ```
 
-- `DEBUG: true` in `config.json` → Flask development server (for debugging); `false` → gunicorn (1 worker, multi-threaded, for production)
+- `DEBUG: true` in `config.json` starts the Flask development server (for debugging); `false` starts gunicorn (1 worker, multi-threaded, for production)
 - Session secret (the `key` field in `config.json`): auto-generated on first launch in development mode; production mode requires an explicit value (startup fails with specific instructions if unset), or inject one via the `CODEMIG_SECRET_KEY` environment variable
 - Visit `http://<server_ip>:8080/` in a browser (for production, set `server_ip` in `config.json` to `0.0.0.0`)
 - On first launch an administrator account **Admin** is created automatically (initial password `Codemig@123`); a forced password change on first login immediately invalidates the initial password
@@ -88,7 +85,7 @@ cd server/assets/ai-agent
 docker load -i codemig-agent-base_1.0.0_x86.tar
 ```
 
-The runtime account needs docker access (`sudo usermod -aG docker $USER`, then re-login).
+The account running the backend needs Docker access (`sudo usermod -aG docker $USER`, then re-login).
 
 ## Testing
 
