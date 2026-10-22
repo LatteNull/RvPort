@@ -1,0 +1,22 @@
+id: C_CPP.X86.VECTOR_TYPE
+language: c_cpp
+severity: high
+confidence: high
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        generatedSet: "vectorTypes"
+        regex: "\\b(__m64|__m128|__m128i|__m128d|__m256|__m256i|__m256d|__m512|__m512i|__m512d)\\b"
+message:
+  zh-CN:
+    title: "使用 x86 SIMD 向量类型"
+    reason: "代码使用了 x86 SIMD 向量类型，例如 __m128、__m256 或 __m512 系列。这些类型无法直接移植到 RISC-V。"
+    suggestion: "建议改为 portable 数据结构，或在目标环境支持时使用 RISC-V Vector 对应实现。"
+  en-US:
+    title: "Uses x86 SIMD vector types"
+    reason: "The code uses x86 SIMD vector types such as __m128, __m256, or __m512. These types cannot be directly ported to RISC-V."
+    suggestion: "Replace them with portable data structures, or use a RISC-V Vector implementation when the target environment supports it."
+
+

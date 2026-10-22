@@ -1,0 +1,40 @@
+.overview {
+  overflow: hidden;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius-lg, 12px);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.85fr) minmax(210px, 1fr) minmax(210px, 1fr);
+  background:
+    linear-gradient(var(--ant-color-fill-quaternary), var(--ant-color-fill-quaternary)),
+    var(--ant-color-bg-container);
+}
+
+.item {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+
+  + div {
+    border-left: 1px solid var(--ant-color-border-secondary);
+  }
+
+  > span {
+    flex: none;
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size-sm, 12px);
+  }
+
+  > strong {
+    overflow: hidden;
+    font-size: var(--ant-font-size, 14px);
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

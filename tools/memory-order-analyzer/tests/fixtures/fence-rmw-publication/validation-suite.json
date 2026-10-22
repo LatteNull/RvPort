@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "FenceRmwValidationSuite",
+  "suite_id": "fence-rmw-publication-v1",
+  "cases": [
+    {"id": "c11-fence-fence", "language": "c11", "mode": "ast-ir", "scenario": "fence-fence", "expected": "discharged"},
+    {"id": "c11-signal-fence", "language": "c11", "mode": "ast-ir", "scenario": "signal-fence", "expected": "unknown"},
+    {"id": "c17-cross-tu-fence", "language": "c17", "mode": "ast-ir", "scenario": "cross-tu-fence", "expected": "discharged"},
+    {"id": "c17-rmw-chain", "language": "c17", "mode": "ir-only", "scenario": "rmw-release-sequence", "expected": "discharged"},
+    {"id": "cpp17-same-thread-store", "language": "c++17", "mode": "ast-ir", "scenario": "same-thread-relaxed-store", "expected": "discharged"},
+    {"id": "cpp20-same-thread-store", "language": "c++20", "mode": "ast-ir", "scenario": "same-thread-relaxed-store", "expected": "risk"},
+    {"id": "cpp17-cas-success", "language": "c++17", "mode": "ir-only", "scenario": "cas-success", "expected": "discharged"},
+    {"id": "cpp20-weak-cas", "language": "c++20", "mode": "ast-ir", "scenario": "weak-spurious", "expected": "unknown"},
+    {"id": "c11-ast-only", "language": "c11", "mode": "ast-only", "scenario": "missing-runtime", "expected": "unknown"},
+    {"id": "c17-open-scope", "language": "c17", "mode": "ast-ir", "scenario": "open-scope", "expected": "unknown"},
+    {"id": "cpp17-no-debug", "language": "c++17", "mode": "ir-only", "scenario": "no-debug", "expected": "discharged"},
+    {"id": "cpp20-budget", "language": "c++20", "mode": "ast-ir", "scenario": "assignment-budget", "expected": "unknown"}
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "references": [
+    {
+      "collectedAt": "2026-09-07",
+      "license": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "logicalLocation": "cpuid.h API declarations",
+      "officialUrl": "https://gcc.gnu.org/git/?p=gcc.git;a=blob;f=gcc/config/i386/cpuid.h;hb=04696df09633baf97cdbbdd6e9929b9d472161d3",
+      "referenceId": "gcc-14.2.0-cpuid-header",
+      "release": "releases/gcc-14.2.0",
+      "revision": "04696df09633baf97cdbbdd6e9929b9d472161d3",
+      "sha256": "dff5713280244867d6b8d0ddfa2328aa5fcf2149722630f01181c51fff642e39"
+    },
+    {
+      "collectedAt": "2026-09-07",
+      "license": "GPL-3.0-or-later WITH GCC-exception-3.1",
+      "logicalLocation": "RDTSC/RDTSCP intrinsic declarations",
+      "officialUrl": "https://gcc.gnu.org/git/?p=gcc.git;a=blob;f=gcc/config/i386/ia32intrin.h;hb=04696df09633baf97cdbbdd6e9929b9d472161d3",
+      "referenceId": "gcc-14.2.0-ia32intrin-header",
+      "release": "releases/gcc-14.2.0",
+      "revision": "04696df09633baf97cdbbdd6e9929b9d472161d3",
+      "sha256": "14f602e79bd3a783ad92cc1b2979f6b5fda2c2ed06e19222fad3aa259528254a"
+    },
+    {
+      "collectedAt": "2026-09-07",
+      "license": "GFDL-1.3-or-later",
+      "logicalLocation": "vector_size attribute documentation",
+      "officialUrl": "https://gcc.gnu.org/git/?p=gcc.git;a=blob;f=gcc/doc/extend.texi;hb=04696df09633baf97cdbbdd6e9929b9d472161d3",
+      "referenceId": "gcc-14.2.0-vector-extensions",
+      "release": "releases/gcc-14.2.0",
+      "revision": "04696df09633baf97cdbbdd6e9929b9d472161d3",
+      "sha256": "5e659f2c44d136fae24331f41e3475df698b8406d6613fd53963061a8e8c9b82"
+    }
+  ],
+  "schemaVersion": "1.0"
+}

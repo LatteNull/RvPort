@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "change": "model-cpp-thread-lifecycle",
+  "status": "validated-synchronized-archived",
+  "required_gate": true,
+  "validated_at": "2026-09-20",
+  "environment": {
+    "image": "memory-order-analyzer-dev:a3",
+    "image_id": "sha256:fe4fe0ab157c4db748ef67dabe2beca58c975ac40fb95f326b88e7b297be6f0a",
+    "llvm": "21.1.8",
+    "target": "x86_64-pc-linux-gnu",
+    "data_layout": "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128",
+    "dockerfile_sha256": "776b310d01f5b9212a0239c8ff8364bb9454bf366fd30aa14e9ac3d8a3164120",
+    "dependency_lock_sha256": "df416eec2189ba7b3a9444a8bc4e51e1606f884783275236bdaf432c4088b941"
+  },
+  "dependencies": {
+    "schemas/contracts.json": "4b26c8131ff62648d900c8f11bd6c5af240558fbc81c5e65c76be11b48b13630",
+    "schemas/effects.json": "11701efb74c5472894f66442ee89ecdb62024a031854c0a9fc17d916038257b5",
+    "schemas/threading.json": "04c1e9e2355cc895f77fa51a26a1c339e3e574b3ef16909454125820bbc18a69",
+    "schemas/publication.json": "e64db91770b5819aa68c08729139086bd914c51f0ea0f6db1d32420e9cb848d7",
+    "schemas/source_evidence.json": "6d16b4f00e0fe442ce093adc897b753d790f6cb6ff70606944ec664698b0e64b",
+    "schemas/degraded_source_analysis.json": "23878ed845225c3a3c9b7bdc5c854b804904dccc0834a40e354b5d77a8a024bf"
+  },
+  "artifacts": {
+    "protocols/cpp-thread-lifecycle-protocol.json": "1415faf1871d8ba35e02a924aaafa99b36b7f3b85c3d5331e28506567fcd2a82",
+    "schemas/cpp_thread_lifecycle.json": "048899a4641ff12dd64f593f9bda427a5c822a424f13afb57a5a7264e74e1f7d",
+    "tests/fixtures/cpp-thread-lifecycle/validation-suite.json": "8197bd43961a7572a54daefb4b1e5eb6c6aa9aa5498e2d160dab3db5b815771c",
+    "tests/fixtures/cpp-thread-lifecycle/validation-truth.json": "fa8519ddce3a2dd8b5cdd46a0f41bd51eb96bb381c41f1e04ab0601fd559b5fb",
+    "tests/fixtures/cpp-thread-lifecycle/validation-report.json": "d00f6725a98f03e182f4a6d6d1f4be988a936ebb2683998a17a6b340a705d5fd",
+    "reports/quality-a3-20260920-final-2/coverage-summary.json": "23be4008ca74a8dfac909a0352bf40d972c64c2648fa78a4e48d24331966be62"
+  },
+  "profiles": [
+    {"file": "cpp-thread-profiles/libstdcpp-clang21-cpp17-x86_64.json", "sha256": "5af3d2892f1548e01ee81d1a759a08e3870c5d5d2a6838cace4e52d69bcbd048", "profile_id": "1ba2f7fe86443903c8748f3e48464bc475e9b6330cbe1d8f7212827950ec448a", "vendor": "libstdc++", "standard": "c++17", "status": "verified"},
+    {"file": "cpp-thread-profiles/libstdcpp-clang21-cpp20-x86_64.json", "sha256": "992feacf4049693232767e47db5479f52a4f401e02a3101992ebf475af817816", "profile_id": "3988f720f560ba1fd63ca15b33ecadb466ed117ad727b0fdceb9adfe8be28551", "vendor": "libstdc++", "standard": "c++20", "status": "verified"},
+    {"file": "cpp-thread-profiles/libcxx21-clang21-cpp20-x86_64.json", "sha256": "3c4bc066d0911d6bea6baf5355eca689f8832897b811912611a4ec566ec9a69e", "profile_id": "dc17dd0b8ad620d91cc63528344785e691123562df31c3b989d914c75d40b500", "vendor": "libc++", "standard": "c++20", "status": "verified"}
+  ],
+  "truth": {
+    "cases": {"exact": 8, "total": 8},
+    "facts": {"expected": 16, "actual": 16, "fp": 0, "fn": 0},
+    "unknown": 3,
+    "abstention": 3,
+    "languages": {
+      "c11": {"planned": 1, "completed": 1, "failed": 0, "unknown": 0, "abstention": 0},
+      "c17": {"planned": 1, "completed": 1, "failed": 0, "unknown": 0, "abstention": 0},
+      "c++17": {"planned": 3, "completed": 3, "failed": 0, "unknown": 1, "abstention": 1},
+      "c++20": {"planned": 3, "completed": 3, "failed": 0, "unknown": 2, "abstention": 2}
+    },
+    "safety": "not_evaluated"
+  },
+  "tests": {"cpp_unit": {"passed": 91, "failed": 0}, "python_unit": {"passed": 529, "failed": 0}, "integration": {"passed": 58, "failed": 0}},
+  "coverage": {
+    "threshold_percent": 90,
+    "passed": true,
+    "overall": {"lines": {"hit": 10418, "total": 10577, "percent": 98.49673820554032}, "branches": {"hit": 6195, "total": 6570, "percent": 94.29223744292237}},
+    "languages": {
+      "cpp": {"lines": {"hit": 3660, "total": 3683, "percent": 99.37550909584577}, "branches": {"hit": 2952, "total": 3165, "percent": 93.27014218009478}},
+      "python": {"lines": {"hit": 6758, "total": 6894, "percent": 98.02727008993328}, "branches": {"hit": 3243, "total": 3405, "percent": 95.24229074889868}}
+    },
+    "affected_modules_passed": true,
+    "affected_modules": {
+      "src/source_facts.cpp": {"lines": {"hit": 700, "total": 705, "percent": 99.29078014184397}, "branches": {"hit": 454, "total": 502, "percent": 90.43824701195219}},
+      "python/memory_order_analyzer/cpp_thread_analysis.py": {"lines": {"hit": 309, "total": 314, "percent": 98.40764331210191}, "branches": {"hit": 189, "total": 204, "percent": 92.6470588235294}},
+      "python/memory_order_analyzer/cpp_thread_cache.py": {"lines": {"hit": 58, "total": 58, "percent": 100.0}, "branches": {"hit": 24, "total": 24, "percent": 100.0}},
+      "python/memory_order_analyzer/cpp_thread_contracts.py": {"lines": {"hit": 189, "total": 191, "percent": 98.95287958115183}, "branches": {"hit": 140, "total": 144, "percent": 97.22222222222223}},
+      "python/memory_order_analyzer/cpp_thread_profiles.py": {"lines": {"hit": 59, "total": 61, "percent": 96.72131147540983}, "branches": {"hit": 31, "total": 34, "percent": 91.17647058823529}},
+      "python/memory_order_analyzer/cpp_thread_validation.py": {"lines": {"hit": 41, "total": 41, "percent": 100.0}, "branches": {"hit": 16, "total": 16, "percent": 100.0}},
+      "python/memory_order_analyzer/model_cpp_thread_lifecycle.py": {"lines": {"hit": 85, "total": 86, "percent": 98.83720930232558}, "branches": {"hit": 37, "total": 38, "percent": 97.36842105263158}},
+      "python/memory_order_analyzer/degraded_analysis.py": {"lines": {"hit": 179, "total": 183, "percent": 97.81420765027322}, "branches": {"hit": 119, "total": 123, "percent": 96.7479674796748}},
+      "python/memory_order_analyzer/cli.py": {"lines": {"hit": 167, "total": 169, "percent": 98.81656804733728}, "branches": {"hit": 41, "total": 42, "percent": 97.61904761904762}}
+    }
+  },
+  "performance": {
+    "request": "fixed-c17-empty-lifecycle",
+    "cold": {"wall_seconds": 0.07359882799210027, "cpu_seconds": 0.03225499999999998, "peak_rss_bytes": 28995584, "output_bytes": 1185, "cache_hits": 0, "cache_misses": 2},
+    "warm": {"wall_seconds": 0.03743670502444729, "cpu_seconds": 0.016967800000000033, "peak_rss_bytes": 29536256, "output_bytes": 1185, "cache_hits": 2, "cache_misses": 0},
+    "semantic_digest": "28f4fb0d1f5d0c7b68e1097fbd7dba3c03fbd47ab0491ee502e4bf23ed4c63e1",
+    "semantic_equal": true
+  },
+  "exclusions": [
+    {"path": "tests/**", "reason": "测试 harness 与纯测试输入，不是生产逻辑"},
+    {"path": "doc/experiments/**/*.c and **/*.cpp", "reason": "compile-only 实验输入"},
+    {"path": "LLVM, GoogleTest, Python dependencies", "reason": "第三方实现"},
+    {"path": "generated protocol headers", "reason": "由版本化 JSON 协议生成且无自有执行逻辑"}
+  ],
+  "reports": {
+    "coverage": "reports/quality-a3-20260920-final-2/coverage-summary.json",
+    "python_html": "reports/quality-a3-20260920-final-2/python-html/index.html",
+    "cpp_html": "reports/quality-a3-20260920-final-2/cpp-html/index.html",
+    "validation": "tests/fixtures/cpp-thread-lifecycle/validation-report.json"
+  },
+  "boundary": "A3 lifecycle exact match and zero FP/FN are not a whole-program safety proof."
+}

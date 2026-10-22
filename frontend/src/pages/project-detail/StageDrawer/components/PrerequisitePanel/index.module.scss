@@ -1,0 +1,76 @@
+.panel {
+  border-radius: var(--ant-border-radius-lg, 12px);
+  background: var(--ant-color-fill-quaternary);
+}
+
+.notice[data-tone] {
+  padding-bottom: 8px;
+  background: transparent;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 8px 20px;
+  padding: 0 4px 4px;
+}
+
+.item {
+  display: grid;
+  min-width: 0;
+  align-content: center;
+  gap: 2px;
+  min-height: 58px;
+  padding: 6px 16px 12px;
+}
+
+.label {
+  color: var(--ant-color-text-secondary);
+  font-size: var(--ant-font-size-sm, 12px);
+  line-height: 18px;
+}
+
+.valueRow {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  strong,
+  a {
+    overflow: hidden;
+    min-width: 0;
+    color: var(--ant-color-text);
+    font-size: var(--ant-font-size, 14px);
+    font-weight: 600;
+    line-height: 21px;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  a {
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    align-items: center;
+    gap: 6px;
+    color: var(--ant-color-link);
+
+    > span {
+      overflow: hidden;
+      overflow-wrap: anywhere;
+    }
+
+    :global(.anticon) {
+      flex: 0 0 auto;
+      font-size: var(--ant-font-size-sm, 12px);
+    }
+  }
+
+  :global(.ant-btn) {
+    height: 21px;
+    flex: 0 0 auto;
+    padding: 0;
+  }
+}

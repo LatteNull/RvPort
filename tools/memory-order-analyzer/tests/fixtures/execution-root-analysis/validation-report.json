@@ -1,0 +1,28 @@
+{
+  "suite_version": "execution-root-r1-v1",
+  "status": "complete",
+  "metrics": {
+    "planned": 8,
+    "completed": 8,
+    "exact": 8,
+    "fp": 0,
+    "fn": 0,
+    "abstention": 2,
+    "source_candidates": 4,
+    "ir_candidates": 6,
+    "aligned_candidates": 3,
+    "classifications": {"dual-exact": 3, "ir-exact": 2, "source-candidate": 0, "ambiguous": 0, "unsupported": 1, "failed": 0},
+    "formal_roots": 14,
+    "candidate_roots": 1,
+    "reachable": {"planned": 14, "complete": 14, "ratio": 1.0},
+    "frontier_items": 2
+  },
+  "languages": {
+    "c11": {"planned": 2, "completed": 2, "exact": 2, "abstention": 0, "source_candidates": 0, "ir_candidates": 1, "aligned_candidates": 0, "formal_roots": 3, "candidate_roots": 0, "reachable": {"planned": 3, "complete": 3}, "frontier_items": 0},
+    "c17": {"planned": 2, "completed": 2, "exact": 2, "abstention": 1, "source_candidates": 1, "ir_candidates": 2, "aligned_candidates": 1, "formal_roots": 4, "candidate_roots": 0, "reachable": {"planned": 4, "complete": 4}, "frontier_items": 1},
+    "c++17": {"planned": 2, "completed": 2, "exact": 2, "abstention": 1, "source_candidates": 2, "ir_candidates": 2, "aligned_candidates": 1, "formal_roots": 3, "candidate_roots": 1, "reachable": {"planned": 3, "complete": 3}, "frontier_items": 1},
+    "c++20": {"planned": 2, "completed": 2, "exact": 2, "abstention": 0, "source_candidates": 1, "ir_candidates": 1, "aligned_candidates": 1, "formal_roots": 4, "candidate_roots": 0, "reachable": {"planned": 4, "complete": 4}, "frontier_items": 0}
+  },
+  "safety": "not_evaluated",
+  "findings": null
+}

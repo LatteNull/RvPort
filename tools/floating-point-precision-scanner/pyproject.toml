@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools==75.8.0", "wheel==0.45.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "floating-point-precision-scanner"
+version = "0.5.1"
+description = "仅面向 C/C++ 的确定性浮点迁移风险扫描器"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+dependencies = ["jsonschema==4.23.0"]
+
+[project.optional-dependencies]
+dev = [
+  "coverage==7.6.12",
+  "mypy==1.15.0",
+  "pytest==8.3.5",
+  "ruff==0.9.10",
+  "types-jsonschema==4.23.0.20250516",
+]
+
+[project.scripts]
+fp-precision-scanner = "floating_point_precision_scanner.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+floating_point_precision_scanner = ["schemas/**/*.json", "profiles/*.json"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+markers = ["integration: requires locked Clang/LLVM 21.1.8"]
+
+[tool.coverage.run]
+branch = true
+source = ["src/floating_point_precision_scanner"]
+omit = []
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 90
+exclude_also = [
+  # 仅排除静态类型检查导入；运行时不存在可执行行为。
+  "if TYPE_CHECKING:",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["floating_point_precision_scanner"]
+mypy_path = "src"

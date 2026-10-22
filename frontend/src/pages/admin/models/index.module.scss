@@ -1,0 +1,332 @@
+@use '../../../styles/mixins' as type;
+
+.page {
+  max-width: 1440px;
+  margin: 0 auto;
+
+  .pageHeader {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--ant-color-border-secondary);
+  }
+
+  .title {
+    @include type.page-title;
+    margin: 0;
+    color: var(--ant-color-text);
+  }
+
+  .description {
+    margin: 4px 0 0;
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size, 14px);
+    line-height: 22px;
+  }
+
+  .createProfileButton {
+    flex: 0 0 auto;
+  }
+
+  .bindingSection {
+    display: grid;
+    grid-template-columns: minmax(200px, 240px) minmax(0, 1fr);
+    gap: 24px;
+    align-items: center;
+    padding: 16px 24px;
+
+    & + & {
+      border-top: 1px solid var(--ant-color-border-secondary);
+    }
+  }
+
+  .bindingList {
+    margin-top: 24px;
+    overflow: hidden;
+    background: var(--ant-color-bg-container);
+    border: 1px solid var(--ant-color-border-secondary);
+    border-radius: calc(var(--ant-border-radius) * 2);
+  }
+
+  .bindingError {
+    margin-top: 24px;
+  }
+
+  .bindingOverview {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+
+    .sectionTitle {
+      @include type.section-title;
+    }
+  }
+
+  .sectionTitle {
+    @include type.section-title;
+    margin: 0;
+    color: var(--ant-color-text);
+  }
+
+  .sectionDescription {
+    margin: 4px 0 0;
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size, 14px);
+    line-height: 22px;
+  }
+
+  .bindingControl {
+    display: grid;
+    grid-template-columns: minmax(180px, 1fr) minmax(180px, 1fr) 128px;
+    gap: 12px;
+    align-items: end;
+
+    .bindingFormItem {
+      min-width: 0;
+      margin-bottom: 0;
+    }
+
+    :global(.ant-form-item-label) {
+      padding-bottom: 2px;
+
+      > label {
+        height: 20px;
+        color: var(--ant-color-text-secondary);
+        font-size: var(--ant-font-size-sm, 12px);
+      }
+    }
+  }
+
+  .bindingActions {
+    align-items: center;
+    min-height: 32px;
+  }
+
+  .bindingPanel {
+    min-width: 0;
+    min-height: 54px;
+  }
+
+  .bindingHint {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    width: auto;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: var(--ant-font-size-sm, 12px);
+    line-height: 20px;
+  }
+
+  .ready,
+  .warning {
+    display: inline-flex;
+    align-items: center;
+    color: var(--ant-color-success);
+
+    &::before {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      content: '';
+    }
+  }
+
+  .warning {
+    color: var(--ant-color-warning);
+  }
+
+  .profilesSection {
+    padding-top: 16px;
+  }
+
+  .profilesHeader {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .tableArea {
+    margin-top: 24px;
+  }
+
+  .profilesTable {
+    :global(.ant-table-cell) {
+      white-space: nowrap;
+    }
+  }
+
+  .profileName {
+    color: var(--ant-color-text);
+    font-weight: 500;
+  }
+
+  .endpoint {
+    display: block;
+    overflow: hidden;
+    color: var(--ant-color-text-secondary);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .compatibilitySummary {
+    display: inline-flex;
+    gap: 14px;
+    align-items: center;
+    padding: 4px 10px;
+    font: inherit;
+    line-height: 20px;
+    background: var(--ant-color-fill-quaternary);
+    border: 1px solid transparent;
+    border-radius: var(--ant-border-radius-sm);
+    cursor: pointer;
+    outline: none;
+
+    > span {
+      display: inline-flex;
+      gap: 5px;
+      align-items: center;
+    }
+
+    &:hover {
+      background: var(--ant-color-fill-secondary);
+      border-color: var(--ant-color-border-secondary);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--ant-color-primary);
+      outline-offset: 2px;
+    }
+  }
+
+  @media (max-width: 1199px) {
+    .pageHeader {
+      align-items: flex-start;
+    }
+
+    .bindingSection {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .bindingControl {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 128px;
+    }
+  }
+}
+
+// Status styles are shared by the table and the BaseModal portal.
+.compatibilitySuccess {
+  color: var(--ant-color-success);
+}
+
+.compatibilityError {
+  color: var(--ant-color-error);
+}
+
+.compatibilityDetails {
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius-lg);
+}
+
+.compatibilityDetail {
+  padding: 16px;
+
+  & + & {
+    border-top: 1px solid var(--ant-color-border-secondary);
+  }
+}
+
+.compatibilityDetailContent {
+  min-width: 0;
+}
+
+.compatibilityDetailIdentity,
+.compatibilityCapability > span:last-child {
+  display: flex;
+  align-items: center;
+}
+
+.compatibilityDetailIdentity {
+  gap: 8px;
+  min-width: 0;
+}
+
+.compatibilityDetailTitle {
+  color: var(--ant-color-text);
+  font-size: var(--ant-font-size, 14px);
+  font-weight: 600;
+  line-height: 22px;
+  overflow-wrap: anywhere;
+}
+
+.compatibilityDetailMeta {
+  display: inline-flex;
+  max-width: 100%;
+  padding: 0 6px;
+  color: var(--ant-color-text-secondary);
+  font-size: var(--ant-font-size-sm, 12px);
+  line-height: 18px;
+  background: var(--ant-color-fill-quaternary);
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius-sm);
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.compatibilityCapabilityGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.compatibilityCapability {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  padding: 8px 10px;
+  color: var(--ant-color-text-secondary);
+  font-size: 13px;
+  line-height: 20px;
+  background: var(--ant-color-fill-quaternary);
+  border-radius: var(--ant-border-radius);
+
+  > span:last-child {
+    flex: 0 0 auto;
+    gap: 4px;
+    font-size: var(--ant-font-size-sm, 12px);
+  }
+}
+
+.compatibilityIssue {
+  margin-top: 8px;
+  padding: 8px 10px;
+  font-size: var(--ant-font-size-sm, 12px);
+  line-height: 20px;
+  background: var(--ant-color-fill-quaternary);
+  border-left: 2px solid currentColor;
+  border-radius: 0 var(--ant-border-radius) var(--ant-border-radius) 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+
+  > span {
+    display: block;
+    margin-bottom: 2px;
+    font-weight: 500;
+  }
+
+  p {
+    margin: 0;
+    color: var(--ant-color-text-secondary);
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "ruleId": "C_CPP.X86.ASM_MACRO",
+  "count": 1,
+  "symbols": ["VZEROALL"]
+}
+
+

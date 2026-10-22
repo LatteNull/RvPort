@@ -1,0 +1,28 @@
+{
+  "kind": "FloatingPointBuildContext",
+  "schema_version": "1.0",
+  "context_id": "locked-clang21-riscv-unknown-libm",
+  "base_profile_fingerprint": "2ac379cc09b6e158e446c44c87e019f7f7ee318f87930ccc2fd5f89832a9d9ec",
+  "target_triple": "riscv64-unknown-linux-gnu",
+  "abi": "lp64d",
+  "toolchain": {"name": "clang", "version": "21.1.8"},
+  "libm": {
+    "status": "unknown",
+    "reason": "锁定工具链不固定应用的 sysroot 与运行镜像，不能可靠声明 libm 身份或行为",
+    "source": "toolchain.lock.json and Dockerfile.dev scope review"
+  },
+  "environment": {
+    "status": "unknown",
+    "reason": "运行时浮点环境由应用链接与线程运行环境决定",
+    "source": "static build-context boundary"
+  },
+  "target_features": {
+    "status": "unknown",
+    "reason": "应用级 -march/-mabi 扩展未由该最小 fixture 固定",
+    "source": "request compile options"
+  },
+  "sources": {
+    "toolchain": "toolchain.lock.json",
+    "scope": "unknown-only acceptance fixture; no host inference"
+  }
+}

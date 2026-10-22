@@ -1,0 +1,18 @@
+{
+  "generator": {
+    "tool_version": "0.5.0",
+    "clang_version": "21.1.8",
+    "llvm_version": "21.1.8",
+    "facts_schema_version": "1.3",
+    "llvm_facts_schema_version": "1.1",
+    "evidence_schema_version": "1.1"
+  },
+  "assessments": {
+    "mixed-precision-conversion": "matched",
+    "fragile-fp-comparison": "matched",
+    "reduction-reassociation": "matched",
+    "math-library-variance": "unknown"
+  },
+  "finding_origins": ["deterministic", "heuristic"],
+  "unknown_frontier": "libm_context_identity_and_capabilities"
+}

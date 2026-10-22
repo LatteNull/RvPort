@@ -1,0 +1,31 @@
+id: BUILD.X86.FEATURE_MACRO
+language: build
+severity: high
+confidence: medium
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        pathSuffixIn:
+          - ".am"
+          - ".m4"
+          - ".in"
+          - ".sh"
+          - ".zig"
+          - ".vcxproj"
+          - ".props"
+          - ".targets"
+        ignoreCommentLines: true
+        symbolGroup: 1
+        regex: "\\b(HAVE_(?:AMD64_ASM|AVX_ASM|CPUID|MMINTRIN_H|EMMINTRIN_H|PMMINTRIN_H|TMMINTRIN_H|SMMINTRIN_H|AVXINTRIN_H|AVX2INTRIN_H|AVX512FINTRIN_H|WMMINTRIN_H|RDRAND|_XGETBV)|(?:sse2|ssse3|sse4|avx2|avx512|aesni|xmm6)[A-Za-z0-9_./\\\\-]*)\\b"
+message:
+  zh-CN:
+    title: "构建系统启用 x86 特性或后端"
+    reason: "构建文件中出现 x86 feature 宏、x86 后端名或 x86 专属源码选择逻辑，可能会在构建阶段启用 x86-only 路径。"
+    suggestion: "建议为 RISC-V 构建显式关闭该路径，并补充 portable/RISC-V 后端选择逻辑。"
+  en-US:
+    title: "Build system enables x86 features or backends"
+    reason: "The build file contains x86 feature macros, x86 backend names, or x86-specific source selection logic, which may enable an x86-only path during the build."
+    suggestion: "Explicitly disable this path for RISC-V builds and add portable or RISC-V backend selection logic."
+

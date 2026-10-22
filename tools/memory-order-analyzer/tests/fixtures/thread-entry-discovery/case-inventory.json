@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {"capability": "c11-pthread-direct", "fixture": "sources/c11-pthread.c"},
+    {"capability": "c11-thrd-create", "fixture": "sources/c11-thrd.c"},
+    {"capability": "c17-macro-no-debug", "fixture": "sources/c17-pthread-no-debug.c"},
+    {"capability": "c17-cross-tu-wrapper", "fixture": "sources/c17-cross-tu/main.c;sources/c17-cross-tu/wrapper.c;sources/c17-cross-tu/worker.c;sources/c17-cross-tu/shared.h"},
+    {"capability": "cpp17-alias-lambda", "fixture": "sources/cpp17-thread.cpp"},
+    {"capability": "cpp17-member-functor-async", "fixture": "sources/cpp17-callables.cpp"},
+    {"capability": "cpp20-jthread-stop-token", "fixture": "sources/cpp20-jthread.cpp"},
+    {"capability": "async-policy-matrix", "fixture": "sources/cpp17-async.cpp;sources/cpp20-async-default.cpp"},
+    {"capability": "default-move-factory-negative", "fixture": "sources/cpp20-negative.cpp"},
+    {"capability": "framework-unsupported", "fixture": "sources/cpp20-negative.cpp;sources/c11-clone-unsupported.c"},
+    {"capability": "source-ir-callback-conflict", "fixture": "validation-truth.json"},
+    {"capability": "open-scope-frontier", "fixture": "validation-truth.json"},
+    {"capability": "profile-abi-mismatch", "fixture": "validation-truth.json"},
+    {"capability": "budget-and-cache", "fixture": "validation-report.json"},
+    {"capability": "windows-excluded", "fixture": "provenance.json"}
+  ]
+}

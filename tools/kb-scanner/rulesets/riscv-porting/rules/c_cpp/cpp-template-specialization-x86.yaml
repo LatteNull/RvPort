@@ -1,0 +1,21 @@
+id: CPP.X86.TEMPLATE_SPECIALIZATION
+language: cpp
+severity: medium
+confidence: medium
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        ignoreCommentLines: true
+        symbolGroup: 1
+        regex: "^(?:\\s*template\\s*<>\\s*)?\\s*(?:struct|class)\\s+[^\\n;{]*<[^\\n;>]*(\\b(?:x86|avx[0-9]*|sse[0-9]*)[A-Za-z0-9_]*\\b)[^\\n;>]*>"
+message:
+  zh-CN:
+    title: "C++ 模板特化绑定 x86 后端"
+    reason: "C++ 模板特化名称或模板参数中出现 x86/SSE/AVX 后端标识，说明存在按架构特化的 x86-only 实现入口。"
+    suggestion: "建议检查是否已有 RISC-V/portable 特化；如果没有，应补充对应特化并将公共模板接口与 x86 实现隔离。"
+  en-US:
+    title: "C++ template specialization is bound to an x86 backend"
+    reason: "The C++ template specialization name or template argument contains an x86/SSE/AVX backend identifier, indicating an architecture-specialized x86-only implementation entry."
+    suggestion: "Check whether a RISC-V or portable specialization already exists. If not, add one and isolate the public template interface from the x86 implementation."

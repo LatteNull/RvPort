@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-precision-scanner/facts/v1/facts.schema.json",
+  "title": "FloatingPointFactBundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "schema_version", "producer", "translation_unit_id", "physical_tu_id", "context_id", "compile_context", "effective_fp_options", "profiles", "facts", "unknowns", "diagnostics", "semantic_digest"],
+  "properties": {
+    "kind": {"const": "FloatingPointFactBundle"},
+    "schema_version": {"const": "1.4"},
+    "producer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["tool_version", "clang_version", "mapper_version"],
+      "properties": {"tool_version": {"type": "string"}, "clang_version": {"const": "21.1.8"}, "mapper_version": {"const": "1.1"}}
+    },
+    "translation_unit_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "physical_tu_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "context_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "compile_context": {"type": "object"},
+    "effective_fp_options": {"type": "object"},
+    "profiles": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source", "target"],
+      "properties": {"source": {"type": "string"}, "target": {"type": "string"}}
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["fact_id", "fact_kind", "type", "location", "source_range", "function_id", "function_symbol", "payload"],
+        "properties": {
+          "fact_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "fact_kind": {"enum": ["type", "literal", "arithmetic", "comparison", "conversion", "call", "environment", "function_summary", "reduction", "api", "suppression"]},
+          "type": {"type": ["string", "null"]},
+          "location": {"type": ["object", "null"]},
+          "source_range": {"type": ["object", "null"]},
+          "function_id": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+          "function_symbol": {"type": ["string", "null"]},
+          "payload": {"type": "object"}
+        }
+      }
+    },
+    "unknowns": {"type": "array", "items": {"type": "object"}},
+    "diagnostics": {"type": "array", "items": {"type": "object"}},
+    "semantic_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  }
+}

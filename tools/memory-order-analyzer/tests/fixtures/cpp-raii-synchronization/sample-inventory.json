@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "origin": "memory-model-ir-checker/samples/safe/03_pthread_mutex.cpp",
+      "local": "archived_safe_03_pthread_mutex.cpp",
+      "sha256": "14ebefa00f4f3042db73a82f995fef88322cb9dbbbd8745126ea3c32fbc03882",
+      "capability": "std::mutex + std::lock_guard + pthread lifecycle regression",
+      "truth": "完整 profile、对象、路径、线程与 IR wrapper 证据存在时，可在受限同 mutex 模型内消解；否则保持 unknown，不宣称全程序安全"
+    }
+  ]
+}

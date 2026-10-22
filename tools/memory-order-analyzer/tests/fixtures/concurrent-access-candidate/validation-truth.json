@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "ConcurrentAccessValidationTruth",
+  "cases": [
+    {"case_id": "c11-pthread-struct", "status": "complete", "candidate_pairs": ["main-read~worker-write"], "protected": ["main-read~worker-write"], "excluded": [], "frontier": []},
+    {"case_id": "c11-ast-only-union", "status": "partial", "candidate_pairs": [], "protected": [], "excluded": [], "frontier": ["ast-only-runtime-alias-unknown"]},
+    {"case_id": "c11-compile-failed", "status": "failed", "candidate_pairs": [], "protected": [], "excluded": [], "frontier": ["compile-failed"]},
+    {"case_id": "c17-thrd-pointer", "status": "complete", "candidate_pairs": ["main-read~worker-write"], "protected": [], "excluded": [], "frontier": []},
+    {"case_id": "c17-cross-tu", "status": "complete", "candidate_pairs": ["main-read~worker-write"], "protected": [], "excluded": [], "frontier": []},
+    {"case_id": "c17-ir-only", "status": "partial", "candidate_pairs": [], "protected": [], "excluded": [], "frontier": ["thread-entry-source-evidence-missing"]},
+    {"case_id": "cpp17-thread-mutex", "status": "complete", "candidate_pairs": ["main-read~worker-write"], "protected": ["main-read~worker-write"], "excluded": [], "frontier": []},
+    {"case_id": "cpp17-move-detach", "status": "complete", "candidate_pairs": ["main-read~worker-write"], "protected": [], "excluded": [], "frontier": []},
+    {"case_id": "cpp17-no-debug", "status": "complete", "candidate_pairs": ["main-read~worker-write"], "protected": [], "excluded": [], "frontier": []},
+    {"case_id": "cpp17-archived-pthread-mutex", "status": "complete", "candidate_pairs": ["worker-1-write~worker-2-write"], "protected": ["worker-1-write~worker-2-write"], "excluded": [], "frontier": []},
+    {"case_id": "cpp20-jthread-fields", "status": "complete", "candidate_pairs": [], "protected": [], "excluded": ["main-second-read~worker-first-write:must-disjoint"], "frontier": []},
+    {"case_id": "cpp20-async-policy", "status": "complete", "candidate_pairs": ["async-write~main-read"], "protected": [], "excluded": [], "frontier": []},
+    {"case_id": "cpp20-deferred", "status": "complete", "candidate_pairs": [], "protected": [], "excluded": ["deferred-not-parallel"], "frontier": []}
+  ]
+}

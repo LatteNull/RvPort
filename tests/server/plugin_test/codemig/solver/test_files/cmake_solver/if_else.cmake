@@ -1,5 +1,0 @@
-if (CMAKE_SYSTEM_PROCESSOR MATCH A)
-  print('1')
-else()
-print(2)
-endif()

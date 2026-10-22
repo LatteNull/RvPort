@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-precision-scanner/evidence/v1/floating-point-evidence.schema.json",
+  "title": "FloatingPointEvidenceBundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "schema_version", "producer", "artifact", "source_fact_bundle_digest", "ir_fact_bundle_digest", "bindings", "ambiguities", "unmatched_source_fact_ids", "unmatched_ir_fact_ids", "diagnostics", "semantic_digest"],
+  "properties": {
+    "kind": {"const": "FloatingPointEvidenceBundle"},
+    "schema_version": {"const": "1.1"},
+    "producer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["tool_version"],
+      "properties": {"tool_version": {"type": "string", "minLength": 1}}
+    },
+    "artifact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_set_id", "artifact_key", "physical_tu_id", "context_id", "profile", "sha256"],
+      "properties": {
+        "artifact_set_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "artifact_key": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "physical_tu_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "context_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "profile": {"enum": ["source-preserving", "build-faithful"]},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "source_fact_bundle_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "ir_fact_bundle_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "bindings": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["binding_id", "source_fact_id", "ir_fact_id", "method", "confidence", "source_fact_bundle_digest", "ir_fact_bundle_digest", "relation", "reason"],
+        "properties": {
+          "binding_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "source_fact_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "ir_fact_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "method": {"enum": ["explicit-sidecar", "derived-debug"]},
+          "confidence": {"enum": ["exact", "strong", "weak"]},
+          "source_fact_bundle_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "ir_fact_bundle_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "relation": {"enum": ["explicit", "lowering", "conversion-lowering", "comparison-use", "environment-call", "reduction-lowering", "math-call", "architecture-api"]},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "ambiguities": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["ir_fact_id", "source_fact_ids", "reason"],
+        "properties": {
+          "ir_fact_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "source_fact_ids": {"type": "array", "minItems": 2, "items": {"type": "string", "pattern": "^[a-f0-9]{64}$"}},
+          "reason": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "unmatched_source_fact_ids": {"type": "array", "items": {"type": "string", "pattern": "^[a-f0-9]{64}$"}},
+    "unmatched_ir_fact_ids": {"type": "array", "items": {"type": "string", "pattern": "^[a-f0-9]{64}$"}},
+    "diagnostics": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/diagnostic"}
+    },
+    "semantic_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "$defs": {
+    "diagnostic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["diagnostic_code", "stage", "severity", "message", "message_en", "suggestion", "suggestion_en", "retryable", "count"],
+      "properties": {
+        "diagnostic_code": {"type": "string", "minLength": 1},
+        "stage": {"type": "string", "minLength": 1},
+        "severity": {"enum": ["info", "warning", "error"]},
+        "message": {"type": "string", "minLength": 1},
+        "message_en": {"type": "string", "minLength": 1},
+        "suggestion": {"type": "string", "minLength": 1},
+        "suggestion_en": {"type": "string", "minLength": 1},
+        "retryable": {"type": "boolean"},
+        "count": {"type": "integer", "minimum": 1},
+        "location": {"type": ["object", "null"]},
+        "translation_unit_id": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

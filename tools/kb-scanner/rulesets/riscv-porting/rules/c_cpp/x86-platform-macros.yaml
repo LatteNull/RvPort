@@ -1,0 +1,25 @@
+id: C_CPP.X86.PLATFORM_MACRO
+language: c_cpp
+severity: medium
+confidence: medium
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        generatedSet: "platformMacros"
+        ignoreCommentLines: true
+        ignoreEndifLines: true
+        singleFindingPerLine: true
+        regex: "^(?!\\s*#\\s*endif\\b).*\\b(__x86_64__|__amd64__|__i386__|_M_X64|_M_IX86|__SSE__|__SSE2__|__SSE3__|__SSSE3__|__SSE4_1__|__SSE4_2__|__AVX__|__AVX2__|__AVX512F__|__BMI__|__BMI2__|__FMA__|__AES__)\\b"
+message:
+  zh-CN:
+    title: "使用 x86 平台宏"
+    reason: "代码中出现 x86 平台或 CPU feature 宏，说明存在架构相关条件编译或平台假设。"
+    suggestion: "建议检查该条件分支是否已有 RISC-V/portable 实现；若没有，需要补充目标架构分支。"
+  en-US:
+    title: "Uses an x86 platform macro"
+    reason: "The code contains an x86 platform or CPU feature macro, indicating architecture-related conditional compilation or platform assumptions."
+    suggestion: "Check whether this conditional branch already has a RISC-V or portable implementation. If not, add a target-architecture branch."
+
+

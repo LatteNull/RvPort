@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "suite_version": "r3-demand-v1",
+  "cases": [
+    {"id": "c11-single-ast-ir", "language": "c11", "mode": "ast+ir", "scope": "closed", "layout": "single-tu", "source": "c11-single.c", "debug": true, "root": "pthread"},
+    {"id": "c11-ast-only", "language": "c11", "mode": "ast-only", "scope": "closed", "layout": "single-tu", "source": "c11-single.c", "debug": true, "root": "pthread"},
+    {"id": "c17-cross-ir", "language": "c17", "mode": "ir-only", "scope": "closed", "layout": "cross-tu", "source": "c17-main.c", "dependency": "c17-helper.c", "debug": true, "root": "main"},
+    {"id": "c17-open", "language": "c17", "mode": "ast+ir", "scope": "open", "layout": "cross-tu", "source": "c17-main.c", "dependency": "c17-helper.c", "debug": false, "root": "main"},
+    {"id": "cpp17-single-no-debug", "language": "c++17", "mode": "ast+ir", "scope": "closed", "layout": "single-tu", "source": "cpp17-single.cpp", "debug": false, "root": "pthread"},
+    {"id": "cpp17-worker-timeout", "language": "c++17", "mode": "ir-only", "scope": "closed", "layout": "single-tu", "source": "cpp17-single.cpp", "debug": true, "root": "main"},
+    {"id": "cpp20-cross", "language": "c++20", "mode": "ast+ir", "scope": "closed", "layout": "cross-tu", "source": "cpp20-main.cpp", "dependency": "cpp20-helper.cpp", "debug": true, "root": "main"},
+    {"id": "cpp20-budget", "language": "c++20", "mode": "ir-only", "scope": "closed", "layout": "cross-tu", "source": "cpp20-main.cpp", "dependency": "cpp20-helper.cpp", "debug": false, "root": "main"}
+  ]
+}

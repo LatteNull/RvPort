@@ -1,0 +1,31 @@
+{
+  "protocol_version": 1,
+  "analysis_version": "0.1.0",
+  "llvm_version": "21.1.8",
+  "policy_id": "cpp-thread-lifecycle-v1",
+  "kinds": {
+    "CppThreadLifecycleRequest": 1,
+    "CppThreadLibraryProfile": 1,
+    "CppThreadLocalFacts": 1,
+    "CppThreadLifecycleGraph": 1,
+    "CppThreadLifecycleReport": 1,
+    "CppThreadValidationSuite": 1,
+    "CppThreadValidationTruth": 1,
+    "CppThreadValidationReport": 1
+  },
+  "budgets": {
+    "translation_units": 4096,
+    "callables": 65536,
+    "objects": 65536,
+    "instances": 65536,
+    "transitions": 262144,
+    "relations": 262144,
+    "recursive_iterations": 64,
+    "candidate_targets": 64,
+    "worker_seconds": 300,
+    "worker_output_bytes": 67108864,
+    "request_seconds": 3600,
+    "request_output_bytes": 268435456,
+    "diagnostic_bytes": 4096
+  }
+}

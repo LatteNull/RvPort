@@ -1,0 +1,41 @@
+id: C_CPP.X86.HEADER
+language: c_cpp
+severity: high
+confidence: high
+capability:
+  - include.detect
+match:
+  any:
+    - include:
+        generatedSet: "headers"
+        pathIn:
+          - "immintrin.h"
+          - "x86intrin.h"
+          - "emmintrin.h"
+          - "xmmintrin.h"
+          - "mmintrin.h"
+          - "pmmintrin.h"
+          - "tmmintrin.h"
+          - "smmintrin.h"
+          - "nmmintrin.h"
+          - "wmmintrin.h"
+          - "avxintrin.h"
+          - "avx2intrin.h"
+          - "avx512fintrin.h"
+          - "avx512bwintrin.h"
+          - "avx512dqintrin.h"
+          - "avx512vlintrin.h"
+          - "cpuid.h"
+          - "ia32intrin.h"
+          - "mm_malloc.h"
+message:
+  zh-CN:
+    title: "引用 x86 专属头文件"
+    reason: "代码引用了 x86 平台专属头文件，通常表示该分支包含 x86 专属实现。"
+    suggestion: "建议确认该分支在 RISC-V 构建中不会启用，或提供 portable/RISC-V 实现分支。"
+  en-US:
+    title: "Includes an x86-specific header"
+    reason: "The code includes an x86 platform-specific header, which usually indicates that the branch contains an x86-specific implementation."
+    suggestion: "Confirm that this branch is not enabled in RISC-V builds, or provide a portable or RISC-V implementation branch."
+
+

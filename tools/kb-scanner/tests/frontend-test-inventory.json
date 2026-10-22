@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "1.0",
+  "candidateNoiseInventory": "tests/architecture-candidate-noise-test-inventory.json",
+  "baseline": {
+    "fullRegressionTests": 126,
+    "frontendAddedTests": 38,
+    "classification": {
+      "moduleOrComponent": 22,
+      "libclangIntegration": 5,
+      "compositionOrStagedIntegration": 6,
+      "boundaryContract": 5
+    }
+  },
+  "coverageThresholds": {
+    "linePercent": 90.0,
+    "branchPercent": 80.0
+  },
+  "layers": {
+    "unit": "tests/unit/frontends/cpp; third-party parser and downstream boundaries are fake or mocked",
+    "component": "real Tree-sitter grammar and filesystem contracts",
+    "integration": "real libclang and staged pipeline composition",
+    "contract": "legacy freeze, facts, imports, output and test-inventory boundaries"
+  },
+  "modules": {
+    "assert_profile.py": {
+      "unit": "tests/unit/test_assert_profile.py",
+      "higherLayers": ["tests/test_test_content_component.py"]
+    },
+    "test_inventory.py": {
+      "unit": "tests/unit/test_test_inventory.py",
+      "higherLayers": ["tests/test_test_content_component.py"]
+    },
+    "macro_records.py": {
+      "unit": "tests/unit/test_macro_records.py",
+      "higherLayers": ["tests/test_macro_build_effect_component.py"]
+    },
+    "usage_inventory.py": {
+      "unit": "tests/unit/test_usage_inventory.py",
+      "higherLayers": ["tests/test_candidate_usage_frontend.py"]
+    },
+    "usage_bindings.py": {
+      "unit": "tests/unit/test_usage_bindings.py",
+      "higherLayers": ["tests/test_candidate_usage_frontend.py"]
+    },
+    "function_inventory.py": {
+      "unit": "tests/unit/test_function_inventory.py",
+      "higherLayers": ["tests/test_function_multiversion_frontend.py"]
+    },
+    "function_semantics.py": {
+      "unit": "tests/unit/test_function_semantics.py",
+      "higherLayers": ["tests/test_function_multiversion_frontend.py"]
+    },
+    "arguments.py": {
+      "unit": "tests/unit/frontends/cpp/test_arguments.py",
+      "higherLayers": ["tests/test_clang_argument_policy.py"]
+    },
+    "clang_adapter.py": {
+      "unit": "tests/unit/frontends/cpp/test_clang_adapter.py",
+      "higherLayers": ["tests/test_formal_clang_frontend.py", "tests/test_frontend_staged_integration.py"]
+    },
+    "compilation_database.py": {
+      "unit": "tests/unit/frontends/cpp/test_compilation_database.py",
+      "higherLayers": ["tests/test_compilation_database_frontend.py"]
+    },
+    "frontend.py": {
+      "unit": "tests/unit/frontends/cpp/test_frontend.py",
+      "higherLayers": ["tests/test_frontend_staged_integration.py"]
+    },
+    "source_positions.py": {
+      "unit": "tests/unit/frontends/cpp/test_source_positions.py",
+      "higherLayers": ["tests/test_tree_sitter_source_span_regression.py"]
+    },
+    "tree_sitter_adapter.py": {
+      "unit": "tests/unit/frontends/cpp/test_tree_sitter_adapter.py",
+      "higherLayers": ["tests/test_formal_cpp_frontend.py", "tests/test_tree_sitter_source_span_regression.py", "tests/test_frontend_staged_integration.py"]
+    },
+    "vocabulary.py": {
+      "unit": "tests/unit/frontends/cpp/test_vocabulary.py",
+      "higherLayers": ["tests/test_formal_cpp_frontend.py", "tests/test_formal_frontend_boundaries.py"]
+    },
+    "workspace.py": {
+      "unit": "tests/unit/frontends/cpp/test_workspace.py",
+      "higherLayers": ["tests/test_cpp_workspace.py", "tests/test_frontend_staged_integration.py"]
+    }
+  }
+}

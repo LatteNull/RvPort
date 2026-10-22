@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.0",
+  "generator": "kb-scanner legacy 0.1.0",
+  "fixture": "avx-avx2-example-code@5029c4fa44bd01c61476189e11787511f89ddfcd",
+  "summary": {
+    "files": 41,
+    "findings": 838,
+    "issues": 793,
+    "hints": 45,
+    "blocking": 793
+  },
+  "ruleCounts": {
+    "COMMENT.ARCH.HINT": 45,
+    "C_CPP.X86.COMPILER_FLAG": 4,
+    "C_CPP.X86.HEADER": 39,
+    "C_CPP.X86.INTRINSIC_CALL": 390,
+    "C_CPP.X86.VECTOR_TYPE": 360
+  },
+  "artifacts": ["scan-result.json", "scan-report.html", "scan.log"]
+}

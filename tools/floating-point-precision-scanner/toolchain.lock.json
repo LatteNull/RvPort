@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "platform": "linux/amd64",
+  "base_image": "ubuntu:24.04@sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90",
+  "clang_version": "21.1.8",
+  "llvm_version": "21.1.8",
+  "llvm_reader_version": "1.0",
+  "llvm_extractor_version": "1.1",
+  "llvm_worker_protocol_version": "1.1",
+  "python_minimum": "3.11",
+  "llvm_repository": "https://apt.llvm.org/noble/",
+  "llvm_key_sha256": "8b2a587ffd672c4687e7581dad4b2f6c1bb2ad6b480cd9771ba2ff48e0b8c75d",
+  "python_dependencies": {
+    "jsonschema": "4.23.0",
+    "coverage": "7.6.12",
+    "mypy": "1.15.0",
+    "pytest": "8.3.5",
+    "ruff": "0.9.10",
+    "types-jsonschema": "4.23.0.20250516"
+  },
+  "license_inventory": "docs/dependency-licenses.md"
+}

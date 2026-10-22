@@ -1,0 +1,21 @@
+id: C.X86.GENERIC_DISPATCH
+language: c
+severity: medium
+confidence: medium
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        ignoreCommentLines: true
+        symbolGroup: 1
+        regex: "\\b_Generic\\s*\\([^\\n;]*?(\\b(?:__m64|__m128|__m128i|__m128d|__m256|__m256i|__m256d|__m512|__m512i|__m512d|_mm[0-9A-Za-z_]*|avx[0-9]*|sse[0-9]*)\\b)"
+message:
+  zh-CN:
+    title: "C _Generic 分派绑定 x86 类型或后端"
+    reason: "C 代码中的 _Generic 分派直接引用 x86 SIMD 类型、intrinsic 或 avx/sse 后端标识，说明类型分派表中存在 x86-only 实现入口。"
+    suggestion: "建议把 _Generic 分派拆成公共接口和架构后端，为 RISC-V/portable 增加独立分支，并避免在公共分派表中只绑定 x86 类型。"
+  en-US:
+    title: "C _Generic dispatch is bound to x86 types or backends"
+    reason: "The C _Generic dispatch directly references x86 SIMD types, intrinsics, or avx/sse backend identifiers, indicating an x86-only implementation entry in the dispatch table."
+    suggestion: "Split the _Generic dispatch into a public interface and architecture backends. Add an independent RISC-V or portable branch, and avoid binding the public dispatch table only to x86 types."

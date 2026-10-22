@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.rvport.local/memory-order-analyzer/unified-project-analysis-v1.schema.json",
+  "$defs": {
+    "Hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "Id": {"type": "string", "minLength": 1, "maxLength": 512},
+    "Status": {"enum": ["complete", "partial", "ambiguous", "unknown", "failed", "cancelled", "skipped-not-applicable"]},
+    "Diagnostic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "detail", "detail_en", "suggestion", "suggestion_en", "stage", "scope_id", "relevant"],
+      "properties": {
+        "code": {"$ref": "#/$defs/Id"}, "detail": {"$ref": "#/$defs/Id"}, "detail_en": {"$ref": "#/$defs/Id"},
+        "suggestion": {"$ref": "#/$defs/Id"}, "suggestion_en": {"$ref": "#/$defs/Id"},
+        "stage": {"type": ["string", "null"]}, "scope_id": {"type": ["string", "null"]},
+        "relevant": {"type": "boolean"}, "references": {"type": "array", "items": {"$ref": "#/$defs/Id"}, "uniqueItems": true}
+      }
+    },
+    "Budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scopes", "translation_units", "stages", "worklist_items", "findings", "frontier_items", "evidence_steps", "evidence_edges", "evidence_paths", "context_lines", "context_characters", "artifact_bytes", "stage_output_bytes", "request_output_bytes", "deadline_seconds"],
+      "properties": {
+        "scopes": {"type": "integer", "minimum": 1, "maximum": 1024},
+        "translation_units": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "stages": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "worklist_items": {"type": "integer", "minimum": 1, "maximum": 1000000},
+        "findings": {"type": "integer", "minimum": 1, "maximum": 100000},
+        "frontier_items": {"type": "integer", "minimum": 1, "maximum": 100000},
+        "evidence_steps": {"type": "integer", "minimum": 1, "maximum": 200000},
+        "evidence_edges": {"type": "integer", "minimum": 1, "maximum": 200000},
+        "evidence_paths": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "context_lines": {"type": "integer", "minimum": 1, "maximum": 256},
+        "context_characters": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "artifact_bytes": {"type": "integer", "minimum": 1024, "maximum": 1073741824},
+        "stage_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 268435456},
+        "request_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 536870912},
+        "deadline_seconds": {"type": "integer", "minimum": 1, "maximum": 86400}
+      }
+    },
+    "Reference": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "producer", "schema_version", "digest", "path"],
+      "properties": {
+        "kind": {"$ref": "#/$defs/Id"}, "id": {"$ref": "#/$defs/Id"}, "producer": {"$ref": "#/$defs/Id"},
+        "schema_version": {"type": "integer", "minimum": 1}, "digest": {"$ref": "#/$defs/Hash"}, "path": {"$ref": "#/$defs/Id"}
+      }
+    },
+    "UnifiedMemoryOrderAnalysisRequest": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "policy_preset", "project", "bundle", "scope_selection", "source_assistance", "source_requests", "explicit_roots", "cache", "cancel_file", "budgets", "semantic_digest"],
+      "properties": {
+        "schema_version": {"enum": [1, 2]}, "kind": {"const": "UnifiedMemoryOrderAnalysisRequest"},
+        "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "unified-project-analysis-v1"}, "policy_preset": {"const": "bounded-default-v1"},
+        "project": {"type": "object", "additionalProperties": false, "required": ["id", "name"], "properties": {"id": {"$ref": "#/$defs/Id"}, "name": {"$ref": "#/$defs/Id"}}},
+        "bundle": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"$ref": "#/$defs/Id"}, "sha256": {"$ref": "#/$defs/Hash"}}},
+        "scope_selection": {"type": "object", "additionalProperties": false, "required": ["mode", "scope_ids"], "properties": {"mode": {"enum": ["all", "explicit"]}, "scope_ids": {"type": "array", "items": {"$ref": "#/$defs/Id"}, "uniqueItems": true}}},
+        "source_assistance": {"enum": ["auto", "required", "disabled"]},
+        "source_requests": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["record_id", "path", "sha256"], "properties": {"record_id": {"$ref": "#/$defs/Id"}, "path": {"$ref": "#/$defs/Id"}, "sha256": {"$ref": "#/$defs/Hash"}, "schema_version": {"const": 2}}}},
+        "explicit_roots": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["kind", "symbol"], "properties": {"kind": {"enum": ["program-entry", "library-export", "framework-thread"]}, "symbol": {"$ref": "#/$defs/Id"}, "artifact_key": {"type": ["string", "null"]}, "function_id": {"type": ["string", "null"]}}}},
+        "cache": {"type": "object", "additionalProperties": false, "required": ["mode", "resume"], "properties": {"mode": {"enum": ["read-write", "read-only", "disabled"]}, "resume": {"type": "boolean"}}},
+        "cancel_file": {"type": ["string", "null"]}, "budgets": {"$ref": "#/$defs/Budgets"}, "semantic_digest": {"$ref": "#/$defs/Hash"}
+      }
+    },
+    "PlanStage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "scope_id", "stage", "version", "producer", "inputs", "outputs", "dependencies", "status", "applicability", "budget_key", "cache_policy", "failure_policy"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Hash"}, "scope_id": {"$ref": "#/$defs/Id"}, "stage": {"$ref": "#/$defs/Id"}, "version": {"$ref": "#/$defs/Id"}, "producer": {"$ref": "#/$defs/Id"},
+        "inputs": {"type": "array", "items": {"$ref": "#/$defs/Id"}}, "outputs": {"type": "array", "items": {"$ref": "#/$defs/Id"}},
+        "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Hash"}, "uniqueItems": true},
+        "status": {"enum": ["planned", "skipped-not-applicable"]}, "applicability": {"$ref": "#/$defs/Id"}, "budget_key": {"$ref": "#/$defs/Id"},
+        "cache_policy": {"enum": ["complete-only", "disabled"]}, "failure_policy": {"enum": ["isolate", "stop-scope", "stop-request"]}
+      }
+    },
+    "UnifiedAnalysisPlan": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "request_digest", "bundle_id", "selected_scopes", "stages", "edges", "diagnostics", "frontier", "semantic_digest"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "UnifiedAnalysisPlan"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "unified-project-analysis-v1"},
+        "request_digest": {"$ref": "#/$defs/Hash"}, "bundle_id": {"$ref": "#/$defs/Id"}, "selected_scopes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/Id"}, "uniqueItems": true},
+        "stages": {"type": "array", "items": {"$ref": "#/$defs/PlanStage"}}, "edges": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["from", "to"], "properties": {"from": {"$ref": "#/$defs/Hash"}, "to": {"$ref": "#/$defs/Hash"}}}},
+        "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "semantic_digest": {"$ref": "#/$defs/Hash"}
+      }
+    },
+    "StageResult": {
+      "type": "object", "additionalProperties": false,
+      "required": ["stage_id", "stage", "status", "cache", "outputs", "diagnostics", "frontier"],
+      "properties": {"stage_id": {"$ref": "#/$defs/Hash"}, "stage": {"$ref": "#/$defs/Id"}, "status": {"$ref": "#/$defs/Status"}, "cache": {"enum": ["hit", "miss", "disabled"]}, "outputs": {"type": "array", "items": {"$ref": "#/$defs/Reference"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}}
+    },
+    "ScopeAnalysisExecutionRecord": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "status", "tu_modes", "stages", "counts", "diagnostics", "frontier", "semantic_digest"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "ScopeAnalysisExecutionRecord"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "unified-project-analysis-v1"}, "scope_id": {"$ref": "#/$defs/Id"}, "status": {"$ref": "#/$defs/Status"},
+        "tu_modes": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["record_id", "physical_tu_id", "mode", "status", "available_evidence", "missing_evidence"], "properties": {"record_id": {"$ref": "#/$defs/Id"}, "physical_tu_id": {"$ref": "#/$defs/Hash"}, "mode": {"enum": ["ast-ir", "ir-only", "ast-only", "failed"]}, "status": {"enum": ["complete", "partial", "failed"]}, "available_evidence": {"type": "array", "items": {"$ref": "#/$defs/Id"}, "uniqueItems": true}, "missing_evidence": {"type": "array", "items": {"$ref": "#/$defs/Id"}, "uniqueItems": true}}}},
+        "stages": {"type": "array", "items": {"$ref": "#/$defs/StageResult"}}, "counts": {"type": "object"}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "semantic_digest": {"$ref": "#/$defs/Hash"}
+      }
+    },
+    "UnifiedMemoryOrderAnalysisReport": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "finding_schema_version", "project", "request_digest", "bundle_id", "status", "verdict", "exit_code", "scope_records", "summary", "findings", "source_candidates", "discharged_assessments", "unsupported", "frontier", "diagnostics", "artifacts", "semantic_digest"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "UnifiedMemoryOrderAnalysisReport"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "unified-project-analysis-v1"}, "finding_schema_version": {"const": "2.0"},
+        "project": {"type": "object"}, "request_digest": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}, "bundle_id": {"type": ["string", "null"]}, "status": {"enum": ["complete", "partial", "failed", "cancelled"]}, "verdict": {"enum": ["risk", "inconclusive", "no-finding-within-supported-model", "failed"]}, "exit_code": {"enum": [0, 1, 2, 3]},
+        "scope_records": {"type": "array", "items": {"$ref": "#/$defs/Reference"}}, "summary": {"type": "object"},
+        "findings": {"type": "array", "items": {"type": "object"}}, "source_candidates": {"type": "array", "items": {"type": "object"}}, "discharged_assessments": {"type": "array", "items": {"type": "object"}},
+        "unsupported": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "artifacts": {"type": "array", "items": {"$ref": "#/$defs/Reference"}}, "semantic_digest": {"$ref": "#/$defs/Hash"}
+      }
+    }
+  }
+}

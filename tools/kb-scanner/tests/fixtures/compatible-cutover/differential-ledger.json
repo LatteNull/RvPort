@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "1.0",
+  "allowedStatuses": ["parity-required", "approved-correction", "deferred-blocking"],
+  "decisions": [
+    {
+      "id": "autoconf-canonical-input-unavailable",
+      "status": "approved-correction",
+      "fixture": "build-selection",
+      "field": "$.findings / $.summary / $.diagnostics",
+      "legacyValue": "Previous staged baseline: 6 findings, 4 blocking, 4 actionable; canonical helper availability was not assessed.",
+      "newValue": "7 findings, unchanged 4 blocking and 4 actionable; one unknown at configure.ac:1 with autoconf-helper-pair-unavailable.",
+      "reason": "implement-kb-scanner-autoconf-target-support detects AC_CANONICAL_HOST() but the input contains no helper pair. This is missing evidence, not an x86 dependency or proven RISC-V refusal. All six previous non-Autoconf findings remain unchanged.",
+      "evidenceIds": ["tests/fixtures/build-selection/project/configure.ac:1", "tests/test_autoconf_target_component.py"],
+      "proofPathIds": ["tests/fixtures/compatible-cutover/matrix-differential-golden-v1.json#build-selection"]
+    },
+    {
+      "id": "autoconf-workspace-unknown-input",
+      "status": "approved-correction",
+      "fixture": "workspace-escape",
+      "field": "$.findings / $.summary / $.diagnostics",
+      "legacyValue": "Previous staged baseline: 6 in-workspace findings.",
+      "newValue": "7 in-workspace findings, including the same non-actionable canonical-helper unknown as build-selection.",
+      "reason": "This matrix row uses the same build-selection/project input. Discovery still honors workspace exclusions and rejects escaped paths; no new script is executed or supplied implicitly.",
+      "evidenceIds": ["tests/fixtures/build-selection/project/configure.ac:1", "tests/unit/autoconf/test_project.py"],
+      "proofPathIds": ["tests/fixtures/compatible-cutover/matrix-differential-golden-v1.json#workspace-escape"]
+    },
+    {
+      "id": "rpm-architecture-static-diagnostics",
+      "status": "approved-correction",
+      "fixture": "build-selection",
+      "field": "$.diagnostics (also workspace-escape, classification-assessment, malicious-static-input)",
+      "legacyValue": "Previous staged parser retained coarse RPM unsupported diagnostics and ignored ordinary script commands.",
+      "newValue": "Localized RPM/Shell unknown diagnostics and graph incompleteness; all four fixtures retain their previous Finding semantic hashes, counts, blocking and readiness.",
+      "reason": "implement-kb-scanner-rpm-architecture-rules statically inspects script sections without executing them. HEAD staged versus new staged was compared in the standalone container; only diagnostic signatures are approved here. A transient allowed-constraint false positive and unrelated selector identity changes were fixed, not admitted into the golden.",
+      "evidenceIds": ["tests/fixtures/build-selection/project/package.spec:10-12", "tests/fixtures/classification-assessment/malicious/package.spec:5", "docs/rpm-architecture-analysis.md"],
+      "proofPathIds": ["rpm-shell-command-unsupported", "rpm-executable-expansion", "rpm-shell-partial-syntax"]
+    },
+    {
+      "id": "semantic-admission-confirmed-macro-dedup",
+      "status": "approved-correction",
+      "fixture": "generated-and-curated-facts",
+      "field": "$.findings[*].trace.observationIds / title / confidence",
+      "legacyValue": "Prior staged signature 1f0ca32760bda2d771981738d2f873a50678b0f8dca244fee72bde527af04528 retained a duplicate candidate Observation",
+      "newValue": "Staged signature 35142cd424599157613d36a628d9f629f1f55b2bc0b74a0d7bb63043d8c47605 retains only the confirmed Observation on the same fully covered fact",
+      "reason": "Independent pre-change HEAD/current CLI comparison: title becomes X86 Platform Macro Reference, confidence high, duplicate trace Observation removed; counts, source, reachability, severity, blocking and diagnostics unchanged. Historical Legacy side is not rewritten.",
+      "evidenceIds": ["tests/fixtures/candidate-semantic-admission/report-differential.json#formal-cpp-frontend"],
+      "proofPathIds": []
+    },
+    {
+      "id": "avx-macro-definition-false-positive",
+      "status": "approved-correction",
+      "fixture": "avx-x86-only",
+      "field": "$.summary.findings / $.ruleCounts.C_CPP.X86.INTRINSIC_CALL",
+      "legacyValue": "390 intrinsic-call findings, including 12 function-like macro declarations",
+      "newValue": "360 direct calls plus 18 terminal macro replacement references; declarations are not calls",
+      "reason": "The manually audited frontend baseline distinguishes definitions from terminal replacement calls.",
+      "evidenceIds": ["tests/fixtures/evidence-graph/avx-manual-baseline.json#auditedCounts"],
+      "proofPathIds": []
+    },
+    {
+      "id": "classification-proof-backed-source-blocking",
+      "status": "approved-correction",
+      "fixture": "avx-x86-only",
+      "field": "$.findings[*].is_blocking / $.summary.blocking",
+      "legacyValue": "All 793 non-comment findings were blocking",
+      "newValue": "783 knowledge-backed source/build dependencies are blocking; 779 source dependencies without a complete portable alternative are explicit portability gaps",
+      "reason": "Static selector-to-target-to-source proof now closes the previously missing reachability edge without claiming compilation or test execution.",
+      "evidenceIds": ["tests/fixtures/evidence-graph/avx-manual-baseline.json#buildEvidence"],
+      "proofPathIds": ["uses_source", "source_x86_dependency", "kb-scanner.migration-classification@1"]
+    },
+    {
+      "id": "macro-replacement-rule-refinement",
+      "status": "approved-correction",
+      "fixture": "avx-x86-only",
+      "field": "$.findings[*].rule_id",
+      "legacyValue": "C_CPP.X86.INTRINSIC_CALL for macro bodies",
+      "newValue": "C_CPP.X86.MACRO_EXPANDS_TO_INTRINSIC for terminal replacement references",
+      "reason": "The new rule id preserves the x86 intrinsic meaning while exposing the actual macro provenance in trace.",
+      "evidenceIds": ["tests/fixtures/evidence-graph/avx-manual-baseline.json#macroDefinitions"],
+      "proofPathIds": ["expands_to"]
+    },
+    {
+      "id": "generated-curated-formal-knowledge-expansion",
+      "status": "approved-correction",
+      "fixture": "generated-and-curated-facts",
+      "field": "$.findings[*].rule_id / $.summary",
+      "legacyValue": "2 YAML-backed findings with blanket blocking inline asm",
+      "newValue": "5 code-owned findings preserving instruction, platform-macro and guarded provenance; constexpr conditions are normalized instead of reported as unsupported",
+      "reason": "The formal generated and accepted curated knowledge sources distinguish exact vocabulary and branch evidence that Legacy could not represent, while the enum change removes the obsolete constexpr unsupported diagnostic.",
+      "evidenceIds": ["rulesets/riscv-porting/knowledge-manifest.json#runtimeSources"],
+      "proofPathIds": ["tests/fixtures/compatible-cutover/matrix-differential-golden-v1.json#generated-and-curated-facts"]
+    },
+    {
+      "id": "formal-build-and-test-selection-expansion",
+      "status": "approved-correction",
+      "fixture": "build-selection",
+      "field": "$.findings[*].build_context / $.summary",
+      "legacyValue": "1 text-matched compiler flag across 8 legacy source files",
+      "newValue": "6 graph-backed build/test findings across 13 source and build inputs with compatible occurrence/reference trace closure",
+      "reason": "The staged build frontend evaluates bounded selection relationships and retains exact source, argument, target and test provenance.",
+      "evidenceIds": ["tests/fixtures/build-selection/avx-make-baseline.json#occurrences"],
+      "proofPathIds": ["selected_for_target", "selects_test"]
+    },
+    {
+      "id": "static-readiness-extension-for-zero-findings",
+      "status": "approved-correction",
+      "fixture": "classification-assessment",
+      "field": "$.summary.readiness / $.diagnostics",
+      "legacyValue": "No readiness field and no completeness diagnostic",
+      "newValue": "Provisional static-only readiness with incomplete source/reachability dimensions",
+      "reason": "Zero findings cannot prove RISC-V readiness; the conservative assessor exposes missing static inputs without claiming compilation or test success.",
+      "evidenceIds": ["tests/fixtures/compatible-cutover/output-contract-baseline.json#optionalExtensions"],
+      "proofPathIds": ["kb-scanner.migration-assessment@1"]
+    },
+    {
+      "id": "malicious-input-static-diagnostics",
+      "status": "approved-correction",
+      "fixture": "malicious-static-input",
+      "field": "$.summary.readiness / $.diagnostics",
+      "legacyValue": "No findings and no static input completeness assessment",
+      "newValue": "No findings plus provisional static-only readiness and bounded unsupported-input diagnostics",
+      "reason": "Recipes, shell, RPM check content, plugins and response files remain inert text; retaining bounded diagnostics is safer than silently treating them as validated.",
+      "evidenceIds": ["tests/fixtures/classification-assessment/malicious#static-input"],
+      "proofPathIds": ["tests/fixtures/compatible-cutover/matrix-differential-golden-v1.json#malicious-static-input"]
+    },
+    {
+      "id": "workspace-escape-build-boundary",
+      "status": "approved-correction",
+      "fixture": "workspace-escape",
+      "field": "$.findings[*].location / $.diagnostics",
+      "legacyValue": "Legacy source scan with one compiler-flag finding",
+      "newValue": "Workspace-bounded build/test evidence with escaped paths rejected and six in-workspace findings",
+      "reason": "The formal workspace and build frontends reject path escape while retaining safe in-workspace evidence and selection proof.",
+      "evidenceIds": ["tests/fixtures/build-selection/project#workspace-boundary"],
+      "proofPathIds": ["tests/fixtures/compatible-cutover/matrix-differential-golden-v1.json#workspace-escape"]
+    },
+    {
+      "id": "architecture-candidate-parent-child-noise",
+      "status": "approved-correction",
+      "fixture": "generated-and-curated-facts",
+      "field": "$.findings / $.summary / $.diagnostics",
+      "legacyValue": "Previous staged baseline had 5 findings including 2 redundant structural asm candidates.",
+      "newValue": "3 findings: confirmed instruction, platform condition and comment hint; no duplicate structural asm candidates.",
+      "reason": "fix-kb-scanner-architecture-candidate-noise admits whole asm statements and prefers existing precise x86 knowledge matches. Zlib ARM/no_sanitize interference is covered by the dedicated fixture.",
+      "evidenceIds": [
+        "tests/fixtures/architecture-candidate-noise/zlib-shape.c",
+        "tests/test_architecture_candidate_noise.py"
+      ],
+      "proofPathIds": [
+        "tests/fixtures/compatible-cutover/matrix-differential-golden-v1.json#generated-and-curated-facts"
+      ]
+    }
+  ]
+}

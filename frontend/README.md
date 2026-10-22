@@ -1,27 +1,51 @@
-# Frontend
+# RvPort frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
+English | [简体中文](README.zh-CN.md)
 
-## Development server
+The frontend provides project, source, execution-environment, migration-analysis, build-validation, and result-report interfaces. It uses React, TypeScript, Vite, Ant Design, TanStack Query, and Zustand. Dependency versions are pinned in `pnpm-lock.yaml`.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Build and run
 
-## Code scaffolding
+Run all commands from the repository root. The host only needs Docker; do not install Node.js or pnpm on the host.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```powershell
+docker build -t rvport-frontend:local -f frontend/deploy/docker/Dockerfile frontend
+docker compose up -d frontend
+```
 
-## Build
+First prepare the root `.env` and build the backend as described in the [installation guide](../docs/installation.md). The default URL is `http://localhost:8081`. Nginx forwards `/api/` to `backend:8080`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Development and validation
 
-## Running unit tests
+```powershell
+docker build -t rvport-frontend-dev:local -f frontend/deploy/docker/Dockerfile.dev frontend
+docker run --rm -p 5173:5173 -e VITE_API_PROXY_TARGET=http://host.docker.internal:8080 rvport-frontend-dev:local
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+The development server is at `http://localhost:5173`. Match the example's backend port to `.env`. Run builds and checks in separate containers so dependencies and outputs are not written to the host source directory:
 
-## Running end-to-end tests
+```powershell
+docker run --rm --memory=4g --cpus=2 rvport-frontend-dev:local pnpm lint
+docker run --rm --memory=4g --cpus=2 rvport-frontend-dev:local pnpm typecheck
+docker run --rm --memory=6g --cpus=2 -e NODE_OPTIONS=--max-old-space-size=4096 rvport-frontend-dev:local pnpm test
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Frontend coverage acceptance is currently deferred by project decision; lint, type checking, ordinary unit tests, and production builds remain required. To run the existing coverage entry point:
 
-## Further help
+```powershell
+docker run --name rvport-frontend-coverage --memory=6g --cpus=2 -e NODE_OPTIONS=--max-old-space-size=4096 rvport-frontend-dev:local pnpm test:coverage
+docker cp rvport-frontend-coverage:/app/coverage ./.migration-reports/frontend-coverage
+docker rm rvport-frontend-coverage
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Save reports before removing the stopped container created for the run. `pnpm build` builds static assets only; run `pnpm typecheck` separately. Coverage includes all executable TS/TSX in `src` and `scripts`, excluding declarations, unit tests, and test-environment helpers. Overall line/branch gates are 90%; affected modules must also be reviewed in the same report.
+
+## Layout and conventions
+
+- `src/api/`: domain-specific API clients.
+- `src/pages/`, `src/components/`: pages and shared components.
+- `src/types/`, `src/store/`, `src/utils/`: types, state, and shared utilities.
+- `deploy/`: Docker and Nginx deployment configuration.
+- `openspec/`: independent frontend specifications, active changes, and historical archives.
+
+See [UI conventions](AGENTS.en.md) and the [style guide](STYLE_GUIDE.md). Keep tests close to their domain source. Update contract tests and backend documentation alongside API changes.

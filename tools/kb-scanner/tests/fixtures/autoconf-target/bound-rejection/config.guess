@@ -1,0 +1,3 @@
+#!/bin/sh
+cpu=$(uname -m)
+echo "$cpu-unknown-linux-gnu"

@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "NonEmpty": {"type": "string", "minLength": 1},
+    "Status": {"enum": ["complete", "partial", "failed"]},
+    "Dependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "digest"],
+      "properties": {"kind": {"$ref": "#/$defs/NonEmpty"}, "id": {"$ref": "#/$defs/NonEmpty"}, "digest": {"$ref": "#/$defs/Digest"}}
+    },
+    "EvidenceInput": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "digest", "path"],
+      "properties": {"kind": {"$ref": "#/$defs/NonEmpty"}, "id": {"$ref": "#/$defs/NonEmpty"}, "digest": {"$ref": "#/$defs/Digest"}, "path": {"$ref": "#/$defs/NonEmpty"}}
+    },
+    "Entry": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_key", "function_id"],
+      "properties": {"artifact_key": {"$ref": "#/$defs/Digest"}, "function_id": {"$ref": "#/$defs/NonEmpty"}}
+    },
+    "Diagnostic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "detail", "detail_en", "limitation", "limitation_en", "suggestion", "suggestion_en", "source"],
+      "properties": {
+        "code": {"$ref": "#/$defs/NonEmpty"}, "detail": {"$ref": "#/$defs/NonEmpty"}, "detail_en": {"$ref": "#/$defs/NonEmpty"},
+        "limitation": {"$ref": "#/$defs/NonEmpty"}, "limitation_en": {"$ref": "#/$defs/NonEmpty"},
+        "suggestion": {"type": ["string", "null"]}, "suggestion_en": {"type": ["string", "null"]}, "source": {"type": ["object", "null"]}
+      }
+    },
+    "Budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["translation_units", "source_candidates", "ir_candidates", "binding_candidates", "roots", "functions", "contexts", "call_edges", "wrapper_depth", "scc_iterations", "frontier_items", "diagnostic_bytes", "request_seconds", "request_output_bytes"],
+      "properties": {
+        "translation_units": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "source_candidates": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "ir_candidates": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "binding_candidates": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "roots": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "functions": {"type": "integer", "minimum": 1, "maximum": 1000000},
+        "contexts": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "call_edges": {"type": "integer", "minimum": 1, "maximum": 2000000},
+        "wrapper_depth": {"type": "integer", "minimum": 0, "maximum": 16},
+        "scc_iterations": {"type": "integer", "minimum": 1, "maximum": 64},
+        "frontier_items": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "diagnostic_bytes": {"type": "integer", "minimum": 128, "maximum": 4096},
+        "request_seconds": {"type": "integer", "minimum": 1, "maximum": 3600},
+        "request_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 268435456}
+      }
+    },
+    "Member": {
+      "type": "object", "additionalProperties": false,
+      "required": ["physical_tu_id", "profile_id", "language", "standard", "evidence"],
+      "properties": {
+        "physical_tu_id": {"$ref": "#/$defs/NonEmpty"}, "profile_id": {"$ref": "#/$defs/Digest"},
+        "language": {"enum": ["c", "c++"]}, "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/EvidenceInput"}}
+      }
+    },
+    "ExplicitRoot": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "entry", "source_entity_id", "arguments"],
+      "properties": {
+        "id": {"$ref": "#/$defs/NonEmpty"}, "kind": {"enum": ["program", "exported", "framework"]},
+        "entry": {"$ref": "#/$defs/Entry"}, "source_entity_id": {"type": ["string", "null"]},
+        "arguments": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "Base": {
+      "type": "object", "required": ["schema_version", "kind", "analysis_version", "policy_id"],
+      "properties": {"schema_version": {"const": 1}, "kind": {"$ref": "#/$defs/NonEmpty"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "execution-root-driven-analysis-v1"}}
+    },
+    "CommonOutput": {
+      "type": "object",
+      "required": ["scope_id", "request_hash", "status", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+      "properties": {
+        "scope_id": {"$ref": "#/$defs/NonEmpty"}, "request_hash": {"$ref": "#/$defs/Digest"}, "status": {"$ref": "#/$defs/Status"},
+        "counts": {"type": "object", "additionalProperties": {"type": ["integer", "number", "null"], "minimum": 0}},
+        "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+        "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+        "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "semantic_digest": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "ExecutionRootDiscoveryRequest": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "closed_scope", "discover_main", "members", "global_evidence", "explicit_roots", "budgets", "semantic_digest"],
+        "properties": {
+          "schema_version": {}, "kind": {"const": "ExecutionRootDiscoveryRequest"}, "analysis_version": {}, "policy_id": {},
+          "scope_id": {"$ref": "#/$defs/NonEmpty"}, "closed_scope": {"type": "boolean"}, "discover_main": {"type": "boolean"},
+          "members": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/Member"}},
+          "global_evidence": {"type": "array", "items": {"$ref": "#/$defs/EvidenceInput"}},
+          "explicit_roots": {"type": "array", "items": {"$ref": "#/$defs/ExplicitRoot"}},
+          "budgets": {"$ref": "#/$defs/Budgets"}, "semantic_digest": {"$ref": "#/$defs/Digest"}
+        }
+      }]
+    },
+    "ThreadCreationSiteIndex": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"$ref": "#/$defs/CommonOutput"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "sites", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "ThreadCreationSiteIndex"}, "analysis_version": {}, "policy_id": {}, "scope_id": {}, "request_hash": {}, "status": {}, "sites": {"type": "array", "items": {"type": "object"}}, "counts": {}, "dependencies": {}, "diagnostics": {}, "frontier": {}, "semantic_digest": {}}
+      }]
+    },
+    "ExecutionRootIndex": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"$ref": "#/$defs/CommonOutput"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "roots", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "ExecutionRootIndex"}, "analysis_version": {}, "policy_id": {}, "scope_id": {}, "request_hash": {}, "status": {}, "roots": {"type": "array", "items": {"type": "object"}}, "counts": {}, "dependencies": {}, "diagnostics": {}, "frontier": {}, "semantic_digest": {}}
+      }]
+    },
+    "RootDrivenAnalysisPlan": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"$ref": "#/$defs/CommonOutput"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "thread_creation_sites", "execution_roots", "reachable_functions", "call_edges", "contexts", "demands", "p2_requests", "p3_requests", "a3_overlays", "reconciliation", "completeness", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "RootDrivenAnalysisPlan"}, "analysis_version": {}, "policy_id": {}, "scope_id": {}, "request_hash": {}, "status": {}, "thread_creation_sites": {"$ref": "#/$defs/Dependency"}, "execution_roots": {"$ref": "#/$defs/Dependency"}, "reachable_functions": {"type": "array", "items": {"type": "object"}}, "call_edges": {"type": "array", "items": {"type": "object"}}, "contexts": {"type": "array", "items": {"type": "object"}}, "demands": {"type": "array", "items": {"type": "object"}}, "p2_requests": {"type": "array", "items": {"type": "object"}}, "p3_requests": {"type": "array", "items": {"type": "object"}}, "a3_overlays": {"type": "array", "items": {"type": "object"}}, "reconciliation": {"type": "object"}, "completeness": {"type": "object"}, "counts": {}, "dependencies": {}, "diagnostics": {}, "frontier": {}, "semantic_digest": {}}
+      }]
+    },
+    "RootDrivenAnalysisReport": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "exit_code", "safety", "findings", "thread_creation_sites", "execution_roots", "plan", "classification_counts", "root_counts", "reachable_counts", "analysis_counts", "completeness", "dependencies", "diagnostics", "frontier", "cache", "semantic_digest"],
+        "properties": {
+          "schema_version": {}, "kind": {"const": "RootDrivenAnalysisReport"}, "analysis_version": {}, "policy_id": {},
+          "scope_id": {"type": ["string", "null"]}, "request_hash": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+          "status": {"$ref": "#/$defs/Status"}, "exit_code": {"enum": [0, 1, 2]}, "safety": {"const": "not_evaluated"}, "findings": {"type": "null"},
+          "thread_creation_sites": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]}, "execution_roots": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]}, "plan": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]},
+          "classification_counts": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}}, "root_counts": {"type": "object"}, "reachable_counts": {"type": "object"}, "analysis_counts": {"type": "object"}, "completeness": {"type": "object"},
+          "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "cache": {"type": "object", "additionalProperties": false, "required": ["hits", "misses"], "properties": {"hits": {"type": "integer", "minimum": 0}, "misses": {"type": "integer", "minimum": 0}}}, "semantic_digest": {"$ref": "#/$defs/Digest"}
+        }
+      }]
+    }
+  }
+}

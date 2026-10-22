@@ -1,0 +1,11 @@
+/build/
+/build-*/
+/out/
+/reports/
+/doc/validation/r3-quality-*/
+__pycache__/
+.pytest_cache/
+.coverage*
+*.profraw
+*.profdata
+.venv/

@@ -1,0 +1,6 @@
+// Main detail viewers keep a usable height independently of surrounding metadata.
+@mixin main-viewport {
+  height: clamp(720px, 80vh, 1200px);
+  min-height: 0;
+  flex: 0 0 auto;
+}

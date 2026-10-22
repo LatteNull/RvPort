@@ -1,0 +1,6 @@
+# pnpm 11 的项目级配置。内容寻址包缓存归属于前端项目，避免写入仓库根目录。
+storeDir: .pnpm-store
+
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true

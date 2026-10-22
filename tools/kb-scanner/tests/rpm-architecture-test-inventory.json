@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0",
+  "coverageThresholds": {
+    "linePercent": 90,
+    "branchPercent": 80
+  },
+  "boundaries": "RPM native parser is forbidden in isolated gate (fake nodes/grammar/Parser); in-memory profiles and source readers; all project process execution forbidden. Existing non-RPM adapter units retain their established boundaries. Real Bash grammar belongs to component tests.",
+  "modules": {
+    "frontends/build/adapters.py": {
+      "unit": "tests/unit/build_selection/test_adapters.py",
+      "higherLayers": [
+        "tests/test_build_selection_component.py",
+        "tests/test_rpm_architecture_component.py"
+      ],
+      "supportingUnits": [
+        "tests/unit/build_selection/test_rpm_parser.py"
+      ]
+    },
+    "normalization/build.py": {
+      "unit": "tests/unit/build_selection/test_analysis.py",
+      "higherLayers": [
+        "tests/test_build_selection_component.py",
+        "tests/test_rpm_architecture_component.py"
+      ],
+      "supportingUnits": [
+        "tests/unit/build_selection/test_rpm_graph.py"
+      ]
+    },
+    "analyzers/build_selection.py": {
+      "unit": "tests/unit/build_selection/test_analysis.py",
+      "supportingUnits": [
+        "tests/unit/projection_reachability/test_build_reachability.py",
+        "tests/unit/build_selection/test_rpm_graph.py"
+      ],
+      "higherLayers": [
+        "tests/test_build_selection_component.py",
+        "tests/test_rpm_architecture_component.py"
+      ]
+    },
+    "detectors/build_selection.py": {
+      "unit": "tests/unit/build_selection/test_analysis.py",
+      "higherLayers": [
+        "tests/test_build_selection_component.py",
+        "tests/test_rpm_architecture_component.py"
+      ],
+      "supportingUnits": [
+        "tests/unit/build_selection/test_rpm_graph.py"
+      ]
+    },
+    "frontends/build/rpm/macros.py": {
+      "unit": "tests/unit/build_selection/test_rpm_macros.py",
+      "higherLayers": [
+        "tests/test_rpm_architecture_component.py"
+      ]
+    },
+    "frontends/build/rpm/conditions.py": {
+      "unit": "tests/unit/build_selection/test_rpm_conditions.py",
+      "higherLayers": [
+        "tests/test_rpm_architecture_component.py"
+      ]
+    },
+    "frontends/build/rpm/records.py": {
+      "unit": "tests/unit/build_selection/test_rpm_dependencies.py",
+      "higherLayers": [
+        "tests/test_rpm_architecture_component.py"
+      ]
+    },
+    "frontends/build/rpm/dependencies.py": {
+      "unit": "tests/unit/build_selection/test_rpm_dependencies.py",
+      "higherLayers": [
+        "tests/test_rpm_architecture_component.py"
+      ]
+    },
+    "frontends/build/rpm/parser.py": {
+      "unit": "tests/unit/build_selection/test_rpm_parser.py",
+      "higherLayers": [
+        "tests/test_rpm_architecture_component.py"
+      ]
+    },
+    "frontends/build/rpm/shell.py": {
+      "unit": "tests/unit/build_selection/test_rpm_shell.py",
+      "higherLayers": [
+        "tests/test_rpm_architecture_component.py"
+      ]
+    },
+    "analyzers/rpm_selection.py": {
+      "unit": "tests/unit/build_selection/test_rpm_graph.py",
+      "higherLayers": [
+        "tests/test_rpm_architecture_component.py"
+      ]
+    },
+    "classifiers/policy.py": {
+      "unit": "tests/unit/build_selection/test_rpm_graph.py",
+      "supportingUnits": [
+        "tests/unit/classification_assessment/test_classifier.py"
+      ],
+      "higherLayers": [
+        "tests/test_rpm_architecture_component.py"
+      ]
+    },
+    "projection/v2/chain.py": {
+      "unit": "tests/unit/schema_v2_projection/test_rpm_projection.py",
+      "higherLayers": [
+        "tests/test_rpm_architecture_component.py"
+      ]
+    },
+    "projection/v2/mapper.py": {
+      "unit": "tests/unit/schema_v2_projection/test_rpm_projection.py",
+      "higherLayers": [
+        "tests/test_rpm_architecture_component.py"
+      ]
+    }
+  }
+}

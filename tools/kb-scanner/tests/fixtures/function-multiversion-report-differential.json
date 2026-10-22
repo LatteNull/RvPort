@@ -1,0 +1,30 @@
+{
+  "change": "implement-kb-scanner-function-multiversion-analysis",
+  "reviewedAt": "2026-09-23",
+  "historicalBaseline": "cmake-risk-report-differential.json",
+  "reviewedChanges": [
+    "仅 architecture-candidate-noise 含 target 属性。accelerated 新增一条函数声明 Evidence/Fact，29→30；旧属性值与位置不变，观察/分类/Finding 均保持 3。",
+    "V2 仅新增顶层与属性 Finding 的 function-multiversion namespace，单 target 标记 single_target，default 不适用，不产生缺口或额外 Finding。",
+    "V2 属性 Finding 证据链新增真实 accelerated 函数节点与 defines 边，primaryPath 1→2、steps 2→3；原未闭合源码链变为完整源码关系，不表示目标可达或项目 ready。",
+    "V1 仅 C_CPP.X86.TARGET_ATTRIBUTE 的 trace 增加真实函数来源和属性归属关系；其他字段未变。V1/V2 风险、建议、occurrence 和 scan.log 字节保持不变。",
+    "禁用本轮新增 inventory/analyzer 的对照报告完整重现历史 JSON 与日志 SHA-256；原历史 ledger 不覆盖。"
+  ],
+  "after": {
+    "1.0": "4c0e9353f092880e284408874c8e3aee54a2b4b4b851d6183556af823bea10d9",
+    "2.0": "56cc7abb683c7e6b134900ec7a85eb1047fc74151f710121e3a6685e74ef1ad5"
+  },
+  "fixtures": {
+    "architecture-candidate-noise": {
+      "1.0": {
+        "after": "4c0e9353f092880e284408874c8e3aee54a2b4b4b851d6183556af823bea10d9",
+        "logSha256": "1475613aeaae7a6485d732102a7cee4adb8b5fdb1feac9ac73880995e021a0e0",
+        "strippedSha256": null
+      },
+      "2.0": {
+        "after": "56cc7abb683c7e6b134900ec7a85eb1047fc74151f710121e3a6685e74ef1ad5",
+        "logSha256": "f2a38d51226f656b70ab67b4ba0492d9f295eb61db23334bd50067297e949989",
+        "strippedSha256": "dc3618bd1f7e251b6e4904bed85264adeff608ab5658fa54707e9f60ab0be02b"
+      }
+    }
+  }
+}

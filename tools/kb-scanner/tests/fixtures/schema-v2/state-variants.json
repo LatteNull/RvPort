@@ -1,0 +1,199 @@
+{
+  "schemaVersion": "2.0-design-variants",
+  "base": "complete.json",
+  "variants": [
+    {"name": "complete", "operations": []},
+    {
+      "name": "partial",
+      "operations": [
+        {"op": "set", "path": "scan.id", "value": "scan-partial"},
+        {"op": "set", "path": "project.status", "value": "partial"},
+        {"op": "set", "path": "project.reasonCodes", "value": ["missing_input"]},
+        {"op": "set", "path": "summary.readiness", "value": "provisional"},
+        {"op": "set", "path": "summary.status", "value": "partial"},
+        {"op": "set", "path": "summary.reasonCodes", "value": ["missing_input"]},
+        {"op": "set", "path": "summary.portabilityGaps", "value": null},
+        {"op": "set", "path": "findings.0.conclusion.status", "value": "partial"},
+        {"op": "set", "path": "findings.0.evidenceChain.status", "value": "partial"},
+        {"op": "set", "path": "findings.0.evidenceChain.reasonCodes", "value": ["missing_input"]},
+        {"op": "set", "path": "findings.0.evidenceChain.steps.3.status", "value": "partial"},
+        {"op": "set", "path": "findings.0.evidenceChain.steps.3.reasonCodes", "value": ["missing_input"]},
+        {"op": "set", "path": "findings.0.evidenceChain.edges.2.status", "value": "partial"},
+        {"op": "set", "path": "findings.0.evidenceChain.edges.2.reasonCodes", "value": ["missing_input"]},
+        {
+          "op": "set",
+          "path": "findings.0.evidenceChain.breaks",
+          "value": [
+            {
+              "id": "break-missing-alternative-scope",
+              "status": "partial",
+              "reasonCode": "missing_input",
+              "stage": "alternative-analysis",
+              "fromStepId": "step-03-classification",
+              "candidateStepIds": [],
+              "expectedKind": "alternative-analysis",
+              "missingId": "alternative-scope"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ambiguous",
+      "operations": [
+        {"op": "set", "path": "scan.id", "value": "scan-ambiguous"},
+        {
+          "op": "append",
+          "path": "scan.knowledgeSources",
+          "value": {
+            "id": "gcc-x86-entries",
+            "kind": "compiler-derived",
+            "sha256": "89775341ee880b13ac4f10a30558ff5d52875b25a3233114a5765601f0a9dad9"
+          }
+        },
+        {"op": "set", "path": "project.status", "value": "ambiguous"},
+        {"op": "set", "path": "project.reasonCodes", "value": ["multiple_candidates"]},
+        {"op": "set", "path": "summary.readiness", "value": "provisional"},
+        {"op": "set", "path": "summary.status", "value": "ambiguous"},
+        {"op": "set", "path": "summary.reasonCodes", "value": ["multiple_candidates"]},
+        {"op": "set", "path": "summary.blocking", "value": 0},
+        {"op": "set", "path": "summary.portabilityGaps", "value": null},
+        {"op": "set", "path": "findings.0.conclusion.status", "value": "ambiguous"},
+        {"op": "set", "path": "findings.0.conclusion.actionable", "value": false},
+        {"op": "set", "path": "findings.0.conclusion.blocking", "value": false},
+        {"op": "set", "path": "findings.0.conclusion.archReachability", "value": "unknown"},
+        {"op": "set", "path": "findings.0.evidenceChain.status", "value": "ambiguous"},
+        {"op": "set", "path": "findings.0.evidenceChain.reasonCodes", "value": ["multiple_candidates"]},
+        {
+          "op": "append",
+          "path": "findings.0.evidenceChain.steps",
+          "value": {
+            "id": "step-02b-knowledge",
+            "kind": "knowledge_match",
+            "title": "A second compiler fact candidate also matches",
+            "status": "ambiguous",
+            "reason": "The candidate set cannot yet be reduced to one semantic identity.",
+            "reasonCodes": ["multiple_candidates"],
+            "symbol": "_mm256_add_ps",
+            "knowledge": {
+              "entryId": "gcc-intrinsic-mm256-add-ps",
+              "category": "intrinsics",
+              "symbol": "_mm256_add_ps",
+              "producer": "compiler-facts",
+              "sourceId": "gcc-x86-entries",
+              "sourceSha256": "89775341ee880b13ac4f10a30558ff5d52875b25a3233114a5765601f0a9dad9",
+              "provenance": [
+                {"kind": "knowledge", "id": "gcc-intrinsic-mm256-add-ps", "producer": "compiler-facts"}
+              ]
+            },
+            "provenance": [
+              {"kind": "knowledge", "id": "gcc-intrinsic-mm256-add-ps", "producer": "compiler-facts"}
+            ]
+          }
+        },
+        {
+          "op": "append",
+          "path": "findings.0.evidenceChain.edges",
+          "value": {
+            "id": "edge-01b-source-knowledge",
+            "fromStepId": "step-01-source",
+            "toStepId": "step-02b-knowledge",
+            "kind": "matches_knowledge",
+            "status": "ambiguous",
+            "reasonCodes": ["multiple_candidates"],
+            "provenance": [
+              {"kind": "relation", "id": "relation-source-knowledge-gcc", "producer": "local-detector"}
+            ]
+          }
+        },
+        {
+          "op": "set",
+          "path": "findings.0.evidenceChain.breaks",
+          "value": [
+            {
+              "id": "break-knowledge-candidates",
+              "status": "ambiguous",
+              "reasonCode": "multiple_candidates",
+              "stage": "knowledge-resolution",
+              "fromStepId": "step-01-source",
+              "candidateStepIds": ["step-02-knowledge", "step-02b-knowledge"]
+            }
+          ]
+        },
+        {"op": "sort", "path": "findings.0.evidenceChain.steps", "keys": ["id"]},
+        {"op": "sort", "path": "findings.0.evidenceChain.edges", "keys": ["id"]}
+      ]
+    },
+    {
+      "name": "inactive",
+      "operations": [
+        {"op": "set", "path": "scan.id", "value": "scan-inactive"},
+        {"op": "set", "path": "summary.readiness", "value": "provisional"},
+        {"op": "set", "path": "summary.blocking", "value": 0},
+        {"op": "set", "path": "summary.portabilityGaps", "value": 0},
+        {"op": "set", "path": "summary.inactiveOrGuarded", "value": 1},
+        {"op": "set", "path": "findings.0.conclusion.status", "value": "inactive"},
+        {"op": "set", "path": "findings.0.conclusion.actionable", "value": false},
+        {"op": "set", "path": "findings.0.conclusion.blocking", "value": false},
+        {"op": "set", "path": "findings.0.conclusion.archReachability", "value": "inactive"},
+        {"op": "set", "path": "findings.0.occurrences.0.selectionStatus", "value": "inactive"},
+        {"op": "set", "path": "findings.0.occurrences.0.status", "value": "inactive"},
+        {"op": "set", "path": "findings.0.occurrences.0.reasonCodes", "value": ["inactive_branch"]},
+        {"op": "set", "path": "findings.0.evidenceChain.status", "value": "inactive"},
+        {"op": "set", "path": "findings.0.evidenceChain.reasonCodes", "value": ["inactive_branch"]},
+        {"op": "set", "path": "findings.0.evidenceChain.steps.0.status", "value": "inactive"},
+        {"op": "set", "path": "findings.0.evidenceChain.steps.0.selectionStatus", "value": "inactive"},
+        {"op": "set", "path": "findings.0.evidenceChain.steps.0.reasonCodes", "value": ["inactive_branch"]},
+        {"op": "set", "path": "findings.0.evidenceChain.steps.2.status", "value": "inactive"},
+        {"op": "set", "path": "findings.0.evidenceChain.steps.2.reasonCodes", "value": ["inactive_branch"]},
+        {"op": "set", "path": "findings.0.evidenceChain.steps.3.status", "value": "inactive"},
+        {"op": "set", "path": "findings.0.evidenceChain.steps.3.reasonCodes", "value": ["inactive_branch"]},
+        {"op": "set", "path": "findings.0.evidenceChain.edges.0.status", "value": "inactive"},
+        {"op": "set", "path": "findings.0.evidenceChain.edges.0.reasonCodes", "value": ["inactive_branch"]},
+        {"op": "set", "path": "findings.0.evidenceChain.edges.1.status", "value": "inactive"},
+        {"op": "set", "path": "findings.0.evidenceChain.edges.1.reasonCodes", "value": ["inactive_branch"]},
+        {"op": "set", "path": "findings.0.evidenceChain.edges.2.status", "value": "inactive"},
+        {"op": "set", "path": "findings.0.evidenceChain.edges.2.reasonCodes", "value": ["inactive_branch"]}
+      ]
+    },
+    {
+      "name": "unknown",
+      "operations": [
+        {"op": "set", "path": "scan.id", "value": "scan-unknown"},
+        {"op": "set", "path": "project.status", "value": "unknown"},
+        {"op": "set", "path": "project.reasonCodes", "value": ["dynamic_expression"]},
+        {"op": "set", "path": "summary.readiness", "value": "unknown"},
+        {"op": "set", "path": "summary.status", "value": "unknown"},
+        {"op": "set", "path": "summary.reasonCodes", "value": ["dynamic_expression"]},
+        {"op": "set", "path": "summary.blocking", "value": 0},
+        {"op": "set", "path": "summary.portabilityGaps", "value": null},
+        {"op": "set", "path": "findings.0.conclusion.status", "value": "unknown"},
+        {"op": "set", "path": "findings.0.conclusion.actionable", "value": false},
+        {"op": "set", "path": "findings.0.conclusion.blocking", "value": false},
+        {"op": "set", "path": "findings.0.conclusion.archReachability", "value": "unknown"},
+        {"op": "set", "path": "findings.0.evidenceChain.status", "value": "unknown"},
+        {"op": "set", "path": "findings.0.evidenceChain.reasonCodes", "value": ["dynamic_expression"]},
+        {"op": "set", "path": "findings.0.evidenceChain.steps.0.status", "value": "unknown"},
+        {"op": "set", "path": "findings.0.evidenceChain.steps.0.reasonCodes", "value": ["dynamic_expression"]},
+        {"op": "set", "path": "findings.0.evidenceChain.edges.0.status", "value": "unknown"},
+        {"op": "set", "path": "findings.0.evidenceChain.edges.0.reasonCodes", "value": ["dynamic_expression"]},
+        {
+          "op": "set",
+          "path": "findings.0.evidenceChain.breaks",
+          "value": [
+            {
+              "id": "break-dynamic-selection",
+              "status": "unknown",
+              "reasonCode": "dynamic_expression",
+              "stage": "build-selection",
+              "fromStepId": "step-01-source",
+              "candidateStepIds": [],
+              "expectedKind": "target-selection",
+              "missingId": "dynamic-target"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

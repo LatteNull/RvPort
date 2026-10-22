@@ -1,0 +1,5 @@
+#!/bin/sh
+# A real source call binds both helpers; this fixture is never executed.
+cpu=$(./config.guess)
+host=$(./config.sub "$cpu")
+exit

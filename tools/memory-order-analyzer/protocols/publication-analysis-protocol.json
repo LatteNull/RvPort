@@ -1,0 +1,24 @@
+{
+  "protocol_version": 1,
+  "analysis_version": "0.1.0",
+  "llvm_version": "21.1.8",
+  "policy_id": "single-publication-risks-v1",
+  "model_id": "c-cpp-single-publication-v1",
+  "kinds": {
+    "PublicationRiskRequest": 1,
+    "PublicationLocalFacts": 1,
+    "SinglePublicationProtocolGraph": 1,
+    "PublicationRiskReport": 1
+  },
+  "budgets": {
+    "local_steps": 100000,
+    "value_candidates": 8,
+    "protocol_candidates": 10000,
+    "assessments": 10000,
+    "scc_iterations": 16,
+    "worker_seconds": 60,
+    "worker_output_bytes": 16777216,
+    "request_seconds": 300,
+    "request_output_bytes": 67108864
+  }
+}

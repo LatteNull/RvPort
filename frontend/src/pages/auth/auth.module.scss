@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  background: #f3f5fa url('@/assets/images/auth-background.avif') center / cover no-repeat;
+}
+
+.card {
+  width: min(100%, 360px);
+  padding: 40px 32px;
+  background: #ffffff;
+  border-radius: var(--ant-border-radius-lg, 12px);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 16px;
+}
+
+.authLogo {
+  display: block;
+  width: 147px;
+  max-width: 100%;
+  height: auto;
+}
+
+.resultText {
+  margin: 0 0 24px;
+  color: var(--ant-color-text-secondary);
+  font-size: var(--ant-font-size, 14px);
+  line-height: 22px;
+  text-align: center;
+}
+
+.subtitle {
+  margin: -24px 0 32px;
+  color: var(--ant-color-text-secondary);
+  font-size: var(--ant-font-size, 14px);
+  line-height: 22px;
+  text-align: center;
+}

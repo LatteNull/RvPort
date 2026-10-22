@@ -1,0 +1,22 @@
+id: C_CPP.X86.MACRO_EXPANDS_TO_INTRINSIC
+language: c_cpp
+severity: high
+confidence: medium
+capability:
+  - macro.expand
+match:
+  any:
+    - macroExpansion:
+        expandedCallNameRegex: "^_mm"
+message:
+  zh-CN:
+    title: "宏展开后调用 x86 intrinsic"
+    reason: "表面代码未直接出现 x86 intrinsic，但宏展开后会调用 x86 专属接口。"
+    suggestion: "建议将宏改造成多架构分支，或改为 portable 实现。"
+  en-US:
+    title: "Macro expands to an x86 intrinsic call"
+    reason: "The surface code does not directly show an x86 intrinsic, but the macro expansion calls an x86-specific interface."
+    suggestion: "Refactor the macro into architecture-specific branches, or replace it with a portable implementation."
+
+
+

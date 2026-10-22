@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "1.0",
+  "owner": "manual-review-do-not-regenerate-from-scanner",
+  "target": "riscv64",
+  "occurrences": [
+    {"line": 7, "kind": "build_dependency", "value": "x86-only", "selection": "inactive"},
+    {"line": 9, "kind": "build_dependency", "value": "portable", "selection": "selected"},
+    {"line": 11, "kind": "build_dependency", "value": "libfoo%{?_isa}", "selection": "selected", "targetAdaptive": true},
+    {"line": 12, "kind": "build_dependency", "value": "liboptional(x86-64)", "selection": "selected", "softDependency": true},
+    {"line": 13, "kind": "build_dependency", "value": "unknown%{?__external_isa}%{_arch}", "selection": "unknown"},
+    {"line": 16, "kind": "build_dependency", "value": "common", "selection": "selected"},
+    {"line": 21, "kind": "build_argument", "value": "-mavx", "selection": "inactive"},
+    {"line": 22, "kind": "build_argument", "value": "-O2", "selection": "selected"},
+    {"line": 23, "kind": "build_argument", "value": "-O1", "selection": "inactive"}
+  ],
+  "notFindings": ["libfoo%{?_isa}", "portable", "common"],
+  "notBlocking": ["liboptional(x86-64)", "x86-only", "-mavx"],
+  "unknown": ["unknown%{?__external_isa}%{_arch}"]
+}

@@ -1,0 +1,41 @@
+id: RPM_SPEC.X86.BUILD_OR_CHECK
+language: rpm_spec
+severity: high
+confidence: high
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        pathSuffixIn:
+          - ".spec"
+        rpmSections:
+          - build
+          - install
+          - check
+        ignoreCommentLines: true
+        ignoreRpmChangelog: true
+        sourceKind: rpm_spec
+        symbolGroup: 2
+        singleFindingPerLine: true
+        regex: "(^|[=\\s\"'(;])(-mavx(?:2|512[a-z0-9_+-]*)?|-msse[0-9.]*|-mssse3|-mfma|-mxsave|-march=x86-64(?:-v[0-9])?)(?=$|[\\s\"');])"
+    - text:
+        pathSuffixIn:
+          - ".spec"
+        rpmSections:
+          - check
+        ignoreCommentLines: true
+        ignoreRpmChangelog: true
+        sourceKind: rpm_spec
+        symbolGroup: 1
+        singleFindingPerLine: true
+        regex: "\\b((?:skip|disable|disabled|without|xfail|unsupported)[A-Za-z0-9_./\\\\-]*riscv[A-Za-z0-9_./\\\\-]*|riscv[A-Za-z0-9_./\\\\-]*(?:skip|disable|disabled|without|xfail|unsupported)[A-Za-z0-9_./\\\\-]*)\\b"
+message:
+  zh-CN:
+    title: "RPM spec 构建或测试阶段存在 x86/RISC-V 风险逻辑"
+    reason: "RPM spec 的构建、安装或测试阶段包含 x86-only 参数，或测试阶段包含 RISC-V 跳过/禁用逻辑。"
+    suggestion: "调整 spec 中的构建和测试逻辑，为 RISC-V 提供 portable 或 RISC-V 专用路径，并确保迁移后测试仍会执行。"
+  en-US:
+    title: "RPM spec build or check section contains x86/RISC-V risk logic"
+    reason: "The RPM spec build, install, or check section contains x86-only flags or RISC-V test skip/disable logic."
+    suggestion: "Update the spec build and test logic to provide portable or RISC-V-specific paths, and ensure migrated tests still run."

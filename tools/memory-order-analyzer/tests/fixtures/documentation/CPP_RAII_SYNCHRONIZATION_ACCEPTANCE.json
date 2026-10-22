@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "change": "model-cpp-raii-synchronization",
+  "status": "validated-awaiting-sync-archive",
+  "required_gate": true,
+  "validated_at": "2026-09-21",
+  "environment": {
+    "image": "memory-order-analyzer-dev:a3",
+    "image_id": "sha256:fe4fe0ab157c4db748ef67dabe2beca58c975ac40fb95f326b88e7b297be6f0a",
+    "llvm": "21.1.8",
+    "gcc": "13.3.0",
+    "target": "x86_64-pc-linux-gnu",
+    "dockerfile_sha256": "776b310d01f5b9212a0239c8ff8364bb9454bf366fd30aa14e9ac3d8a3164120",
+    "dependency_lock_sha256": "df416eec2189ba7b3a9444a8bc4e51e1606f884783275236bdaf432c4088b941",
+    "toolchain_lock_sha256": "9d844af753fb04d623b523583b2f8f8b9a0d26792aa8a879321d3e3b03064d83"
+  },
+  "dependencies": {
+    "schemas/contracts.json": "4b26c8131ff62648d900c8f11bd6c5af240558fbc81c5e65c76be11b48b13630",
+    "schemas/effects.json": "11701efb74c5472894f66442ee89ecdb62024a031854c0a9fc17d916038257b5",
+    "schemas/threading.json": "04c1e9e2355cc895f77fa51a26a1c339e3e574b3ef16909454125820bbc18a69",
+    "schemas/publication.json": "e64db91770b5819aa68c08729139086bd914c51f0ea0f6db1d32420e9cb848d7",
+    "schemas/source_evidence.json": "6d16b4f00e0fe442ce093adc897b753d790f6cb6ff70606944ec664698b0e64b",
+    "schemas/degraded_source_analysis.json": "23878ed845225c3a3c9b7bdc5c854b804904dccc0834a40e354b5d77a8a024bf",
+    "schemas/cpp_thread_lifecycle.json": "048899a4641ff12dd64f593f9bda427a5c822a424f13afb57a5a7264e74e1f7d"
+  },
+  "artifacts": {
+    "protocols/cpp-raii-synchronization-protocol.json": "084088f4b99896b636540d58264c1514e68e42138f449ed62508a08a52141c15",
+    "schemas/cpp_raii_synchronization.json": "47cfa9d9fb4316e881f64c3090743348f298f46cdd68a68ad572da519f1c5ca6",
+    "tests/fixtures/cpp-raii-synchronization/validation-suite.json": "89ce7d553ee7e29377d35b18639a9e275842f64e053fe48db2747255f53c4b9b",
+    "tests/fixtures/cpp-raii-synchronization/validation-truth.json": "6bd9af82cfe5b04afbbc3d5b8850b9e989118d648a5bb319e07ed26ab45993a2"
+  },
+  "profiles": [
+    {
+      "file": "cpp-raii-profiles/libstdcpp-clang21-cpp17-x86_64.json",
+      "sha256": "1029a8c04a6856104473998a04eb21c35e1aa9de246b92155a464c268e830bd4",
+      "profile_id": "7e2a2a0f2d78f0a927b75b440eab952f4069276ca7c7a18052852282b84966ac",
+      "lifecycle_profile_id": "1ba2f7fe86443903c8748f3e48464bc475e9b6330cbe1d8f7212827950ec448a",
+      "vendor": "libstdc++",
+      "standard": "c++17",
+      "status": "verified"
+    },
+    {
+      "file": "cpp-raii-profiles/libstdcpp-clang21-cpp20-x86_64.json",
+      "sha256": "7da41e7f34f1416f11ccfc6a6048b76a01f96b4d16273b4e510e46763ac019fa",
+      "profile_id": "92b81e1daf115d4419502981a7130477cb073d517d7b07cfe610925694b1ddba",
+      "lifecycle_profile_id": "3988f720f560ba1fd63ca15b33ecadb466ed117ad727b0fdceb9adfe8be28551",
+      "vendor": "libstdc++",
+      "standard": "c++20",
+      "status": "verified"
+    },
+    {
+      "file": "cpp-raii-profiles/libcxx21-clang21-cpp20-x86_64.json",
+      "sha256": "4e386de48b6baad812222e2ff27c1c22e33138b13141614186601c38b88f7b08",
+      "profile_id": "3f32e692db699d2e7612290abd5622dde5f336fc6d3515dbc99935d68548b16c",
+      "lifecycle_profile_id": "dc17dd0b8ad620d91cc63528344785e691123562df31c3b989d914c75d40b500",
+      "vendor": "libc++",
+      "standard": "c++20",
+      "status": "verified"
+    }
+  ],
+  "truth": {
+    "cases": {"exact": 8, "total": 8},
+    "facts": {"expected": 25, "actual": 25, "tp": 25, "fp": 0, "fn": 0},
+    "unknown": 0,
+    "abstention": 0,
+    "languages": {
+      "c11": {"planned": 2, "completed": 2, "eligible": 2, "failed": 0, "unknown": 0, "abstention": 0},
+      "c17": {"planned": 2, "completed": 2, "eligible": 2, "failed": 0, "unknown": 0, "abstention": 0},
+      "c++17": {"planned": 2, "completed": 2, "eligible": 2, "failed": 0, "unknown": 0, "abstention": 0},
+      "c++20": {"planned": 2, "completed": 2, "eligible": 2, "failed": 0, "unknown": 0, "abstention": 0}
+    },
+    "safety": "not_established"
+  },
+  "tests": {
+    "cpp_unit": {"passed": 92, "failed": 0},
+    "python_unit": {"passed": 542, "failed": 0},
+    "integration": {"passed": 62, "failed": 0}
+  },
+  "coverage": {
+    "threshold_percent": 90,
+    "passed": true,
+    "overall": {
+      "lines": {"hit": 11282, "total": 11463, "percent": 98.42100671726425},
+      "branches": {"hit": 6717, "total": 7137, "percent": 94.1151744430433}
+    },
+    "languages": {
+      "cpp": {
+        "lines": {"hit": 3788, "total": 3811, "percent": 99.39648386250327},
+        "branches": {"hit": 3053, "total": 3279, "percent": 93.10765477279658}
+      },
+      "python": {
+        "lines": {"hit": 7494, "total": 7652, "percent": 97.93518034500784},
+        "branches": {"hit": 3664, "total": 3858, "percent": 94.97148781752203}
+      }
+    },
+    "affected_modules_passed": true,
+    "affected_modules": {
+      "src/source_facts.cpp": {"lines": {"hit": 828, "total": 833, "percent": 99.39975990396158}, "branches": {"hit": 555, "total": 616, "percent": 90.09740259740259}},
+      "python/memory_order_analyzer/cpp_raii_analysis.py": {"lines": {"hit": 276, "total": 284, "percent": 97.1830985915493}, "branches": {"hit": 169, "total": 180, "percent": 93.88888888888889}},
+      "python/memory_order_analyzer/cpp_raii_cache.py": {"lines": {"hit": 57, "total": 58, "percent": 98.27586206896552}, "branches": {"hit": 22, "total": 24, "percent": 91.66666666666667}},
+      "python/memory_order_analyzer/cpp_raii_contracts.py": {"lines": {"hit": 187, "total": 196, "percent": 95.40816326530613}, "branches": {"hit": 135, "total": 147, "percent": 91.83673469387755}},
+      "python/memory_order_analyzer/cpp_raii_profiles.py": {"lines": {"hit": 56, "total": 58, "percent": 96.55172413793103}, "branches": {"hit": 31, "total": 34, "percent": 91.17647058823529}},
+      "python/memory_order_analyzer/cpp_raii_validation.py": {"lines": {"hit": 49, "total": 49, "percent": 100.0}, "branches": {"hit": 20, "total": 20, "percent": 100.0}},
+      "python/memory_order_analyzer/model_cpp_raii_synchronization.py": {"lines": {"hit": 101, "total": 103, "percent": 98.05825242718447}, "branches": {"hit": 42, "total": 46, "percent": 91.30434782608695}},
+      "python/memory_order_analyzer/cli.py": {"lines": {"hit": 177, "total": 179, "percent": 98.88268156424581}, "branches": {"hit": 43, "total": 44, "percent": 97.72727272727273}}
+    }
+  },
+  "performance": {
+    "cold_warm_semantic_equal": true,
+    "cold_cache": {"hits": 0, "misses": 2},
+    "warm_cache": {"hits": 2, "misses": 0},
+    "measurement": "deterministic unit acceptance; wall time and RSS are environment-dependent and excluded from semantic gates"
+  },
+  "exclusions": [
+    {"path": "tests/**", "reason": "测试 harness 与纯测试输入，不是生产逻辑"},
+    {"path": "doc/experiments/**/*.c and **/*.cpp", "reason": "compile-only 实验输入"},
+    {"path": "LLVM, GoogleTest, Python dependencies", "reason": "第三方实现"},
+    {"path": "generated protocol headers", "reason": "版本化 JSON 协议生成元数据，无自有执行逻辑"}
+  ],
+  "reports": {
+    "coverage": "reports/quality-a4-final-5/coverage-summary.json",
+    "python_html": "reports/quality-a4-final-5/python-html/index.html",
+    "cpp_html": "reports/quality-a4-final-5/cpp-html/index.html"
+  },
+  "boundary": "A4 exact match and bounded mutex proofs are not a whole-program safety or general happens-before proof."
+}

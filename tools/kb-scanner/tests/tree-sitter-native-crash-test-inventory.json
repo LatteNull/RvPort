@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "1.0",
+  "change": "fix-kb-scanner-tree-sitter-native-crashes",
+  "container": "kb-scanner-test",
+  "coverageThresholds": {"linePercent": 90.0, "branchPercent": 80.0},
+  "boundaries": "fake parser/process boundaries for units; offline read-only source fixtures for process regressions; no project command execution",
+  "modules": {
+    "kb_scanner/frontends/cpp/source_positions.py": {"unit": "tests/unit/frontends/cpp/test_source_positions.py", "coverageGate": "--frontend-unit"},
+    "kb_scanner/frontends/cpp/tree_sitter_adapter.py": {"unit": "tests/unit/frontends/cpp/test_tree_sitter_adapter.py", "supportingUnits": ["tests/unit/architecture_enum/test_architecture_enum.py"], "coverageGate": "--frontend-unit"},
+    "tests/tree_sitter_native_support.py": {"unit": "tests/unit/native_crash/test_tree_sitter_native_support.py", "coverageGate": "--tree-sitter-native-crash-unit"}
+  },
+  "higherLayers": ["tests/test_tree_sitter_native_crash_regression.py", "tests/test_architecture_enum_analysis.py"]
+}

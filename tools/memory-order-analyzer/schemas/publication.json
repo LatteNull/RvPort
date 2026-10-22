@@ -1,0 +1,333 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Id": {"type": "string", "minLength": 1, "maxLength": 1024},
+    "Hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "NullableId": {"type": ["string", "null"], "minLength": 1, "maxLength": 1024},
+    "Status": {"enum": ["complete", "partial", "failed", "not_run"]},
+    "SourceRef": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_key", "function_id", "id"],
+      "properties": {
+        "artifact_key": {"$ref": "#/$defs/Hash"},
+        "function_id": {"$ref": "#/$defs/NullableId"},
+        "id": {"$ref": "#/$defs/Id"}
+      }
+    },
+    "AnalysisRef": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_key", "function_id", "analysis_id"],
+      "properties": {
+        "artifact_key": {"$ref": "#/$defs/Hash"},
+        "function_id": {"$ref": "#/$defs/NullableId"},
+        "analysis_id": {"$ref": "#/$defs/Id"}
+      }
+    },
+    "EvidenceRef": {"oneOf": [{"$ref": "#/$defs/SourceRef"}, {"$ref": "#/$defs/AnalysisRef"}]},
+    "Origin": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_key", "module_hash", "facts_hash", "extractor_version", "llvm_version", "profile"],
+      "properties": {
+        "artifact_key": {"$ref": "#/$defs/Hash"}, "module_hash": {"$ref": "#/$defs/Hash"},
+        "facts_hash": {"$ref": "#/$defs/Hash"}, "extractor_version": {"const": "0.2.0"},
+        "llvm_version": {"const": "21.1.8"},
+        "profile": {"enum": ["source-preserving", "build-faithful", "imported", "linked"]}
+      }
+    },
+    "Budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["local_steps", "value_candidates", "protocol_candidates", "assessments", "scc_iterations", "worker_seconds", "worker_output_bytes", "request_seconds", "request_output_bytes"],
+      "properties": {
+        "local_steps": {"type": "integer", "minimum": 1, "maximum": 100000},
+        "value_candidates": {"type": "integer", "minimum": 1, "maximum": 8},
+        "protocol_candidates": {"type": "integer", "minimum": 1, "maximum": 10000},
+        "assessments": {"type": "integer", "minimum": 1, "maximum": 10000},
+        "scc_iterations": {"type": "integer", "minimum": 1, "maximum": 16},
+        "worker_seconds": {"type": "integer", "minimum": 1, "maximum": 60},
+        "worker_output_bytes": {"type": "integer", "minimum": 1, "maximum": 16777216},
+        "request_seconds": {"type": "integer", "minimum": 1, "maximum": 300},
+        "request_output_bytes": {"type": "integer", "minimum": 1, "maximum": 67108864}
+      }
+    },
+    "Scalar": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["state", "bits", "hex"],
+         "properties": {"state": {"const": "exact"}, "bits": {"type": "integer", "minimum": 1, "maximum": 8388608}, "hex": {"type": "string", "pattern": "^[0-9A-F]+$"}}},
+        {"type": "object", "additionalProperties": false, "required": ["state", "reason"],
+         "properties": {"state": {"const": "unknown"}, "reason": {"$ref": "#/$defs/Id"}}}
+      ]
+    },
+    "ObjectRange": {
+      "type": "object", "additionalProperties": false,
+      "required": ["object", "offset_bytes", "size_bytes", "address_space"],
+      "properties": {
+        "object": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/SourceRef"}]},
+        "offset_bytes": {"type": ["string", "null"], "pattern": "^-?(0|[1-9][0-9]*)$"},
+        "size_bytes": {"type": ["string", "null"], "pattern": "^(0|[1-9][0-9]*)$"},
+        "address_space": {"type": ["integer", "null"], "minimum": 0
+        }
+      }
+    },
+    "Predicate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "bits", "hex", "negated"],
+      "properties": {
+        "kind": {"enum": ["eq", "ne", "zero", "nonzero"]},
+        "bits": {"type": "integer", "minimum": 1, "maximum": 8388608},
+        "hex": {"type": ["string", "null"], "pattern": "^[0-9A-F]+$"},
+        "negated": {"type": "boolean"}
+      }
+    },
+    "Diagnostic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "detail", "detail_en", "suggestion", "suggestion_en", "source", "thread_context_id", "thread_instance_id"],
+      "properties": {
+        "code": {"$ref": "#/$defs/Id"}, "detail": {"type": "string", "minLength": 1},
+        "detail_en": {"type": "string", "minLength": 1},
+        "suggestion": {"type": ["string", "null"]}, "suggestion_en": {"type": ["string", "null"]},
+        "source": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/SourceRef"}]},
+        "thread_context_id": {"$ref": "#/$defs/NullableId"}, "thread_instance_id": {"$ref": "#/$defs/NullableId"}
+      },
+      "allOf": [
+        {"if": {"properties": {"suggestion": {"type": "string"}}}, "then": {"properties": {"suggestion_en": {"type": "string"}}}},
+        {"if": {"properties": {"suggestion_en": {"type": "string"}}}, "then": {"properties": {"suggestion": {"type": "string"}}}}
+      ]
+    },
+    "AnalysisEvidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["ref", "kind", "source", "inputs", "result"],
+      "properties": {
+        "ref": {"$ref": "#/$defs/AnalysisRef"}, "kind": {"$ref": "#/$defs/Id"},
+        "source": {"$ref": "#/$defs/SourceRef"},
+        "inputs": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}},
+        "result": {"$ref": "#/$defs/Id"}
+      }
+    },
+    "Access": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "source", "kind", "atomic", "volatile", "ordering", "syncscope", "range", "value", "multiplicity", "proof", "status", "reason"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "source": {"$ref": "#/$defs/SourceRef"},
+        "kind": {"enum": ["read", "write", "rmw", "cas", "fence", "call"]},
+        "atomic": {"type": "boolean"}, "volatile": {"type": "boolean"},
+        "ordering": {"$ref": "#/$defs/NullableId"}, "syncscope": {"$ref": "#/$defs/NullableId"},
+        "range": {"$ref": "#/$defs/ObjectRange"}, "value": {"$ref": "#/$defs/Scalar"},
+        "multiplicity": {"enum": ["single", "repeated", "unknown"]},
+        "proof": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}},
+        "status": {"enum": ["exact", "candidate", "unknown"]}, "reason": {"$ref": "#/$defs/NullableId"}
+      }
+    },
+    "Initializer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "source", "range", "value", "proof", "status", "reason"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "source": {"$ref": "#/$defs/SourceRef"},
+        "range": {"$ref": "#/$defs/ObjectRange"}, "value": {"$ref": "#/$defs/Scalar"},
+        "proof": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}},
+        "status": {"enum": ["exact", "candidate", "unknown"]}, "reason": {"$ref": "#/$defs/NullableId"}
+      }
+    },
+    "Observation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "source", "access_id", "predicate", "result_source", "proof", "status", "reason"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "source": {"$ref": "#/$defs/SourceRef"},
+        "access_id": {"$ref": "#/$defs/Id"}, "predicate": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Predicate"}]},
+        "result_source": {"$ref": "#/$defs/SourceRef"},
+        "proof": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}},
+        "status": {"enum": ["exact", "candidate", "unknown"]}, "reason": {"$ref": "#/$defs/NullableId"}
+      }
+    },
+    "Gate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "observation_id", "terminator", "success_edge", "success_target", "retry_edge", "controlled_blocks", "repeated", "proof", "status", "reason"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "observation_id": {"$ref": "#/$defs/Id"},
+        "terminator": {"$ref": "#/$defs/SourceRef"}, "success_edge": {"type": "integer", "minimum": 0},
+        "success_target": {"$ref": "#/$defs/SourceRef"}, "retry_edge": {"type": ["integer", "null"], "minimum": 0},
+        "controlled_blocks": {"type": "array", "items": {"$ref": "#/$defs/SourceRef"}},
+        "repeated": {"type": "boolean"}, "proof": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}},
+        "status": {"enum": ["exact", "candidate", "unknown"]}, "reason": {"$ref": "#/$defs/NullableId"}
+      }
+    },
+    "ReturnDependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "observation_id", "source", "predicate", "proof", "status", "reason"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "observation_id": {"$ref": "#/$defs/Id"},
+        "source": {"$ref": "#/$defs/SourceRef"}, "predicate": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Predicate"}]},
+        "proof": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}},
+        "status": {"enum": ["exact", "candidate", "unknown"]}, "reason": {"$ref": "#/$defs/NullableId"}
+      }
+    },
+    "LocalOrderEdge": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "before", "after", "relation", "proof", "reason"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"},
+        "before": {"$ref": "#/$defs/SourceRef"},
+        "after": {"$ref": "#/$defs/SourceRef"},
+        "relation": {"const": "must-before"},
+        "proof": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/EvidenceRef"}},
+        "reason": {"const": "p4-dominance-order"}
+      }
+    },
+    "Dependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "digest"],
+      "properties": {"kind": {"$ref": "#/$defs/Id"}, "id": {"$ref": "#/$defs/Id"}, "digest": {"$ref": "#/$defs/Hash"}}
+    },
+    "SuccessfulObservation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "local_observation_id", "thread_effect_id", "thread_instance_id", "invocation_id", "predicate", "gate_id", "guards", "proof", "status", "reason"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "local_observation_id": {"$ref": "#/$defs/Id"},
+        "thread_effect_id": {"$ref": "#/$defs/Id"}, "thread_instance_id": {"$ref": "#/$defs/Id"},
+        "invocation_id": {"$ref": "#/$defs/Id"}, "predicate": {"$ref": "#/$defs/Predicate"},
+        "gate_id": {"$ref": "#/$defs/Id"}, "guards": {"type": "array", "items": {"$ref": "#/$defs/Id"}},
+        "proof": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}},
+        "status": {"enum": ["candidate", "exact", "unknown"]}, "reason": {"$ref": "#/$defs/NullableId"}
+      }
+    },
+    "Assessment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "protocol_id", "kind", "code", "status", "severity", "confidence", "detail", "detail_en", "suggestion", "suggestion_en", "events", "missing_edges", "assumptions", "limitations", "evidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "protocol_id": {"$ref": "#/$defs/Id"},
+        "kind": {"enum": ["potential-data-race", "publication-order-risk", "discharged", "unknown", "unsupported"]},
+        "code": {"$ref": "#/$defs/Id"}, "status": {"enum": ["finding", "discharged", "unknown", "unsupported"]},
+        "severity": {"enum": ["info", "low", "medium", "high"]},
+        "confidence": {"enum": ["proved-within-model", "conditional", "unknown"]},
+        "detail": {"type": "string", "minLength": 1}, "detail_en": {"type": "string", "minLength": 1},
+        "suggestion": {"type": ["string", "null"]}, "suggestion_en": {"type": ["string", "null"]},
+        "events": {"type": "array", "items": {"$ref": "#/$defs/Id"}},
+        "missing_edges": {"type": "array", "items": {"$ref": "#/$defs/Id"}},
+        "assumptions": {"type": "array", "items": {"$ref": "#/$defs/Id"}},
+        "limitations": {"type": "array", "items": {"$ref": "#/$defs/Id"}},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}}
+      },
+      "allOf": [
+        {"if": {"properties": {"suggestion": {"type": "string"}}}, "then": {"properties": {"suggestion_en": {"type": "string"}}}},
+        {"if": {"properties": {"suggestion_en": {"type": "string"}}}, "then": {"properties": {"suggestion": {"type": "string"}}}}
+      ]
+    },
+    "ProtocolCandidate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "publisher_thread", "consumer_thread", "flag_write", "flag_read", "successful_observation", "payload_write", "payload_read", "flag_object", "payload_object", "predicate", "guards", "language_profile", "unique_reads_from", "chain", "assessment_ids", "status", "reason"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "publisher_thread": {"$ref": "#/$defs/Id"}, "consumer_thread": {"$ref": "#/$defs/Id"},
+        "flag_write": {"$ref": "#/$defs/Id"}, "flag_read": {"$ref": "#/$defs/Id"},
+        "successful_observation": {"$ref": "#/$defs/Id"}, "payload_write": {"$ref": "#/$defs/Id"}, "payload_read": {"$ref": "#/$defs/Id"},
+        "flag_object": {"$ref": "#/$defs/Id"}, "payload_object": {"$ref": "#/$defs/Id"},
+        "predicate": {"$ref": "#/$defs/Predicate"}, "guards": {"type": "array", "items": {"$ref": "#/$defs/Id"}},
+        "language_profile": {"$ref": "#/$defs/NullableId"},
+        "unique_reads_from": {"enum": ["proved", "candidate", "unknown", "not_applicable"]},
+        "chain": {"type": "array", "items": {"$ref": "#/$defs/Id"}},
+        "assessment_ids": {"type": "array", "items": {"$ref": "#/$defs/Id"}},
+        "status": {"enum": ["candidate", "evaluated", "excluded", "unknown", "unsupported"]},
+        "reason": {"$ref": "#/$defs/NullableId"}
+      }
+    },
+    "OutcomeCounts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["planned", "candidate", "evaluated", "finding", "discharged", "unknown", "unsupported", "excluded", "evaluated_ratio"],
+      "properties": {
+        "planned": {"type": "integer", "minimum": 0}, "candidate": {"type": "integer", "minimum": 0},
+        "evaluated": {"type": "integer", "minimum": 0}, "finding": {"type": "integer", "minimum": 0},
+        "discharged": {"type": "integer", "minimum": 0}, "unknown": {"type": "integer", "minimum": 0},
+        "unsupported": {"type": "integer", "minimum": 0}, "excluded": {"type": "integer", "minimum": 0},
+        "evaluated_ratio": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      }
+    },
+    "PlannedItem": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "status", "reason"],
+      "properties": {"id": {"$ref": "#/$defs/Id"}, "status": {"$ref": "#/$defs/Status"}, "reason": {"$ref": "#/$defs/NullableId"}}
+    },
+    "LayerCounts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["planned", "complete", "partial", "failed", "not_run", "complete_ratio"],
+      "properties": {
+        "planned": {"type": "integer", "minimum": 0}, "complete": {"type": "integer", "minimum": 0},
+        "partial": {"type": "integer", "minimum": 0}, "failed": {"type": "integer", "minimum": 0},
+        "not_run": {"type": "integer", "minimum": 0},
+        "complete_ratio": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      }
+    },
+    "Common": {
+      "type": "object",
+      "required": ["schema_version", "kind", "analysis_version", "policy_id"],
+      "properties": {"schema_version": {"const": 1}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "single-publication-risks-v1"}}
+    },
+    "PublicationRiskRequest": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "thread_request", "model_id", "budgets"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "PublicationRiskRequest"},
+        "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "single-publication-risks-v1"},
+        "thread_request": {"type": "string", "minLength": 1}, "model_id": {"const": "c-cpp-single-publication-v1"},
+        "budgets": {"$ref": "#/$defs/Budgets"}
+      }
+    },
+    "PublicationLocalFacts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "origin", "budgets", "accesses", "initializers", "observations", "gates", "returns", "order", "analysis_evidence", "diagnostics", "frontier", "status"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "PublicationLocalFacts"},
+        "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "single-publication-risks-v1"},
+        "origin": {"$ref": "#/$defs/Origin"}, "budgets": {"$ref": "#/$defs/Budgets"},
+        "accesses": {"type": "array", "items": {"$ref": "#/$defs/Access"}},
+        "initializers": {"type": "array", "items": {"$ref": "#/$defs/Initializer"}},
+        "observations": {"type": "array", "items": {"$ref": "#/$defs/Observation"}},
+        "gates": {"type": "array", "items": {"$ref": "#/$defs/Gate"}},
+        "returns": {"type": "array", "items": {"$ref": "#/$defs/ReturnDependency"}},
+        "order": {"type": "array", "items": {"$ref": "#/$defs/LocalOrderEdge"}},
+        "analysis_evidence": {"type": "array", "items": {"$ref": "#/$defs/AnalysisEvidence"}},
+        "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+        "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+        "status": {"$ref": "#/$defs/Status"}
+      }
+    },
+    "SinglePublicationProtocolGraph": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "model_id", "scope_id", "request_hash", "thread_graph_digest", "budgets", "dependencies", "successful_observations", "protocols", "assessments", "counts", "frontier", "diagnostics", "status"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "SinglePublicationProtocolGraph"},
+        "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "single-publication-risks-v1"},
+        "model_id": {"const": "c-cpp-single-publication-v1"}, "scope_id": {"$ref": "#/$defs/Hash"},
+        "request_hash": {"$ref": "#/$defs/Hash"}, "thread_graph_digest": {"$ref": "#/$defs/Hash"},
+        "budgets": {"$ref": "#/$defs/Budgets"}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+        "successful_observations": {"type": "array", "items": {"$ref": "#/$defs/SuccessfulObservation"}},
+        "protocols": {"type": "array", "items": {"$ref": "#/$defs/ProtocolCandidate"}},
+        "assessments": {"type": "array", "items": {"$ref": "#/$defs/Assessment"}},
+        "counts": {"$ref": "#/$defs/OutcomeCounts"}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+        "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "status": {"$ref": "#/$defs/Status"}
+      }
+    },
+    "PublicationRiskReport": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "model_id", "request_hash", "scope_id", "budgets", "input_integrity", "p1_analysis", "p2_analysis", "p3_analysis", "publication_local_analysis", "candidate_modeling", "risk_evaluation", "source_mapping", "members", "member_counts", "outcome_counts", "graph", "dependencies", "frontier", "diagnostics", "assumptions", "safety", "verdict", "findings", "exit_code"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "PublicationRiskReport"},
+        "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "single-publication-risks-v1"},
+        "model_id": {"const": "c-cpp-single-publication-v1"},
+        "request_hash": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Hash"}]},
+        "scope_id": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Hash"}]}, "budgets": {"$ref": "#/$defs/Budgets"},
+        "input_integrity": {"$ref": "#/$defs/Status"}, "p1_analysis": {"$ref": "#/$defs/Status"},
+        "p2_analysis": {"$ref": "#/$defs/Status"}, "p3_analysis": {"$ref": "#/$defs/Status"},
+        "publication_local_analysis": {"$ref": "#/$defs/Status"}, "candidate_modeling": {"$ref": "#/$defs/Status"},
+        "risk_evaluation": {"$ref": "#/$defs/Status"}, "source_mapping": {"enum": ["complete", "partial", "unavailable", "not_run"]},
+        "members": {"type": "array", "items": {"$ref": "#/$defs/PlannedItem"}}, "member_counts": {"$ref": "#/$defs/LayerCounts"},
+        "outcome_counts": {"$ref": "#/$defs/OutcomeCounts"},
+        "graph": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Dependency"}]},
+        "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+        "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+        "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+        "assumptions": {"type": "array", "items": {"$ref": "#/$defs/Id"}}, "safety": {"const": "not_established"},
+        "verdict": {"enum": ["risks_found", "no_supported_risk_found", "inconclusive", "failed"]},
+        "findings": {"type": "array", "items": {"$ref": "#/$defs/Assessment"}},
+        "exit_code": {"enum": [0, 1, 2, 3]}
+      }
+    }
+  }
+}

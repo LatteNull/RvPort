@@ -1,0 +1,28 @@
+{
+  "complete.c": [
+    "include",
+    "macro_definition",
+    "preprocessor_condition",
+    "preprocessor_branch",
+    "call_expression",
+    "type_reference",
+    "inline_asm"
+  ],
+  "complete.cpp": [
+    "include",
+    "macro_definition",
+    "template_declaration",
+    "call_expression",
+    "type_reference"
+  ],
+  "ambiguous.h": [
+    "template_declaration"
+  ],
+  "incomplete.cpp": [
+    "include",
+    "macro_definition"
+  ],
+  "comments.c": [
+    "comment"
+  ]
+}

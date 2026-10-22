@@ -1,0 +1,40 @@
+ARG UBUNTU_IMAGE=ubuntu:24.04@sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90
+FROM ${UBUNTU_IMAGE}
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG LLVM_DEB_VERSION=1:21.1.8~++20251221032922+2078da43e25a-1~exp1~20251221153059.70
+COPY development-packages.lock /opt/development-packages.lock
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates=20260601~24.04.1 curl=8.5.0-2ubuntu10.15
+RUN curl --fail --show-error --location --max-time 60 \
+       https://apt.llvm.org/llvm-snapshot.gpg.key -o /usr/share/keyrings/llvm.asc \
+    && echo '8b2a587ffd672c4687e7581dad4b2f6c1bb2ad6b480cd9771ba2ff48e0b8c75d  /usr/share/keyrings/llvm.asc' | sha256sum -c - \
+    && printf '%s\n' 'deb [signed-by=/usr/share/keyrings/llvm.asc] https://apt.llvm.org/noble/ llvm-toolchain-noble-21 main' > /etc/apt/sources.list.d/llvm.list \
+    && apt-get update && apt-get install -y --no-install-recommends \
+       clang-21=${LLVM_DEB_VERSION} llvm-21=${LLVM_DEB_VERSION} \
+       llvm-21-dev=${LLVM_DEB_VERSION} llvm-21-tools=${LLVM_DEB_VERSION} \
+       libclang-21-dev=${LLVM_DEB_VERSION} libclang-rt-21-dev=${LLVM_DEB_VERSION} \
+       libc++-21-dev=${LLVM_DEB_VERSION} libc++abi-21-dev=${LLVM_DEB_VERSION} \
+       g++=4:13.2.0-7ubuntu1 cmake=3.28.3-1build7 ninja-build=1.11.1-2 \
+       libgtest-dev=1.14.0-1 python3-pytest=7.4.4-1 \
+       python3-coverage=7.4.4+dfsg1-0ubuntu2 python3-jsonschema=4.10.3-2ubuntu1 \
+    && xargs -r apt-get install -y --no-install-recommends --allow-downgrades < /opt/development-packages.lock \
+    && dpkg-query -W -f='${Package}\t${Version}\n' > /opt/development-packages.tsv \
+    && dpkg-query -W -f='${Package}=${Version}\n' | diff - /opt/development-packages.lock \
+    # libc++abi also installs compatibility copies at LLVM's public include root.
+    # CMake must expose that root for LLVM headers, so the copies would shadow
+    # libstdc++'s cxxabi declarations.  The canonical libc++ copies remain under
+    # include/c++/v1 and are used by every -stdlib=libc++ profile probe.
+    && rm /usr/lib/llvm-21/include/cxxabi.h /usr/lib/llvm-21/include/__cxxabi_config.h \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV PATH=/usr/lib/llvm-21/bin:$PATH \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH=/workspace/python \
+    LLVM_DIR=/usr/lib/llvm-21/lib/cmake/llvm
+RUN groupadd --gid 10001 analyzer && useradd --uid 10001 --gid analyzer --create-home analyzer \
+    && mkdir /workspace /output && chown analyzer:analyzer /output
+USER analyzer
+WORKDIR /workspace
+CMD ["python3", "-m", "memory_order_analyzer", "--help"]
+

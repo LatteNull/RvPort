@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "kind": "UnifiedProjectAnalysisTruthMatrix",
+  "description": "人工复核的统一入口合同分母；验证编排、降级和展示语义，不声称全程序安全。",
+  "profiles": [
+    {"language": "c", "standard": "c11", "planned": 5, "completed": 2, "failed": 1, "risk": 1, "candidate": 1, "discharged": 1, "frontier": 2, "abstention": 2},
+    {"language": "c", "standard": "c17", "planned": 5, "completed": 2, "failed": 1, "risk": 1, "candidate": 1, "discharged": 1, "frontier": 2, "abstention": 2},
+    {"language": "c++", "standard": "c++17", "planned": 5, "completed": 2, "failed": 1, "risk": 1, "candidate": 1, "discharged": 1, "frontier": 2, "abstention": 2},
+    {"language": "c++", "standard": "c++20", "planned": 5, "completed": 2, "failed": 1, "risk": 1, "candidate": 1, "discharged": 1, "frontier": 2, "abstention": 2}
+  ],
+  "cases": [
+    {"id": "c11-pthread-risk", "language": "c", "standard": "c11", "topology": "single-tu", "mode": "ast-ir", "feature": "pthread-publication", "expected_status": "complete", "expected_verdict": "risk", "required_steps": ["thread-creation", "memory-access", "object-provenance", "mhp", "atomic-event", "conclusion"]},
+    {"id": "c11-thrd-discharge", "language": "c", "standard": "c11", "topology": "cross-tu", "mode": "ast-ir", "feature": "thrd-create-release-acquire", "expected_status": "complete", "expected_verdict": "discharged-within-bounded-model", "required_steps": ["thread-creation", "callback-binding", "execution-root", "reads-from", "synchronization-proof", "conclusion"]},
+    {"id": "c11-ast-only", "language": "c", "standard": "c11", "topology": "single-tu", "mode": "ast-only", "feature": "stdatomic-source", "expected_status": "partial", "expected_verdict": "source-candidate", "required_breaks": ["missing-ir-binding", "missing-runtime-object", "missing-rf", "missing-sw-hb"]},
+    {"id": "c11-ir-only-nodebug", "language": "c", "standard": "c11", "topology": "single-tu", "mode": "ir-only", "feature": "no-debug", "expected_status": "partial", "expected_verdict": "inconclusive", "required_breaks": ["source-context-unavailable"]},
+    {"id": "c11-failed", "language": "c", "standard": "c11", "topology": "single-tu", "mode": "failed", "feature": "fatal-source-and-missing-bc", "expected_status": "failed", "expected_verdict": "failed", "required_breaks": ["evidence-unavailable"]},
+
+    {"id": "c17-pthread-mutex-risk", "language": "c", "standard": "c17", "topology": "cross-tu", "mode": "ast-ir", "feature": "pthread-mutex-outside", "expected_status": "complete", "expected_verdict": "risk", "required_steps": ["thread-creation", "call-path", "memory-access", "byte-range-overlap", "synchronization-gap", "conclusion"]},
+    {"id": "c17-pthread-mutex-discharge", "language": "c", "standard": "c17", "topology": "cross-tu", "mode": "ast-ir", "feature": "pthread-mutex-protected", "expected_status": "complete", "expected_verdict": "discharged-within-bounded-model", "required_steps": ["thread-instance", "mhp", "mutex-region", "synchronization-proof", "conclusion"]},
+    {"id": "c17-ast-only", "language": "c", "standard": "c17", "topology": "multi-scope", "mode": "ast-only", "feature": "struct-union-field", "expected_status": "partial", "expected_verdict": "source-candidate", "required_breaks": ["missing-ir-binding", "missing-runtime-object"]},
+    {"id": "c17-open-scope", "language": "c", "standard": "c17", "topology": "open-scope", "mode": "ir-only", "feature": "unknown-callback", "expected_status": "partial", "expected_verdict": "inconclusive", "required_breaks": ["open-scope", "callback-ambiguous"]},
+    {"id": "c17-failed", "language": "c", "standard": "c17", "topology": "single-tu", "mode": "failed", "feature": "ingest-verify-failure", "expected_status": "failed", "expected_verdict": "failed", "required_breaks": ["evidence-unavailable"]},
+
+    {"id": "cpp17-thread-risk", "language": "c++", "standard": "c++17", "topology": "single-tu", "mode": "ast-ir", "feature": "std-thread-relaxed-publication", "expected_status": "complete", "expected_verdict": "risk", "required_steps": ["thread-creation", "callback-binding", "thread-instance", "mhp", "atomic-event", "conclusion"]},
+    {"id": "cpp17-raii-discharge", "language": "c++", "standard": "c++17", "topology": "cross-tu", "mode": "ast-ir", "feature": "lock-guard-field", "expected_status": "complete", "expected_verdict": "discharged-within-bounded-model", "required_steps": ["object-provenance", "byte-range-overlap", "mutex-region", "synchronization-proof", "conclusion"]},
+    {"id": "cpp17-ast-only", "language": "c++", "standard": "c++17", "topology": "cross-tu", "mode": "ast-only", "feature": "std-thread-source", "expected_status": "partial", "expected_verdict": "source-candidate", "required_breaks": ["missing-ir-binding", "missing-thread-instance", "missing-sw-hb"]},
+    {"id": "cpp17-budget", "language": "c++", "standard": "c++17", "topology": "single-tu", "mode": "ir-only", "feature": "recursive-demand", "expected_status": "partial", "expected_verdict": "inconclusive", "required_breaks": ["demand-worklist-budget"]},
+    {"id": "cpp17-failed", "language": "c++", "standard": "c++17", "topology": "single-tu", "mode": "failed", "feature": "profile-conflict", "expected_status": "failed", "expected_verdict": "failed", "required_breaks": ["evidence-unavailable"]},
+
+    {"id": "cpp20-jthread-cas-risk", "language": "c++", "standard": "c++20", "topology": "single-tu", "mode": "ast-ir", "feature": "jthread-cas-failure-order", "expected_status": "complete", "expected_verdict": "risk", "required_steps": ["thread-creation", "atomic-event", "reads-from", "modification-order", "conclusion"]},
+    {"id": "cpp20-rmw-release-sequence", "language": "c++", "standard": "c++20", "topology": "cross-tu", "mode": "ast-ir", "feature": "rmw-release-sequence", "expected_status": "complete", "expected_verdict": "discharged-within-bounded-model", "required_steps": ["atomic-event", "reads-from", "modification-order", "release-sequence", "synchronization-proof", "conclusion"]},
+    {"id": "cpp20-async-ast-only", "language": "c++", "standard": "c++20", "topology": "multi-scope", "mode": "ast-only", "feature": "async-policy", "expected_status": "partial", "expected_verdict": "source-candidate", "required_breaks": ["missing-ir-binding", "async-policy-conditional"]},
+    {"id": "cpp20-ambiguous-rf", "language": "c++", "standard": "c++20", "topology": "cross-tu", "mode": "ir-only", "feature": "fence-rmw-ambiguous-rf", "expected_status": "partial", "expected_verdict": "inconclusive", "required_breaks": ["reads-from-ambiguous"]},
+    {"id": "cpp20-failed", "language": "c++", "standard": "c++20", "topology": "single-tu", "mode": "failed", "feature": "worker-failure", "expected_status": "failed", "expected_verdict": "failed", "required_breaks": ["evidence-unavailable"]}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "suite_version": "execution-root-r1-v1",
+  "cases": [
+    {"case_id": "c11-single", "status": "complete", "root_kinds": ["main", "pthread"], "classifications": ["ir-exact"]},
+    {"case_id": "c17-cross", "status": "complete", "root_kinds": ["main", "pthread"], "classifications": ["dual-exact"]},
+    {"case_id": "cpp17-pthread", "status": "complete", "root_kinds": ["main", "pthread"], "classifications": ["dual-exact"]},
+    {"case_id": "cpp20-std-thread", "status": "complete", "root_kinds": ["main", "std-thread"], "classifications": ["dual-exact"]},
+    {"case_id": "cpp20-explicit-roots", "status": "complete", "root_kinds": ["exported", "framework"], "classifications": []},
+    {"case_id": "cpp17-indirect", "status": "partial", "root_kinds": ["main"], "classifications": ["unsupported"]},
+    {"case_id": "c11-recursive", "status": "complete", "root_kinds": ["main"], "classifications": []},
+    {"case_id": "c17-open-scope", "status": "partial", "root_kinds": ["main", "pthread"], "classifications": ["ir-exact"]}
+  ]
+}

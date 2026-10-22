@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Hash": {"type":"string","pattern":"^[a-f0-9]{64}$"},
+    "Id": {"type":"string","minLength":1,"maxLength":256,"pattern":"^[A-Za-z0-9_.:+/@-]+$"},
+    "Diagnostic": {
+      "type":"object","additionalProperties":false,
+      "required":["code","detail","detail_en","suggestion","suggestion_en","relevant","record_id","references"],
+      "properties":{
+        "code":{"type":"string","minLength":1},"detail":{"type":"string"},"detail_en":{"type":"string"},
+        "suggestion":{"type":"string"},"suggestion_en":{"type":"string"},
+        "relevant":{"type":"boolean"},"record_id":{"type":["string","null"]},
+        "references":{"type":"array","items":{"type":"string"},"uniqueItems":true}
+      }
+    },
+    "Producer": {
+      "type":"object","additionalProperties":false,
+      "required":["family","version","llvm_version","host_triple"],
+      "properties":{
+        "family":{"enum":["clang","llvm-compatible"]},"version":{"type":"string","minLength":1},
+        "llvm_version":{"type":"string","minLength":1},"host_triple":{"type":"string","minLength":1}
+      }
+    },
+    "Target": {
+      "type":"object","additionalProperties":false,
+      "required":["triple","data_layout","abi"],
+      "properties":{"triple":{"type":"string","minLength":1},"data_layout":{"type":"string","minLength":1},"abi":{"type":"object"}}
+    },
+    "Source": {
+      "type":"object","additionalProperties":false,"required":["path","sha256"],
+      "properties":{"path":{"type":"string","minLength":1},"sha256":{"$ref":"#/$defs/Hash"}}
+    },
+    "RecordReference": {
+      "type":"object","additionalProperties":false,"required":["path","sha256"],
+      "properties":{"path":{"type":"string","minLength":1},"sha256":{"$ref":"#/$defs/Hash"}}
+    },
+    "Scope": {
+      "type":"object","additionalProperties":false,
+      "required":["target_id","record_ids","evidence","closed","external_boundaries","target_triple"],
+      "properties":{
+        "target_id":{"$ref":"#/$defs/Id"},"record_ids":{"type":"array","minItems":1,"uniqueItems":true,"items":{"$ref":"#/$defs/Id"}},
+        "evidence":{"type":"string","minLength":1},"closed":{"type":"boolean"},"external_boundaries":{"type":"array"},
+        "target_triple":{"type":"string","minLength":1}
+      }
+    },
+    "Budgets": {
+      "type":"object","additionalProperties":false,
+      "required":["max_records","max_artifact_bytes","max_total_bytes","max_worker_seconds","max_output_bytes"],
+      "properties":{
+        "max_records":{"type":"integer","minimum":1,"maximum":10000},
+        "max_artifact_bytes":{"type":"integer","minimum":4,"maximum":1073741824},
+        "max_total_bytes":{"type":"integer","minimum":4,"maximum":8589934592},
+        "max_worker_seconds":{"type":"integer","minimum":1,"maximum":120},
+        "max_output_bytes":{"type":"integer","minimum":1024,"maximum":16777216}
+      }
+    },
+    "ExternalBitcodeArtifactRecord": {
+      "type":"object","additionalProperties":false,
+      "required":["schema_version","kind","ingestion_version","policy_id","record_id","physical_tu_id","status","diagnostic","bitcode","producer","target","language","standard","optimization","debug","module_kind","source","compile_record_digest","input_digests","semantic_digest"],
+      "properties":{
+        "schema_version":{"enum":[1,2]},"kind":{"const":"ExternalBitcodeArtifactRecord"},
+        "ingestion_version":{"const":"0.1.0"},"policy_id":{"const":"external-bitcode-ingestion-v1"},
+        "record_id":{"$ref":"#/$defs/Id"},"physical_tu_id":{"$ref":"#/$defs/Hash"},
+        "status":{"enum":["produced","missing","failed","unsupported"]},
+        "diagnostic":{"anyOf":[{"$ref":"#/$defs/Diagnostic"},{"type":"null"}]},
+        "bitcode":{"anyOf":[{"type":"object","additionalProperties":false,"required":["path","sha256","bytes"],"properties":{"path":{"type":"string","minLength":1},"sha256":{"$ref":"#/$defs/Hash"},"bytes":{"type":"integer","minimum":4}}},{"type":"null"}]},
+        "producer":{"$ref":"#/$defs/Producer"},"target":{"$ref":"#/$defs/Target"},
+        "language":{"enum":["c","c++"]},"standard":{"enum":["compiler-default", "unsupported", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+        "dialect":{"enum":["compiler-default","iso","gnu"]},"standard_source":{"enum":["compiler-default","explicit"]},"standard_option":{"type":["string","null"]},
+        "optimization":{"enum":["O0","O1","O2","O3","Os","Oz","Ofast","unknown"]},"debug":{"enum":["full","line-tables","none","unknown"]},
+        "module_kind":{"enum":["translation-unit","linked","lto"]},
+        "source":{"anyOf":[{"$ref":"#/$defs/Source"},{"type":"null"}]},
+        "compile_record_digest":{"anyOf":[{"$ref":"#/$defs/Hash"},{"type":"null"}]},
+        "input_digests":{"type":"object","additionalProperties":{"$ref":"#/$defs/Hash"}},
+        "semantic_digest":{"$ref":"#/$defs/Hash"}
+      }
+    },
+    "ExternalBitcodeBundleManifest": {
+      "type":"object","additionalProperties":false,
+      "required":["schema_version","kind","ingestion_version","policy_id","bundle_id","producer","records","scopes","budgets","semantic_digest"],
+      "properties":{
+        "schema_version":{"const":1},"kind":{"const":"ExternalBitcodeBundleManifest"},
+        "ingestion_version":{"const":"0.1.0"},"policy_id":{"const":"external-bitcode-ingestion-v1"},
+        "bundle_id":{"$ref":"#/$defs/Id"},"producer":{"$ref":"#/$defs/Producer"},
+        "records":{"type":"array","items":{"$ref":"#/$defs/RecordReference"}},
+        "scopes":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/Scope"}},"budgets":{"$ref":"#/$defs/Budgets"},
+        "semantic_digest":{"$ref":"#/$defs/Hash"}
+      }
+    },
+    "ExternalBitcodeIngestionReport": {
+      "type":"object","additionalProperties":false,
+      "required":["schema_version","kind","ingestion_version","policy_id","bundle_id","status","exit_code","semantic_analysis","safety","findings","counts","ratios","record_artifacts","scopes","artifacts","cache","frontier","diagnostics","semantic_digest"],
+      "properties":{
+        "schema_version":{"const":1},"kind":{"const":"ExternalBitcodeIngestionReport"},
+        "ingestion_version":{"const":"0.1.0"},"policy_id":{"const":"external-bitcode-ingestion-v1"},
+        "bundle_id":{"type":["string","null"]},"status":{"enum":["complete","partial","failed"]},"exit_code":{"enum":[0,1,2]},
+        "semantic_analysis":{"const":"not_run"},"safety":{"const":"not_evaluated"},"findings":{"type":"null"},
+        "counts":{"type":"object","additionalProperties":{"type":"integer","minimum":0}},
+        "ratios":{"type":"object","additionalProperties":{"type":["number","null"],"minimum":0,"maximum":1}},
+        "record_artifacts":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["record_id","physical_tu_id","producer_host","target_triple","data_layout","status","artifact_key","facts_status","source_binding"],"properties":{"record_id":{"type":"string"},"physical_tu_id":{"type":"string"},"producer_host":{"type":"string"},"target_triple":{"type":"string"},"data_layout":{"type":"string"},"status":{"enum":["published","missing","failed"]},"artifact_key":{"type":["string","null"]},"facts_status":{"enum":["complete","partial","failed","not_run"]},"source_binding":{"enum":["bound","unavailable","mismatch"]}}}},
+        "scopes":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["target_id","status","path","members","missing_records"],"properties":{"target_id":{"type":"string"},"status":{"enum":["resolved","partial","failed"]},"path":{"type":["string","null"]},"members":{"type":"array","items":{"type":"string"}},"missing_records":{"type":"array","items":{"type":"string"}}}}},
+        "artifacts":{"type":"array","items":{"$ref":"#/$defs/Hash"},"uniqueItems":true},
+        "cache":{"type":"object","additionalProperties":false,"required":["hits","misses"],"properties":{"hits":{"type":"integer","minimum":0},"misses":{"type":"integer","minimum":0}}},
+        "frontier":{"type":"array","items":{"$ref":"#/$defs/Diagnostic"}},"diagnostics":{"type":"array","items":{"$ref":"#/$defs/Diagnostic"}},
+        "semantic_digest":{"$ref":"#/$defs/Hash"}
+      }
+    }
+  }
+}

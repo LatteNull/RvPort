@@ -1,0 +1,26 @@
+{
+  "selection": {
+    "cardinalityPerScan": 1,
+    "defaultSchemaVersion": "2.0",
+    "supportedExplicitVersions": ["1.0", "2.0"],
+    "projectorInput": "staged-snapshots",
+    "projectorsAreIndependent": true
+  },
+  "failure": {
+    "v2ProjectionFailureFallsBackToV1": false,
+    "partialArtifactPublicationAllowed": false,
+    "requiredBehavior": "fail the selected scan result publication with a structured internal error"
+  },
+  "artifacts": ["scan-result.json", "scan-report.html", "scan.log"],
+  "artifactRule": "all three artifacts represent the one selected schema version",
+  "rollback": {
+    "mechanism": "select schema 1.0 for subsequent scans",
+    "rewritesExistingArtifacts": false,
+    "requiresV2ToV1Conversion": false
+  },
+  "futureChanges": [
+    "schema-v2-backend-consumer",
+    "schema-v2-frontend-explainability",
+    "schema-v1-retirement"
+  ]
+}

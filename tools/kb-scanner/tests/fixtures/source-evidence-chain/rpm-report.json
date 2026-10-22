@@ -1,0 +1,2333 @@
+{
+  "diagnostics": [
+    {
+      "code": "assessor.provisional",
+      "count": 1,
+      "findingIds": [],
+      "id": "diagnostic:3744f793f9408aa3f8885620a334205327f385dae0bb48ba404eccc111a956d0",
+      "reasonCodes": [
+        "missing_input"
+      ],
+      "refs": [],
+      "severity": "medium",
+      "stage": "assessor",
+      "status": "partial"
+    },
+    {
+      "code": "build-selection.rpm-partial",
+      "count": 1,
+      "findingIds": [],
+      "id": "diagnostic:96aa3526e35984e6a602d9f1cb059782e6ef8ed1b1663fbe74209f97f30c24ab",
+      "reasonCodes": [
+        "missing_input"
+      ],
+      "refs": [],
+      "severity": "medium",
+      "stage": "analysis.build-selection",
+      "status": "partial"
+    },
+    {
+      "code": "build-selection.rpm-partial",
+      "count": 1,
+      "findingIds": [],
+      "id": "diagnostic:cb14bd40bf36d9eb121a6ba168bd028b0e86eed198505d04ac5ca1c3c9748a45",
+      "reasonCodes": [
+        "missing_input"
+      ],
+      "refs": [],
+      "severity": "medium",
+      "stage": "analysis.build-selection",
+      "status": "partial"
+    },
+    {
+      "code": "classifier.unknown-results",
+      "count": 1,
+      "findingIds": [],
+      "id": "diagnostic:aecdea4d13931b14f8214b29f7c972c7bcdc034f16d178a1da83dd2e24e12cfa",
+      "reasonCodes": [
+        "missing_input"
+      ],
+      "refs": [],
+      "severity": "medium",
+      "stage": "classifier",
+      "status": "partial"
+    }
+  ],
+  "findings": [
+    {
+      "conclusion": {
+        "actionable": false,
+        "archReachability": "inactive",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "build_inactive_x86_path",
+        "reason": "x86-path-statically-excluded",
+        "severity": "low",
+        "status": "inactive",
+        "suggestion": "Provide a RISC-V or portable implementation and verify the selected static path.",
+        "title": "Build Inactive X86 Path"
+      },
+      "evidenceChain": {
+        "breaks": [],
+        "budget": {
+          "maxDepth": 16,
+          "maxPaths": 32,
+          "maxVisited": 256,
+          "paths": 11,
+          "truncated": false,
+          "visited": 7
+        },
+        "edges": [
+          {
+            "fromStepId": "step:fc4e5f03d7879edfefea29ee725dbb51de945fde061e4eae65552ab0fc462a64",
+            "id": "edge:09ca69d43c6f1beb0452a3a21c25628a2c3017b710054b37ff3ff15138022d4b",
+            "kind": "selects",
+            "provenance": [
+              {
+                "id": "02566fc1bad9548e067f7ffa147e8fa2ce2f1c283ffa1dd4cd5bd642579512ba",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [
+              "inactive_branch"
+            ],
+            "status": "inactive",
+            "toStepId": "step:c4b74c026f27f86a20f0dc31f06c12a4c8d26877bc2840a0d3d8f6946953d0bc"
+          },
+          {
+            "fromStepId": "step:c4b74c026f27f86a20f0dc31f06c12a4c8d26877bc2840a0d3d8f6946953d0bc",
+            "id": "edge:126add3b27e7d06eb199ef4a97854868a11778b4713dba853b6c2d61226b2a19",
+            "kind": "selects",
+            "provenance": [
+              {
+                "id": "1e8b76110c29709614b4a5eadcd569ead9b6df084cc4a612bfc344dedd333df7",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [
+              "inactive_branch"
+            ],
+            "status": "inactive",
+            "toStepId": "step:52c130bb182153af9aa29bd5c050ae7d9b9b22f00855ab195b5b1aba84a6b495"
+          },
+          {
+            "fromStepId": "step:6ba63def028a1f64cf148f8d48f60a9e54f16fd4cb8f639e83775da681342ab5",
+            "id": "edge:1bd8e8b434cc3e2cdc2690bab0a0d78cae52a71cfdbfa7ecff8c956db84a5854",
+            "kind": "selects",
+            "provenance": [
+              {
+                "id": "a54a4eca3c10b084b9ad3696c442b90d801df43534400cdfa316ead27b8d2f80",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [
+              "inactive_branch"
+            ],
+            "status": "inactive",
+            "toStepId": "step:c4b74c026f27f86a20f0dc31f06c12a4c8d26877bc2840a0d3d8f6946953d0bc"
+          },
+          {
+            "fromStepId": "step:fc4e5f03d7879edfefea29ee725dbb51de945fde061e4eae65552ab0fc462a64",
+            "id": "edge:3b2d74f653cb4696c4694db96a253758ca1aa8ee752d57f28498b744c73d9d9d",
+            "kind": "defines",
+            "provenance": [
+              {
+                "id": "89f0bea42cc0b2fa93eb24f24c09357f5ccea39b58138cb1312a5bc6a33ff830",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:6ba63def028a1f64cf148f8d48f60a9e54f16fd4cb8f639e83775da681342ab5"
+          },
+          {
+            "fromStepId": "step:169c3ee825ce6809081a399f4200bb49c5851bb56fba9c34baf90787fdfca928",
+            "id": "edge:4f615e999e1343e2fa04fcaff3404e4ddc501a8ec806ef923d5d7c969bce8b90",
+            "kind": "selects",
+            "provenance": [
+              {
+                "id": "feea659218d4b7ee96d8fef2bea6e1e08ad6843025f22d645f6e5f70ccd16390",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [
+              "inactive_branch"
+            ],
+            "status": "inactive",
+            "toStepId": "step:52c130bb182153af9aa29bd5c050ae7d9b9b22f00855ab195b5b1aba84a6b495"
+          },
+          {
+            "fromStepId": "step:52c130bb182153af9aa29bd5c050ae7d9b9b22f00855ab195b5b1aba84a6b495",
+            "id": "edge:7ed5fe5074e6ffad5432775bd8efb7c9fc3f274269c3eb00ad5d3206446c0f6e",
+            "kind": "matches_knowledge",
+            "provenance": [
+              {
+                "id": "df789878fa053410d7521f8c164887bcf2e37f66b22ed0a8dad45a61d8b4ad9f",
+                "kind": "evidence",
+                "producer": "bounded-rpm-parser"
+              },
+              {
+                "id": "f2aa408dbfe3e57561835313a7898a8944e43d5d2a834a92eb355e2354441d4d",
+                "kind": "knowledge",
+                "producer": "clang-x86-entries"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:9f92cd3c868be21663105363b3074caa97ada37f664cbeb7bfc12f0db7fd64dd"
+          },
+          {
+            "fromStepId": "step:519e53be7f051a27d5adfc9d1a0354a211520ee6a940e8284838e1d8b3e39146",
+            "id": "edge:7f05ec1720ac0df755db3aeeca88758c49cd70ba8d29fe49bc9efea63d2509f1",
+            "kind": "selects",
+            "provenance": [
+              {
+                "id": "d27f7e1f978b703a8ab34fc1999b0371a88f7e5169b582e3274e6aa08bceb087",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [
+              "inactive_branch"
+            ],
+            "status": "inactive",
+            "toStepId": "step:c4b74c026f27f86a20f0dc31f06c12a4c8d26877bc2840a0d3d8f6946953d0bc"
+          },
+          {
+            "fromStepId": "step:fc4e5f03d7879edfefea29ee725dbb51de945fde061e4eae65552ab0fc462a64",
+            "id": "edge:c5716dd6d3009933a8d7a071ddb36ea5bd516c69444a3793a3945057eb342efc",
+            "kind": "selects",
+            "provenance": [
+              {
+                "id": "19f464271da49ea623d7d85c808f20f09cde81ec329361c1e021addf5a41f6e3",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [
+              "inactive_branch"
+            ],
+            "status": "inactive",
+            "toStepId": "step:52c130bb182153af9aa29bd5c050ae7d9b9b22f00855ab195b5b1aba84a6b495"
+          },
+          {
+            "fromStepId": "step:fc4e5f03d7879edfefea29ee725dbb51de945fde061e4eae65552ab0fc462a64",
+            "id": "edge:ca073a17bb1b759dcc02ddbea07ef4fa7a078f6e6f80277f17eb80578cd1b2b8",
+            "kind": "contains",
+            "provenance": [
+              {
+                "id": "16aa5880096c29f6d3e9b187211405b6ebe2918ec386add2ed89f6c91e8363e0",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:519e53be7f051a27d5adfc9d1a0354a211520ee6a940e8284838e1d8b3e39146"
+          },
+          {
+            "fromStepId": "step:fc4e5f03d7879edfefea29ee725dbb51de945fde061e4eae65552ab0fc462a64",
+            "id": "edge:e055dc9d3a72ff971715760938f8d1bf47c928099780702941771113c63d1259",
+            "kind": "defines",
+            "provenance": [
+              {
+                "id": "68d387c86cc478c5ff6bffb9d28e4732ca2e07b50b41a0f9414cb9f6acee63a3",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [
+              "inactive_branch"
+            ],
+            "status": "inactive",
+            "toStepId": "step:169c3ee825ce6809081a399f4200bb49c5851bb56fba9c34baf90787fdfca928"
+          },
+          {
+            "fromStepId": "step:c4b74c026f27f86a20f0dc31f06c12a4c8d26877bc2840a0d3d8f6946953d0bc",
+            "id": "edge:e79255a36a97e5f9ec5bfe67426b6cf2751e2c5ddb726b6d855f9e73f05a150b",
+            "kind": "defines",
+            "provenance": [
+              {
+                "id": "6b75c4dea2ab628263b370e2ab753a65ed3a6017aea741fb0ae164487e5247ec",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [
+              "inactive_branch"
+            ],
+            "status": "inactive",
+            "toStepId": "step:169c3ee825ce6809081a399f4200bb49c5851bb56fba9c34baf90787fdfca928"
+          },
+          {
+            "fromStepId": "step:519e53be7f051a27d5adfc9d1a0354a211520ee6a940e8284838e1d8b3e39146",
+            "id": "edge:f86f7950653ff9b43e1f6ace33c7743f7ca426240e08853b8053cd5f90bd657f",
+            "kind": "defines",
+            "provenance": [
+              {
+                "id": "215fbc45533f85d79f7184688a6c6e9c48f2a570a7eea810ea4215433dbe1b10",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:6ba63def028a1f64cf148f8d48f60a9e54f16fd4cb8f639e83775da681342ab5"
+          }
+        ],
+        "impactStepIds": [],
+        "primaryPath": [
+          "step:fc4e5f03d7879edfefea29ee725dbb51de945fde061e4eae65552ab0fc462a64",
+          "step:519e53be7f051a27d5adfc9d1a0354a211520ee6a940e8284838e1d8b3e39146",
+          "step:6ba63def028a1f64cf148f8d48f60a9e54f16fd4cb8f639e83775da681342ab5",
+          "step:c4b74c026f27f86a20f0dc31f06c12a4c8d26877bc2840a0d3d8f6946953d0bc",
+          "step:169c3ee825ce6809081a399f4200bb49c5851bb56fba9c34baf90787fdfca928",
+          "step:52c130bb182153af9aa29bd5c050ae7d9b9b22f00855ab195b5b1aba84a6b495"
+        ],
+        "reasonCodes": [
+          "inactive_branch"
+        ],
+        "rootStepId": "step:fc4e5f03d7879edfefea29ee725dbb51de945fde061e4eae65552ab0fc462a64",
+        "status": "inactive",
+        "steps": [
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.rpm": {
+                "evidenceKind": "build_assignment",
+                "key": "demo.spec:21:15:build_assignment:20",
+                "package": "main",
+                "parents": [
+                  "demo.spec:18:1:build_package_section:16",
+                  "demo.spec:21:1:build_branch:19"
+                ],
+                "profile": "rpm-4.20.0-upstream-target-v1",
+                "reason": "",
+                "resolvedValue": "-mavx",
+                "valueKnown": true,
+                "variable": "CFLAGS"
+              },
+              "org.rvport.kb-scanner.source-chain": {
+                "incoming": [
+                  {
+                    "fromEvidenceId": "35b2dda7a49b63a50043557027e91889fd4ce8c5d546b6c9ec0ac2784e8d2e5e",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "68d387c86cc478c5ff6bffb9d28e4732ca2e07b50b41a0f9414cb9f6acee63a3",
+                        "kind": "defines",
+                        "sourceEntityId": "1d4b98ae900e8da880409d25e2112e29fdb42cce4f2f34b8c0f3a1dd0a11b9d4",
+                        "targetEntityId": "daeaa3267ebe6a71e6afc4687ba01c99303cf48186989572f37360621be218fe"
+                      }
+                    ]
+                  },
+                  {
+                    "fromEvidenceId": "dfac55ff09f5142018fdf3ee7579c441945af843b0b6304f5b73537cdbf94dfc",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "6b75c4dea2ab628263b370e2ab753a65ed3a6017aea741fb0ae164487e5247ec",
+                        "kind": "defines",
+                        "sourceEntityId": "5b5fbc866f208ee80dfb221aea7090336c11586fc69ef7c994498645a0668731",
+                        "targetEntityId": "daeaa3267ebe6a71e6afc4687ba01c99303cf48186989572f37360621be218fe"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "id": "step:169c3ee825ce6809081a399f4200bb49c5851bb56fba9c34baf90787fdfca928",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "74f05069b952ffbda82491fc126d9e272739859b662023bf84b07c2745667a51",
+                "kind": "evidence",
+                "producer": "bounded-rpm-parser"
+              }
+            ],
+            "reason": "Observed by bounded-rpm-parser.",
+            "reasonCodes": [
+              "inactive_branch"
+            ],
+            "selectionStatus": "inactive",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 27,
+                    "line": 21,
+                    "startColumn": 15
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "Name: demo"
+                  },
+                  {
+                    "line": 2,
+                    "text": "Version: 1"
+                  },
+                  {
+                    "line": 3,
+                    "text": "Release: 1"
+                  },
+                  {
+                    "line": 4,
+                    "text": "Summary: Static scanner oracle"
+                  },
+                  {
+                    "line": 5,
+                    "text": "License: MIT"
+                  },
+                  {
+                    "line": 6,
+                    "text": "%if \"%{_target_cpu}\" == \"x86_64\""
+                  },
+                  {
+                    "line": 7,
+                    "text": "BuildRequires: x86-only"
+                  },
+                  {
+                    "line": 8,
+                    "text": "%else"
+                  },
+                  {
+                    "line": 9,
+                    "text": "BuildRequires: portable"
+                  },
+                  {
+                    "line": 10,
+                    "text": "%endif"
+                  },
+                  {
+                    "line": 11,
+                    "text": "Requires: libfoo%{?_isa}"
+                  },
+                  {
+                    "line": 12,
+                    "text": "Recommends: liboptional(x86-64)"
+                  },
+                  {
+                    "line": 13,
+                    "text": "Requires: unknown%{?__external_isa}%{_arch}"
+                  },
+                  {
+                    "line": 14,
+                    "text": "%global machine %(uname -m)"
+                  },
+                  {
+                    "line": 15,
+                    "text": "%if \"%{machine}\" == \"riscv64\""
+                  },
+                  {
+                    "line": 16,
+                    "text": "Requires: common"
+                  },
+                  {
+                    "line": 17,
+                    "text": "%endif"
+                  },
+                  {
+                    "line": 18,
+                    "text": "%build"
+                  },
+                  {
+                    "line": 19,
+                    "text": "machine=$(uname -m)"
+                  },
+                  {
+                    "line": 20,
+                    "text": "case \"$machine\" in"
+                  },
+                  {
+                    "line": 21,
+                    "text": "x86_64|amd64) CFLAGS=-mavx ;;"
+                  },
+                  {
+                    "line": 22,
+                    "text": "riscv64) CFLAGS=-O2 ;;"
+                  },
+                  {
+                    "line": 23,
+                    "text": "*) CFLAGS=-O1 ;;"
+                  },
+                  {
+                    "line": 24,
+                    "text": "esac"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "demo.spec",
+              "span": {
+                "end": {
+                  "column": 27,
+                  "line": 21
+                },
+                "start": {
+                  "column": 15,
+                  "line": 21
+                }
+              }
+            },
+            "status": "inactive",
+            "symbol": "CFLAGS=-mavx",
+            "title": "Source Evidence: CFLAGS=-mavx"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.rpm": {
+                "architectureRelated": true,
+                "evidenceKind": "build_arch_probe",
+                "key": "demo.spec:19:9:build_arch_probe:18",
+                "package": "main",
+                "parents": [
+                  "demo.spec:18:1:build_package_section:16"
+                ],
+                "profile": "rpm-4.20.0-upstream-target-v1",
+                "resolvedValue": "riscv64"
+              },
+              "org.rvport.kb-scanner.source-chain": {
+                "incoming": [
+                  {
+                    "fromEvidenceId": "35b2dda7a49b63a50043557027e91889fd4ce8c5d546b6c9ec0ac2784e8d2e5e",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "16aa5880096c29f6d3e9b187211405b6ebe2918ec386add2ed89f6c91e8363e0",
+                        "kind": "depends_on",
+                        "sourceEntityId": "1d4b98ae900e8da880409d25e2112e29fdb42cce4f2f34b8c0f3a1dd0a11b9d4",
+                        "targetEntityId": "a9331d8e72e5ebf25abe5494735aa44f486679bc8d1ae1aa70d860c825e10dc1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "id": "step:519e53be7f051a27d5adfc9d1a0354a211520ee6a940e8284838e1d8b3e39146",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "b253d21a6c6c7e57e9a9d049c0185b48d87763eb89b4af51961d0c73a01daf5f",
+                "kind": "evidence",
+                "producer": "bounded-rpm-parser"
+              }
+            ],
+            "reason": "Observed by bounded-rpm-parser.",
+            "reasonCodes": [],
+            "selectionStatus": "selected",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 20,
+                    "line": 19,
+                    "startColumn": 9
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "Name: demo"
+                  },
+                  {
+                    "line": 2,
+                    "text": "Version: 1"
+                  },
+                  {
+                    "line": 3,
+                    "text": "Release: 1"
+                  },
+                  {
+                    "line": 4,
+                    "text": "Summary: Static scanner oracle"
+                  },
+                  {
+                    "line": 5,
+                    "text": "License: MIT"
+                  },
+                  {
+                    "line": 6,
+                    "text": "%if \"%{_target_cpu}\" == \"x86_64\""
+                  },
+                  {
+                    "line": 7,
+                    "text": "BuildRequires: x86-only"
+                  },
+                  {
+                    "line": 8,
+                    "text": "%else"
+                  },
+                  {
+                    "line": 9,
+                    "text": "BuildRequires: portable"
+                  },
+                  {
+                    "line": 10,
+                    "text": "%endif"
+                  },
+                  {
+                    "line": 11,
+                    "text": "Requires: libfoo%{?_isa}"
+                  },
+                  {
+                    "line": 12,
+                    "text": "Recommends: liboptional(x86-64)"
+                  },
+                  {
+                    "line": 13,
+                    "text": "Requires: unknown%{?__external_isa}%{_arch}"
+                  },
+                  {
+                    "line": 14,
+                    "text": "%global machine %(uname -m)"
+                  },
+                  {
+                    "line": 15,
+                    "text": "%if \"%{machine}\" == \"riscv64\""
+                  },
+                  {
+                    "line": 16,
+                    "text": "Requires: common"
+                  },
+                  {
+                    "line": 17,
+                    "text": "%endif"
+                  },
+                  {
+                    "line": 18,
+                    "text": "%build"
+                  },
+                  {
+                    "line": 19,
+                    "text": "machine=$(uname -m)"
+                  },
+                  {
+                    "line": 20,
+                    "text": "case \"$machine\" in"
+                  },
+                  {
+                    "line": 21,
+                    "text": "x86_64|amd64) CFLAGS=-mavx ;;"
+                  },
+                  {
+                    "line": 22,
+                    "text": "riscv64) CFLAGS=-O2 ;;"
+                  },
+                  {
+                    "line": 23,
+                    "text": "*) CFLAGS=-O1 ;;"
+                  },
+                  {
+                    "line": 24,
+                    "text": "esac"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "demo.spec",
+              "span": {
+                "end": {
+                  "column": 20,
+                  "line": 19
+                },
+                "start": {
+                  "column": 9,
+                  "line": 19
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "$(uname -m)",
+            "title": "Source Evidence: $(uname -m)"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.rpm": {
+                "buildUseKnown": false,
+                "evidenceKind": "build_argument",
+                "key": "demo.spec:21:22:build_argument:21",
+                "package": "main",
+                "parents": [
+                  "demo.spec:18:1:build_package_section:16",
+                  "demo.spec:21:1:build_branch:19",
+                  "demo.spec:21:15:build_assignment:20"
+                ],
+                "profile": "rpm-4.20.0-upstream-target-v1",
+                "reason": "",
+                "valueKnown": true
+              },
+              "org.rvport.kb-scanner.source-chain": {
+                "incoming": [
+                  {
+                    "fromEvidenceId": "35b2dda7a49b63a50043557027e91889fd4ce8c5d546b6c9ec0ac2784e8d2e5e",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "19f464271da49ea623d7d85c808f20f09cde81ec329361c1e021addf5a41f6e3",
+                        "kind": "adds_argument",
+                        "sourceEntityId": "1d4b98ae900e8da880409d25e2112e29fdb42cce4f2f34b8c0f3a1dd0a11b9d4",
+                        "targetEntityId": "dbd4a5531d2dfa83811bc8d280413ffa3b30e51a5075c352f1ac1e3707ae6f2b"
+                      }
+                    ]
+                  },
+                  {
+                    "fromEvidenceId": "74f05069b952ffbda82491fc126d9e272739859b662023bf84b07c2745667a51",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "feea659218d4b7ee96d8fef2bea6e1e08ad6843025f22d645f6e5f70ccd16390",
+                        "kind": "adds_argument",
+                        "sourceEntityId": "daeaa3267ebe6a71e6afc4687ba01c99303cf48186989572f37360621be218fe",
+                        "targetEntityId": "dbd4a5531d2dfa83811bc8d280413ffa3b30e51a5075c352f1ac1e3707ae6f2b"
+                      }
+                    ]
+                  },
+                  {
+                    "fromEvidenceId": "dfac55ff09f5142018fdf3ee7579c441945af843b0b6304f5b73537cdbf94dfc",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "1e8b76110c29709614b4a5eadcd569ead9b6df084cc4a612bfc344dedd333df7",
+                        "kind": "adds_argument",
+                        "sourceEntityId": "5b5fbc866f208ee80dfb221aea7090336c11586fc69ef7c994498645a0668731",
+                        "targetEntityId": "dbd4a5531d2dfa83811bc8d280413ffa3b30e51a5075c352f1ac1e3707ae6f2b"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "id": "step:52c130bb182153af9aa29bd5c050ae7d9b9b22f00855ab195b5b1aba84a6b495",
+            "kind": "compiler_flag",
+            "provenance": [
+              {
+                "id": "df789878fa053410d7521f8c164887bcf2e37f66b22ed0a8dad45a61d8b4ad9f",
+                "kind": "evidence",
+                "producer": "bounded-rpm-parser"
+              }
+            ],
+            "reason": "Observed by bounded-rpm-parser.",
+            "reasonCodes": [
+              "inactive_branch"
+            ],
+            "selectionStatus": "inactive",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 27,
+                    "line": 21,
+                    "startColumn": 22
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "Name: demo"
+                  },
+                  {
+                    "line": 2,
+                    "text": "Version: 1"
+                  },
+                  {
+                    "line": 3,
+                    "text": "Release: 1"
+                  },
+                  {
+                    "line": 4,
+                    "text": "Summary: Static scanner oracle"
+                  },
+                  {
+                    "line": 5,
+                    "text": "License: MIT"
+                  },
+                  {
+                    "line": 6,
+                    "text": "%if \"%{_target_cpu}\" == \"x86_64\""
+                  },
+                  {
+                    "line": 7,
+                    "text": "BuildRequires: x86-only"
+                  },
+                  {
+                    "line": 8,
+                    "text": "%else"
+                  },
+                  {
+                    "line": 9,
+                    "text": "BuildRequires: portable"
+                  },
+                  {
+                    "line": 10,
+                    "text": "%endif"
+                  },
+                  {
+                    "line": 11,
+                    "text": "Requires: libfoo%{?_isa}"
+                  },
+                  {
+                    "line": 12,
+                    "text": "Recommends: liboptional(x86-64)"
+                  },
+                  {
+                    "line": 13,
+                    "text": "Requires: unknown%{?__external_isa}%{_arch}"
+                  },
+                  {
+                    "line": 14,
+                    "text": "%global machine %(uname -m)"
+                  },
+                  {
+                    "line": 15,
+                    "text": "%if \"%{machine}\" == \"riscv64\""
+                  },
+                  {
+                    "line": 16,
+                    "text": "Requires: common"
+                  },
+                  {
+                    "line": 17,
+                    "text": "%endif"
+                  },
+                  {
+                    "line": 18,
+                    "text": "%build"
+                  },
+                  {
+                    "line": 19,
+                    "text": "machine=$(uname -m)"
+                  },
+                  {
+                    "line": 20,
+                    "text": "case \"$machine\" in"
+                  },
+                  {
+                    "line": 21,
+                    "text": "x86_64|amd64) CFLAGS=-mavx ;;"
+                  },
+                  {
+                    "line": 22,
+                    "text": "riscv64) CFLAGS=-O2 ;;"
+                  },
+                  {
+                    "line": 23,
+                    "text": "*) CFLAGS=-O1 ;;"
+                  },
+                  {
+                    "line": 24,
+                    "text": "esac"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "demo.spec",
+              "span": {
+                "end": {
+                  "column": 27,
+                  "line": 21
+                },
+                "start": {
+                  "column": 22,
+                  "line": 21
+                }
+              }
+            },
+            "status": "inactive",
+            "symbol": "-mavx",
+            "title": "Compiler Flag: -mavx"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.rpm": {
+                "evidenceKind": "build_assignment",
+                "key": "demo.spec:19:1:build_assignment:17",
+                "package": "main",
+                "parents": [
+                  "demo.spec:18:1:build_package_section:16",
+                  "demo.spec:19:9:build_arch_probe:18"
+                ],
+                "profile": "rpm-4.20.0-upstream-target-v1",
+                "reason": "",
+                "resolvedValue": "riscv64",
+                "valueKnown": true,
+                "variable": "machine"
+              },
+              "org.rvport.kb-scanner.source-chain": {
+                "incoming": [
+                  {
+                    "fromEvidenceId": "35b2dda7a49b63a50043557027e91889fd4ce8c5d546b6c9ec0ac2784e8d2e5e",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "89f0bea42cc0b2fa93eb24f24c09357f5ccea39b58138cb1312a5bc6a33ff830",
+                        "kind": "defines",
+                        "sourceEntityId": "1d4b98ae900e8da880409d25e2112e29fdb42cce4f2f34b8c0f3a1dd0a11b9d4",
+                        "targetEntityId": "2eafe419068e163993bf38f9434963da58298ef8bf562347fa4c1a57698e37f5"
+                      }
+                    ]
+                  },
+                  {
+                    "fromEvidenceId": "b253d21a6c6c7e57e9a9d049c0185b48d87763eb89b4af51961d0c73a01daf5f",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "215fbc45533f85d79f7184688a6c6e9c48f2a570a7eea810ea4215433dbe1b10",
+                        "kind": "defines",
+                        "sourceEntityId": "a9331d8e72e5ebf25abe5494735aa44f486679bc8d1ae1aa70d860c825e10dc1",
+                        "targetEntityId": "2eafe419068e163993bf38f9434963da58298ef8bf562347fa4c1a57698e37f5"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "id": "step:6ba63def028a1f64cf148f8d48f60a9e54f16fd4cb8f639e83775da681342ab5",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "d641203a97c498e4b6f2148849613f0636233b5734f6c973375d4a3ff733773e",
+                "kind": "evidence",
+                "producer": "bounded-rpm-parser"
+              }
+            ],
+            "reason": "Observed by bounded-rpm-parser.",
+            "reasonCodes": [],
+            "selectionStatus": "selected",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 20,
+                    "line": 19,
+                    "startColumn": 1
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "Name: demo"
+                  },
+                  {
+                    "line": 2,
+                    "text": "Version: 1"
+                  },
+                  {
+                    "line": 3,
+                    "text": "Release: 1"
+                  },
+                  {
+                    "line": 4,
+                    "text": "Summary: Static scanner oracle"
+                  },
+                  {
+                    "line": 5,
+                    "text": "License: MIT"
+                  },
+                  {
+                    "line": 6,
+                    "text": "%if \"%{_target_cpu}\" == \"x86_64\""
+                  },
+                  {
+                    "line": 7,
+                    "text": "BuildRequires: x86-only"
+                  },
+                  {
+                    "line": 8,
+                    "text": "%else"
+                  },
+                  {
+                    "line": 9,
+                    "text": "BuildRequires: portable"
+                  },
+                  {
+                    "line": 10,
+                    "text": "%endif"
+                  },
+                  {
+                    "line": 11,
+                    "text": "Requires: libfoo%{?_isa}"
+                  },
+                  {
+                    "line": 12,
+                    "text": "Recommends: liboptional(x86-64)"
+                  },
+                  {
+                    "line": 13,
+                    "text": "Requires: unknown%{?__external_isa}%{_arch}"
+                  },
+                  {
+                    "line": 14,
+                    "text": "%global machine %(uname -m)"
+                  },
+                  {
+                    "line": 15,
+                    "text": "%if \"%{machine}\" == \"riscv64\""
+                  },
+                  {
+                    "line": 16,
+                    "text": "Requires: common"
+                  },
+                  {
+                    "line": 17,
+                    "text": "%endif"
+                  },
+                  {
+                    "line": 18,
+                    "text": "%build"
+                  },
+                  {
+                    "line": 19,
+                    "text": "machine=$(uname -m)"
+                  },
+                  {
+                    "line": 20,
+                    "text": "case \"$machine\" in"
+                  },
+                  {
+                    "line": 21,
+                    "text": "x86_64|amd64) CFLAGS=-mavx ;;"
+                  },
+                  {
+                    "line": 22,
+                    "text": "riscv64) CFLAGS=-O2 ;;"
+                  },
+                  {
+                    "line": 23,
+                    "text": "*) CFLAGS=-O1 ;;"
+                  },
+                  {
+                    "line": 24,
+                    "text": "esac"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "demo.spec",
+              "span": {
+                "end": {
+                  "column": 20,
+                  "line": 19
+                },
+                "start": {
+                  "column": 1,
+                  "line": 19
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "machine=$(uname -m)",
+            "title": "Source Evidence: machine=$(uname -m)"
+          },
+          {
+            "id": "step:9f92cd3c868be21663105363b3074caa97ada37f664cbeb7bfc12f0db7fd64dd",
+            "kind": "knowledge_match",
+            "knowledge": {
+              "category": "compilerFlags",
+              "entryId": "f2aa408dbfe3e57561835313a7898a8944e43d5d2a834a92eb355e2354441d4d",
+              "producer": "clang-x86-entries",
+              "provenance": [
+                {
+                  "id": "f2aa408dbfe3e57561835313a7898a8944e43d5d2a834a92eb355e2354441d4d",
+                  "kind": "knowledge",
+                  "producer": "clang-x86-entries"
+                }
+              ],
+              "sourceId": "clang-x86-entries",
+              "sourceSha256": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7",
+              "symbol": "-mavx"
+            },
+            "provenance": [
+              {
+                "id": "f2aa408dbfe3e57561835313a7898a8944e43d5d2a834a92eb355e2354441d4d",
+                "kind": "knowledge",
+                "producer": "clang-x86-entries"
+              }
+            ],
+            "reason": "The normalized value matches the loaded knowledge snapshot.",
+            "reasonCodes": [],
+            "status": "complete",
+            "symbol": "-mavx",
+            "title": "Knowledge matches -mavx"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.rpm": {
+                "conditionGroup": "demo.spec:20:1",
+                "conditionTruth": false,
+                "evidenceKind": "build_branch",
+                "key": "demo.spec:21:1:build_branch:19",
+                "package": "main",
+                "parents": [
+                  "demo.spec:18:1:build_package_section:16",
+                  "demo.spec:19:9:build_arch_probe:18",
+                  "demo.spec:19:1:build_assignment:17"
+                ],
+                "profile": "rpm-4.20.0-upstream-target-v1",
+                "reason": ""
+              },
+              "org.rvport.kb-scanner.source-chain": {
+                "incoming": [
+                  {
+                    "fromEvidenceId": "35b2dda7a49b63a50043557027e91889fd4ce8c5d546b6c9ec0ac2784e8d2e5e",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "02566fc1bad9548e067f7ffa147e8fa2ce2f1c283ffa1dd4cd5bd642579512ba",
+                        "kind": "selects",
+                        "sourceEntityId": "1d4b98ae900e8da880409d25e2112e29fdb42cce4f2f34b8c0f3a1dd0a11b9d4",
+                        "targetEntityId": "5b5fbc866f208ee80dfb221aea7090336c11586fc69ef7c994498645a0668731"
+                      }
+                    ]
+                  },
+                  {
+                    "fromEvidenceId": "b253d21a6c6c7e57e9a9d049c0185b48d87763eb89b4af51961d0c73a01daf5f",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "d27f7e1f978b703a8ab34fc1999b0371a88f7e5169b582e3274e6aa08bceb087",
+                        "kind": "selects",
+                        "sourceEntityId": "a9331d8e72e5ebf25abe5494735aa44f486679bc8d1ae1aa70d860c825e10dc1",
+                        "targetEntityId": "5b5fbc866f208ee80dfb221aea7090336c11586fc69ef7c994498645a0668731"
+                      }
+                    ]
+                  },
+                  {
+                    "fromEvidenceId": "d641203a97c498e4b6f2148849613f0636233b5734f6c973375d4a3ff733773e",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "a54a4eca3c10b084b9ad3696c442b90d801df43534400cdfa316ead27b8d2f80",
+                        "kind": "selects",
+                        "sourceEntityId": "2eafe419068e163993bf38f9434963da58298ef8bf562347fa4c1a57698e37f5",
+                        "targetEntityId": "5b5fbc866f208ee80dfb221aea7090336c11586fc69ef7c994498645a0668731"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "id": "step:c4b74c026f27f86a20f0dc31f06c12a4c8d26877bc2840a0d3d8f6946953d0bc",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "dfac55ff09f5142018fdf3ee7579c441945af843b0b6304f5b73537cdbf94dfc",
+                "kind": "evidence",
+                "producer": "bounded-rpm-parser"
+              }
+            ],
+            "reason": "Observed by bounded-rpm-parser.",
+            "reasonCodes": [
+              "inactive_branch"
+            ],
+            "selectionStatus": "inactive",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 30,
+                    "line": 21,
+                    "startColumn": 1
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "Name: demo"
+                  },
+                  {
+                    "line": 2,
+                    "text": "Version: 1"
+                  },
+                  {
+                    "line": 3,
+                    "text": "Release: 1"
+                  },
+                  {
+                    "line": 4,
+                    "text": "Summary: Static scanner oracle"
+                  },
+                  {
+                    "line": 5,
+                    "text": "License: MIT"
+                  },
+                  {
+                    "line": 6,
+                    "text": "%if \"%{_target_cpu}\" == \"x86_64\""
+                  },
+                  {
+                    "line": 7,
+                    "text": "BuildRequires: x86-only"
+                  },
+                  {
+                    "line": 8,
+                    "text": "%else"
+                  },
+                  {
+                    "line": 9,
+                    "text": "BuildRequires: portable"
+                  },
+                  {
+                    "line": 10,
+                    "text": "%endif"
+                  },
+                  {
+                    "line": 11,
+                    "text": "Requires: libfoo%{?_isa}"
+                  },
+                  {
+                    "line": 12,
+                    "text": "Recommends: liboptional(x86-64)"
+                  },
+                  {
+                    "line": 13,
+                    "text": "Requires: unknown%{?__external_isa}%{_arch}"
+                  },
+                  {
+                    "line": 14,
+                    "text": "%global machine %(uname -m)"
+                  },
+                  {
+                    "line": 15,
+                    "text": "%if \"%{machine}\" == \"riscv64\""
+                  },
+                  {
+                    "line": 16,
+                    "text": "Requires: common"
+                  },
+                  {
+                    "line": 17,
+                    "text": "%endif"
+                  },
+                  {
+                    "line": 18,
+                    "text": "%build"
+                  },
+                  {
+                    "line": 19,
+                    "text": "machine=$(uname -m)"
+                  },
+                  {
+                    "line": 20,
+                    "text": "case \"$machine\" in"
+                  },
+                  {
+                    "line": 21,
+                    "text": "x86_64|amd64) CFLAGS=-mavx ;;"
+                  },
+                  {
+                    "line": 22,
+                    "text": "riscv64) CFLAGS=-O2 ;;"
+                  },
+                  {
+                    "line": 23,
+                    "text": "*) CFLAGS=-O1 ;;"
+                  },
+                  {
+                    "line": 24,
+                    "text": "esac"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "demo.spec",
+              "span": {
+                "end": {
+                  "column": 30,
+                  "line": 21
+                },
+                "start": {
+                  "column": 1,
+                  "line": 21
+                }
+              }
+            },
+            "status": "inactive",
+            "symbol": "x86_64|amd64) CFLAGS=-mavx ;;",
+            "title": "Source Evidence: x86_64|amd64) CFLAGS=-mavx ;;"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.rpm": {
+                "evidenceKind": "build_package_section",
+                "key": "demo.spec:18:1:build_package_section:16",
+                "package": "main",
+                "parents": [],
+                "profile": "rpm-4.20.0-upstream-target-v1"
+              }
+            },
+            "id": "step:fc4e5f03d7879edfefea29ee725dbb51de945fde061e4eae65552ab0fc462a64",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "35b2dda7a49b63a50043557027e91889fd4ce8c5d546b6c9ec0ac2784e8d2e5e",
+                "kind": "evidence",
+                "producer": "bounded-rpm-parser"
+              }
+            ],
+            "reason": "Observed by bounded-rpm-parser.",
+            "reasonCodes": [],
+            "selectionStatus": "selected",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 7,
+                    "line": 18,
+                    "startColumn": 1
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "Name: demo"
+                  },
+                  {
+                    "line": 2,
+                    "text": "Version: 1"
+                  },
+                  {
+                    "line": 3,
+                    "text": "Release: 1"
+                  },
+                  {
+                    "line": 4,
+                    "text": "Summary: Static scanner oracle"
+                  },
+                  {
+                    "line": 5,
+                    "text": "License: MIT"
+                  },
+                  {
+                    "line": 6,
+                    "text": "%if \"%{_target_cpu}\" == \"x86_64\""
+                  },
+                  {
+                    "line": 7,
+                    "text": "BuildRequires: x86-only"
+                  },
+                  {
+                    "line": 8,
+                    "text": "%else"
+                  },
+                  {
+                    "line": 9,
+                    "text": "BuildRequires: portable"
+                  },
+                  {
+                    "line": 10,
+                    "text": "%endif"
+                  },
+                  {
+                    "line": 11,
+                    "text": "Requires: libfoo%{?_isa}"
+                  },
+                  {
+                    "line": 12,
+                    "text": "Recommends: liboptional(x86-64)"
+                  },
+                  {
+                    "line": 13,
+                    "text": "Requires: unknown%{?__external_isa}%{_arch}"
+                  },
+                  {
+                    "line": 14,
+                    "text": "%global machine %(uname -m)"
+                  },
+                  {
+                    "line": 15,
+                    "text": "%if \"%{machine}\" == \"riscv64\""
+                  },
+                  {
+                    "line": 16,
+                    "text": "Requires: common"
+                  },
+                  {
+                    "line": 17,
+                    "text": "%endif"
+                  },
+                  {
+                    "line": 18,
+                    "text": "%build"
+                  },
+                  {
+                    "line": 19,
+                    "text": "machine=$(uname -m)"
+                  },
+                  {
+                    "line": 20,
+                    "text": "case \"$machine\" in"
+                  },
+                  {
+                    "line": 21,
+                    "text": "x86_64|amd64) CFLAGS=-mavx ;;"
+                  },
+                  {
+                    "line": 22,
+                    "text": "riscv64) CFLAGS=-O2 ;;"
+                  },
+                  {
+                    "line": 23,
+                    "text": "*) CFLAGS=-O1 ;;"
+                  },
+                  {
+                    "line": 24,
+                    "text": "esac"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "demo.spec",
+              "span": {
+                "end": {
+                  "column": 7,
+                  "line": 18
+                },
+                "start": {
+                  "column": 1,
+                  "line": 18
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "%build",
+            "title": "Source Evidence: %build"
+          }
+        ]
+      },
+      "fact": {
+        "extensions": {
+          "org.rvport.kb-scanner.rpm": {
+            "buildUseKnown": false,
+            "evidenceKind": "build_argument",
+            "key": "demo.spec:21:22:build_argument:21",
+            "package": "main",
+            "parents": [
+              "demo.spec:18:1:build_package_section:16",
+              "demo.spec:21:1:build_branch:19",
+              "demo.spec:21:15:build_assignment:20"
+            ],
+            "profile": "rpm-4.20.0-upstream-target-v1",
+            "reason": "",
+            "valueKnown": true
+          }
+        },
+        "kind": "build_argument",
+        "matchedText": "-mavx",
+        "primaryLocation": {
+          "context": {
+            "budget": {
+              "afterLines": 20,
+              "beforeLines": 20,
+              "maxCharacters": 65536,
+              "maxLines": 256,
+              "truncated": false
+            },
+            "highlights": [
+              {
+                "endColumn": 27,
+                "line": 21,
+                "startColumn": 22
+              }
+            ],
+            "lines": [
+              {
+                "line": 1,
+                "text": "Name: demo"
+              },
+              {
+                "line": 2,
+                "text": "Version: 1"
+              },
+              {
+                "line": 3,
+                "text": "Release: 1"
+              },
+              {
+                "line": 4,
+                "text": "Summary: Static scanner oracle"
+              },
+              {
+                "line": 5,
+                "text": "License: MIT"
+              },
+              {
+                "line": 6,
+                "text": "%if \"%{_target_cpu}\" == \"x86_64\""
+              },
+              {
+                "line": 7,
+                "text": "BuildRequires: x86-only"
+              },
+              {
+                "line": 8,
+                "text": "%else"
+              },
+              {
+                "line": 9,
+                "text": "BuildRequires: portable"
+              },
+              {
+                "line": 10,
+                "text": "%endif"
+              },
+              {
+                "line": 11,
+                "text": "Requires: libfoo%{?_isa}"
+              },
+              {
+                "line": 12,
+                "text": "Recommends: liboptional(x86-64)"
+              },
+              {
+                "line": 13,
+                "text": "Requires: unknown%{?__external_isa}%{_arch}"
+              },
+              {
+                "line": 14,
+                "text": "%global machine %(uname -m)"
+              },
+              {
+                "line": 15,
+                "text": "%if \"%{machine}\" == \"riscv64\""
+              },
+              {
+                "line": 16,
+                "text": "Requires: common"
+              },
+              {
+                "line": 17,
+                "text": "%endif"
+              },
+              {
+                "line": 18,
+                "text": "%build"
+              },
+              {
+                "line": 19,
+                "text": "machine=$(uname -m)"
+              },
+              {
+                "line": 20,
+                "text": "case \"$machine\" in"
+              },
+              {
+                "line": 21,
+                "text": "x86_64|amd64) CFLAGS=-mavx ;;"
+              },
+              {
+                "line": 22,
+                "text": "riscv64) CFLAGS=-O2 ;;"
+              },
+              {
+                "line": 23,
+                "text": "*) CFLAGS=-O1 ;;"
+              },
+              {
+                "line": 24,
+                "text": "esac"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete"
+          },
+          "file": "demo.spec",
+          "span": {
+            "end": {
+              "column": 27,
+              "line": 21
+            },
+            "start": {
+              "column": 22,
+              "line": 21
+            }
+          }
+        },
+        "provenance": [
+          {
+            "id": "df789878fa053410d7521f8c164887bcf2e37f66b22ed0a8dad45a61d8b4ad9f",
+            "kind": "evidence",
+            "producer": "bounded-rpm-parser"
+          }
+        ],
+        "symbol": "-mavx"
+      },
+      "id": "finding:1f2b2035c909801f5065dd3932f0309c8a787a94622c9eb54ea733773b06c8ac",
+      "occurrences": [
+        {
+          "configuration": "default",
+          "extensions": {
+            "org.rvport.kb-scanner.rpm": {
+              "evidenceKind": "build_package_section",
+              "key": "demo.spec:18:1:build_package_section:16",
+              "package": "main",
+              "parents": [],
+              "profile": "rpm-4.20.0-upstream-target-v1"
+            }
+          },
+          "id": "occurrence:6b0df6e90d7cf7ffe1c78ee62f509605feeea5e232ff36f3180d924d81433964",
+          "kind": "build_package_section",
+          "location": {
+            "context": {
+              "budget": {
+                "afterLines": 20,
+                "beforeLines": 20,
+                "maxCharacters": 65536,
+                "maxLines": 256,
+                "truncated": false
+              },
+              "highlights": [
+                {
+                  "endColumn": 7,
+                  "line": 18,
+                  "startColumn": 1
+                }
+              ],
+              "lines": [
+                {
+                  "line": 1,
+                  "text": "Name: demo"
+                },
+                {
+                  "line": 2,
+                  "text": "Version: 1"
+                },
+                {
+                  "line": 3,
+                  "text": "Release: 1"
+                },
+                {
+                  "line": 4,
+                  "text": "Summary: Static scanner oracle"
+                },
+                {
+                  "line": 5,
+                  "text": "License: MIT"
+                },
+                {
+                  "line": 6,
+                  "text": "%if \"%{_target_cpu}\" == \"x86_64\""
+                },
+                {
+                  "line": 7,
+                  "text": "BuildRequires: x86-only"
+                },
+                {
+                  "line": 8,
+                  "text": "%else"
+                },
+                {
+                  "line": 9,
+                  "text": "BuildRequires: portable"
+                },
+                {
+                  "line": 10,
+                  "text": "%endif"
+                },
+                {
+                  "line": 11,
+                  "text": "Requires: libfoo%{?_isa}"
+                },
+                {
+                  "line": 12,
+                  "text": "Recommends: liboptional(x86-64)"
+                },
+                {
+                  "line": 13,
+                  "text": "Requires: unknown%{?__external_isa}%{_arch}"
+                },
+                {
+                  "line": 14,
+                  "text": "%global machine %(uname -m)"
+                },
+                {
+                  "line": 15,
+                  "text": "%if \"%{machine}\" == \"riscv64\""
+                },
+                {
+                  "line": 16,
+                  "text": "Requires: common"
+                },
+                {
+                  "line": 17,
+                  "text": "%endif"
+                },
+                {
+                  "line": 18,
+                  "text": "%build"
+                },
+                {
+                  "line": 19,
+                  "text": "machine=$(uname -m)"
+                },
+                {
+                  "line": 20,
+                  "text": "case \"$machine\" in"
+                },
+                {
+                  "line": 21,
+                  "text": "x86_64|amd64) CFLAGS=-mavx ;;"
+                },
+                {
+                  "line": 22,
+                  "text": "riscv64) CFLAGS=-O2 ;;"
+                },
+                {
+                  "line": 23,
+                  "text": "*) CFLAGS=-O1 ;;"
+                },
+                {
+                  "line": 24,
+                  "text": "esac"
+                }
+              ],
+              "reasonCodes": [],
+              "status": "complete"
+            },
+            "file": "demo.spec",
+            "span": {
+              "end": {
+                "column": 7,
+                "line": 18
+              },
+              "start": {
+                "column": 1,
+                "line": 18
+              }
+            }
+          },
+          "provenance": [
+            {
+              "id": "35b2dda7a49b63a50043557027e91889fd4ce8c5d546b6c9ec0ac2784e8d2e5e",
+              "kind": "evidence",
+              "producer": "bounded-rpm-parser"
+            }
+          ],
+          "reasonCodes": [],
+          "selectionStatus": "selected",
+          "status": "complete"
+        },
+        {
+          "configuration": "default",
+          "extensions": {
+            "org.rvport.kb-scanner.rpm": {
+              "conditionGroup": "demo.spec:20:1",
+              "conditionTruth": false,
+              "evidenceKind": "build_branch",
+              "key": "demo.spec:21:1:build_branch:19",
+              "package": "main",
+              "parents": [
+                "demo.spec:18:1:build_package_section:16",
+                "demo.spec:19:9:build_arch_probe:18",
+                "demo.spec:19:1:build_assignment:17"
+              ],
+              "profile": "rpm-4.20.0-upstream-target-v1",
+              "reason": ""
+            }
+          },
+          "id": "occurrence:3ccb8e69a508a72115e5306f2de11ed1dd6674b67dfa3fb042b64e95f813dfc7",
+          "kind": "build_branch",
+          "location": {
+            "context": {
+              "budget": {
+                "afterLines": 20,
+                "beforeLines": 20,
+                "maxCharacters": 65536,
+                "maxLines": 256,
+                "truncated": false
+              },
+              "highlights": [
+                {
+                  "endColumn": 30,
+                  "line": 21,
+                  "startColumn": 1
+                }
+              ],
+              "lines": [
+                {
+                  "line": 1,
+                  "text": "Name: demo"
+                },
+                {
+                  "line": 2,
+                  "text": "Version: 1"
+                },
+                {
+                  "line": 3,
+                  "text": "Release: 1"
+                },
+                {
+                  "line": 4,
+                  "text": "Summary: Static scanner oracle"
+                },
+                {
+                  "line": 5,
+                  "text": "License: MIT"
+                },
+                {
+                  "line": 6,
+                  "text": "%if \"%{_target_cpu}\" == \"x86_64\""
+                },
+                {
+                  "line": 7,
+                  "text": "BuildRequires: x86-only"
+                },
+                {
+                  "line": 8,
+                  "text": "%else"
+                },
+                {
+                  "line": 9,
+                  "text": "BuildRequires: portable"
+                },
+                {
+                  "line": 10,
+                  "text": "%endif"
+                },
+                {
+                  "line": 11,
+                  "text": "Requires: libfoo%{?_isa}"
+                },
+                {
+                  "line": 12,
+                  "text": "Recommends: liboptional(x86-64)"
+                },
+                {
+                  "line": 13,
+                  "text": "Requires: unknown%{?__external_isa}%{_arch}"
+                },
+                {
+                  "line": 14,
+                  "text": "%global machine %(uname -m)"
+                },
+                {
+                  "line": 15,
+                  "text": "%if \"%{machine}\" == \"riscv64\""
+                },
+                {
+                  "line": 16,
+                  "text": "Requires: common"
+                },
+                {
+                  "line": 17,
+                  "text": "%endif"
+                },
+                {
+                  "line": 18,
+                  "text": "%build"
+                },
+                {
+                  "line": 19,
+                  "text": "machine=$(uname -m)"
+                },
+                {
+                  "line": 20,
+                  "text": "case \"$machine\" in"
+                },
+                {
+                  "line": 21,
+                  "text": "x86_64|amd64) CFLAGS=-mavx ;;"
+                },
+                {
+                  "line": 22,
+                  "text": "riscv64) CFLAGS=-O2 ;;"
+                },
+                {
+                  "line": 23,
+                  "text": "*) CFLAGS=-O1 ;;"
+                },
+                {
+                  "line": 24,
+                  "text": "esac"
+                }
+              ],
+              "reasonCodes": [],
+              "status": "complete"
+            },
+            "file": "demo.spec",
+            "span": {
+              "end": {
+                "column": 30,
+                "line": 21
+              },
+              "start": {
+                "column": 1,
+                "line": 21
+              }
+            }
+          },
+          "provenance": [
+            {
+              "id": "dfac55ff09f5142018fdf3ee7579c441945af843b0b6304f5b73537cdbf94dfc",
+              "kind": "evidence",
+              "producer": "bounded-rpm-parser"
+            }
+          ],
+          "reasonCodes": [
+            "inactive_branch"
+          ],
+          "selectionStatus": "inactive",
+          "status": "inactive"
+        },
+        {
+          "configuration": "default",
+          "extensions": {
+            "org.rvport.kb-scanner.rpm": {
+              "evidenceKind": "build_assignment",
+              "key": "demo.spec:21:15:build_assignment:20",
+              "package": "main",
+              "parents": [
+                "demo.spec:18:1:build_package_section:16",
+                "demo.spec:21:1:build_branch:19"
+              ],
+              "profile": "rpm-4.20.0-upstream-target-v1",
+              "reason": "",
+              "resolvedValue": "-mavx",
+              "valueKnown": true,
+              "variable": "CFLAGS"
+            }
+          },
+          "id": "occurrence:d05389f12769e0993cb55bb34735d9e8aec6a6071fd19507fc7ed9b5b0bf0d8f",
+          "kind": "build_assignment",
+          "location": {
+            "context": {
+              "budget": {
+                "afterLines": 20,
+                "beforeLines": 20,
+                "maxCharacters": 65536,
+                "maxLines": 256,
+                "truncated": false
+              },
+              "highlights": [
+                {
+                  "endColumn": 27,
+                  "line": 21,
+                  "startColumn": 15
+                }
+              ],
+              "lines": [
+                {
+                  "line": 1,
+                  "text": "Name: demo"
+                },
+                {
+                  "line": 2,
+                  "text": "Version: 1"
+                },
+                {
+                  "line": 3,
+                  "text": "Release: 1"
+                },
+                {
+                  "line": 4,
+                  "text": "Summary: Static scanner oracle"
+                },
+                {
+                  "line": 5,
+                  "text": "License: MIT"
+                },
+                {
+                  "line": 6,
+                  "text": "%if \"%{_target_cpu}\" == \"x86_64\""
+                },
+                {
+                  "line": 7,
+                  "text": "BuildRequires: x86-only"
+                },
+                {
+                  "line": 8,
+                  "text": "%else"
+                },
+                {
+                  "line": 9,
+                  "text": "BuildRequires: portable"
+                },
+                {
+                  "line": 10,
+                  "text": "%endif"
+                },
+                {
+                  "line": 11,
+                  "text": "Requires: libfoo%{?_isa}"
+                },
+                {
+                  "line": 12,
+                  "text": "Recommends: liboptional(x86-64)"
+                },
+                {
+                  "line": 13,
+                  "text": "Requires: unknown%{?__external_isa}%{_arch}"
+                },
+                {
+                  "line": 14,
+                  "text": "%global machine %(uname -m)"
+                },
+                {
+                  "line": 15,
+                  "text": "%if \"%{machine}\" == \"riscv64\""
+                },
+                {
+                  "line": 16,
+                  "text": "Requires: common"
+                },
+                {
+                  "line": 17,
+                  "text": "%endif"
+                },
+                {
+                  "line": 18,
+                  "text": "%build"
+                },
+                {
+                  "line": 19,
+                  "text": "machine=$(uname -m)"
+                },
+                {
+                  "line": 20,
+                  "text": "case \"$machine\" in"
+                },
+                {
+                  "line": 21,
+                  "text": "x86_64|amd64) CFLAGS=-mavx ;;"
+                },
+                {
+                  "line": 22,
+                  "text": "riscv64) CFLAGS=-O2 ;;"
+                },
+                {
+                  "line": 23,
+                  "text": "*) CFLAGS=-O1 ;;"
+                },
+                {
+                  "line": 24,
+                  "text": "esac"
+                }
+              ],
+              "reasonCodes": [],
+              "status": "complete"
+            },
+            "file": "demo.spec",
+            "span": {
+              "end": {
+                "column": 27,
+                "line": 21
+              },
+              "start": {
+                "column": 15,
+                "line": 21
+              }
+            }
+          },
+          "provenance": [
+            {
+              "id": "74f05069b952ffbda82491fc126d9e272739859b662023bf84b07c2745667a51",
+              "kind": "evidence",
+              "producer": "bounded-rpm-parser"
+            }
+          ],
+          "reasonCodes": [
+            "inactive_branch"
+          ],
+          "selectionStatus": "inactive",
+          "status": "inactive"
+        },
+        {
+          "configuration": "default",
+          "extensions": {
+            "org.rvport.kb-scanner.rpm": {
+              "buildUseKnown": false,
+              "evidenceKind": "build_argument",
+              "key": "demo.spec:21:22:build_argument:21",
+              "package": "main",
+              "parents": [
+                "demo.spec:18:1:build_package_section:16",
+                "demo.spec:21:1:build_branch:19",
+                "demo.spec:21:15:build_assignment:20"
+              ],
+              "profile": "rpm-4.20.0-upstream-target-v1",
+              "reason": "",
+              "valueKnown": true
+            }
+          },
+          "id": "occurrence:bdff9d808d4bb8d4d495d6a3bf5a9c7ead10827abbcf4fac77905a2a213370b3",
+          "kind": "build_argument",
+          "location": {
+            "context": {
+              "budget": {
+                "afterLines": 20,
+                "beforeLines": 20,
+                "maxCharacters": 65536,
+                "maxLines": 256,
+                "truncated": false
+              },
+              "highlights": [
+                {
+                  "endColumn": 27,
+                  "line": 21,
+                  "startColumn": 22
+                }
+              ],
+              "lines": [
+                {
+                  "line": 1,
+                  "text": "Name: demo"
+                },
+                {
+                  "line": 2,
+                  "text": "Version: 1"
+                },
+                {
+                  "line": 3,
+                  "text": "Release: 1"
+                },
+                {
+                  "line": 4,
+                  "text": "Summary: Static scanner oracle"
+                },
+                {
+                  "line": 5,
+                  "text": "License: MIT"
+                },
+                {
+                  "line": 6,
+                  "text": "%if \"%{_target_cpu}\" == \"x86_64\""
+                },
+                {
+                  "line": 7,
+                  "text": "BuildRequires: x86-only"
+                },
+                {
+                  "line": 8,
+                  "text": "%else"
+                },
+                {
+                  "line": 9,
+                  "text": "BuildRequires: portable"
+                },
+                {
+                  "line": 10,
+                  "text": "%endif"
+                },
+                {
+                  "line": 11,
+                  "text": "Requires: libfoo%{?_isa}"
+                },
+                {
+                  "line": 12,
+                  "text": "Recommends: liboptional(x86-64)"
+                },
+                {
+                  "line": 13,
+                  "text": "Requires: unknown%{?__external_isa}%{_arch}"
+                },
+                {
+                  "line": 14,
+                  "text": "%global machine %(uname -m)"
+                },
+                {
+                  "line": 15,
+                  "text": "%if \"%{machine}\" == \"riscv64\""
+                },
+                {
+                  "line": 16,
+                  "text": "Requires: common"
+                },
+                {
+                  "line": 17,
+                  "text": "%endif"
+                },
+                {
+                  "line": 18,
+                  "text": "%build"
+                },
+                {
+                  "line": 19,
+                  "text": "machine=$(uname -m)"
+                },
+                {
+                  "line": 20,
+                  "text": "case \"$machine\" in"
+                },
+                {
+                  "line": 21,
+                  "text": "x86_64|amd64) CFLAGS=-mavx ;;"
+                },
+                {
+                  "line": 22,
+                  "text": "riscv64) CFLAGS=-O2 ;;"
+                },
+                {
+                  "line": 23,
+                  "text": "*) CFLAGS=-O1 ;;"
+                },
+                {
+                  "line": 24,
+                  "text": "esac"
+                }
+              ],
+              "reasonCodes": [],
+              "status": "complete"
+            },
+            "file": "demo.spec",
+            "span": {
+              "end": {
+                "column": 27,
+                "line": 21
+              },
+              "start": {
+                "column": 22,
+                "line": 21
+              }
+            }
+          },
+          "provenance": [
+            {
+              "id": "df789878fa053410d7521f8c164887bcf2e37f66b22ed0a8dad45a61d8b4ad9f",
+              "kind": "evidence",
+              "producer": "bounded-rpm-parser"
+            }
+          ],
+          "reasonCodes": [
+            "inactive_branch"
+          ],
+          "selectionStatus": "inactive",
+          "status": "inactive"
+        }
+      ],
+      "primaryOccurrenceId": "occurrence:bdff9d808d4bb8d4d495d6a3bf5a9c7ead10827abbcf4fac77905a2a213370b3"
+    }
+  ],
+  "project": {
+    "filesAnalyzed": 1,
+    "id": "project:8862d32cba0c6477faeef557e6c808cbccd5c6375df31f0dbb346c0cb88f8dda",
+    "name": "rpm-architecture",
+    "reasonCodes": [],
+    "status": "complete"
+  },
+  "scan": {
+    "artifactNames": [
+      "scan-result.json",
+      "scan-report.html",
+      "scan.log"
+    ],
+    "id": "scan:0e4472d458b1afbf98dab938952ea112e6c35d9293f50d13fee3f07c975e3eaf",
+    "knowledgeSources": [
+      {
+        "id": "binutils-2.42-x86",
+        "kind": "compiler-derived",
+        "sha256": "e3ff7d8acccd50fd7e8a2f8c64d4a303e147b7540702a362c1b00f9bbdf29345"
+      },
+      {
+        "id": "clang-x86-entries",
+        "kind": "compiler-derived",
+        "sha256": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7"
+      },
+      {
+        "id": "curated-x86-migration-semantics",
+        "kind": "curated",
+        "sha256": "21b7ccc36186a21994c4e39965ece16da429da916a9272112f38817d3bcccc6b"
+      },
+      {
+        "id": "gcc-14.2.0-x86-target",
+        "kind": "compiler-derived",
+        "sha256": "aa04d904fb8dd76c20898ec3b11355e3ed30c742865cdbe6bdfea9c084dea26c"
+      },
+      {
+        "id": "gcc-x86-entries",
+        "kind": "compiler-derived",
+        "sha256": "89775341ee880b13ac4f10a30558ff5d52875b25a3233114a5765601f0a9dad9"
+      },
+      {
+        "id": "llvm-18.1.8-x86",
+        "kind": "compiler-derived",
+        "sha256": "021708c5e89a9565c36d83f98e8175cd058b1afb9c39c660e0d7e1425ad64722"
+      }
+    ],
+    "scope": {
+      "compiled": false,
+      "domain": "c-cpp-x86-to-riscv",
+      "linked": false,
+      "staticAnalysisOnly": true,
+      "targetArchitecture": "riscv64",
+      "testsExecuted": false
+    },
+    "tool": {
+      "name": "kb-scanner",
+      "version": "0.1.0"
+    }
+  },
+  "schemaVersion": "2.0",
+  "summary": {
+    "blocking": 0,
+    "countUnit": "finding",
+    "files": 1,
+    "findings": 1,
+    "hints": 0,
+    "inactiveOrGuarded": 1,
+    "issues": 1,
+    "portabilityGaps": 0,
+    "readiness": "provisional",
+    "reasonCodes": [],
+    "referenceSources": 0,
+    "references": 0,
+    "status": "complete"
+  }
+}

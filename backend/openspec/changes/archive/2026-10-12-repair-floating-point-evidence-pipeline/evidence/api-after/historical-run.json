@@ -1,0 +1,83 @@
+{
+  "id": "aee4ef66-6d81-4e88-afd7-606cc7d6cc9a",
+  "projectId": "9915a12c-9338-419e-b589-9a3984d56c62",
+  "taskId": "a7653736-9b55-4b0c-89f1-12fb67c4b0c2",
+  "analyzerType": "FLOATING_POINT",
+  "sourceRevisionId": "a019391f-89e6-4d8e-8eed-1b7871055541",
+  "buildRunId": "be53c759-1e2e-459a-9f73-ef8289ecfaf2",
+  "artifactSetId": null,
+  "analysisMode": "AST_ONLY",
+  "bcStatus": "INVALID",
+  "bcPlannedCount": 14,
+  "bcUsableCount": 0,
+  "bcFailedCount": 1,
+  "astOnlyCount": 14,
+  "bcDegradationReason": "BITCODE_WORKER_VALIDATION_FAILED",
+  "environmentConfigVersion": 2,
+  "toolVersion": "0.5.1",
+  "status": "PARTIAL",
+  "verdict": "partial",
+  "exitCode": 4,
+  "summary": {
+    "status": "partial",
+    "verdict": "analyzed",
+    "bcStatus": "INVALID",
+    "analysisMode": "AST_ONLY",
+    "analyzerType": "FLOATING_POINT",
+    "astOnlyCount": 14,
+    "findingCount": 1,
+    "bcFailedCount": 1,
+    "bcUsableCount": 0,
+    "bcPlannedCount": 14,
+    "candidateCount": 0,
+    "diagnosticCount": 3,
+    "languageContexts": [
+      {
+        "dialect": "compiler-default",
+        "compiler": "c++",
+        "language": "c++",
+        "standard": "compiler-default",
+        "standardOption": null,
+        "standardSource": "compiler-default"
+      },
+      {
+        "dialect": "compiler-default",
+        "compiler": "ld",
+        "language": "c",
+        "standard": "compiler-default",
+        "standardOption": null,
+        "standardSource": "compiler-default"
+      },
+      {
+        "dialect": "iso",
+        "compiler": "c++",
+        "language": "c++",
+        "standard": "c++17",
+        "standardOption": "-std=c++17",
+        "standardSource": "explicit"
+      },
+      {
+        "dialect": "compiler-default",
+        "compiler": "ar",
+        "language": "c",
+        "standard": "compiler-default",
+        "standardOption": null,
+        "standardSource": "compiler-default"
+      }
+    ],
+    "sourceRootDigest": "cf77ff4ee3f9e61fd5ce0c1bdeb34c48ca25507d421a963536a1eb2e074b13c7",
+    "bcDegradationReason": "BITCODE_WORKER_VALIDATION_FAILED"
+  },
+  "findingCount": 1,
+  "candidateCount": 0,
+  "diagnosticCount": 3,
+  "currentSourceRevision": true,
+  "staleReasons": [],
+  "requestArtifactId": "29ebcd87-750e-40a5-a00e-c64c4fee7716",
+  "resultJsonArtifactId": "f89aeb17-18bf-4ec8-a5fd-8f1aacdb1024",
+  "resultHtmlArtifactId": "1986f1f3-de40-427b-af0f-20e4f9cc7e73",
+  "auditBundleArtifactId": null,
+  "startedAt": "2026-10-12T02:53:44.431608Z",
+  "finishedAt": "2026-10-12T02:55:39.306977Z",
+  "createdAt": "2026-10-12T02:53:43.142703Z"
+}

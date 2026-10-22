@@ -1,0 +1,2309 @@
+{
+  "diagnostics": [
+    {
+      "code": "source_mapping_incomplete",
+      "count": 3,
+      "findingIds": [],
+      "id": "5a8c13b9087f109f21eed5201fa555b90812200b27906378079016b6d3f3027b",
+      "location": null,
+      "message": "部分 LLVM 浮点事实没有源码证据。",
+      "messageEn": "Some LLVM floating-point facts have no source evidence.",
+      "retryable": false,
+      "severity": "warning",
+      "stage": "evidence",
+      "suggestion": "请检查输入并重试。",
+      "suggestionEn": "Check the input and retry.",
+      "translationUnitId": "b3408b50c78f38c08971804fc84d3f00f784cc5e6115a746f19356d3d48ff414"
+    }
+  ],
+  "extensions": {
+    "org.rvport.floating-point-scanner.analysis": {
+      "analysisScope": "migrationRisks",
+      "assessments": [
+        {
+          "evidence": [
+            {
+              "digest": "c99cc2de75123790f668528001939dff6f92b2496c150458546afc9a0970a230",
+              "id": "c99cc2de75123790f668528001939dff6f92b2496c150458546afc9a0970a230",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "059a4117c0803d279c1ebe7bb6768fff8422da23afe543eeffc10b1fe19ce042",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "f1e74e24f184bcc490c1f3507e4e34b56e24cad8ff241ad03de3af42de9f72c4",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "b9b18403b8e608e3e71286f429e15d5fbcf3e4fc1cdab06fa58d5e81b808a6c9",
+              "id": "b9b18403b8e608e3e71286f429e15d5fbcf3e4fc1cdab06fa58d5e81b808a6c9",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "05dd75e5b62ea85b27875c39a72242960ae01462a69afcb8ac417c1d608ab25d",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "3649e5764f5326125d3907a67c68d52be882d77c5a4d4f96c36518b72c42d494",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "080dfbe6afc318ac5136bb7f0c93e113c46307e23880a6b4781e9c10f595a3eb",
+          "reasonCode": "no_reduction",
+          "ruleCode": "reduction-reassociation",
+          "ruleVersion": "1.0",
+          "scope": "b3408b50c78f38c08971804fc84d3f00f784cc5e6115a746f19356d3d48ff414",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "18ae6f7362a6d2799fe642839e5d40bd44ad546a9952766de9e05d5fb3ed448e",
+          "reasonCode": "no_math_call",
+          "ruleCode": "math-library-variance",
+          "ruleVersion": "1.0",
+          "scope": "c15f8a7e9045577ec8f7a242fb4016ad3340bf238f054b5ad20bb2aa0f4326a3",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "9c1c7077af3b51732669fc1726ea01fdc0ff67ccc7e47e8c6c7494c4ebd6113d",
+              "id": "9c1c7077af3b51732669fc1726ea01fdc0ff67ccc7e47e8c6c7494c4ebd6113d",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "18b9d9002a3ed39f788a0ffe2cfe77431923f0309ad09c33d40ce7f4a2496e6d",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "1a9a4812c47702472ce14894e0d9909eb6c5381b5239c7559cbc423c08aee44c",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "8e3f425ddd2f3c303fcd09f77064aa8f9c84c3329d9eb87c7da75f70d95a9eb0",
+              "id": "8e3f425ddd2f3c303fcd09f77064aa8f9c84c3329d9eb87c7da75f70d95a9eb0",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "1da67dbd73af5a0bf3be8d3599d14660936ab264c6ade2b9ade0914cc294a9a4",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "33655529fac18cf9e29828874e8ed39fda1e0fabb1dde25bb49ec8e32e161dc0",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "083d1a9de4db260fd3d7f3e73c26957d1c65eed83845d3b688bf9a32866e7286",
+              "id": "083d1a9de4db260fd3d7f3e73c26957d1c65eed83845d3b688bf9a32866e7286",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "28c4ecb1450cb86fc6d6eaac65c20485f1df51d04e214629895dbbc7be15dca6",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "402e89d47078876c38f5f61d87a1ca0f547372e9bd0875e6e38521a026475003",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "2cdf16aecfa1c6dbf7f3b8691bdc980ef7e5f8a091c39224ac5b532b3e4ade26",
+          "reasonCode": "no_float_comparison",
+          "ruleCode": "fragile-fp-comparison",
+          "ruleVersion": "1.0",
+          "scope": "25841b60b94dbdaf1c9269861f502658adde00a37454e8d10c61690c34f9d660",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "a76ecc159d0b57538aa1b3d40110aa19352d543506bd668e49914009a8ce5278",
+              "id": "a76ecc159d0b57538aa1b3d40110aa19352d543506bd668e49914009a8ce5278",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "2ecdf1b3d1ec227ce7af350610d7823c9b61003c199496603fcef7be5d437da9",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "ed9468cd5346ad365e1ba401b0992cbca797ce95a92dbb8dfc251ca86e083258",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "fd36c058463c761b1d2f861bbf03292677d340090a65f834a6b98039728000df",
+              "id": "fd36c058463c761b1d2f861bbf03292677d340090a65f834a6b98039728000df",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "3817368b73040e7f125671a3d69af572562eb21e1af11e6834d74cf5824861e1",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "9f78018b0943878309283f6d79dc83b5d675358283ed21cd12f0e6cc92c49bbd",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "65004460cf5a6306d1d72d07ce4a17b2484507bdb79b70e86744f6d99a74f312",
+              "id": "65004460cf5a6306d1d72d07ce4a17b2484507bdb79b70e86744f6d99a74f312",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "3963edb7f31a5c038d2db77f0bcc41c6fd670bfe09bc9015ef87bdcd3e8b4be6",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "f2b9ee9dfd912fda558ee21700ccbffb9f962e16b24d029828c489523689d836",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "ca7f9af442cb11bdeaf7f439cc785809ca2cfb149641a933a0192c30d72255b3",
+              "id": "ca7f9af442cb11bdeaf7f439cc785809ca2cfb149641a933a0192c30d72255b3",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "3b65fdd04c257a63accacfea6c1c66ac89b3c21bd550cdd17e1a1477d20d8dd8",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "ad060491e0109d95500d189e6c24189c796a00740fa06068112112fe68415675",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "40c98738ec493009c3387384c31969f8019f314bef959627fca780dad70447c6",
+          "reasonCode": "no_abi_boundary",
+          "ruleCode": "long-double-abi",
+          "ruleVersion": "1.1",
+          "scope": "25841b60b94dbdaf1c9269861f502658adde00a37454e8d10c61690c34f9d660",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "96240bb03f61ea42a1cbdfc8e50738e8a70d8022c46b7b4ffdaea3dfaa36443c",
+              "id": "96240bb03f61ea42a1cbdfc8e50738e8a70d8022c46b7b4ffdaea3dfaa36443c",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "414718c8107d006ae5c7db213b2c9cbbbcadc3c83ba3633befe842b300a06945",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "5efa6fd0e1735f56ec61c43a893cb124caa2a41ecafa31c88d561a081e327e18",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "42365d5d1f3de231724074871430d7b8b53b32d92338bd67a3974f4c73a66ecf",
+          "reasonCode": "no_implicit_fma_candidate",
+          "ruleCode": "fma-contraction",
+          "ruleVersion": "1.0",
+          "scope": "c15f8a7e9045577ec8f7a242fb4016ad3340bf238f054b5ad20bb2aa0f4326a3",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "4937c072d05238d7ad85a68dd81298d93429ffb6116975cddb77ad36b0891484",
+          "reasonCode": "no_architecture_api",
+          "ruleCode": "architecture-specific-fp-api",
+          "ruleVersion": "1.0",
+          "scope": "25841b60b94dbdaf1c9269861f502658adde00a37454e8d10c61690c34f9d660",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "500dee6a64421d097e8871495f684229e045a6375e59112f1b89a3e4ea4854b7",
+          "reasonCode": "no_float_comparison",
+          "ruleCode": "fragile-fp-comparison",
+          "ruleVersion": "1.0",
+          "scope": "c15f8a7e9045577ec8f7a242fb4016ad3340bf238f054b5ad20bb2aa0f4326a3",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "525891b1664764ce4ea0b4dbabcae34e1a5e52fd2af1a2503804d537fa006f7b",
+          "reasonCode": "no_environment_access",
+          "ruleCode": "floating-environment",
+          "ruleVersion": "1.0",
+          "scope": "b3408b50c78f38c08971804fc84d3f00f784cc5e6115a746f19356d3d48ff414",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "b9e860070188e3b04a9b6ebe51a14928a8bf77f4cb48293bd994522afdab8dc9",
+              "id": "b9e860070188e3b04a9b6ebe51a14928a8bf77f4cb48293bd994522afdab8dc9",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "52d72eb868d723f7262b586bcd7b7253638df796643227b54091ad0a177394b4",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "093597a545f6d572cca1b540dabc3ebd93f1a81d17c0315b172cc592547706fe",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "55dfae60ccbe0cf84c0ade249807b7ec09f1e243644315dcda91fb59a1e23f9f",
+          "reasonCode": "no_abi_boundary",
+          "ruleCode": "long-double-abi",
+          "ruleVersion": "1.1",
+          "scope": "c15f8a7e9045577ec8f7a242fb4016ad3340bf238f054b5ad20bb2aa0f4326a3",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "caddea6b175be102a27f5ee2dfd54f545dda18f951ecea06b981927c7c1f96c1",
+              "id": "caddea6b175be102a27f5ee2dfd54f545dda18f951ecea06b981927c7c1f96c1",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "58de448e002aeb71be6ec9f8a2464877a304c20c7b54abe10faad4252284a7fc",
+          "reasonCode": "comparison_guarded_or_stable",
+          "ruleCode": "fragile-fp-comparison",
+          "ruleVersion": "1.0",
+          "scope": "b3408b50c78f38c08971804fc84d3f00f784cc5e6115a746f19356d3d48ff414",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "ee7da72dfc2f4b59650ad2e891e606d5b7f53d67786007dbeefcb6d50150d9bc",
+              "id": "ee7da72dfc2f4b59650ad2e891e606d5b7f53d67786007dbeefcb6d50150d9bc",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "5c252b8c658f737f550cf02c55adedb8179e100a4da05f39d618337ff9c6f790",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "9ea4277f945230bfc225e88305927aa74f4f09a89092c1cb1475522e151dd75e",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "983f030068c6bed58ca767e303b066dd3f50d3788f64d8aae642b80636926641",
+              "id": "983f030068c6bed58ca767e303b066dd3f50d3788f64d8aae642b80636926641",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "64797cea80852fdba3df656d2519676bd79a2a5922acc8b2f151c283a4ad78d5",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "dd1972e0c0cff3a1df425bd61c3a69c5e9d41b0a9b9645bbfedd270d616280ce",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "6db5887279875d4d940cc4faccbd024ca9a00b0b0a1d8bd539b4c0f791637a4c",
+          "reasonCode": "no_environment_access",
+          "ruleCode": "floating-environment",
+          "ruleVersion": "1.0",
+          "scope": "25841b60b94dbdaf1c9269861f502658adde00a37454e8d10c61690c34f9d660",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "b808b4f6ac985f434e84586b5f53c1b859e56fbb678dca576edfeb6e4e126714",
+              "id": "b808b4f6ac985f434e84586b5f53c1b859e56fbb678dca576edfeb6e4e126714",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "7226a7063718233694187901e3f0eedaee9eac6577ed53226add6ecdbc18a0de",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "62f42620e19d6bdcf79a2464323225e019edf03f365c85231d43f835ac5f6f72",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "5f7734edc218a7f6ff1a6c9209aa099d8cae49999bc349437fb6efff75d4aa7f",
+              "id": "5f7734edc218a7f6ff1a6c9209aa099d8cae49999bc349437fb6efff75d4aa7f",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "75ebc1e49333d61a15c5bdcba58e9ff8b49707157f9297f04a79f12af135144c",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "a9da3ff3a4763e5c400401f9ad887f049e07431d45bf857b81003742eea03598",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "7763cfbe8302f6ecdb0f43e2a3966943209f402583003ab7470ef97a01c53d7a",
+          "reasonCode": "no_operation_chain",
+          "ruleCode": "x87-excess-precision",
+          "ruleVersion": "1.0",
+          "scope": "25841b60b94dbdaf1c9269861f502658adde00a37454e8d10c61690c34f9d660",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "5958cc42242ff4b388c08053051816642d287c1eddfef78b1a9b467b3c29e3e2",
+              "id": "5958cc42242ff4b388c08053051816642d287c1eddfef78b1a9b467b3c29e3e2",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "77addbf5ddb117eb52349cb89be62b12c35cd347e8c83ddf4a6f99c6e7e4dc97",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "8a581018ded203b83e3ab2acc7c05f734aba2e1af15c0b52409f110d95046209",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "7bac502036980e33c43e3139601dd7dd1892df6acff416a55e73e0e906df1159",
+          "reasonCode": "no_operation_chain",
+          "ruleCode": "x87-excess-precision",
+          "ruleVersion": "1.0",
+          "scope": "c15f8a7e9045577ec8f7a242fb4016ad3340bf238f054b5ad20bb2aa0f4326a3",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "81e0c06b70d023da3d605d019cc20512764b88fed1194551de8b98135a08392e",
+          "reasonCode": "no_implicit_fma_candidate",
+          "ruleCode": "fma-contraction",
+          "ruleVersion": "1.0",
+          "scope": "b3408b50c78f38c08971804fc84d3f00f784cc5e6115a746f19356d3d48ff414",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "3b12860ffbeb05ca223332f73dfd71444f2d94d82f3e88af1d01276fd6e726bb",
+              "id": "3b12860ffbeb05ca223332f73dfd71444f2d94d82f3e88af1d01276fd6e726bb",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "8661a492f211edd71a57207ba2da7bc8313507e63f9bea80394c23e590f214cc",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "f769ed3b4ecbd790d587a21cb79b4c1f54c2b19d8dc25b773ed23f7b48b6ed00",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "8fd168a39c1368e3bcb5671611f5c1f87e94cf37e74ae19daf385e6ff41f1a18",
+          "reasonCode": "no_architecture_api",
+          "ruleCode": "architecture-specific-fp-api",
+          "ruleVersion": "1.0",
+          "scope": "c15f8a7e9045577ec8f7a242fb4016ad3340bf238f054b5ad20bb2aa0f4326a3",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "72108b70af0245beaa527ab6be61a368d1aec7fc80f1e4e4d0f81ce104d31b37",
+              "id": "72108b70af0245beaa527ab6be61a368d1aec7fc80f1e4e4d0f81ce104d31b37",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "90051af73d77337cb3d783fd4307cb797a749454fa2c3ea01babbd4b4e5646fc",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "b607ca0565a8c337c994624929d5193304b9349187853546f6a4bf8164a69ce1",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "3ad4e46dfaba289275762336fa1cdbacffb878913231c687a17ad294f57cabf3",
+              "id": "3ad4e46dfaba289275762336fa1cdbacffb878913231c687a17ad294f57cabf3",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "962740a0e34094c9c83e7184dfb02c492f0c3aadb3bcba6a74f6f93d9a71d5da",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "871d23bb0cceaf34725949b057b821542e2eb057c4c7578976fcd2fb993b1f79",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "990149fe0f30ce51a36cae8c0be104a32f898757b20d6e1017e433bc46598359",
+          "reasonCode": "strict_fp_semantics",
+          "ruleCode": "unsafe-fp-optimization",
+          "ruleVersion": "1.0",
+          "scope": "c15f8a7e9045577ec8f7a242fb4016ad3340bf238f054b5ad20bb2aa0f4326a3",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "03bc2fca573899b2789fa43add452d88719bf5b4493c8b649fe7bd86ee730b10",
+              "id": "03bc2fca573899b2789fa43add452d88719bf5b4493c8b649fe7bd86ee730b10",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "9c1bf3386b3b9a532f97bd7d014ae86c700e9ca860d33d61e73c6b382d527ab6",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "9baa3cbc19ae75a0d4f790271214719292308512213f1964679b26d1a14d1759",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "9c3f6b7f3192af703a187d30f5031cae1ce1fe6e39b0f5867b0592208892e3fd",
+          "reasonCode": "strict_fp_semantics",
+          "ruleCode": "unsafe-fp-optimization",
+          "ruleVersion": "1.0",
+          "scope": "25841b60b94dbdaf1c9269861f502658adde00a37454e8d10c61690c34f9d660",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "a82c866750d5347578b2be11470f893c0c652e3741cd417770cbe8c091784acd",
+              "id": "a82c866750d5347578b2be11470f893c0c652e3741cd417770cbe8c091784acd",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "a4ec253a076125a6ddd8143abe06a423d21fd6f2a8771edbca082b335030784b",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "2bfa85bdb76062fd9bbb14fafb6a131c9eecc070325349e6b6afb42d5eeaaddd",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "b9103a961604b041b3c1667b0fbce84066e81eb6829844a56ebe24abbfde0d05",
+              "id": "b9103a961604b041b3c1667b0fbce84066e81eb6829844a56ebe24abbfde0d05",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "ac990cdfb0ef13a59525ce52248581a9db9d01a7478fd345aed6b5978b219360",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "96d5d6d03fa8347c278c8fef0c767186ed3a98da0b634590c199d8d9bcafad0f",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "b06ef4ec1142a144a06cda3cbbea8d49b4545580928ec43b380f889a4fffc517",
+          "reasonCode": "strict_fp_semantics",
+          "ruleCode": "unsafe-fp-optimization",
+          "ruleVersion": "1.0",
+          "scope": "b3408b50c78f38c08971804fc84d3f00f784cc5e6115a746f19356d3d48ff414",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "72a35acecb1de428dab47c5ec2205891bdb2df0b1cc7e7f793d12235814cbf51",
+              "id": "72a35acecb1de428dab47c5ec2205891bdb2df0b1cc7e7f793d12235814cbf51",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "b23f424eca46c2cdf31b0eba3be883d4b40098ca69645c23cf937441b2b31bd9",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "583ef4105c5f209d5db2030f393e8b289a7b2f33dc32a1c9f303644498a4bb96",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "b4278c00ad4d740916c0b850c87a55c39637b99acbaf96b25fa11e3b17b34055",
+          "reasonCode": "no_math_call",
+          "ruleCode": "math-library-variance",
+          "ruleVersion": "1.0",
+          "scope": "25841b60b94dbdaf1c9269861f502658adde00a37454e8d10c61690c34f9d660",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "ba996647b2e50df4bb0073789e9e34c958f7cc7339d1608d7816cd4acda01372",
+          "reasonCode": "no_conversion",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "c15f8a7e9045577ec8f7a242fb4016ad3340bf238f054b5ad20bb2aa0f4326a3",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "be4ca72e2e3044cd1f5e09edc33f98be766bfe227d806b9041971b2ceca34abc",
+          "reasonCode": "no_implicit_fma_candidate",
+          "ruleCode": "fma-contraction",
+          "ruleVersion": "1.0",
+          "scope": "25841b60b94dbdaf1c9269861f502658adde00a37454e8d10c61690c34f9d660",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "67ccd5e73f59fff7889ba4a8269a89d88c32ca347e7123e920c657499186a83c",
+              "id": "67ccd5e73f59fff7889ba4a8269a89d88c32ca347e7123e920c657499186a83c",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "c7ca7e8fcd7062a8230fe2b9f66127e8175946d22987ad75a01332a6fd4604c5",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "f968f5e0cd377b1edd38d00cf41acdaf82a217fa18d39bc8518b7e2b4b6c1d9a",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "ca20e5c2e4c596ae5f8d1d415a94732dbb240085b854fd107611627e74e24791",
+              "id": "ca20e5c2e4c596ae5f8d1d415a94732dbb240085b854fd107611627e74e24791",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "cede74cd6a2d9b2b0ae55af2cb05a678ad5fb7e711be8f9647b46ff5aa8aaeed",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "3347628e3af62d415bd5ec4329ebf9aa112f2c1354d453aa1038037d24655b65",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "4968c4d5ab45ae97cb4e931845e931bd6c129f79fdea97edc9aa09f8bb4fb8db",
+              "id": "4968c4d5ab45ae97cb4e931845e931bd6c129f79fdea97edc9aa09f8bb4fb8db",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "cee339770f99e75c996eff46c890a730468d388564aea5b8426c9c7a4a0787ec",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "1f96b926b3b8e82eeb43b86f51e77e58b2242f8f4f7b9ccc05d88553b137a320",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "cab2820cc0aa28c88cb7616d1b6fe20604250de39582d2e89a837001c3c165a9",
+              "id": "cab2820cc0aa28c88cb7616d1b6fe20604250de39582d2e89a837001c3c165a9",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "d0658046af139affa9e6bd56f7a57a3f1dfb3a4a450e94f63f084f16998b9cf1",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "87fc381c8fb8d14d2753a69da46d90001272d2ad0f4a5ce0eec368d3f2a93ea2",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "d55b951f409143db86ccecee4993d5bd34238a49fe6a03cac16a90aaf80c4fdb",
+          "reasonCode": "no_math_call",
+          "ruleCode": "math-library-variance",
+          "ruleVersion": "1.0",
+          "scope": "b3408b50c78f38c08971804fc84d3f00f784cc5e6115a746f19356d3d48ff414",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "d7b1906a0c794690e9feb3c138ed369e0c6b7348b0654fea6f74848bf300154c",
+          "reasonCode": "no_reduction",
+          "ruleCode": "reduction-reassociation",
+          "ruleVersion": "1.0",
+          "scope": "25841b60b94dbdaf1c9269861f502658adde00a37454e8d10c61690c34f9d660",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "6e021b3de8ce5a1a8c72e6c64d99ecbf649d052ff577c55f0abf5ca202ae48c9",
+              "id": "6e021b3de8ce5a1a8c72e6c64d99ecbf649d052ff577c55f0abf5ca202ae48c9",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "ddda1e5f419bfb3ccf64dbf82cf64163ea9b1f47eb6beb32b78e7fc7434f1917",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "bffe85ed8b429eaa176dd47fb70f590743d56acd12e80b8a0435cb4fa80045ec",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "9d5fbdae0039165e103e924678ec8e8c4bfaf5adb47ea9c59998aebf2d71961b",
+              "id": "9d5fbdae0039165e103e924678ec8e8c4bfaf5adb47ea9c59998aebf2d71961b",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "e467313178f7ba2880e63a7af025c15d952102a68b6f7de41bf998431b9ce55f",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "3b4f671c509a103e36fe4e73463d86ff3944da9da567113d030ce09bf21a9295",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "aa379159cd97e03c73c973d49a48cd948d8bc0da99f4045ebbdd8677813af410",
+              "id": "aa379159cd97e03c73c973d49a48cd948d8bc0da99f4045ebbdd8677813af410",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "e7258f268eb904c104e42e35b669e8e1beae7c6d804a7c5de6af5d62ce5f532b",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "7ed2677adbb3da6e31246f66b3c9d45ef5b173dab228a57151f31954780ddfe4",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "e8e2376fd73da454fc6ae608fde78ed100060c4f3be7693f57b6ed976b7c43dc",
+          "reasonCode": "no_environment_access",
+          "ruleCode": "floating-environment",
+          "ruleVersion": "1.0",
+          "scope": "c15f8a7e9045577ec8f7a242fb4016ad3340bf238f054b5ad20bb2aa0f4326a3",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "c2884d46a4af8d2d11f35ccf7c4cd27d7b8395f0d07d572c00832814704e1cde",
+              "id": "c2884d46a4af8d2d11f35ccf7c4cd27d7b8395f0d07d572c00832814704e1cde",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "ea0d0950eb65a8e1efbe51fb6f9ff5d426ef1a38d1e2fdc2482bed6e7122f9be",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "445cfacfdc15358c9ac5ba7141bf1dc9db4d7e5aafc0d6155f218d61da0bccae",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "4d048c6d91bf078bb61ca21c96549f70f16646dcece9ebb2fd376a6a390b6bfd",
+              "id": "4d048c6d91bf078bb61ca21c96549f70f16646dcece9ebb2fd376a6a390b6bfd",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "f06ca057035a42166a99a82191ef245346df92a5f0b3767870070255dc589632",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "4b63a823b5055c3582389f823c7ce2a28a2d9240fb53e5c63156e0a59e740c73",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+              "id": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "f0826c0a9d27b0ffe9cd438009d044a9552ef3e7c18ea8d6ee425c2a11c53ef6",
+          "reasonCode": "order_sensitive_reduction",
+          "ruleCode": "reduction-reassociation",
+          "ruleVersion": "1.0",
+          "scope": "c15f8a7e9045577ec8f7a242fb4016ad3340bf238f054b5ad20bb2aa0f4326a3",
+          "status": "matched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "f27774379f2c55bc598820c0d64e0dfb60e3f355ffbadeca4da6dd4167e94e31",
+          "reasonCode": "no_operation_chain",
+          "ruleCode": "x87-excess-precision",
+          "ruleVersion": "1.0",
+          "scope": "b3408b50c78f38c08971804fc84d3f00f784cc5e6115a746f19356d3d48ff414",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "f35cb87a73904fcd76ed2c7f1b4313cecc03bc2789bf9cb2dddfcbfd39541b11",
+          "reasonCode": "no_abi_boundary",
+          "ruleCode": "long-double-abi",
+          "ruleVersion": "1.1",
+          "scope": "b3408b50c78f38c08971804fc84d3f00f784cc5e6115a746f19356d3d48ff414",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "e128ef9ab0dbb8c6ce3b649d9a1dd3db6a314278c11afbeee5b0f7979bf5b70b",
+              "id": "e128ef9ab0dbb8c6ce3b649d9a1dd3db6a314278c11afbeee5b0f7979bf5b70b",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "f3882e74c2dba387bc27544ddddda1a7db595894b052bf949c05857267470517",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "20e36696107cd9e758338918e48302c6d2460b118ae3cab6cbd36a7f4801f1a5",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "c31d220b25c0b7147e5dbc274601c39f96ea31bda5a8cd8cfb87d3405b2db69c",
+              "id": "c31d220b25c0b7147e5dbc274601c39f96ea31bda5a8cd8cfb87d3405b2db69c",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "f3f12f907e0cdc7f20a1c7b3027caab76ecaa0524ab1862b299e48c48c402050",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "07602bbbbeff00a9b50334b2c5875aada0bd271b926636712cc4bbe09e3c1f21",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [],
+          "frontier": null,
+          "id": "f73d11499c0bb0e43347d0dd90ee3d1a42c7c39bc963ead17bb6eccdf2132489",
+          "reasonCode": "no_architecture_api",
+          "ruleCode": "architecture-specific-fp-api",
+          "ruleVersion": "1.0",
+          "scope": "b3408b50c78f38c08971804fc84d3f00f784cc5e6115a746f19356d3d48ff414",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "c99f6ee414f4d7be541cb9503849527a8d4e1ed5fa810a2bdc73a85b0f122283",
+              "id": "c99f6ee414f4d7be541cb9503849527a8d4e1ed5fa810a2bdc73a85b0f122283",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "fa6d34df7b01547139dd2318834eb6d6a62b6111a1edf5845c95efb7b8179d23",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "bd7d03cdae1a9f5f446052d72cab07c448191b8b7446a6b0b74d6c5430f6ee80",
+          "status": "notMatched"
+        },
+        {
+          "evidence": [
+            {
+              "digest": "bec6dd860495b8a45c3e390b1cab1cbf342b1a640e6c9023891601eaf85f77e0",
+              "id": "bec6dd860495b8a45c3e390b1cab1cbf342b1a640e6c9023891601eaf85f77e0",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "frontier": null,
+          "id": "fbae2ed17db87dfed9ffb640c13e09f9a5a8f56fcc3034d6b0daede23ed29c6a",
+          "reasonCode": "conversion_exact",
+          "ruleCode": "mixed-precision-conversion",
+          "ruleVersion": "1.1",
+          "scope": "cbd5eecce48ca7c5220772358fca4b6699c70d3965e13ef2f590377a592b9a4b",
+          "status": "notMatched"
+        }
+      ],
+      "bundleDigests": {
+        "evidence": [
+          "9d82aa8c02504e8694685849cc86789a1f49b6eee5afba2f4cf85933976427b9",
+          "b89dcec163bd9cac6cda9612cb2ae67f2e78d99f4b34c7d70f27bc3bb63dab55",
+          "db61c9e07d836575606c81da58e625b38ad247183536851637073fa75475bc91"
+        ],
+        "ir": [
+          "30154a38c125f7e4f79d1f263b92f869895db66f4882b7a354d66939cecaffea",
+          "e3fd6c6500439edbbcdc987a421e570c93f7bacdcbdfd866e15fbdf98935fc31",
+          "ef955fbd456831bc3a94766943490554ac4976dbf7f8eee273cf07bdcf94305c"
+        ],
+        "source": [
+          "cfded66af9a479d51b7188a5aa61abe35680f8fe51175882521f7524a0f775c3",
+          "db99658a56c1c606d50f45f998a3b787e50d2d778c071748b1a9f29e18e01fce",
+          "ea813ed92d751134bffeffd0cb77e0a933ebf21ca7f4f17dcc0b4e3c28f83311"
+        ]
+      },
+      "enabledRules": [
+        "architecture-specific-fp-api",
+        "floating-environment",
+        "fma-contraction",
+        "fragile-fp-comparison",
+        "long-double-abi",
+        "math-library-variance",
+        "mixed-precision-conversion",
+        "reduction-reassociation",
+        "unsafe-fp-optimization",
+        "x87-excess-precision"
+      ],
+      "layers": {
+        "artifact": {
+          "completed": 3,
+          "failed": 0,
+          "planned": 3,
+          "unknown": 0
+        },
+        "evidence": {
+          "completed": 3,
+          "failed": 0,
+          "planned": 3,
+          "unknown": 0
+        },
+        "ir": {
+          "completed": 3,
+          "failed": 0,
+          "planned": 3,
+          "unknown": 0
+        },
+        "rules": {
+          "completed": 64,
+          "failed": 0,
+          "planned": 64,
+          "unknown": 0
+        },
+        "source": {
+          "completed": 3,
+          "failed": 0,
+          "planned": 3,
+          "unknown": 0
+        }
+      },
+      "objects": [
+        {
+          "digest": "059a4117c0803d279c1ebe7bb6768fff8422da23afe543eeffc10b1fe19ce042",
+          "id": "059a4117c0803d279c1ebe7bb6768fff8422da23afe543eeffc10b1fe19ce042",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "05dd75e5b62ea85b27875c39a72242960ae01462a69afcb8ac417c1d608ab25d",
+          "id": "05dd75e5b62ea85b27875c39a72242960ae01462a69afcb8ac417c1d608ab25d",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "080dfbe6afc318ac5136bb7f0c93e113c46307e23880a6b4781e9c10f595a3eb",
+          "id": "080dfbe6afc318ac5136bb7f0c93e113c46307e23880a6b4781e9c10f595a3eb",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "18ae6f7362a6d2799fe642839e5d40bd44ad546a9952766de9e05d5fb3ed448e",
+          "id": "18ae6f7362a6d2799fe642839e5d40bd44ad546a9952766de9e05d5fb3ed448e",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "18b9d9002a3ed39f788a0ffe2cfe77431923f0309ad09c33d40ce7f4a2496e6d",
+          "id": "18b9d9002a3ed39f788a0ffe2cfe77431923f0309ad09c33d40ce7f4a2496e6d",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "1da67dbd73af5a0bf3be8d3599d14660936ab264c6ade2b9ade0914cc294a9a4",
+          "id": "1da67dbd73af5a0bf3be8d3599d14660936ab264c6ade2b9ade0914cc294a9a4",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "28c4ecb1450cb86fc6d6eaac65c20485f1df51d04e214629895dbbc7be15dca6",
+          "id": "28c4ecb1450cb86fc6d6eaac65c20485f1df51d04e214629895dbbc7be15dca6",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "2cdf16aecfa1c6dbf7f3b8691bdc980ef7e5f8a091c39224ac5b532b3e4ade26",
+          "id": "2cdf16aecfa1c6dbf7f3b8691bdc980ef7e5f8a091c39224ac5b532b3e4ade26",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "2ecdf1b3d1ec227ce7af350610d7823c9b61003c199496603fcef7be5d437da9",
+          "id": "2ecdf1b3d1ec227ce7af350610d7823c9b61003c199496603fcef7be5d437da9",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "3817368b73040e7f125671a3d69af572562eb21e1af11e6834d74cf5824861e1",
+          "id": "3817368b73040e7f125671a3d69af572562eb21e1af11e6834d74cf5824861e1",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "3963edb7f31a5c038d2db77f0bcc41c6fd670bfe09bc9015ef87bdcd3e8b4be6",
+          "id": "3963edb7f31a5c038d2db77f0bcc41c6fd670bfe09bc9015ef87bdcd3e8b4be6",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "3b65fdd04c257a63accacfea6c1c66ac89b3c21bd550cdd17e1a1477d20d8dd8",
+          "id": "3b65fdd04c257a63accacfea6c1c66ac89b3c21bd550cdd17e1a1477d20d8dd8",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "40c98738ec493009c3387384c31969f8019f314bef959627fca780dad70447c6",
+          "id": "40c98738ec493009c3387384c31969f8019f314bef959627fca780dad70447c6",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "414718c8107d006ae5c7db213b2c9cbbbcadc3c83ba3633befe842b300a06945",
+          "id": "414718c8107d006ae5c7db213b2c9cbbbcadc3c83ba3633befe842b300a06945",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "42365d5d1f3de231724074871430d7b8b53b32d92338bd67a3974f4c73a66ecf",
+          "id": "42365d5d1f3de231724074871430d7b8b53b32d92338bd67a3974f4c73a66ecf",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "4937c072d05238d7ad85a68dd81298d93429ffb6116975cddb77ad36b0891484",
+          "id": "4937c072d05238d7ad85a68dd81298d93429ffb6116975cddb77ad36b0891484",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "500dee6a64421d097e8871495f684229e045a6375e59112f1b89a3e4ea4854b7",
+          "id": "500dee6a64421d097e8871495f684229e045a6375e59112f1b89a3e4ea4854b7",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "525891b1664764ce4ea0b4dbabcae34e1a5e52fd2af1a2503804d537fa006f7b",
+          "id": "525891b1664764ce4ea0b4dbabcae34e1a5e52fd2af1a2503804d537fa006f7b",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "52d72eb868d723f7262b586bcd7b7253638df796643227b54091ad0a177394b4",
+          "id": "52d72eb868d723f7262b586bcd7b7253638df796643227b54091ad0a177394b4",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "55dfae60ccbe0cf84c0ade249807b7ec09f1e243644315dcda91fb59a1e23f9f",
+          "id": "55dfae60ccbe0cf84c0ade249807b7ec09f1e243644315dcda91fb59a1e23f9f",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "58de448e002aeb71be6ec9f8a2464877a304c20c7b54abe10faad4252284a7fc",
+          "id": "58de448e002aeb71be6ec9f8a2464877a304c20c7b54abe10faad4252284a7fc",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "5c252b8c658f737f550cf02c55adedb8179e100a4da05f39d618337ff9c6f790",
+          "id": "5c252b8c658f737f550cf02c55adedb8179e100a4da05f39d618337ff9c6f790",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "64797cea80852fdba3df656d2519676bd79a2a5922acc8b2f151c283a4ad78d5",
+          "id": "64797cea80852fdba3df656d2519676bd79a2a5922acc8b2f151c283a4ad78d5",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "6db5887279875d4d940cc4faccbd024ca9a00b0b0a1d8bd539b4c0f791637a4c",
+          "id": "6db5887279875d4d940cc4faccbd024ca9a00b0b0a1d8bd539b4c0f791637a4c",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "7226a7063718233694187901e3f0eedaee9eac6577ed53226add6ecdbc18a0de",
+          "id": "7226a7063718233694187901e3f0eedaee9eac6577ed53226add6ecdbc18a0de",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "75ebc1e49333d61a15c5bdcba58e9ff8b49707157f9297f04a79f12af135144c",
+          "id": "75ebc1e49333d61a15c5bdcba58e9ff8b49707157f9297f04a79f12af135144c",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "7763cfbe8302f6ecdb0f43e2a3966943209f402583003ab7470ef97a01c53d7a",
+          "id": "7763cfbe8302f6ecdb0f43e2a3966943209f402583003ab7470ef97a01c53d7a",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "77addbf5ddb117eb52349cb89be62b12c35cd347e8c83ddf4a6f99c6e7e4dc97",
+          "id": "77addbf5ddb117eb52349cb89be62b12c35cd347e8c83ddf4a6f99c6e7e4dc97",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "7bac502036980e33c43e3139601dd7dd1892df6acff416a55e73e0e906df1159",
+          "id": "7bac502036980e33c43e3139601dd7dd1892df6acff416a55e73e0e906df1159",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "81e0c06b70d023da3d605d019cc20512764b88fed1194551de8b98135a08392e",
+          "id": "81e0c06b70d023da3d605d019cc20512764b88fed1194551de8b98135a08392e",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "8661a492f211edd71a57207ba2da7bc8313507e63f9bea80394c23e590f214cc",
+          "id": "8661a492f211edd71a57207ba2da7bc8313507e63f9bea80394c23e590f214cc",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "8fd168a39c1368e3bcb5671611f5c1f87e94cf37e74ae19daf385e6ff41f1a18",
+          "id": "8fd168a39c1368e3bcb5671611f5c1f87e94cf37e74ae19daf385e6ff41f1a18",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "90051af73d77337cb3d783fd4307cb797a749454fa2c3ea01babbd4b4e5646fc",
+          "id": "90051af73d77337cb3d783fd4307cb797a749454fa2c3ea01babbd4b4e5646fc",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "962740a0e34094c9c83e7184dfb02c492f0c3aadb3bcba6a74f6f93d9a71d5da",
+          "id": "962740a0e34094c9c83e7184dfb02c492f0c3aadb3bcba6a74f6f93d9a71d5da",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "990149fe0f30ce51a36cae8c0be104a32f898757b20d6e1017e433bc46598359",
+          "id": "990149fe0f30ce51a36cae8c0be104a32f898757b20d6e1017e433bc46598359",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "9c1bf3386b3b9a532f97bd7d014ae86c700e9ca860d33d61e73c6b382d527ab6",
+          "id": "9c1bf3386b3b9a532f97bd7d014ae86c700e9ca860d33d61e73c6b382d527ab6",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "9c3f6b7f3192af703a187d30f5031cae1ce1fe6e39b0f5867b0592208892e3fd",
+          "id": "9c3f6b7f3192af703a187d30f5031cae1ce1fe6e39b0f5867b0592208892e3fd",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "a4ec253a076125a6ddd8143abe06a423d21fd6f2a8771edbca082b335030784b",
+          "id": "a4ec253a076125a6ddd8143abe06a423d21fd6f2a8771edbca082b335030784b",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "ac990cdfb0ef13a59525ce52248581a9db9d01a7478fd345aed6b5978b219360",
+          "id": "ac990cdfb0ef13a59525ce52248581a9db9d01a7478fd345aed6b5978b219360",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "b06ef4ec1142a144a06cda3cbbea8d49b4545580928ec43b380f889a4fffc517",
+          "id": "b06ef4ec1142a144a06cda3cbbea8d49b4545580928ec43b380f889a4fffc517",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "b23f424eca46c2cdf31b0eba3be883d4b40098ca69645c23cf937441b2b31bd9",
+          "id": "b23f424eca46c2cdf31b0eba3be883d4b40098ca69645c23cf937441b2b31bd9",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "b4278c00ad4d740916c0b850c87a55c39637b99acbaf96b25fa11e3b17b34055",
+          "id": "b4278c00ad4d740916c0b850c87a55c39637b99acbaf96b25fa11e3b17b34055",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "ba996647b2e50df4bb0073789e9e34c958f7cc7339d1608d7816cd4acda01372",
+          "id": "ba996647b2e50df4bb0073789e9e34c958f7cc7339d1608d7816cd4acda01372",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "be4ca72e2e3044cd1f5e09edc33f98be766bfe227d806b9041971b2ceca34abc",
+          "id": "be4ca72e2e3044cd1f5e09edc33f98be766bfe227d806b9041971b2ceca34abc",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "c7ca7e8fcd7062a8230fe2b9f66127e8175946d22987ad75a01332a6fd4604c5",
+          "id": "c7ca7e8fcd7062a8230fe2b9f66127e8175946d22987ad75a01332a6fd4604c5",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "cede74cd6a2d9b2b0ae55af2cb05a678ad5fb7e711be8f9647b46ff5aa8aaeed",
+          "id": "cede74cd6a2d9b2b0ae55af2cb05a678ad5fb7e711be8f9647b46ff5aa8aaeed",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "cee339770f99e75c996eff46c890a730468d388564aea5b8426c9c7a4a0787ec",
+          "id": "cee339770f99e75c996eff46c890a730468d388564aea5b8426c9c7a4a0787ec",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "d0658046af139affa9e6bd56f7a57a3f1dfb3a4a450e94f63f084f16998b9cf1",
+          "id": "d0658046af139affa9e6bd56f7a57a3f1dfb3a4a450e94f63f084f16998b9cf1",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "d55b951f409143db86ccecee4993d5bd34238a49fe6a03cac16a90aaf80c4fdb",
+          "id": "d55b951f409143db86ccecee4993d5bd34238a49fe6a03cac16a90aaf80c4fdb",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "d7b1906a0c794690e9feb3c138ed369e0c6b7348b0654fea6f74848bf300154c",
+          "id": "d7b1906a0c794690e9feb3c138ed369e0c6b7348b0654fea6f74848bf300154c",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "ddda1e5f419bfb3ccf64dbf82cf64163ea9b1f47eb6beb32b78e7fc7434f1917",
+          "id": "ddda1e5f419bfb3ccf64dbf82cf64163ea9b1f47eb6beb32b78e7fc7434f1917",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "e467313178f7ba2880e63a7af025c15d952102a68b6f7de41bf998431b9ce55f",
+          "id": "e467313178f7ba2880e63a7af025c15d952102a68b6f7de41bf998431b9ce55f",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "e7258f268eb904c104e42e35b669e8e1beae7c6d804a7c5de6af5d62ce5f532b",
+          "id": "e7258f268eb904c104e42e35b669e8e1beae7c6d804a7c5de6af5d62ce5f532b",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "e8e2376fd73da454fc6ae608fde78ed100060c4f3be7693f57b6ed976b7c43dc",
+          "id": "e8e2376fd73da454fc6ae608fde78ed100060c4f3be7693f57b6ed976b7c43dc",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "ea0d0950eb65a8e1efbe51fb6f9ff5d426ef1a38d1e2fdc2482bed6e7122f9be",
+          "id": "ea0d0950eb65a8e1efbe51fb6f9ff5d426ef1a38d1e2fdc2482bed6e7122f9be",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "f06ca057035a42166a99a82191ef245346df92a5f0b3767870070255dc589632",
+          "id": "f06ca057035a42166a99a82191ef245346df92a5f0b3767870070255dc589632",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "f0826c0a9d27b0ffe9cd438009d044a9552ef3e7c18ea8d6ee425c2a11c53ef6",
+          "id": "f0826c0a9d27b0ffe9cd438009d044a9552ef3e7c18ea8d6ee425c2a11c53ef6",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "f27774379f2c55bc598820c0d64e0dfb60e3f355ffbadeca4da6dd4167e94e31",
+          "id": "f27774379f2c55bc598820c0d64e0dfb60e3f355ffbadeca4da6dd4167e94e31",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "f35cb87a73904fcd76ed2c7f1b4313cecc03bc2789bf9cb2dddfcbfd39541b11",
+          "id": "f35cb87a73904fcd76ed2c7f1b4313cecc03bc2789bf9cb2dddfcbfd39541b11",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "f3882e74c2dba387bc27544ddddda1a7db595894b052bf949c05857267470517",
+          "id": "f3882e74c2dba387bc27544ddddda1a7db595894b052bf949c05857267470517",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "f3f12f907e0cdc7f20a1c7b3027caab76ecaa0524ab1862b299e48c48c402050",
+          "id": "f3f12f907e0cdc7f20a1c7b3027caab76ecaa0524ab1862b299e48c48c402050",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "f73d11499c0bb0e43347d0dd90ee3d1a42c7c39bc963ead17bb6eccdf2132489",
+          "id": "f73d11499c0bb0e43347d0dd90ee3d1a42c7c39bc963ead17bb6eccdf2132489",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "fa6d34df7b01547139dd2318834eb6d6a62b6111a1edf5845c95efb7b8179d23",
+          "id": "fa6d34df7b01547139dd2318834eb6d6a62b6111a1edf5845c95efb7b8179d23",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "fbae2ed17db87dfed9ffb640c13e09f9a5a8f56fcc3034d6b0daede23ed29c6a",
+          "id": "fbae2ed17db87dfed9ffb640c13e09f9a5a8f56fcc3034d6b0daede23ed29c6a",
+          "kind": "assessment",
+          "producer": "floating-point-rule-engine",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "03bc2fca573899b2789fa43add452d88719bf5b4493c8b649fe7bd86ee730b10",
+          "id": "03bc2fca573899b2789fa43add452d88719bf5b4493c8b649fe7bd86ee730b10",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "083d1a9de4db260fd3d7f3e73c26957d1c65eed83845d3b688bf9a32866e7286",
+          "id": "083d1a9de4db260fd3d7f3e73c26957d1c65eed83845d3b688bf9a32866e7286",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "3ad4e46dfaba289275762336fa1cdbacffb878913231c687a17ad294f57cabf3",
+          "id": "3ad4e46dfaba289275762336fa1cdbacffb878913231c687a17ad294f57cabf3",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "3b12860ffbeb05ca223332f73dfd71444f2d94d82f3e88af1d01276fd6e726bb",
+          "id": "3b12860ffbeb05ca223332f73dfd71444f2d94d82f3e88af1d01276fd6e726bb",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "4968c4d5ab45ae97cb4e931845e931bd6c129f79fdea97edc9aa09f8bb4fb8db",
+          "id": "4968c4d5ab45ae97cb4e931845e931bd6c129f79fdea97edc9aa09f8bb4fb8db",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "4d048c6d91bf078bb61ca21c96549f70f16646dcece9ebb2fd376a6a390b6bfd",
+          "id": "4d048c6d91bf078bb61ca21c96549f70f16646dcece9ebb2fd376a6a390b6bfd",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "5958cc42242ff4b388c08053051816642d287c1eddfef78b1a9b467b3c29e3e2",
+          "id": "5958cc42242ff4b388c08053051816642d287c1eddfef78b1a9b467b3c29e3e2",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "5f7734edc218a7f6ff1a6c9209aa099d8cae49999bc349437fb6efff75d4aa7f",
+          "id": "5f7734edc218a7f6ff1a6c9209aa099d8cae49999bc349437fb6efff75d4aa7f",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "65004460cf5a6306d1d72d07ce4a17b2484507bdb79b70e86744f6d99a74f312",
+          "id": "65004460cf5a6306d1d72d07ce4a17b2484507bdb79b70e86744f6d99a74f312",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "67ccd5e73f59fff7889ba4a8269a89d88c32ca347e7123e920c657499186a83c",
+          "id": "67ccd5e73f59fff7889ba4a8269a89d88c32ca347e7123e920c657499186a83c",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "6e021b3de8ce5a1a8c72e6c64d99ecbf649d052ff577c55f0abf5ca202ae48c9",
+          "id": "6e021b3de8ce5a1a8c72e6c64d99ecbf649d052ff577c55f0abf5ca202ae48c9",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "72108b70af0245beaa527ab6be61a368d1aec7fc80f1e4e4d0f81ce104d31b37",
+          "id": "72108b70af0245beaa527ab6be61a368d1aec7fc80f1e4e4d0f81ce104d31b37",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "72a35acecb1de428dab47c5ec2205891bdb2df0b1cc7e7f793d12235814cbf51",
+          "id": "72a35acecb1de428dab47c5ec2205891bdb2df0b1cc7e7f793d12235814cbf51",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "8e3f425ddd2f3c303fcd09f77064aa8f9c84c3329d9eb87c7da75f70d95a9eb0",
+          "id": "8e3f425ddd2f3c303fcd09f77064aa8f9c84c3329d9eb87c7da75f70d95a9eb0",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "96240bb03f61ea42a1cbdfc8e50738e8a70d8022c46b7b4ffdaea3dfaa36443c",
+          "id": "96240bb03f61ea42a1cbdfc8e50738e8a70d8022c46b7b4ffdaea3dfaa36443c",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "983f030068c6bed58ca767e303b066dd3f50d3788f64d8aae642b80636926641",
+          "id": "983f030068c6bed58ca767e303b066dd3f50d3788f64d8aae642b80636926641",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "9c1c7077af3b51732669fc1726ea01fdc0ff67ccc7e47e8c6c7494c4ebd6113d",
+          "id": "9c1c7077af3b51732669fc1726ea01fdc0ff67ccc7e47e8c6c7494c4ebd6113d",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "9d5fbdae0039165e103e924678ec8e8c4bfaf5adb47ea9c59998aebf2d71961b",
+          "id": "9d5fbdae0039165e103e924678ec8e8c4bfaf5adb47ea9c59998aebf2d71961b",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "a76ecc159d0b57538aa1b3d40110aa19352d543506bd668e49914009a8ce5278",
+          "id": "a76ecc159d0b57538aa1b3d40110aa19352d543506bd668e49914009a8ce5278",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "a82c866750d5347578b2be11470f893c0c652e3741cd417770cbe8c091784acd",
+          "id": "a82c866750d5347578b2be11470f893c0c652e3741cd417770cbe8c091784acd",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "aa379159cd97e03c73c973d49a48cd948d8bc0da99f4045ebbdd8677813af410",
+          "id": "aa379159cd97e03c73c973d49a48cd948d8bc0da99f4045ebbdd8677813af410",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "b808b4f6ac985f434e84586b5f53c1b859e56fbb678dca576edfeb6e4e126714",
+          "id": "b808b4f6ac985f434e84586b5f53c1b859e56fbb678dca576edfeb6e4e126714",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "b9103a961604b041b3c1667b0fbce84066e81eb6829844a56ebe24abbfde0d05",
+          "id": "b9103a961604b041b3c1667b0fbce84066e81eb6829844a56ebe24abbfde0d05",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "b9b18403b8e608e3e71286f429e15d5fbcf3e4fc1cdab06fa58d5e81b808a6c9",
+          "id": "b9b18403b8e608e3e71286f429e15d5fbcf3e4fc1cdab06fa58d5e81b808a6c9",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "b9e860070188e3b04a9b6ebe51a14928a8bf77f4cb48293bd994522afdab8dc9",
+          "id": "b9e860070188e3b04a9b6ebe51a14928a8bf77f4cb48293bd994522afdab8dc9",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "bec6dd860495b8a45c3e390b1cab1cbf342b1a640e6c9023891601eaf85f77e0",
+          "id": "bec6dd860495b8a45c3e390b1cab1cbf342b1a640e6c9023891601eaf85f77e0",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "c2884d46a4af8d2d11f35ccf7c4cd27d7b8395f0d07d572c00832814704e1cde",
+          "id": "c2884d46a4af8d2d11f35ccf7c4cd27d7b8395f0d07d572c00832814704e1cde",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "c31d220b25c0b7147e5dbc274601c39f96ea31bda5a8cd8cfb87d3405b2db69c",
+          "id": "c31d220b25c0b7147e5dbc274601c39f96ea31bda5a8cd8cfb87d3405b2db69c",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "c99cc2de75123790f668528001939dff6f92b2496c150458546afc9a0970a230",
+          "id": "c99cc2de75123790f668528001939dff6f92b2496c150458546afc9a0970a230",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "c99f6ee414f4d7be541cb9503849527a8d4e1ed5fa810a2bdc73a85b0f122283",
+          "id": "c99f6ee414f4d7be541cb9503849527a8d4e1ed5fa810a2bdc73a85b0f122283",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "ca20e5c2e4c596ae5f8d1d415a94732dbb240085b854fd107611627e74e24791",
+          "id": "ca20e5c2e4c596ae5f8d1d415a94732dbb240085b854fd107611627e74e24791",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "ca7f9af442cb11bdeaf7f439cc785809ca2cfb149641a933a0192c30d72255b3",
+          "id": "ca7f9af442cb11bdeaf7f439cc785809ca2cfb149641a933a0192c30d72255b3",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "cab2820cc0aa28c88cb7616d1b6fe20604250de39582d2e89a837001c3c165a9",
+          "id": "cab2820cc0aa28c88cb7616d1b6fe20604250de39582d2e89a837001c3c165a9",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "caddea6b175be102a27f5ee2dfd54f545dda18f951ecea06b981927c7c1f96c1",
+          "id": "caddea6b175be102a27f5ee2dfd54f545dda18f951ecea06b981927c7c1f96c1",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "e128ef9ab0dbb8c6ce3b649d9a1dd3db6a314278c11afbeee5b0f7979bf5b70b",
+          "id": "e128ef9ab0dbb8c6ce3b649d9a1dd3db6a314278c11afbeee5b0f7979bf5b70b",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "ee7da72dfc2f4b59650ad2e891e606d5b7f53d67786007dbeefcb6d50150d9bc",
+          "id": "ee7da72dfc2f4b59650ad2e891e606d5b7f53d67786007dbeefcb6d50150d9bc",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+          "id": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        },
+        {
+          "digest": "fd36c058463c761b1d2f861bbf03292677d340090a65f834a6b98039728000df",
+          "id": "fd36c058463c761b1d2f861bbf03292677d340090a65f834a6b98039728000df",
+          "kind": "sourceFact",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        }
+      ],
+      "ruleDependencies": [
+        {
+          "assessmentScope": "call",
+          "budgetKey": "max_rule_candidates",
+          "buildContextFields": [
+            "target_features"
+          ],
+          "category": "portability",
+          "code": "architecture-specific-fp-api",
+          "defaultEnabled": true,
+          "evidenceMode": "deterministic",
+          "irCapability": "none",
+          "irFactKinds": [
+            "call"
+          ],
+          "profileFields": [
+            "target_features"
+          ],
+          "sourceFactKinds": [
+            "api",
+            "call"
+          ],
+          "version": "1.0"
+        },
+        {
+          "assessmentScope": "function",
+          "budgetKey": "max_rule_candidates",
+          "buildContextFields": [],
+          "category": "environment-semantics",
+          "code": "floating-environment",
+          "defaultEnabled": true,
+          "evidenceMode": "deterministic",
+          "irCapability": "either",
+          "irFactKinds": [
+            "call",
+            "constrained"
+          ],
+          "profileFields": [
+            "environment"
+          ],
+          "sourceFactKinds": [
+            "environment",
+            "function_summary"
+          ],
+          "version": "1.0"
+        },
+        {
+          "assessmentScope": "translation-unit",
+          "budgetKey": "max_rule_candidates",
+          "buildContextFields": [],
+          "category": "rounding-semantics",
+          "code": "fma-contraction",
+          "defaultEnabled": true,
+          "evidenceMode": "deterministic",
+          "irCapability": "build-faithful",
+          "irFactKinds": [
+            "call",
+            "arithmetic"
+          ],
+          "profileFields": [
+            "fma"
+          ],
+          "sourceFactKinds": [
+            "arithmetic"
+          ],
+          "version": "1.0"
+        },
+        {
+          "assessmentScope": "expression",
+          "budgetKey": "max_rule_candidates",
+          "buildContextFields": [],
+          "category": "comparison-semantics",
+          "code": "fragile-fp-comparison",
+          "defaultEnabled": true,
+          "evidenceMode": "heuristic-capable",
+          "irCapability": "either",
+          "irFactKinds": [
+            "comparison"
+          ],
+          "profileFields": [],
+          "sourceFactKinds": [
+            "comparison"
+          ],
+          "version": "1.0"
+        },
+        {
+          "assessmentScope": "translation-unit",
+          "budgetKey": "max_rule_candidates",
+          "buildContextFields": [],
+          "category": "abi",
+          "code": "long-double-abi",
+          "defaultEnabled": true,
+          "evidenceMode": "deterministic",
+          "irCapability": "none",
+          "irFactKinds": [],
+          "profileFields": [
+            "floating_types"
+          ],
+          "sourceFactKinds": [
+            "type"
+          ],
+          "version": "1.1"
+        },
+        {
+          "assessmentScope": "call",
+          "budgetKey": "max_rule_candidates",
+          "buildContextFields": [
+            "libm"
+          ],
+          "category": "library-semantics",
+          "code": "math-library-variance",
+          "defaultEnabled": true,
+          "evidenceMode": "deterministic",
+          "irCapability": "either",
+          "irFactKinds": [
+            "call"
+          ],
+          "profileFields": [],
+          "sourceFactKinds": [
+            "call"
+          ],
+          "version": "1.0"
+        },
+        {
+          "assessmentScope": "expression",
+          "budgetKey": "max_rule_candidates",
+          "buildContextFields": [],
+          "category": "precision-conversion",
+          "code": "mixed-precision-conversion",
+          "defaultEnabled": true,
+          "evidenceMode": "deterministic",
+          "irCapability": "none",
+          "irFactKinds": [
+            "conversion"
+          ],
+          "profileFields": [
+            "floating_types"
+          ],
+          "sourceFactKinds": [
+            "conversion"
+          ],
+          "version": "1.1"
+        },
+        {
+          "assessmentScope": "loop",
+          "budgetKey": "max_rule_candidates",
+          "buildContextFields": [],
+          "category": "reduction-semantics",
+          "code": "reduction-reassociation",
+          "defaultEnabled": true,
+          "evidenceMode": "heuristic-capable",
+          "irCapability": "either",
+          "irFactKinds": [
+            "reduction",
+            "arithmetic"
+          ],
+          "profileFields": [
+            "evaluation"
+          ],
+          "sourceFactKinds": [
+            "reduction"
+          ],
+          "version": "1.0"
+        },
+        {
+          "assessmentScope": "translation-unit",
+          "budgetKey": "max_rule_candidates",
+          "buildContextFields": [],
+          "category": "optimization-semantics",
+          "code": "unsafe-fp-optimization",
+          "defaultEnabled": true,
+          "evidenceMode": "deterministic",
+          "irCapability": "either",
+          "irFactKinds": [
+            "arithmetic"
+          ],
+          "profileFields": [],
+          "sourceFactKinds": [],
+          "version": "1.0"
+        },
+        {
+          "assessmentScope": "translation-unit",
+          "budgetKey": "max_rule_candidates",
+          "buildContextFields": [],
+          "category": "evaluation-semantics",
+          "code": "x87-excess-precision",
+          "defaultEnabled": true,
+          "evidenceMode": "deterministic",
+          "irCapability": "build-faithful",
+          "irFactKinds": [
+            "conversion"
+          ],
+          "profileFields": [
+            "evaluation"
+          ],
+          "sourceFactKinds": [
+            "arithmetic",
+            "conversion"
+          ],
+          "version": "1.0"
+        }
+      ],
+      "ruleRegistryDigest": "e291c9dd928c13c895768586d9fd1127701d611d71894b86cc2a40c0372843df",
+      "ruleVersions": {
+        "architecture-specific-fp-api": "1.0",
+        "floating-environment": "1.0",
+        "fma-contraction": "1.0",
+        "fragile-fp-comparison": "1.0",
+        "long-double-abi": "1.1",
+        "math-library-variance": "1.0",
+        "mixed-precision-conversion": "1.1",
+        "reduction-reassociation": "1.0",
+        "unsafe-fp-optimization": "1.0",
+        "x87-excess-precision": "1.0"
+      },
+      "schemaVersion": "1.0"
+    },
+    "org.rvport.floating-point-scanner.artifacts": {
+      "artifactSet": {
+        "artifactSetId": "f9e95a698b4c5c97c60148791ce9daafbd906d7fd38f1f89550a530b65524af9",
+        "buildRunId": "be53c759-1e2e-459a-9f73-ef8289ecfaf2",
+        "manifestSha256": "1c45f4afb009c1bd079b1f16e431d5bd53ba4feead68de44e818bf4f0a0be817",
+        "sourceRevision": "a019391f-89e6-4d8e-8eed-1b7871055541"
+      },
+      "bitcodeCapabilities": [
+        "debug-location",
+        "debug.locations",
+        "debug.variables",
+        "fp.fast-math-flags",
+        "fp.operations",
+        "llvm-fp-facts",
+        "llvm.ir-readable",
+        "memory.atomic-ordering",
+        "memory.fence",
+        "memory.syncscope",
+        "source.correlation",
+        "symbols.linkage",
+        "target.data-layout",
+        "target.triple"
+      ],
+      "bitcodeProfiles": {
+        "completed": [
+          "source-preserving"
+        ],
+        "requested": [
+          "source-preserving"
+        ]
+      },
+      "irAnalysis": {
+        "extractorVersion": "1.1",
+        "llvmVersion": "21.1.8",
+        "readerVersion": "1.0",
+        "status": "complete"
+      },
+      "schemaVersion": "1.0",
+      "sourceMapping": {
+        "mode": "best-effort",
+        "status": "incomplete"
+      }
+    },
+    "org.rvport.floating-point-scanner.profiles": {
+      "schemaVersion": "1.0",
+      "source": {
+        "abi": "sysv-amd64",
+        "compilerVersion": "21.1.8",
+        "fingerprint": "68e8c233d91de98c66decb5c92d6515b9700110d905c4b81bbd28f0b85fda882",
+        "profile": "x86_64-linux-gnu-clang21@1.0",
+        "targetTriple": "x86_64-unknown-linux-gnu"
+      },
+      "sourceBuildContext": null,
+      "target": {
+        "abi": "lp64d",
+        "compilerVersion": "21.1.8",
+        "fingerprint": "70c3bb5e2679aa8c96685e580bcff5f11944639229a61d3c403a4086aa2d6980",
+        "profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+        "targetTriple": "riscv64-unknown-linux-gnu"
+      },
+      "targetBuildContext": null
+    },
+    "org.rvport.floating-point-scanner.runtime": {
+      "budgets": {
+        "frontiers": [],
+        "limits": {
+          "maxBitcodeBytes": 8589934592,
+          "maxDiagnostics": 100000,
+          "maxFiles": 100000,
+          "maxFrontendOutputBytes": 536870912,
+          "maxRelatedLocations": 10000,
+          "maxResultBytes": 536870912,
+          "maxRuleAssessments": 1000000,
+          "wallSeconds": 3600
+        },
+        "logicalUsed": {
+          "maxFiles": 3
+        }
+      },
+      "cache": {
+        "corrupt": 0,
+        "hit": 0,
+        "miss": 9,
+        "mode": "read-write",
+        "schemaVersion": "1.0",
+        "write": 9
+      },
+      "schemaVersion": "1.0"
+    },
+    "org.rvport.floating-point-scanner.suppressions": {
+      "policyAsOf": null,
+      "records": [],
+      "schemaVersion": "1.0"
+    }
+  },
+  "findings": [
+    {
+      "conclusion": {
+        "affectedCount": 1,
+        "aggregationKey": null,
+        "assessmentId": "f0826c0a9d27b0ffe9cd438009d044a9552ef3e7c18ea8d6ee425c2a11c53ef6",
+        "category": "reduction-semantics",
+        "confidence": "medium",
+        "evidenceOrigin": "heuristic",
+        "findingCode": "reduction-reassociation",
+        "impact": "病态输入、抵消和长归约的误差可能扩大。",
+        "impactEn": "Error may grow for ill-conditioned inputs, cancellation, and long reductions.",
+        "message": "累加、点积或向量归约可能因重结合或向量化采用不同顺序。",
+        "messageEn": "An accumulation, dot product, or vector reduction may use a different order after reassociation or vectorization.",
+        "rationale": "reduction-reassociation",
+        "requiresHumanConfirmation": true,
+        "ruleVersion": "1.0",
+        "semantic": {
+          "compensationInvalidated": false,
+          "irFactIds": [],
+          "rationale": "order_sensitive_reduction"
+        },
+        "severity": "medium",
+        "sourceBuildContextFingerprint": null,
+        "sourceProfileFingerprint": "68e8c233d91de98c66decb5c92d6515b9700110d905c4b81bbd28f0b85fda882",
+        "status": "complete",
+        "suggestion": "固定所需顺序或采用经过验证的补偿/成对归约算法。",
+        "suggestionEn": "Fix the required order or use a validated compensated or pairwise reduction.",
+        "targetBuildContextFingerprint": null,
+        "targetProfileFingerprint": "70c3bb5e2679aa8c96685e580bcff5f11944639229a61d3c403a4086aa2d6980",
+        "testSuggestion": "使用病态顺序、正负抵消和不同向量宽度重复测试。",
+        "testSuggestionEn": "Repeat with ill-conditioned orders, cancellation, and different vector widths.",
+        "title": "浮点归约顺序可能改变",
+        "titleEn": "Floating-point reduction order may change",
+        "validationPlan": {
+          "errorMetrics": [
+            "absolute",
+            "relative",
+            "ulp"
+          ],
+          "inputClasses": [
+            "cancellation",
+            "ill-conditioned-order",
+            "long-sequence"
+          ],
+          "repeatStrategy": "repeat across order, vector width, and thread count",
+          "thresholdSource": "project-policy"
+        }
+      },
+      "evidenceChain": {
+        "breaks": [],
+        "budget": {
+          "maxDepth": 3,
+          "maxPaths": 1,
+          "maxVisited": 3,
+          "paths": 1,
+          "truncated": false,
+          "visited": 3
+        },
+        "edges": [
+          {
+            "fromStepId": "05ba789f8e5aac6ef35909c136916a2430be3035e5dd2144941848bb36136ae5",
+            "id": "7368d57d8860755de8c1eb5e2fac9e4cc41dd16e0f152c27e0938fe53f4d4cd7",
+            "kind": "assessedAs",
+            "toStepId": "c9bf282b8c594c4ac158442e7be958e4925f1bfe7ce8d199d3de1380ad44c586"
+          },
+          {
+            "fromStepId": "32ddbf847fd6ca834c2d4ebbf3f2e051ab063119b9b508501c4d2c93fc252220",
+            "id": "ac561fa4005e2d6b43e0999033826d209f1faf2ba5260edfabe51d6be004e258",
+            "kind": "supports",
+            "toStepId": "05ba789f8e5aac6ef35909c136916a2430be3035e5dd2144941848bb36136ae5"
+          }
+        ],
+        "impactStepIds": [
+          "c9bf282b8c594c4ac158442e7be958e4925f1bfe7ce8d199d3de1380ad44c586"
+        ],
+        "primaryPath": [
+          "32ddbf847fd6ca834c2d4ebbf3f2e051ab063119b9b508501c4d2c93fc252220",
+          "05ba789f8e5aac6ef35909c136916a2430be3035e5dd2144941848bb36136ae5",
+          "c9bf282b8c594c4ac158442e7be958e4925f1bfe7ce8d199d3de1380ad44c586"
+        ],
+        "rootStepId": "32ddbf847fd6ca834c2d4ebbf3f2e051ab063119b9b508501c4d2c93fc252220",
+        "status": "complete",
+        "steps": [
+          {
+            "id": "05ba789f8e5aac6ef35909c136916a2430be3035e5dd2144941848bb36136ae5",
+            "kind": "assessment",
+            "reason": "规则 reduction-reassociation 的评估状态为 matched，依据代码 order_sensitive_reduction。归约结果可能受累加顺序影响；尚无 IR 重排证明。",
+            "reasonCodes": [],
+            "reasonEn": "Rule reduction-reassociation assessed as matched; reason code order_sensitive_reduction. Reduction may depend on accumulation order; no IR reassociation proof.",
+            "references": [
+              {
+                "digest": "f0826c0a9d27b0ffe9cd438009d044a9552ef3e7c18ea8d6ee425c2a11c53ef6",
+                "id": "f0826c0a9d27b0ffe9cd438009d044a9552ef3e7c18ea8d6ee425c2a11c53ef6",
+                "kind": "assessment",
+                "producer": "floating-point-rule-engine",
+                "schemaVersion": "1.0"
+              }
+            ],
+            "status": "complete",
+            "title": "规则判断：reduction-reassociation",
+            "titleEn": "Rule assessment: reduction-reassociation"
+          },
+          {
+            "id": "32ddbf847fd6ca834c2d4ebbf3f2e051ab063119b9b508501c4d2c93fc252220",
+            "kind": "sourceObservation",
+            "reason": "在 src/vectorcalc.cpp:62 观察到浮点归约累加。type=float; function_symbol=_ZN10vectorcalc11dot_productEPKfS1_m; operation=+=; reduction_kind=sum; loop_kind=ForStmt; fixed_order=False; ambiguous=False。这是源码证据，不代表迁移必然失败。",
+            "reasonCodes": [],
+            "reasonEn": "Observed Floating-point reduction at src/vectorcalc.cpp:62. type=float; function_symbol=_ZN10vectorcalc11dot_productEPKfS1_m; operation=+=; reduction_kind=sum; loop_kind=ForStmt; fixed_order=False; ambiguous=False. This is source evidence, not proof of migration failure.",
+            "references": [
+              {
+                "digest": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+                "id": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+                "kind": "sourceFact",
+                "producer": "clang-ast-fact-mapper",
+                "schemaVersion": "1.0"
+              }
+            ],
+            "status": "complete",
+            "title": "浮点归约累加",
+            "titleEn": "Floating-point reduction"
+          },
+          {
+            "id": "c9bf282b8c594c4ac158442e7be958e4925f1bfe7ce8d199d3de1380ad44c586",
+            "kind": "conclusion",
+            "reason": "累加、点积或向量归约可能因重结合或向量化采用不同顺序。",
+            "reasonCodes": [],
+            "reasonEn": "An accumulation, dot product, or vector reduction may use a different order after reassociation or vectorization.",
+            "references": [],
+            "status": "complete",
+            "title": "浮点归约顺序可能改变",
+            "titleEn": "Floating-point reduction order may change"
+          }
+        ]
+      },
+      "fact": {
+        "id": "25f23ea6292e5ee1686ffe15be32168ea20b1116e18c0d90cdf06d9405f18617",
+        "kind": "reduction-reassociation",
+        "matchedText": "reduction-reassociation",
+        "primaryLocation": {
+          "column": 9,
+          "file": "src/vectorcalc.cpp",
+          "line": 62
+        },
+        "provenance": [
+          {
+            "digest": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+            "id": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+            "kind": "sourceFact",
+            "producer": "clang-ast-fact-mapper",
+            "schemaVersion": "1.0"
+          }
+        ]
+      },
+      "id": "219d931e7ab442eee890b6eb880af89077555870ea5ad4787f0d8b3b0d6cda40",
+      "occurrences": [
+        {
+          "configuration": "default",
+          "id": "0baa61e951199742c501e6a8655088212aa3aeaf0f39083e7a6975060f893d2f",
+          "kind": "primary",
+          "location": {
+            "column": 9,
+            "file": "src/vectorcalc.cpp",
+            "line": 62
+          },
+          "provenance": [
+            {
+              "digest": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+              "id": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+              "kind": "sourceFact",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "reasonCodes": [],
+          "status": "confirmed"
+        }
+      ],
+      "primaryOccurrenceId": "0baa61e951199742c501e6a8655088212aa3aeaf0f39083e7a6975060f893d2f"
+    }
+  ],
+  "project": {
+    "filesAnalyzed": 3,
+    "reasonCodes": [],
+    "sourceRevision": "a019391f-89e6-4d8e-8eed-1b7871055541",
+    "status": "complete",
+    "translationUnits": {
+      "completed": 3,
+      "failed": 0,
+      "planned": 3,
+      "unknown": 0
+    }
+  },
+  "scan": {
+    "analysisScope": "migrationRisks",
+    "analysisVersion": "0.5.1",
+    "id": "73181be9-97cf-47b5-9fc3-b2de266a7dd8",
+    "requestSchemaVersion": "1.4",
+    "semanticDigest": "462921c3c164dc45c2a40aea048aed484ff833e034b4bbd0757b86fe3e20a8a6",
+    "status": "complete",
+    "tool": {
+      "name": "floating-point-precision-scanner",
+      "version": "0.5.1"
+    }
+  },
+  "schemaVersion": "2.0",
+  "summary": {
+    "assessments": {
+      "completed": 64,
+      "failed": 0,
+      "matched": 1,
+      "notMatched": 63,
+      "planned": 64,
+      "skipped": 0,
+      "unknown": 0
+    },
+    "diagnostics": 1,
+    "findings": 1,
+    "layers": {
+      "artifact": {
+        "completed": 3,
+        "failed": 0,
+        "planned": 3,
+        "unknown": 0
+      },
+      "evidence": {
+        "completed": 3,
+        "failed": 0,
+        "planned": 3,
+        "unknown": 0
+      },
+      "ir": {
+        "completed": 3,
+        "failed": 0,
+        "planned": 3,
+        "unknown": 0
+      },
+      "rules": {
+        "completed": 64,
+        "failed": 0,
+        "planned": 64,
+        "unknown": 0
+      },
+      "source": {
+        "completed": 3,
+        "failed": 0,
+        "planned": 3,
+        "unknown": 0
+      }
+    },
+    "suppressed": 0
+  }
+}

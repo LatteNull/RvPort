@@ -1,0 +1,1327 @@
+{
+  "kind": "FloatingPointScannerValidationObservations",
+  "schema_version": "1.0",
+  "corpus_digest": "accepted-after-schema-validation",
+  "observations": {
+    "long-double-abi-positive-01": {
+      "status": "matched",
+      "finding_keys": [
+        "long-double-abi:positive:1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "long-double-abi-positive-02": {
+      "status": "matched",
+      "finding_keys": [
+        "long-double-abi:positive:2"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "long-double-abi-positive-03": {
+      "status": "matched",
+      "finding_keys": [
+        "long-double-abi:positive:3"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "long-double-abi-positive-04": {
+      "status": "matched",
+      "finding_keys": [
+        "long-double-abi:positive:4"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "long-double-abi-positive-05": {
+      "status": "matched",
+      "finding_keys": [
+        "long-double-abi:positive:5"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "long-double-abi-positive-06": {
+      "status": "matched",
+      "finding_keys": [
+        "long-double-abi:positive:6"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "long-double-abi-negative-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "long-double-abi-negative-02": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "long-double-abi-negative-03": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "long-double-abi-negative-04": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "long-double-abi-negative-05": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "long-double-abi-negative-06": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "long-double-abi-unknown-01": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "long-double-abi-unknown-02": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "long-double-abi-unknown-03": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "long-double-abi-suppression-01": {
+      "status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [
+        "long-double-abi:suppression:1"
+      ]
+    },
+    "long-double-abi-budget-01": {
+      "status": "failed",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "budget_exceeded"
+      ],
+      "suppression_ids": []
+    },
+    "long-double-abi-boundary-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-positive-01": {
+      "status": "matched",
+      "finding_keys": [
+        "x87-excess-precision:positive:1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-positive-02": {
+      "status": "matched",
+      "finding_keys": [
+        "x87-excess-precision:positive:2"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-positive-03": {
+      "status": "matched",
+      "finding_keys": [
+        "x87-excess-precision:positive:3"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-positive-04": {
+      "status": "matched",
+      "finding_keys": [
+        "x87-excess-precision:positive:4"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-positive-05": {
+      "status": "matched",
+      "finding_keys": [
+        "x87-excess-precision:positive:5"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-positive-06": {
+      "status": "matched",
+      "finding_keys": [
+        "x87-excess-precision:positive:6"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-negative-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-negative-02": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-negative-03": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-negative-04": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-negative-05": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-negative-06": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-unknown-01": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-unknown-02": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-unknown-03": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-suppression-01": {
+      "status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [
+        "x87-excess-precision:suppression:1"
+      ]
+    },
+    "x87-excess-precision-budget-01": {
+      "status": "failed",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "budget_exceeded"
+      ],
+      "suppression_ids": []
+    },
+    "x87-excess-precision-boundary-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fma-contraction-positive-01": {
+      "status": "matched",
+      "finding_keys": [
+        "fma-contraction:positive:1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fma-contraction-positive-02": {
+      "status": "matched",
+      "finding_keys": [
+        "fma-contraction:positive:2"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fma-contraction-positive-03": {
+      "status": "matched",
+      "finding_keys": [
+        "fma-contraction:positive:3"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fma-contraction-positive-04": {
+      "status": "matched",
+      "finding_keys": [
+        "fma-contraction:positive:4"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fma-contraction-positive-05": {
+      "status": "matched",
+      "finding_keys": [
+        "fma-contraction:positive:5"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fma-contraction-positive-06": {
+      "status": "matched",
+      "finding_keys": [
+        "fma-contraction:positive:6"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fma-contraction-negative-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fma-contraction-negative-02": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fma-contraction-negative-03": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fma-contraction-negative-04": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fma-contraction-negative-05": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fma-contraction-negative-06": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fma-contraction-unknown-01": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "fma-contraction-unknown-02": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "fma-contraction-unknown-03": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "fma-contraction-suppression-01": {
+      "status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [
+        "fma-contraction:suppression:1"
+      ]
+    },
+    "fma-contraction-budget-01": {
+      "status": "failed",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "budget_exceeded"
+      ],
+      "suppression_ids": []
+    },
+    "fma-contraction-boundary-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-positive-01": {
+      "status": "matched",
+      "finding_keys": [
+        "unsafe-fp-optimization:positive:1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-positive-02": {
+      "status": "matched",
+      "finding_keys": [
+        "unsafe-fp-optimization:positive:2"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-positive-03": {
+      "status": "matched",
+      "finding_keys": [
+        "unsafe-fp-optimization:positive:3"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-positive-04": {
+      "status": "matched",
+      "finding_keys": [
+        "unsafe-fp-optimization:positive:4"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-positive-05": {
+      "status": "matched",
+      "finding_keys": [
+        "unsafe-fp-optimization:positive:5"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-positive-06": {
+      "status": "matched",
+      "finding_keys": [
+        "unsafe-fp-optimization:positive:6"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-negative-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-negative-02": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-negative-03": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-negative-04": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-negative-05": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-negative-06": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-unknown-01": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-unknown-02": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-unknown-03": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-suppression-01": {
+      "status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [
+        "unsafe-fp-optimization:suppression:1"
+      ]
+    },
+    "unsafe-fp-optimization-budget-01": {
+      "status": "failed",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "budget_exceeded"
+      ],
+      "suppression_ids": []
+    },
+    "unsafe-fp-optimization-boundary-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "floating-environment-positive-01": {
+      "status": "matched",
+      "finding_keys": [
+        "floating-environment:positive:1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "floating-environment-positive-02": {
+      "status": "matched",
+      "finding_keys": [
+        "floating-environment:positive:2"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "floating-environment-positive-03": {
+      "status": "matched",
+      "finding_keys": [
+        "floating-environment:positive:3"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "floating-environment-positive-04": {
+      "status": "matched",
+      "finding_keys": [
+        "floating-environment:positive:4"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "floating-environment-positive-05": {
+      "status": "matched",
+      "finding_keys": [
+        "floating-environment:positive:5"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "floating-environment-positive-06": {
+      "status": "matched",
+      "finding_keys": [
+        "floating-environment:positive:6"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "floating-environment-negative-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "floating-environment-negative-02": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "floating-environment-negative-03": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "floating-environment-negative-04": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "floating-environment-negative-05": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "floating-environment-negative-06": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "floating-environment-unknown-01": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "floating-environment-unknown-02": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "floating-environment-unknown-03": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "floating-environment-suppression-01": {
+      "status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [
+        "floating-environment:suppression:1"
+      ]
+    },
+    "floating-environment-budget-01": {
+      "status": "failed",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "budget_exceeded"
+      ],
+      "suppression_ids": []
+    },
+    "floating-environment-boundary-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-positive-01": {
+      "status": "matched",
+      "finding_keys": [
+        "mixed-precision-conversion:positive:1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-positive-02": {
+      "status": "matched",
+      "finding_keys": [
+        "mixed-precision-conversion:positive:2"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-positive-03": {
+      "status": "matched",
+      "finding_keys": [
+        "mixed-precision-conversion:positive:3"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-positive-04": {
+      "status": "matched",
+      "finding_keys": [
+        "mixed-precision-conversion:positive:4"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-positive-05": {
+      "status": "matched",
+      "finding_keys": [
+        "mixed-precision-conversion:positive:5"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-positive-06": {
+      "status": "matched",
+      "finding_keys": [
+        "mixed-precision-conversion:positive:6"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-negative-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-negative-02": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-negative-03": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-negative-04": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-negative-05": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-negative-06": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-unknown-01": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-unknown-02": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-unknown-03": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-suppression-01": {
+      "status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [
+        "mixed-precision-conversion:suppression:1"
+      ]
+    },
+    "mixed-precision-conversion-budget-01": {
+      "status": "failed",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "budget_exceeded"
+      ],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-boundary-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-positive-01": {
+      "status": "matched",
+      "finding_keys": [
+        "fragile-fp-comparison:positive:1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-positive-02": {
+      "status": "matched",
+      "finding_keys": [
+        "fragile-fp-comparison:positive:2"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-positive-03": {
+      "status": "matched",
+      "finding_keys": [
+        "fragile-fp-comparison:positive:3"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-positive-04": {
+      "status": "matched",
+      "finding_keys": [
+        "fragile-fp-comparison:positive:4"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-positive-05": {
+      "status": "matched",
+      "finding_keys": [
+        "fragile-fp-comparison:positive:5"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-positive-06": {
+      "status": "matched",
+      "finding_keys": [
+        "fragile-fp-comparison:positive:6"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-negative-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-negative-02": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-negative-03": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-negative-04": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-negative-05": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-negative-06": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-unknown-01": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-unknown-02": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-unknown-03": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-suppression-01": {
+      "status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [
+        "fragile-fp-comparison:suppression:1"
+      ]
+    },
+    "fragile-fp-comparison-budget-01": {
+      "status": "failed",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "budget_exceeded"
+      ],
+      "suppression_ids": []
+    },
+    "fragile-fp-comparison-boundary-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-positive-01": {
+      "status": "matched",
+      "finding_keys": [
+        "reduction-reassociation:positive:1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-positive-02": {
+      "status": "matched",
+      "finding_keys": [
+        "reduction-reassociation:positive:2"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-positive-03": {
+      "status": "matched",
+      "finding_keys": [
+        "reduction-reassociation:positive:3"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-positive-04": {
+      "status": "matched",
+      "finding_keys": [
+        "reduction-reassociation:positive:4"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-positive-05": {
+      "status": "matched",
+      "finding_keys": [
+        "reduction-reassociation:positive:5"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-positive-06": {
+      "status": "matched",
+      "finding_keys": [
+        "reduction-reassociation:positive:6"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-negative-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-negative-02": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-negative-03": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-negative-04": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-negative-05": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-negative-06": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-unknown-01": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-unknown-02": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-unknown-03": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-suppression-01": {
+      "status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [
+        "reduction-reassociation:suppression:1"
+      ]
+    },
+    "reduction-reassociation-budget-01": {
+      "status": "failed",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "budget_exceeded"
+      ],
+      "suppression_ids": []
+    },
+    "reduction-reassociation-boundary-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "math-library-variance-positive-01": {
+      "status": "matched",
+      "finding_keys": [
+        "math-library-variance:positive:1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "math-library-variance-positive-02": {
+      "status": "matched",
+      "finding_keys": [
+        "math-library-variance:positive:2"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "math-library-variance-positive-03": {
+      "status": "matched",
+      "finding_keys": [
+        "math-library-variance:positive:3"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "math-library-variance-positive-04": {
+      "status": "matched",
+      "finding_keys": [
+        "math-library-variance:positive:4"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "math-library-variance-positive-05": {
+      "status": "matched",
+      "finding_keys": [
+        "math-library-variance:positive:5"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "math-library-variance-positive-06": {
+      "status": "matched",
+      "finding_keys": [
+        "math-library-variance:positive:6"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "math-library-variance-negative-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "math-library-variance-negative-02": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "math-library-variance-negative-03": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "math-library-variance-negative-04": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "math-library-variance-negative-05": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "math-library-variance-negative-06": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "math-library-variance-unknown-01": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "math-library-variance-unknown-02": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "math-library-variance-unknown-03": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "math-library-variance-suppression-01": {
+      "status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [
+        "math-library-variance:suppression:1"
+      ]
+    },
+    "math-library-variance-budget-01": {
+      "status": "failed",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "budget_exceeded"
+      ],
+      "suppression_ids": []
+    },
+    "math-library-variance-boundary-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-positive-01": {
+      "status": "matched",
+      "finding_keys": [
+        "architecture-specific-fp-api:positive:1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-positive-02": {
+      "status": "matched",
+      "finding_keys": [
+        "architecture-specific-fp-api:positive:2"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-positive-03": {
+      "status": "matched",
+      "finding_keys": [
+        "architecture-specific-fp-api:positive:3"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-positive-04": {
+      "status": "matched",
+      "finding_keys": [
+        "architecture-specific-fp-api:positive:4"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-positive-05": {
+      "status": "matched",
+      "finding_keys": [
+        "architecture-specific-fp-api:positive:5"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-positive-06": {
+      "status": "matched",
+      "finding_keys": [
+        "architecture-specific-fp-api:positive:6"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-negative-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-negative-02": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-negative-03": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-negative-04": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-negative-05": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-negative-06": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-unknown-01": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-unknown-02": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-unknown-03": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "required_evidence_unknown"
+      ],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-suppression-01": {
+      "status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [
+        "architecture-specific-fp-api:suppression:1"
+      ]
+    },
+    "architecture-specific-fp-api-budget-01": {
+      "status": "failed",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "budget_exceeded"
+      ],
+      "suppression_ids": []
+    },
+    "architecture-specific-fp-api-boundary-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "long-double-abi-system-declaration-flood-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-nonscalar-01": {
+      "status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": []
+    },
+    "mixed-precision-conversion-missing-type-01": {
+      "status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "mixed_precision_conversion_conversion_type_unknown"
+      ],
+      "suppression_ids": []
+    }
+  }
+}

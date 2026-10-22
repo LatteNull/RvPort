@@ -1,0 +1,207 @@
+@use '../../../../styles/mixins' as type;
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.logContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  & + & {
+    padding-top: 24px;
+    border-top: 1px solid var(--ant-color-border-secondary);
+  }
+
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h3 {
+    @include type.section-title;
+    color: var(--ant-color-text);
+  }
+
+  p {
+    margin-top: 4px;
+    color: var(--ant-color-text-secondary);
+  }
+}
+
+.sectionHeading {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  p {
+    margin: 0;
+    color: var(--ant-color-text-secondary);
+    font-size: 13px;
+    line-height: 20px;
+  }
+}
+
+.buildIdCell {
+  min-width: 0;
+
+  > span:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.currentTag {
+  flex: 0 0 auto;
+  margin-inline-end: 0;
+}
+
+.logSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.logEditor {
+  flex: 1;
+  min-height: 0;
+}
+
+.buildSummary {
+  flex: 0 0 auto;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  overflow: hidden;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: calc(var(--ant-border-radius, 4px) * 2);
+}
+
+.summaryItem {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  align-items: center;
+  min-width: 0;
+  gap: 12px;
+  min-height: 42px;
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--ant-color-border-secondary);
+
+  &:nth-child(odd):not(:last-child) {
+    border-right: 1px solid var(--ant-color-border-secondary);
+  }
+
+  > span {
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size-sm, 12px);
+    line-height: 18px;
+  }
+
+  > strong {
+    overflow: hidden;
+    color: var(--ant-color-text);
+    font-size: var(--ant-font-size, 14px);
+    font-weight: 400;
+    line-height: 21px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .statusTag {
+    justify-self: start;
+    margin-inline-end: 0;
+  }
+}
+
+.summaryItem:last-child {
+  grid-column: 1 / -1;
+  border-bottom: 0;
+}
+
+.bitcodeResult {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 4px;
+
+  p {
+    margin: 0;
+    color: var(--ant-color-text);
+    font-size: var(--ant-font-size, 14px);
+    line-height: 22px;
+  }
+
+  small {
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size-sm, 12px);
+    line-height: 18px;
+  }
+}
+
+.bitcodeHeading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  h3 {
+    margin: 0;
+    font-size: var(--ant-font-size, 14px);
+    line-height: 22px;
+  }
+}
+
+.bitcodeStatusTag {
+  margin-inline-end: 0;
+}
+
+.configurationGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.38fr);
+  align-items: start;
+  gap: 20px;
+}
+
+.scriptField {
+  margin-bottom: 0;
+}
+
+.scriptEditor {
+  height: 256px !important;
+
+  :global(.cm-editor),
+  :global(.cm-scroller) {
+    height: 256px !important;
+    max-height: 256px !important;
+  }
+}
+
+.environmentVariables {
+  resize: none;
+}
+
+.configurationSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .sidebarFormItem {
+    margin-bottom: 0;
+  }
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}

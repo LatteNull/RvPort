@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "platform": "linux/amd64",
+  "base_image": "ubuntu:24.04@sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90",
+  "llvm_version": "21.1.8",
+  "llvm_deb_version": "1:21.1.8~++20251221032922+2078da43e25a-1~exp1~20251221153059.70",
+  "llvm_source": "https://apt.llvm.org/noble/ llvm-toolchain-noble-21 main",
+  "llvm_key_url": "https://apt.llvm.org/llvm-snapshot.gpg.key",
+  "llvm_key_sha256": "8b2a587ffd672c4687e7581dad4b2f6c1bb2ad6b480cd9771ba2ff48e0b8c75d",
+  "dependencies": {
+    "clang-21": {"license": "Apache-2.0 WITH LLVM-exception", "sha256": "943b013e1f8e0ae4940a41406dd4f63e468e435054cbf5db5951a6dbbd3785ec"},
+    "llvm-21": {"license": "Apache-2.0 WITH LLVM-exception", "sha256": "9c5dab1ac8b64afb4bc7a749f9e1bd0f506570a603bbe3aed78b8d3bf0bec0cc"},
+    "llvm-21-dev": {"license": "Apache-2.0 WITH LLVM-exception", "sha256": "43d2ceeb829edbc805aa9f26acfa31b1227e6d66583b5b99043e8951f12985af"},
+    "llvm-21-tools": {"license": "Apache-2.0 WITH LLVM-exception", "sha256": "5f4a303bf5e5fa48e4519990aca2911533c13deb41521d9f43d9bac2d413f3c7"},
+    "libclang-21-dev": {"license": "Apache-2.0 WITH LLVM-exception", "version": "1:21.1.8~++20251221032922+2078da43e25a-1~exp1~20251221153059.70"},
+    "g++": {"version": "4:13.2.0-7ubuntu1", "license": "GPL-3.0-or-later; runtime exception"},
+    "cmake": {"version": "3.28.3-1build7", "license": "BSD-3-Clause"},
+    "ninja-build": {"version": "1.11.1-2", "license": "Apache-2.0"},
+    "libgtest-dev": {"version": "1.14.0-1", "license": "BSD-3-Clause"},
+    "python3-pytest": {"version": "7.4.4-1", "license": "MIT"},
+    "python3-coverage": {"version": "7.4.4+dfsg1-0ubuntu2", "license": "Apache-2.0"},
+    "python3-jsonschema": {"version": "4.10.3-2ubuntu1", "license": "MIT"}
+  },
+  "ubuntu_source": "Ubuntu noble main/universe, noble-updates, noble-security; signed InRelease and package SHA256 verified by apt",
+  "transitive_inventory": "/opt/development-packages.tsv",
+  "license_inventory": "/usr/share/doc/<package>/copyright",
+  "package_lock": "development-packages.lock",
+  "reproducibility_limit": "All installed package versions, including transitive dependencies, are pinned and the complete installed set is compared with development-packages.lock. Signed repositories must still retain these versions; withdrawn packages fail the build rather than silently upgrade. Preserve the validated image digest for byte-identical environments."
+}

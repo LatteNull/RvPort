@@ -1,0 +1,6 @@
+{
+  "ruleId": "C_CPP.ARCH.ALIGNMENT_ASSUMPTION",
+  "count": 2,
+  "symbols": ["ALIGN256"]
+}
+

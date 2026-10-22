@@ -1,0 +1,115 @@
+# RvPort development guide
+
+English | [简体中文](开发指南.md)
+
+## Architecture and boundaries
+
+API and worker nodes share backend code and use `RVPORT_APP_MODE` to select their responsibilities. PostgreSQL stores application state and task records; RabbitMQ delivers task messages; Redis provides sessions, caching, and broadcasts; object storage holds artifacts. Tools integrate with the backend through controlled subprocesses and versioned JSON protocols.
+
+Main source is under `backend/src/main/java/cn/rvport/backend/`, with corresponding tests in `src/test/`. Generated jOOQ source is in `src/generated/java/`. Liquibase manages database changes. Updating generated types without the corresponding schema change is not sufficient.
+
+See [testing and coverage scope](testing-and-coverage.md) for language scopes, exclusion reasons, and outstanding gaps.
+
+## Builds and unit tests in Docker
+
+Run all commands from the repository root. The host only edits files, invokes Docker, and reads exported reports. Compilation, testing, code generation, and dependency installation run inside containers. Keep outputs in dedicated containers or volumes; do not mount host dependency-cache directories.
+
+The backend unit-test image includes only the build stage and does not require all analysis tools to be built first:
+
+```powershell
+docker build --target unit-test -t rvport-backend-unit:local -f backend/Dockerfile .
+docker run --name rvport-backend-unit --memory=6g --cpus=2 -e MAVEN_OPTS=-Xmx1536m rvport-backend-unit:local
+docker cp rvport-backend-unit:/workspace/backend/target/surefire-reports ./unit-reports
+docker cp rvport-backend-unit:/workspace/backend/target/site/jacoco ./coverage-reports
+docker rm rvport-backend-unit
+```
+
+The container executes `mvn -B clean verify`. Save reports when a command fails and do not mark failed checks as passing. If test failure prevents coverage generation, record that reason rather than substituting an earlier revision's report. Before rerunning, export previous reports and remove the stopped container created for that run if its name will be reused.
+
+Builds use Maven Central by default. To change the download endpoint, pass `--build-arg MAVEN_MIRROR_URL=https://trusted-mirror.example`; set the base JDK image with `--build-arg JAVA_IMAGE=image-reference`. Check the replacement's digest and version. Do not change global Docker configuration or disable TLS verification.
+
+JaCoCo enforces 90% line and branch coverage overall and per backend package; generated jOOQ types are excluded. Retained Python scripts and other owned tools require separate measurement. Passing the Java gate does not establish compliance for the entire project.
+
+Frontend coverage acceptance is currently deferred by project decision, but lint, type checks, ordinary unit tests, and production builds remain required. Finally, perform the complete Compose build in the installation guide, then start all default services with one `docker compose up -d --wait` command and check health, logs, and business flows.
+
+Validate the backend's Python resource scripts separately in the same test image:
+
+```powershell
+docker run --name rvport-backend-python --memory=2g --cpus=2 -e PYTHONPATH=/workspace/tools/memory-order-analyzer/python rvport-backend-unit:local sh -c 'python3 -m coverage run --branch --source=src/main/resources/analysis,src/main/resources/bitcode -m pytest src/test/python; test_status=$?; python3 -m coverage json -o /tmp/backend-python-coverage.json; python3 -m coverage report --fail-under=90; coverage_status=$?; if [ "$test_status" -ne 0 ]; then exit "$test_status"; fi; exit "$coverage_status"'
+docker cp rvport-backend-python:/tmp/backend-python-coverage.json ./.migration-reports/backend-python-coverage.json
+docker run --rm --memory=1g --cpus=1 --mount "type=bind,source=$((Get-Location).Path)/.migration-reports/backend-python-coverage.json,target=/tmp/coverage.json,readonly" rvport-backend-unit:local python3 -c 'import json; r=json.load(open("/tmp/coverage.json")); rows=[r["totals"],*[f["summary"] for f in r["files"].values()]]; assert all(s["covered_lines"]*100 >= s["num_statements"]*90 and s["covered_branches"]*100 >= s["num_branches"]*90 for s in rows), "Line or branch coverage is below 90%"; print("Overall and per-script line and branch coverage reach 90%")'
+```
+
+The first command preserves test failures while producing coverage. The final command independently checks at least 90% line and branch coverage overall and for each script; coverage's combined percentage alone is insufficient. Failure at any step means the gate has not passed. Reports include resource scripts that were not loaded by tests.
+
+Floating-point scanner:
+
+```powershell
+docker build -t rvport-fp-dev:local tools/floating-point-precision-scanner -f tools/floating-point-precision-scanner/Dockerfile.dev
+docker run --name rvport-fp-unit --memory=8g --cpus=2 -e CMAKE_BUILD_PARALLEL_LEVEL=2 rvport-fp-dev:local make coverage cpp-coverage
+docker cp rvport-fp-unit:/workspace/artifacts/coverage ./fp-coverage
+docker rm rvport-fp-unit
+```
+
+KB Scanner has an independent test container. Existing domain-specific checks are described in `tools/kb-scanner/README.md`. Run the complete ordinary unit suite and full coverage from the repository root:
+
+```powershell
+docker build -f tools/kb-scanner/Dockerfile.test -t rvport-kb-scanner-test:local .
+docker run --name rvport-kb-unit --memory=4g --cpus=2 --network=none -e COVERAGE_FILE=/tmp/.coverage --entrypoint sh rvport-kb-scanner-test:local -c 'python -m coverage run --branch --source=kb_scanner,scripts,tools -m unittest discover -s tests/unit -t . && python -m coverage json -o /tmp/coverage.json'
+docker cp rvport-kb-unit:/tmp/coverage.json ./kb-coverage.json
+```
+
+After the preceding command succeeds, check that no owned source was omitted and validate overall and affected-module line/branch gates inside the container. Maintain `affected` to reflect actual changes; do not narrow it to bypass affected code:
+
+```powershell
+$kbGate = @'
+import json
+from pathlib import Path
+r = json.load(open('/report.json'))
+owned = {p.as_posix() for root in ('kb_scanner', 'scripts', 'tools') for p in Path(root).rglob('*.py')}
+assert owned <= set(r['files']), sorted(owned - set(r['files']))
+affected = ['kb_scanner/core/metadata.py', 'kb_scanner/analyzers/candidate_usage/proofs.py']
+affected += ['kb_scanner/projection/v2/' + name + '.py' for name in ('chain', 'families', 'macro_effects', 'mapper', 'multiversion', 'summary', 'test_content', 'validation')]
+rows = [r['totals'], *[r['files'][name]['summary'] for name in affected]]
+assert all(s['covered_lines'] * 100 >= s['num_statements'] * 90 and s['covered_branches'] * 100 >= s['num_branches'] * 90 for s in rows)
+print('Full-source overall and affected-module line/branch gates passed')
+'@
+docker run --rm --memory=1g --cpus=1 --network=none --mount "type=bind,source=$((Get-Location).Path)/kb-coverage.json,target=/report.json,readonly" rvport-kb-scanner-test:local -c $kbGate
+```
+
+The memory-order analyzer's container coverage entry point is `python3 -m memory_order_analyzer.quality --output /output/unique-run-directory`; see [its development guide](../tools/memory-order-analyzer/doc/development.md). It independently checks all owned source, each language, and every module. Integration profiles do not replace unit-test profiles.
+
+## Database and code generation
+
+Add a Liquibase changeset for schema changes, validate complete initialization against a new database, and run the `jooq-codegen` profile in a container. Set `RVPORT_JOOQ_JDBC_URL`, `RVPORT_JOOQ_JDBC_USER`, and `RVPORT_JOOQ_JDBC_PASSWORD`. Generated code must retain the `cn.rvport.backend.jooq` package.
+
+Code generation reuses the backend unit-test image above; dependencies and outputs remain inside containers. First create a local `.env.codegen` with `POSTGRES_PASSWORD`, `RVPORT_MIGRATION_TEST_PASSWORD`, and `RVPORT_JOOQ_JDBC_PASSWORD`, all set to the same temporary random password. This is local configuration and must not be committed. The code-generation database exposes no host ports and does not reuse deployment volumes.
+
+```powershell
+docker network create rvport-codegen
+docker run -d --name rvport-codegen-db --network rvport-codegen --env-file .env.codegen -e POSTGRES_DB=rvport_codegen -e POSTGRES_USER=rvport_codegen postgres:18.4
+docker exec rvport-codegen-db pg_isready -U rvport_codegen -d rvport_codegen
+```
+
+Wait for database readiness before initialization validation and generation. `LiquibaseMigrationTests` applies migrations twice to verify empty-database initialization and repeatability.
+
+```powershell
+docker run --name rvport-codegen --network rvport-codegen --memory=6g --cpus=2 --env-file .env.codegen -e MAVEN_OPTS=-Xmx1536m -e RVPORT_MIGRATION_TEST_ENABLED=true -e RVPORT_MIGRATION_TEST_JDBC_URL=jdbc:postgresql://rvport-codegen-db:5432/rvport_codegen -e RVPORT_MIGRATION_TEST_USERNAME=rvport_codegen -e RVPORT_JOOQ_JDBC_URL=jdbc:postgresql://rvport-codegen-db:5432/rvport_codegen -e RVPORT_JOOQ_JDBC_USER=rvport_codegen rvport-backend-unit:local sh -c 'mvn -B -s /opt/maven-cache/settings.xml -Dmaven.repo.local=/opt/maven-cache/repository -Dtest=LiquibaseMigrationTests test && mvn -B -s /opt/maven-cache/settings.xml -Dmaven.repo.local=/opt/maven-cache/repository -Pjooq-codegen generate-sources'
+docker cp rvport-codegen:/workspace/backend/src/generated/java ./.migration-reports/jooq-generated
+```
+
+Only after the container exits successfully and the report confirms success should the complete exported `java` directory replace `backend/src/generated/java/`. Save the previous generated directory for review first. Overwriting only matching files can leave obsolete types for removed tables. Rebuild the test image and run the full unit and coverage suite; a database test alone does not replace the unit-test gate. After exporting reports, remove the two containers and dedicated network created for this run.
+
+## Code and API changes
+
+- Before removing functions or endpoints, inspect frontend callers, scripts, message handlers, scheduled tasks, reflection, and framework registration. Text-reference counts alone are insufficient.
+- Automated testing, connection testing, and model testing exposed by the product are business features, distinct from test-only infrastructure.
+- Preserve Chinese and English fields for user-facing business explanations as required by the protocol, such as `suggestion` and `suggestion_en`.
+- Maintain unit tests for normal behavior, boundaries, and error paths alongside implementation changes. Overall and affected-module coverage must reach 90% lines and, where supported, branches.
+- Update `.env.example` and installation documentation when adding configuration. Do not commit real credentials, runtime logs, or environment data.
+
+## OpenSpec
+
+The repository root, backend, frontend, and three main scanners each have an independent OpenSpec root: six in total. Identify the current project root when executing commands; do not apply a backend change to a tool's store. Conclusions in specifications and archives describe their original revisions. Current implementations require current validation.
+
+Archive an active change only after implementation and validation are complete.

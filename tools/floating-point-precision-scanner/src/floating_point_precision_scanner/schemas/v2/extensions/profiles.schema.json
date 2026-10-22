@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-scanner/extensions/profiles/1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "source", "target", "sourceBuildContext", "targetBuildContext"],
+  "properties": {
+    "schemaVersion": {"const": "1.0"},
+    "source": {"type": "object", "maxProperties": 64},
+    "target": {"type": "object", "maxProperties": 64},
+    "sourceBuildContext": {"type": ["object", "null"], "maxProperties": 64},
+    "targetBuildContext": {"type": ["object", "null"], "maxProperties": 64}
+  }
+}

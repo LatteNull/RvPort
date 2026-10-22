@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "NullableDigest": {"oneOf": [{"$ref": "#/$defs/Digest"}, {"type": "null"}]},
+    "Reference": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "digest"],
+      "properties": {
+        "kind": {"type": "string", "minLength": 1},
+        "id": {"type": "string", "minLength": 1},
+        "digest": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "EvidenceReference": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "schema_version", "producer", "digest", "path"],
+      "properties": {
+        "kind": {"type": "string", "minLength": 1},
+        "id": {"type": "string", "minLength": 1},
+        "schema_version": {"const": 1},
+        "producer": {"type": "string", "minLength": 1},
+        "digest": {"$ref": "#/$defs/Digest"},
+        "path": {"type": "string", "minLength": 1}
+      }
+    },
+    "Diagnostic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "reason", "reason_en", "suggestion", "suggestion_en", "artifact_key", "root_id", "function_id", "context_id", "layer", "attempt"],
+      "properties": {
+        "code": {"type": "string", "minLength": 1},
+        "reason": {"type": "string", "minLength": 1},
+        "reason_en": {"type": "string", "minLength": 1},
+        "suggestion": {"type": ["string", "null"]},
+        "suggestion_en": {"type": ["string", "null"]},
+        "artifact_key": {"type": ["string", "null"]},
+        "root_id": {"type": ["string", "null"]},
+        "function_id": {"type": ["string", "null"]},
+        "context_id": {"type": ["string", "null"]},
+        "layer": {"enum": ["semantic", "effect", "thread", null]},
+        "attempt": {"type": ["string", "null"]}
+      }
+    },
+    "Budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["translation_units", "roots", "demands", "contexts", "functions_per_batch", "workers", "materialized_instructions", "analysis_queries", "scc_iterations", "recursion_depth", "frontier_items", "diagnostic_bytes", "worker_seconds", "request_seconds", "cpu_seconds", "rss_bytes", "worker_output_bytes", "request_output_bytes"],
+      "properties": {
+        "translation_units": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "roots": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "demands": {"type": "integer", "minimum": 1, "maximum": 1048576},
+        "contexts": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "functions_per_batch": {"type": "integer", "minimum": 1, "maximum": 256},
+        "workers": {"type": "integer", "minimum": 1, "maximum": 32},
+        "materialized_instructions": {"type": "integer", "minimum": 1, "maximum": 4000000},
+        "analysis_queries": {"type": "integer", "minimum": 1, "maximum": 8000000},
+        "scc_iterations": {"type": "integer", "minimum": 1, "maximum": 64},
+        "recursion_depth": {"type": "integer", "minimum": 1, "maximum": 64},
+        "frontier_items": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "diagnostic_bytes": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "worker_seconds": {"type": "integer", "minimum": 1, "maximum": 600},
+        "request_seconds": {"type": "integer", "minimum": 1, "maximum": 3600},
+        "cpu_seconds": {"type": "integer", "minimum": 1, "maximum": 3600},
+        "rss_bytes": {"type": "integer", "minimum": 1, "maximum": 8589934592},
+        "worker_output_bytes": {"type": "integer", "minimum": 1, "maximum": 268435456},
+        "request_output_bytes": {"type": "integer", "minimum": 1, "maximum": 536870912}
+      }
+    },
+    "Member": {
+      "type": "object", "additionalProperties": false,
+      "required": ["physical_tu_id", "artifact_key", "bc_digest", "profile_id", "compiler", "language", "standard", "target", "data_layout", "abi", "evidence_mode"],
+      "properties": {
+        "physical_tu_id": {"type": "string", "minLength": 1},
+        "artifact_key": {"$ref": "#/$defs/Digest"},
+        "bc_digest": {"$ref": "#/$defs/NullableDigest"},
+        "profile_id": {"type": "string", "minLength": 1},
+        "compiler": {"enum": ["gcc", "clang"]},
+        "language": {"enum": ["c", "c++"]},
+        "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+        "target": {"type": "string", "minLength": 1},
+        "data_layout": {"type": "string", "minLength": 1},
+        "abi": {"type": "string", "minLength": 1},
+        "evidence_mode": {"enum": ["ast+ir", "ir-only", "ast-only", "failed"]}
+      }
+    },
+    "Common": {
+      "type": "object",
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "semantic_digest"],
+      "properties": {
+        "schema_version": {"const": 1},
+        "kind": {"type": "string"},
+        "analysis_version": {"const": "0.1.0"},
+        "policy_id": {"const": "demand-driven-function-analysis-v1"},
+        "semantic_digest": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "DemandDrivenAnalysisRequest": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {
+        "type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "closed_scope", "target", "data_layout", "abi", "members", "evidence", "layers", "budgets", "semantic_digest"],
+        "properties": {
+          "schema_version": {"const": 1}, "kind": {"const": "DemandDrivenAnalysisRequest"},
+          "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "demand-driven-function-analysis-v1"},
+          "scope_id": {"type": "string", "minLength": 1}, "closed_scope": {"type": "boolean"},
+          "target": {"type": "string", "minLength": 1}, "data_layout": {"type": "string", "minLength": 1}, "abi": {"type": "string", "minLength": 1},
+          "members": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/Member"}},
+          "evidence": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/EvidenceReference"}},
+          "layers": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["semantic", "effect", "thread"]}},
+          "budgets": {"$ref": "#/$defs/Budgets"}, "semantic_digest": {"$ref": "#/$defs/Digest"}
+        }
+      }]
+    },
+    "Symbol": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "name", "declaration", "materializable", "linkage", "visibility", "comdat"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1}, "name": {"type": "string"},
+        "declaration": {"type": "boolean"}, "materializable": {"type": "boolean"},
+        "linkage": {"type": "string", "minLength": 1}, "visibility": {"type": "string", "minLength": 1},
+        "comdat": {"type": ["string", "null"]}
+      }
+    },
+    "LLVMModuleIndexFacts": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {
+        "type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "artifact_key", "physical_tu_id", "bc_digest", "profile_id", "target", "data_layout", "abi", "status", "symbols", "source_bindings", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {
+          "schema_version": {"const": 1}, "kind": {"const": "LLVMModuleIndexFacts"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "demand-driven-function-analysis-v1"},
+          "artifact_key": {"$ref": "#/$defs/Digest"}, "physical_tu_id": {"type": "string", "minLength": 1}, "bc_digest": {"$ref": "#/$defs/Digest"},
+          "profile_id": {"type": "string", "minLength": 1}, "target": {"type": "string", "minLength": 1}, "data_layout": {"type": "string", "minLength": 1}, "abi": {"type": "string", "minLength": 1},
+          "status": {"enum": ["complete", "partial", "failed"]}, "symbols": {"type": "array", "items": {"$ref": "#/$defs/Symbol"}},
+          "source_bindings": {"type": "array", "items": {"type": "object"}}, "counts": {"type": "object"},
+          "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Reference"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "semantic_digest": {"$ref": "#/$defs/Digest"}
+        }
+      }]
+    },
+    "FunctionShard": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "artifact_key", "physical_tu_id", "bc_digest", "function_id", "function_name", "context_id", "layer", "status", "facts", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"enum": ["FunctionSemanticFacts", "FunctionEffectFacts", "FunctionThreadFacts"]},
+        "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "demand-driven-function-analysis-v1"},
+        "scope_id": {"type": "string", "minLength": 1}, "artifact_key": {"$ref": "#/$defs/Digest"}, "physical_tu_id": {"type": "string", "minLength": 1}, "bc_digest": {"$ref": "#/$defs/Digest"},
+        "function_id": {"type": "string", "minLength": 1}, "function_name": {"type": "string"}, "context_id": {"type": "string", "minLength": 1},
+        "layer": {"enum": ["semantic", "effect", "thread"]}, "status": {"enum": ["completed", "partial", "failed"]},
+        "facts": {"type": "object"}, "counts": {"type": "object"}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Reference"}},
+        "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+        "semantic_digest": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "FunctionSemanticFacts": {"allOf": [{"$ref": "#/$defs/FunctionShard"}, {"properties": {"kind": {"const": "FunctionSemanticFacts"}, "layer": {"const": "semantic"}}}]},
+    "FunctionEffectFacts": {"allOf": [{"$ref": "#/$defs/FunctionShard"}, {"properties": {"kind": {"const": "FunctionEffectFacts"}, "layer": {"const": "effect"}}}]},
+    "FunctionThreadFacts": {"allOf": [{"$ref": "#/$defs/FunctionShard"}, {"properties": {"kind": {"const": "FunctionThreadFacts"}, "layer": {"const": "thread"}}}]},
+    "AnalysisDemandGraph": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {
+        "type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "nodes", "edges", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {
+          "schema_version": {"const": 1}, "kind": {"const": "AnalysisDemandGraph"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "demand-driven-function-analysis-v1"},
+          "scope_id": {"type": "string", "minLength": 1}, "request_hash": {"$ref": "#/$defs/Digest"}, "status": {"enum": ["complete", "partial", "failed"]},
+          "nodes": {"type": "array", "items": {"type": "object"}}, "edges": {"type": "array", "items": {"type": "object"}}, "counts": {"type": "object"},
+          "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Reference"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "semantic_digest": {"$ref": "#/$defs/Digest"}
+        }
+      }]
+    },
+    "WorkerExecutionManifest": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {
+        "type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "batches", "metrics", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {
+          "schema_version": {"const": 1}, "kind": {"const": "WorkerExecutionManifest"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "demand-driven-function-analysis-v1"},
+          "scope_id": {"type": "string", "minLength": 1}, "request_hash": {"$ref": "#/$defs/Digest"}, "status": {"enum": ["complete", "partial", "failed"]},
+          "batches": {"type": "array", "items": {"type": "object"}}, "metrics": {"type": "object"},
+          "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Reference"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "semantic_digest": {"$ref": "#/$defs/Digest"}
+        }
+      }]
+    },
+    "DemandDrivenAnalysisReport": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {
+        "type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "exit_code", "safety", "findings", "demand_graph", "worker_manifest", "counts", "coverage", "resources", "cache", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {
+          "schema_version": {"const": 1}, "kind": {"const": "DemandDrivenAnalysisReport"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "demand-driven-function-analysis-v1"},
+          "scope_id": {"type": "string", "minLength": 1}, "request_hash": {"$ref": "#/$defs/Digest"}, "status": {"enum": ["complete", "partial", "failed"]},
+          "exit_code": {"enum": [0, 1, 2]}, "safety": {"const": "not_evaluated"}, "findings": {"type": "null"},
+          "demand_graph": {"oneOf": [{"$ref": "#/$defs/Reference"}, {"type": "null"}]}, "worker_manifest": {"oneOf": [{"$ref": "#/$defs/Reference"}, {"type": "null"}]},
+          "counts": {"type": "object"}, "coverage": {"type": "object"}, "resources": {"type": "object"}, "cache": {"type": "object"},
+          "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Reference"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "semantic_digest": {"$ref": "#/$defs/Digest"}
+        }
+      }]
+    }
+  }
+}

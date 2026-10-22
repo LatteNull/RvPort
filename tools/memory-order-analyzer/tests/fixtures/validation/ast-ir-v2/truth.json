@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "AstIrValidationTruth",
+  "analysis_version": "0.1.0",
+  "policy_id": "ast-cross-tu-evidence-v1",
+  "suite_id": "ast-ir-cross-tu-matrix",
+  "suite_version": 2,
+  "suite_digest": "e34e27380f2b66c82f0074913699752f387df5e13c4ddfc51258522f1db80454",
+  "cases": [
+    {"case_id":"c11-correct-single","profile_replay":"complete","source_entities":5,"entity_resolution":5,"entity_binding":5,"expression_binding":4,"overlay":2,"candidate_slices":1,"verdict":"discharged","frontier":[]},
+    {"case_id":"c11-risk-multi","profile_replay":"complete","source_entities":12,"entity_resolution":8,"entity_binding":8,"expression_binding":6,"overlay":3,"candidate_slices":1,"verdict":"risk","frontier":[]},
+    {"case_id":"c17-correct-multi","profile_replay":"complete","source_entities":11,"entity_resolution":7,"entity_binding":7,"expression_binding":5,"overlay":3,"candidate_slices":1,"verdict":"discharged","frontier":[]},
+    {"case_id":"c17-unknown-single","profile_replay":"complete","source_entities":6,"entity_resolution":4,"entity_binding":2,"expression_binding":1,"overlay":1,"candidate_slices":1,"verdict":"unknown","frontier":["binding-budget","unsupported"]},
+    {"case_id":"cpp17-risk-single","profile_replay":"complete","source_entities":7,"entity_resolution":5,"entity_binding":4,"expression_binding":4,"overlay":2,"candidate_slices":1,"verdict":"risk","frontier":["weak-link-selection","tls-object"]},
+    {"case_id":"cpp17-unknown-multi","profile_replay":"complete","source_entities":14,"entity_resolution":9,"entity_binding":5,"expression_binding":2,"overlay":2,"candidate_slices":1,"verdict":"unknown","frontier":["odr-definition-mismatch","no-debug-expression-binding"]},
+    {"case_id":"cpp20-correct-single","profile_replay":"complete","source_entities":6,"entity_resolution":6,"entity_binding":6,"expression_binding":4,"overlay":2,"candidate_slices":1,"verdict":"discharged","frontier":[]},
+    {"case_id":"cpp20-risk-multi","profile_replay":"partial","source_entities":13,"entity_resolution":8,"entity_binding":5,"expression_binding":3,"overlay":2,"candidate_slices":1,"verdict":"risk","frontier":["profile-conflict","comdat-selection"]}
+  ],
+  "review": {"status":"reviewed","reviewer":"memory-order-analyzer maintainers","method":"manual","reviewed_on":"2026-09-18","basis":"基于 P5 人工真值与 AST/IR 证据层逐项复核；不改变历史 P5 truth","basis_en":"Layer-by-layer AST/IR review against the P5 human truth without rewriting historical truth"},
+  "semantic_digest": "f5350052266cc4802d94297148b62879a8035113fc85e267f9a32a7e77d4faca"
+}

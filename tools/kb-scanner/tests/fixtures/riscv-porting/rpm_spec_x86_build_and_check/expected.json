@@ -1,0 +1,5 @@
+{
+  "ruleId": "RPM_SPEC.X86.BUILD_OR_CHECK",
+  "count": 2,
+  "symbols": ["-mavx2", "skip-riscv"]
+}

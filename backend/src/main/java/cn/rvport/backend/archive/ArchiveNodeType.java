@@ -1,0 +1,15 @@
+package cn.rvport.backend.archive;
+
+public enum ArchiveNodeType {
+    KB_SCAN,
+    DEPENDENCY_ANALYSIS,
+    MIGRATION_REPORT,
+    REPORT_COMPARISON,
+    RECHECK,
+    BUILD_VALIDATION,
+    AUTOMATED_TEST,
+    TEST_COMPARISON,
+    KB_AI_EXTENSION,
+    FLOATING_POINT_ANALYSIS,
+    MEMORY_ORDER_ANALYSIS
+}

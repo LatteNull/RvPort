@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-precision-scanner/artifacts/v1/bitcode-artifact-set.schema.json",
+  "title": "SharedBitcodeArtifactSet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "schema_version", "artifact_set_id", "source_revision", "build_run_id", "compile_commands_sha256", "status", "producer", "counts", "members", "failures"],
+  "properties": {
+    "kind": {"const": "SharedBitcodeArtifactSet"},
+    "schema_version": {"const": "1.0"},
+    "artifact_set_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "source_revision": {"type": "string", "minLength": 1},
+    "build_run_id": {"type": "string", "minLength": 1},
+    "compile_commands_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "status": {"enum": ["READY", "PARTIAL", "MISSING", "QUEUED", "GENERATING", "FAILED"]},
+    "producer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["tool", "version", "analysis_compiler", "production_compiler"],
+      "properties": {
+        "tool": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1},
+        "analysis_compiler": {"$ref": "#/$defs/compiler"},
+        "production_compiler": {"$ref": "#/$defs/compiler"}
+      }
+    },
+    "counts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["planned", "completed", "failed"],
+      "properties": {
+        "planned": {"type": "integer", "minimum": 0},
+        "completed": {"type": "integer", "minimum": 0},
+        "failed": {"type": "integer", "minimum": 0}
+      }
+    },
+    "members": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/member"}
+    },
+    "failures": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/failure"}
+    }
+  },
+  "$defs": {
+    "compiler": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {"name": {"type": "string"}, "version": {"type": "string"}}
+    },
+    "sidecar": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "size_bytes", "sha256", "schema_version"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "size_bytes": {"type": "integer", "minimum": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "schema_version": {"const": "1.0"}
+      }
+    },
+    "member": {
+      "type": "object", "additionalProperties": false,
+      "required": ["physical_tu_id", "context_id", "artifact_key", "language", "target", "abi", "profile", "profile_version", "capabilities", "path", "size_bytes", "sha256"],
+      "properties": {
+        "physical_tu_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "context_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "artifact_key": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "language": {"enum": ["c", "c-header", "c++", "c++-header"]},
+        "target": {"type": ["string", "null"]},
+        "abi": {"type": ["string", "null"]},
+        "profile": {"enum": ["source-preserving", "build-faithful"]},
+        "profile_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+        "capabilities": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "path": {"type": "string", "minLength": 1},
+        "size_bytes": {"type": "integer", "minimum": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "data_layout": {"type": ["string", "null"]},
+        "binding_sidecar": {"$ref": "#/$defs/sidecar"}
+      }
+    },
+    "failure": {
+      "type": "object", "additionalProperties": false,
+      "required": ["physical_tu_id", "context_id", "profile", "code", "detail", "detail_en"],
+      "properties": {
+        "physical_tu_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "context_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "profile": {"enum": ["source-preserving", "build-faithful"]},
+        "code": {"type": "string", "minLength": 1},
+        "detail": {"type": "string", "minLength": 1},
+        "detail_en": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

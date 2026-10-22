@@ -1,0 +1,3 @@
+// Generated from protocols/extractor-protocol.json; do not edit the generated file.
+#pragma once
+#define MOA_PROTOCOL_JSON R"moa(@MOA_PROTOCOL_JSON@)moa"

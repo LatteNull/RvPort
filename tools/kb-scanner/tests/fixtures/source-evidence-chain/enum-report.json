@@ -1,0 +1,2620 @@
+{
+  "diagnostics": [
+    {
+      "code": "assessor.provisional",
+      "count": 1,
+      "findingIds": [],
+      "id": "diagnostic:3744f793f9408aa3f8885620a334205327f385dae0bb48ba404eccc111a956d0",
+      "reasonCodes": [
+        "missing_input"
+      ],
+      "refs": [],
+      "severity": "medium",
+      "stage": "assessor",
+      "status": "partial"
+    },
+    {
+      "code": "classifier.unknown-results",
+      "count": 1,
+      "findingIds": [],
+      "id": "diagnostic:aecdea4d13931b14f8214b29f7c972c7bcdc034f16d178a1da83dd2e24e12cfa",
+      "reasonCodes": [
+        "missing_input"
+      ],
+      "refs": [],
+      "severity": "medium",
+      "stage": "classifier",
+      "status": "partial"
+    },
+    {
+      "code": "tree-sitter.partial-parse",
+      "count": 1,
+      "findingIds": [],
+      "id": "diagnostic:3f827a2bba49fb7a92eb784623ca5189f8a2971b6ff24d5e7e236957c8544e2c",
+      "reasonCodes": [
+        "missing_input"
+      ],
+      "refs": [],
+      "representativeLocation": {
+        "context": {
+          "budget": {
+            "afterLines": 20,
+            "beforeLines": 20,
+            "maxCharacters": 65536,
+            "maxLines": 256,
+            "truncated": false
+          },
+          "highlights": [
+            {
+              "endColumn": 2,
+              "line": 2,
+              "startColumn": 1
+            }
+          ],
+          "lines": [
+            {
+              "line": 1,
+              "text": "enum Backend { scalar, X86_AESNI = 7, riscv };"
+            },
+            {
+              "line": 2,
+              "text": "int choose(enum Backend value) {"
+            },
+            {
+              "line": 3,
+              "text": "  switch (value) {"
+            },
+            {
+              "line": 4,
+              "text": "    case X86_AESNI: return 1;"
+            },
+            {
+              "line": 5,
+              "text": "    case riscv: return 0;"
+            },
+            {
+              "line": 6,
+              "text": "  /* deliberately incomplete for parser recovery */"
+            }
+          ],
+          "reasonCodes": [],
+          "status": "complete"
+        },
+        "file": "recovery.c",
+        "span": {
+          "end": {
+            "column": 1,
+            "line": 2
+          },
+          "start": {
+            "column": 1,
+            "line": 2
+          }
+        }
+      },
+      "severity": "medium",
+      "stage": "frontend.tree-sitter",
+      "status": "partial"
+    }
+  ],
+  "findings": [
+    {
+      "conclusion": {
+        "actionable": false,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 0.75,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "architecture_enum_candidate",
+        "reason": "enum-selection-binding-incomplete",
+        "severity": "low",
+        "status": "unknown",
+        "suggestion": "Execution-architecture relevance cannot be determined from the current evidence. Preserve this fact for follow-up analysis; a data-format architecture name alone does not prove an execution dependency.",
+        "title": "Architecture Enum Candidate"
+      },
+      "evidenceChain": {
+        "breaks": [
+          {
+            "candidateStepIds": [],
+            "fromStepId": "step:43d4946c5d6cadeed10a0062f94cde3d702f7f5b7b58f6d6a79c0f2ea0dc3ed7",
+            "id": "break:f36b2e1cb587432c293a8a951c924ed3a363234c1f4b7589c60439402c3c696d",
+            "reasonCode": "missing_input",
+            "stage": "source-upstream",
+            "status": "unknown"
+          }
+        ],
+        "budget": {
+          "maxDepth": 16,
+          "maxPaths": 32,
+          "maxVisited": 256,
+          "paths": 5,
+          "truncated": false,
+          "visited": 8
+        },
+        "edges": [
+          {
+            "fromStepId": "step:dddb467404ccb8797a5b6997924a5f007f9821688481fe1c5c40fd7a715bb6b2",
+            "id": "edge:266051b80b89832e871ea13ca13bafc9b1ad78c231d9ecf603167d3dfbe10137",
+            "kind": "contains",
+            "provenance": [
+              {
+                "id": "67177b21f2ee578402a1125ffcab9f5d0fe2625a1ae3f52057611783abd8e6d5",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:1aa51a64c6efcdcd621d94a034bc0fcac4ab32f61ec1259c457ededc837effd8"
+          },
+          {
+            "fromStepId": "step:af57cfc6540ea1d19ae16e1b45ac669eb11aaf955d18eab748a0cdc5ded7ffaf",
+            "id": "edge:28b46f6af6b3edfd9892e0121a1d96b53707f1d42da722347517649b5083b3a6",
+            "kind": "selects",
+            "provenance": [
+              {
+                "id": "b2ace1beddbd536612783b3da0ac5c95e5d498200d06d17a2536f051a6fc7374",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:1aa51a64c6efcdcd621d94a034bc0fcac4ab32f61ec1259c457ededc837effd8"
+          },
+          {
+            "fromStepId": "step:9f4dc6da6bccbc05a18510309c8868d5b15f3d533963fb7eea5c46b647234889",
+            "id": "edge:347930edbe7483d07e84086b65aa17bc5ef55c3a8f9c8afd5903869e2f38bf81",
+            "kind": "selects",
+            "provenance": [
+              {
+                "id": "1205f8b1440619142569e8094d6a4464f9aec6557cfd77d6d9971228d2595451",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [
+              "missing_input"
+            ],
+            "status": "unknown",
+            "toStepId": "step:1aa51a64c6efcdcd621d94a034bc0fcac4ab32f61ec1259c457ededc837effd8"
+          },
+          {
+            "fromStepId": "step:d04835a709146a02ea441cded32c1985e4d97ac836709b96bd72838febfd5993",
+            "id": "edge:573d2a90993af3d6a846df21b63898333be521fda9ee16eb47392e7bf002cdce",
+            "kind": "selects",
+            "provenance": [
+              {
+                "id": "daefa4040bb16aee6899cb79fe09d19c9f268009de6a941ff6df84e70ef20b2e",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:1aa51a64c6efcdcd621d94a034bc0fcac4ab32f61ec1259c457ededc837effd8"
+          },
+          {
+            "fromStepId": "step:1aa51a64c6efcdcd621d94a034bc0fcac4ab32f61ec1259c457ededc837effd8",
+            "id": "edge:611de27a4d0b54b77a8230c1060660f662d0bc07246a1cf947d357cf226c424c",
+            "kind": "contains",
+            "provenance": [
+              {
+                "id": "07c9cee1e223419d20d90dec3e75541a20ca96f40119fb4dadc3d36fb7746b8f",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:43d4946c5d6cadeed10a0062f94cde3d702f7f5b7b58f6d6a79c0f2ea0dc3ed7"
+          }
+        ],
+        "impactStepIds": [],
+        "primaryPath": [
+          "step:d04835a709146a02ea441cded32c1985e4d97ac836709b96bd72838febfd5993",
+          "step:1aa51a64c6efcdcd621d94a034bc0fcac4ab32f61ec1259c457ededc837effd8",
+          "step:43d4946c5d6cadeed10a0062f94cde3d702f7f5b7b58f6d6a79c0f2ea0dc3ed7"
+        ],
+        "reasonCodes": [
+          "missing_input"
+        ],
+        "rootStepId": "step:d04835a709146a02ea441cded32c1985e4d97ac836709b96bd72838febfd5993",
+        "status": "unknown",
+        "steps": [
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.architecture-enum": {
+                "bindingStatus": "complete",
+                "enumDeclarationEvidenceId": "932c4e6a05accee04800b9b0dc401f49c3f4032d944cb921a9426e1479ed8f4f",
+                "enumName": "Backend",
+                "enumStyle": "scoped",
+                "evidenceKind": "enum_member_declaration",
+                "identityVersion": 1,
+                "initializerPresent": true,
+                "language": "cpp",
+                "languageSource": "suffix",
+                "memberName": "avx2",
+                "nodeType": "enumerator",
+                "qualifiedName": "Backend::avx2"
+              },
+              "org.rvport.kb-scanner.source-chain": {
+                "incoming": [
+                  {
+                    "fromEvidenceId": "6b3fbf779103a5bd0750b3e95c5cb50e29aaf4c07a60a4ada6ca05b1a8ef6522",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "daefa4040bb16aee6899cb79fe09d19c9f268009de6a941ff6df84e70ef20b2e",
+                        "kind": "selects",
+                        "sourceEntityId": "46f90dc81c3d45c958045ed380fe72878e74a43a14121eecc97ca2e1ccb364e1",
+                        "targetEntityId": "18a6b72f1c03c0f0d7a7cb50ffcc54b0de72697c8afbe15ec1809e0757d692d2"
+                      }
+                    ]
+                  },
+                  {
+                    "fromEvidenceId": "8447718ab479e0088f6bf310850b606b8a807bc188a20e71b15aa55c04cea031",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "1205f8b1440619142569e8094d6a4464f9aec6557cfd77d6d9971228d2595451",
+                        "kind": "selects",
+                        "sourceEntityId": "dbb8805c6dbfafd11bcb4eb1f4b740d43d96f1fd5f4a44e5482d14dd630b7672",
+                        "targetEntityId": "18a6b72f1c03c0f0d7a7cb50ffcc54b0de72697c8afbe15ec1809e0757d692d2"
+                      }
+                    ]
+                  },
+                  {
+                    "fromEvidenceId": "8a9797174505a64d3f8007f93e2d917bd7225a1049652211ef2f8ad43faff56d",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "b2ace1beddbd536612783b3da0ac5c95e5d498200d06d17a2536f051a6fc7374",
+                        "kind": "selects",
+                        "sourceEntityId": "6aeeeb4f24202d39cd8bfbb156fd96a84d1b7d3a145b3171723c347cbc93afd6",
+                        "targetEntityId": "18a6b72f1c03c0f0d7a7cb50ffcc54b0de72697c8afbe15ec1809e0757d692d2"
+                      }
+                    ]
+                  },
+                  {
+                    "fromEvidenceId": "932c4e6a05accee04800b9b0dc401f49c3f4032d944cb921a9426e1479ed8f4f",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "67177b21f2ee578402a1125ffcab9f5d0fe2625a1ae3f52057611783abd8e6d5",
+                        "kind": "contains",
+                        "sourceEntityId": "9e82ed99fe9af323d4efc83b7f404eb5755f254d0f04d275edf7703f5344065a",
+                        "targetEntityId": "18a6b72f1c03c0f0d7a7cb50ffcc54b0de72697c8afbe15ec1809e0757d692d2"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "id": "step:1aa51a64c6efcdcd621d94a034bc0fcac4ab32f61ec1259c457ededc837effd8",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "2301ff28e1c4007245ae52f0ba37e50e35c21598bc5b320d069b4c49ac775e3d",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              }
+            ],
+            "reason": "Observed by tree-sitter-cpp@0.23.4.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 34,
+                    "line": 1,
+                    "startColumn": 30
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "enum class Backend { scalar, avx2 = 2, riscv, portable };"
+                  },
+                  {
+                    "line": 2,
+                    "text": ""
+                  },
+                  {
+                    "line": 3,
+                    "text": "float avx2_sum(float *data);"
+                  },
+                  {
+                    "line": 4,
+                    "text": "float scalar_sum(float *data);"
+                  },
+                  {
+                    "line": 5,
+                    "text": ""
+                  },
+                  {
+                    "line": 6,
+                    "text": "float select_runtime(Backend backend, float *data) {"
+                  },
+                  {
+                    "line": 7,
+                    "text": "  if (backend == Backend::avx2) {"
+                  },
+                  {
+                    "line": 8,
+                    "text": "    return _mm256_cvtss_f32(_mm256_add_ps(*(__m256 *)data, *(__m256 *)data));"
+                  },
+                  {
+                    "line": 9,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 10,
+                    "text": "  return scalar_sum(data);"
+                  },
+                  {
+                    "line": 11,
+                    "text": "}"
+                  },
+                  {
+                    "line": 12,
+                    "text": ""
+                  },
+                  {
+                    "line": 13,
+                    "text": "template <Backend B>"
+                  },
+                  {
+                    "line": 14,
+                    "text": "float select_template(float *data) {"
+                  },
+                  {
+                    "line": 15,
+                    "text": "  if constexpr (B == Backend::avx2) {"
+                  },
+                  {
+                    "line": 16,
+                    "text": "    return avx2_sum(data);"
+                  },
+                  {
+                    "line": 17,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 18,
+                    "text": "  return scalar_sum(data);"
+                  },
+                  {
+                    "line": 19,
+                    "text": "}"
+                  },
+                  {
+                    "line": 20,
+                    "text": ""
+                  },
+                  {
+                    "line": 21,
+                    "text": "float select_switch(Backend backend, float *data) {"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "matrix.cpp",
+              "span": {
+                "end": {
+                  "column": 34,
+                  "line": 1
+                },
+                "start": {
+                  "column": 30,
+                  "line": 1
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "Backend::avx2",
+            "title": "Source Evidence: Backend::avx2"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.architecture-enum": {
+                "bindingStatus": "complete",
+                "enumMemberDeclarationEvidenceIds": [
+                  "2301ff28e1c4007245ae52f0ba37e50e35c21598bc5b320d069b4c49ac775e3d"
+                ],
+                "enumName": "Backend",
+                "evidenceKind": "enum_member_reference",
+                "identityVersion": 1,
+                "language": "cpp",
+                "languageSource": "suffix",
+                "memberName": "avx2",
+                "nodeType": "qualified_identifier",
+                "qualifiedName": "Backend::avx2",
+                "referenceContext": "if_constexpr",
+                "templateDependent": true
+              },
+              "org.rvport.kb-scanner.source-chain": {
+                "incoming": [
+                  {
+                    "fromEvidenceId": "2301ff28e1c4007245ae52f0ba37e50e35c21598bc5b320d069b4c49ac775e3d",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "07c9cee1e223419d20d90dec3e75541a20ca96f40119fb4dadc3d36fb7746b8f",
+                        "kind": "contains",
+                        "sourceEntityId": "18a6b72f1c03c0f0d7a7cb50ffcc54b0de72697c8afbe15ec1809e0757d692d2",
+                        "targetEntityId": "5446977625008ca5fbd07dc0efb0f5464332958d0092e557a369f25bb1494102"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "id": "step:43d4946c5d6cadeed10a0062f94cde3d702f7f5b7b58f6d6a79c0f2ea0dc3ed7",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "fad826842de28f7fd47747c5077795eb099248fac968ac5dec3d18ddcd84be2e",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              }
+            ],
+            "reason": "Observed by tree-sitter-cpp@0.23.4.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 35,
+                    "line": 15,
+                    "startColumn": 31
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "enum class Backend { scalar, avx2 = 2, riscv, portable };"
+                  },
+                  {
+                    "line": 2,
+                    "text": ""
+                  },
+                  {
+                    "line": 3,
+                    "text": "float avx2_sum(float *data);"
+                  },
+                  {
+                    "line": 4,
+                    "text": "float scalar_sum(float *data);"
+                  },
+                  {
+                    "line": 5,
+                    "text": ""
+                  },
+                  {
+                    "line": 6,
+                    "text": "float select_runtime(Backend backend, float *data) {"
+                  },
+                  {
+                    "line": 7,
+                    "text": "  if (backend == Backend::avx2) {"
+                  },
+                  {
+                    "line": 8,
+                    "text": "    return _mm256_cvtss_f32(_mm256_add_ps(*(__m256 *)data, *(__m256 *)data));"
+                  },
+                  {
+                    "line": 9,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 10,
+                    "text": "  return scalar_sum(data);"
+                  },
+                  {
+                    "line": 11,
+                    "text": "}"
+                  },
+                  {
+                    "line": 12,
+                    "text": ""
+                  },
+                  {
+                    "line": 13,
+                    "text": "template <Backend B>"
+                  },
+                  {
+                    "line": 14,
+                    "text": "float select_template(float *data) {"
+                  },
+                  {
+                    "line": 15,
+                    "text": "  if constexpr (B == Backend::avx2) {"
+                  },
+                  {
+                    "line": 16,
+                    "text": "    return avx2_sum(data);"
+                  },
+                  {
+                    "line": 17,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 18,
+                    "text": "  return scalar_sum(data);"
+                  },
+                  {
+                    "line": 19,
+                    "text": "}"
+                  },
+                  {
+                    "line": 20,
+                    "text": ""
+                  },
+                  {
+                    "line": 21,
+                    "text": "float select_switch(Backend backend, float *data) {"
+                  },
+                  {
+                    "line": 22,
+                    "text": "  switch (backend) {"
+                  },
+                  {
+                    "line": 23,
+                    "text": "    case Backend::avx2: return avx2_sum(data);"
+                  },
+                  {
+                    "line": 24,
+                    "text": "    case Backend::riscv: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 25,
+                    "text": "    case Backend::portable: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 26,
+                    "text": "    default: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 27,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 28,
+                    "text": "}"
+                  },
+                  {
+                    "line": 29,
+                    "text": ""
+                  },
+                  {
+                    "line": 30,
+                    "text": "enum LegacyBackend { BACKEND_SCALAR, BACKEND_AVX2 };"
+                  },
+                  {
+                    "line": 31,
+                    "text": "int select_unqualified(LegacyBackend backend) {"
+                  },
+                  {
+                    "line": 32,
+                    "text": "  switch (backend) {"
+                  },
+                  {
+                    "line": 33,
+                    "text": "    case BACKEND_AVX2: return 1;"
+                  },
+                  {
+                    "line": 34,
+                    "text": "    default: return 0;"
+                  },
+                  {
+                    "line": 35,
+                    "text": "  }"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "matrix.cpp",
+              "span": {
+                "end": {
+                  "column": 35,
+                  "line": 15
+                },
+                "start": {
+                  "column": 31,
+                  "line": 15
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "Backend::avx2",
+            "title": "Source Evidence: Backend::avx2"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.architecture-enum": {
+                "bindingStatus": "complete",
+                "enumMemberReferenceEvidenceIds": [
+                  "fad826842de28f7fd47747c5077795eb099248fac968ac5dec3d18ddcd84be2e"
+                ],
+                "evidenceKind": "constexpr_condition",
+                "guardEndLine": 17,
+                "guardStartLine": 15,
+                "identityVersion": 1,
+                "language": "cpp",
+                "languageSource": "suffix",
+                "nodeType": "condition_clause",
+                "selectionContext": "if_constexpr",
+                "templateDependent": true
+              }
+            },
+            "id": "step:9f4dc6da6bccbc05a18510309c8868d5b15f3d533963fb7eea5c46b647234889",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "8447718ab479e0088f6bf310850b606b8a807bc188a20e71b15aa55c04cea031",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              }
+            ],
+            "reason": "Observed by tree-sitter-cpp@0.23.4.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 36,
+                    "line": 15,
+                    "startColumn": 16
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "enum class Backend { scalar, avx2 = 2, riscv, portable };"
+                  },
+                  {
+                    "line": 2,
+                    "text": ""
+                  },
+                  {
+                    "line": 3,
+                    "text": "float avx2_sum(float *data);"
+                  },
+                  {
+                    "line": 4,
+                    "text": "float scalar_sum(float *data);"
+                  },
+                  {
+                    "line": 5,
+                    "text": ""
+                  },
+                  {
+                    "line": 6,
+                    "text": "float select_runtime(Backend backend, float *data) {"
+                  },
+                  {
+                    "line": 7,
+                    "text": "  if (backend == Backend::avx2) {"
+                  },
+                  {
+                    "line": 8,
+                    "text": "    return _mm256_cvtss_f32(_mm256_add_ps(*(__m256 *)data, *(__m256 *)data));"
+                  },
+                  {
+                    "line": 9,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 10,
+                    "text": "  return scalar_sum(data);"
+                  },
+                  {
+                    "line": 11,
+                    "text": "}"
+                  },
+                  {
+                    "line": 12,
+                    "text": ""
+                  },
+                  {
+                    "line": 13,
+                    "text": "template <Backend B>"
+                  },
+                  {
+                    "line": 14,
+                    "text": "float select_template(float *data) {"
+                  },
+                  {
+                    "line": 15,
+                    "text": "  if constexpr (B == Backend::avx2) {"
+                  },
+                  {
+                    "line": 16,
+                    "text": "    return avx2_sum(data);"
+                  },
+                  {
+                    "line": 17,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 18,
+                    "text": "  return scalar_sum(data);"
+                  },
+                  {
+                    "line": 19,
+                    "text": "}"
+                  },
+                  {
+                    "line": 20,
+                    "text": ""
+                  },
+                  {
+                    "line": 21,
+                    "text": "float select_switch(Backend backend, float *data) {"
+                  },
+                  {
+                    "line": 22,
+                    "text": "  switch (backend) {"
+                  },
+                  {
+                    "line": 23,
+                    "text": "    case Backend::avx2: return avx2_sum(data);"
+                  },
+                  {
+                    "line": 24,
+                    "text": "    case Backend::riscv: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 25,
+                    "text": "    case Backend::portable: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 26,
+                    "text": "    default: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 27,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 28,
+                    "text": "}"
+                  },
+                  {
+                    "line": 29,
+                    "text": ""
+                  },
+                  {
+                    "line": 30,
+                    "text": "enum LegacyBackend { BACKEND_SCALAR, BACKEND_AVX2 };"
+                  },
+                  {
+                    "line": 31,
+                    "text": "int select_unqualified(LegacyBackend backend) {"
+                  },
+                  {
+                    "line": 32,
+                    "text": "  switch (backend) {"
+                  },
+                  {
+                    "line": 33,
+                    "text": "    case BACKEND_AVX2: return 1;"
+                  },
+                  {
+                    "line": 34,
+                    "text": "    default: return 0;"
+                  },
+                  {
+                    "line": 35,
+                    "text": "  }"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "matrix.cpp",
+              "span": {
+                "end": {
+                  "column": 36,
+                  "line": 15
+                },
+                "start": {
+                  "column": 16,
+                  "line": 15
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "(B == Backend::avx2)",
+            "title": "Source Evidence: (B == Backend::avx2)"
+          },
+          {
+            "id": "step:a5fcfc985dd8fb23f97c635f38a6da9576d5757d746e18b3362a69d035492c73",
+            "kind": "knowledge_match",
+            "knowledge": {
+              "category": "targetFeatures",
+              "entryId": "a2731e3c2cbf1438748c981b9303c74dd21140e951df4d9fd683383ac88c8927",
+              "producer": "gcc-14.2.0-x86-target",
+              "provenance": [
+                {
+                  "id": "a2731e3c2cbf1438748c981b9303c74dd21140e951df4d9fd683383ac88c8927",
+                  "kind": "knowledge",
+                  "producer": "gcc-14.2.0-x86-target"
+                }
+              ],
+              "sourceId": "gcc-14.2.0-x86-target",
+              "sourceSha256": "aa04d904fb8dd76c20898ec3b11355e3ed30c742865cdbe6bdfea9c084dea26c",
+              "symbol": "avx2"
+            },
+            "provenance": [
+              {
+                "id": "a2731e3c2cbf1438748c981b9303c74dd21140e951df4d9fd683383ac88c8927",
+                "kind": "knowledge",
+                "producer": "gcc-14.2.0-x86-target"
+              }
+            ],
+            "reason": "The normalized value matches the loaded knowledge snapshot.",
+            "reasonCodes": [],
+            "status": "complete",
+            "symbol": "avx2",
+            "title": "Knowledge matches avx2"
+          },
+          {
+            "id": "step:a9018a7e929ca10507628bf9d9a705beb944d0be80834384ca08c74bd94fb3ca",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "2bccfd88d7a36eff3c6fd9749d80a00eb161ee422bb82949a5d5b584ecaee38e",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              }
+            ],
+            "reason": "Observed by tree-sitter-cpp@0.23.4.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 26,
+                    "line": 16,
+                    "startColumn": 12
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "enum class Backend { scalar, avx2 = 2, riscv, portable };"
+                  },
+                  {
+                    "line": 2,
+                    "text": ""
+                  },
+                  {
+                    "line": 3,
+                    "text": "float avx2_sum(float *data);"
+                  },
+                  {
+                    "line": 4,
+                    "text": "float scalar_sum(float *data);"
+                  },
+                  {
+                    "line": 5,
+                    "text": ""
+                  },
+                  {
+                    "line": 6,
+                    "text": "float select_runtime(Backend backend, float *data) {"
+                  },
+                  {
+                    "line": 7,
+                    "text": "  if (backend == Backend::avx2) {"
+                  },
+                  {
+                    "line": 8,
+                    "text": "    return _mm256_cvtss_f32(_mm256_add_ps(*(__m256 *)data, *(__m256 *)data));"
+                  },
+                  {
+                    "line": 9,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 10,
+                    "text": "  return scalar_sum(data);"
+                  },
+                  {
+                    "line": 11,
+                    "text": "}"
+                  },
+                  {
+                    "line": 12,
+                    "text": ""
+                  },
+                  {
+                    "line": 13,
+                    "text": "template <Backend B>"
+                  },
+                  {
+                    "line": 14,
+                    "text": "float select_template(float *data) {"
+                  },
+                  {
+                    "line": 15,
+                    "text": "  if constexpr (B == Backend::avx2) {"
+                  },
+                  {
+                    "line": 16,
+                    "text": "    return avx2_sum(data);"
+                  },
+                  {
+                    "line": 17,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 18,
+                    "text": "  return scalar_sum(data);"
+                  },
+                  {
+                    "line": 19,
+                    "text": "}"
+                  },
+                  {
+                    "line": 20,
+                    "text": ""
+                  },
+                  {
+                    "line": 21,
+                    "text": "float select_switch(Backend backend, float *data) {"
+                  },
+                  {
+                    "line": 22,
+                    "text": "  switch (backend) {"
+                  },
+                  {
+                    "line": 23,
+                    "text": "    case Backend::avx2: return avx2_sum(data);"
+                  },
+                  {
+                    "line": 24,
+                    "text": "    case Backend::riscv: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 25,
+                    "text": "    case Backend::portable: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 26,
+                    "text": "    default: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 27,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 28,
+                    "text": "}"
+                  },
+                  {
+                    "line": 29,
+                    "text": ""
+                  },
+                  {
+                    "line": 30,
+                    "text": "enum LegacyBackend { BACKEND_SCALAR, BACKEND_AVX2 };"
+                  },
+                  {
+                    "line": 31,
+                    "text": "int select_unqualified(LegacyBackend backend) {"
+                  },
+                  {
+                    "line": 32,
+                    "text": "  switch (backend) {"
+                  },
+                  {
+                    "line": 33,
+                    "text": "    case BACKEND_AVX2: return 1;"
+                  },
+                  {
+                    "line": 34,
+                    "text": "    default: return 0;"
+                  },
+                  {
+                    "line": 35,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 36,
+                    "text": "}"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "matrix.cpp",
+              "span": {
+                "end": {
+                  "column": 26,
+                  "line": 16
+                },
+                "start": {
+                  "column": 12,
+                  "line": 16
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "avx2_sum",
+            "title": "Source Evidence: avx2_sum"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.architecture-enum": {
+                "bindingStatus": "complete",
+                "enumMemberReferenceEvidenceIds": [
+                  "1e02a7678013d6ee72894d6fddbda176ddc0c7c5c28df4a2edaccefc774b3ba9"
+                ],
+                "evidenceKind": "selection_condition",
+                "guardEndLine": 9,
+                "guardStartLine": 7,
+                "identityVersion": 1,
+                "language": "cpp",
+                "languageSource": "suffix",
+                "nodeType": "condition_clause",
+                "selectionContext": "if",
+                "templateDependent": false
+              }
+            },
+            "id": "step:af57cfc6540ea1d19ae16e1b45ac669eb11aaf955d18eab748a0cdc5ded7ffaf",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "8a9797174505a64d3f8007f93e2d917bd7225a1049652211ef2f8ad43faff56d",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              }
+            ],
+            "reason": "Observed by tree-sitter-cpp@0.23.4.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 32,
+                    "line": 7,
+                    "startColumn": 6
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "enum class Backend { scalar, avx2 = 2, riscv, portable };"
+                  },
+                  {
+                    "line": 2,
+                    "text": ""
+                  },
+                  {
+                    "line": 3,
+                    "text": "float avx2_sum(float *data);"
+                  },
+                  {
+                    "line": 4,
+                    "text": "float scalar_sum(float *data);"
+                  },
+                  {
+                    "line": 5,
+                    "text": ""
+                  },
+                  {
+                    "line": 6,
+                    "text": "float select_runtime(Backend backend, float *data) {"
+                  },
+                  {
+                    "line": 7,
+                    "text": "  if (backend == Backend::avx2) {"
+                  },
+                  {
+                    "line": 8,
+                    "text": "    return _mm256_cvtss_f32(_mm256_add_ps(*(__m256 *)data, *(__m256 *)data));"
+                  },
+                  {
+                    "line": 9,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 10,
+                    "text": "  return scalar_sum(data);"
+                  },
+                  {
+                    "line": 11,
+                    "text": "}"
+                  },
+                  {
+                    "line": 12,
+                    "text": ""
+                  },
+                  {
+                    "line": 13,
+                    "text": "template <Backend B>"
+                  },
+                  {
+                    "line": 14,
+                    "text": "float select_template(float *data) {"
+                  },
+                  {
+                    "line": 15,
+                    "text": "  if constexpr (B == Backend::avx2) {"
+                  },
+                  {
+                    "line": 16,
+                    "text": "    return avx2_sum(data);"
+                  },
+                  {
+                    "line": 17,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 18,
+                    "text": "  return scalar_sum(data);"
+                  },
+                  {
+                    "line": 19,
+                    "text": "}"
+                  },
+                  {
+                    "line": 20,
+                    "text": ""
+                  },
+                  {
+                    "line": 21,
+                    "text": "float select_switch(Backend backend, float *data) {"
+                  },
+                  {
+                    "line": 22,
+                    "text": "  switch (backend) {"
+                  },
+                  {
+                    "line": 23,
+                    "text": "    case Backend::avx2: return avx2_sum(data);"
+                  },
+                  {
+                    "line": 24,
+                    "text": "    case Backend::riscv: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 25,
+                    "text": "    case Backend::portable: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 26,
+                    "text": "    default: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 27,
+                    "text": "  }"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "matrix.cpp",
+              "span": {
+                "end": {
+                  "column": 32,
+                  "line": 7
+                },
+                "start": {
+                  "column": 6,
+                  "line": 7
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "(backend == Backend::avx2)",
+            "title": "Source Evidence: (backend == Backend::avx2)"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.architecture-enum": {
+                "bindingStatus": "complete",
+                "enumMemberReferenceEvidenceIds": [
+                  "72fa9c8e93646fb017874bc273883e68e983695ba990f9f8271d9051b4eb4046"
+                ],
+                "evidenceKind": "selection_condition",
+                "guardEndLine": 23,
+                "guardStartLine": 23,
+                "identityVersion": 1,
+                "language": "cpp",
+                "languageSource": "suffix",
+                "nodeType": "case_statement",
+                "selectionContext": "switch_case",
+                "templateDependent": false
+              }
+            },
+            "id": "step:d04835a709146a02ea441cded32c1985e4d97ac836709b96bd72838febfd5993",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "6b3fbf779103a5bd0750b3e95c5cb50e29aaf4c07a60a4ada6ca05b1a8ef6522",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              }
+            ],
+            "reason": "Observed by tree-sitter-cpp@0.23.4.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 23,
+                    "line": 23,
+                    "startColumn": 10
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 3,
+                    "text": "float avx2_sum(float *data);"
+                  },
+                  {
+                    "line": 4,
+                    "text": "float scalar_sum(float *data);"
+                  },
+                  {
+                    "line": 5,
+                    "text": ""
+                  },
+                  {
+                    "line": 6,
+                    "text": "float select_runtime(Backend backend, float *data) {"
+                  },
+                  {
+                    "line": 7,
+                    "text": "  if (backend == Backend::avx2) {"
+                  },
+                  {
+                    "line": 8,
+                    "text": "    return _mm256_cvtss_f32(_mm256_add_ps(*(__m256 *)data, *(__m256 *)data));"
+                  },
+                  {
+                    "line": 9,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 10,
+                    "text": "  return scalar_sum(data);"
+                  },
+                  {
+                    "line": 11,
+                    "text": "}"
+                  },
+                  {
+                    "line": 12,
+                    "text": ""
+                  },
+                  {
+                    "line": 13,
+                    "text": "template <Backend B>"
+                  },
+                  {
+                    "line": 14,
+                    "text": "float select_template(float *data) {"
+                  },
+                  {
+                    "line": 15,
+                    "text": "  if constexpr (B == Backend::avx2) {"
+                  },
+                  {
+                    "line": 16,
+                    "text": "    return avx2_sum(data);"
+                  },
+                  {
+                    "line": 17,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 18,
+                    "text": "  return scalar_sum(data);"
+                  },
+                  {
+                    "line": 19,
+                    "text": "}"
+                  },
+                  {
+                    "line": 20,
+                    "text": ""
+                  },
+                  {
+                    "line": 21,
+                    "text": "float select_switch(Backend backend, float *data) {"
+                  },
+                  {
+                    "line": 22,
+                    "text": "  switch (backend) {"
+                  },
+                  {
+                    "line": 23,
+                    "text": "    case Backend::avx2: return avx2_sum(data);"
+                  },
+                  {
+                    "line": 24,
+                    "text": "    case Backend::riscv: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 25,
+                    "text": "    case Backend::portable: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 26,
+                    "text": "    default: return scalar_sum(data);"
+                  },
+                  {
+                    "line": 27,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 28,
+                    "text": "}"
+                  },
+                  {
+                    "line": 29,
+                    "text": ""
+                  },
+                  {
+                    "line": 30,
+                    "text": "enum LegacyBackend { BACKEND_SCALAR, BACKEND_AVX2 };"
+                  },
+                  {
+                    "line": 31,
+                    "text": "int select_unqualified(LegacyBackend backend) {"
+                  },
+                  {
+                    "line": 32,
+                    "text": "  switch (backend) {"
+                  },
+                  {
+                    "line": 33,
+                    "text": "    case BACKEND_AVX2: return 1;"
+                  },
+                  {
+                    "line": 34,
+                    "text": "    default: return 0;"
+                  },
+                  {
+                    "line": 35,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 36,
+                    "text": "}"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "matrix.cpp",
+              "span": {
+                "end": {
+                  "column": 23,
+                  "line": 23
+                },
+                "start": {
+                  "column": 10,
+                  "line": 23
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "Backend::avx2",
+            "title": "Source Evidence: Backend::avx2"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.architecture-enum": {
+                "bindingStatus": "complete",
+                "enumName": "Backend",
+                "enumStyle": "scoped",
+                "evidenceKind": "enum_declaration",
+                "identityVersion": 1,
+                "language": "cpp",
+                "languageSource": "suffix",
+                "nodeType": "enum_specifier"
+              }
+            },
+            "id": "step:dddb467404ccb8797a5b6997924a5f007f9821688481fe1c5c40fd7a715bb6b2",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "932c4e6a05accee04800b9b0dc401f49c3f4032d944cb921a9426e1479ed8f4f",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              }
+            ],
+            "reason": "Observed by tree-sitter-cpp@0.23.4.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 19,
+                    "line": 1,
+                    "startColumn": 12
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "enum class Backend { scalar, avx2 = 2, riscv, portable };"
+                  },
+                  {
+                    "line": 2,
+                    "text": ""
+                  },
+                  {
+                    "line": 3,
+                    "text": "float avx2_sum(float *data);"
+                  },
+                  {
+                    "line": 4,
+                    "text": "float scalar_sum(float *data);"
+                  },
+                  {
+                    "line": 5,
+                    "text": ""
+                  },
+                  {
+                    "line": 6,
+                    "text": "float select_runtime(Backend backend, float *data) {"
+                  },
+                  {
+                    "line": 7,
+                    "text": "  if (backend == Backend::avx2) {"
+                  },
+                  {
+                    "line": 8,
+                    "text": "    return _mm256_cvtss_f32(_mm256_add_ps(*(__m256 *)data, *(__m256 *)data));"
+                  },
+                  {
+                    "line": 9,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 10,
+                    "text": "  return scalar_sum(data);"
+                  },
+                  {
+                    "line": 11,
+                    "text": "}"
+                  },
+                  {
+                    "line": 12,
+                    "text": ""
+                  },
+                  {
+                    "line": 13,
+                    "text": "template <Backend B>"
+                  },
+                  {
+                    "line": 14,
+                    "text": "float select_template(float *data) {"
+                  },
+                  {
+                    "line": 15,
+                    "text": "  if constexpr (B == Backend::avx2) {"
+                  },
+                  {
+                    "line": 16,
+                    "text": "    return avx2_sum(data);"
+                  },
+                  {
+                    "line": 17,
+                    "text": "  }"
+                  },
+                  {
+                    "line": 18,
+                    "text": "  return scalar_sum(data);"
+                  },
+                  {
+                    "line": 19,
+                    "text": "}"
+                  },
+                  {
+                    "line": 20,
+                    "text": ""
+                  },
+                  {
+                    "line": 21,
+                    "text": "float select_switch(Backend backend, float *data) {"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "matrix.cpp",
+              "span": {
+                "end": {
+                  "column": 19,
+                  "line": 1
+                },
+                "start": {
+                  "column": 12,
+                  "line": 1
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "Backend",
+            "title": "Source Evidence: Backend"
+          }
+        ]
+      },
+      "fact": {
+        "extensions": {
+          "org.rvport.kb-scanner.architecture-enum": {
+            "bindingStatus": "complete",
+            "enumName": "Backend",
+            "evidenceKind": "enum_member_reference",
+            "memberName": "avx2",
+            "qualifiedName": "Backend::avx2",
+            "referenceContext": "if_constexpr",
+            "templateDependent": true
+          }
+        },
+        "kind": "architecture_probe",
+        "matchedText": "Backend::avx2",
+        "primaryLocation": {
+          "context": {
+            "budget": {
+              "afterLines": 20,
+              "beforeLines": 20,
+              "maxCharacters": 65536,
+              "maxLines": 256,
+              "truncated": false
+            },
+            "highlights": [
+              {
+                "endColumn": 35,
+                "line": 15,
+                "startColumn": 31
+              }
+            ],
+            "lines": [
+              {
+                "line": 1,
+                "text": "enum class Backend { scalar, avx2 = 2, riscv, portable };"
+              },
+              {
+                "line": 2,
+                "text": ""
+              },
+              {
+                "line": 3,
+                "text": "float avx2_sum(float *data);"
+              },
+              {
+                "line": 4,
+                "text": "float scalar_sum(float *data);"
+              },
+              {
+                "line": 5,
+                "text": ""
+              },
+              {
+                "line": 6,
+                "text": "float select_runtime(Backend backend, float *data) {"
+              },
+              {
+                "line": 7,
+                "text": "  if (backend == Backend::avx2) {"
+              },
+              {
+                "line": 8,
+                "text": "    return _mm256_cvtss_f32(_mm256_add_ps(*(__m256 *)data, *(__m256 *)data));"
+              },
+              {
+                "line": 9,
+                "text": "  }"
+              },
+              {
+                "line": 10,
+                "text": "  return scalar_sum(data);"
+              },
+              {
+                "line": 11,
+                "text": "}"
+              },
+              {
+                "line": 12,
+                "text": ""
+              },
+              {
+                "line": 13,
+                "text": "template <Backend B>"
+              },
+              {
+                "line": 14,
+                "text": "float select_template(float *data) {"
+              },
+              {
+                "line": 15,
+                "text": "  if constexpr (B == Backend::avx2) {"
+              },
+              {
+                "line": 16,
+                "text": "    return avx2_sum(data);"
+              },
+              {
+                "line": 17,
+                "text": "  }"
+              },
+              {
+                "line": 18,
+                "text": "  return scalar_sum(data);"
+              },
+              {
+                "line": 19,
+                "text": "}"
+              },
+              {
+                "line": 20,
+                "text": ""
+              },
+              {
+                "line": 21,
+                "text": "float select_switch(Backend backend, float *data) {"
+              },
+              {
+                "line": 22,
+                "text": "  switch (backend) {"
+              },
+              {
+                "line": 23,
+                "text": "    case Backend::avx2: return avx2_sum(data);"
+              },
+              {
+                "line": 24,
+                "text": "    case Backend::riscv: return scalar_sum(data);"
+              },
+              {
+                "line": 25,
+                "text": "    case Backend::portable: return scalar_sum(data);"
+              },
+              {
+                "line": 26,
+                "text": "    default: return scalar_sum(data);"
+              },
+              {
+                "line": 27,
+                "text": "  }"
+              },
+              {
+                "line": 28,
+                "text": "}"
+              },
+              {
+                "line": 29,
+                "text": ""
+              },
+              {
+                "line": 30,
+                "text": "enum LegacyBackend { BACKEND_SCALAR, BACKEND_AVX2 };"
+              },
+              {
+                "line": 31,
+                "text": "int select_unqualified(LegacyBackend backend) {"
+              },
+              {
+                "line": 32,
+                "text": "  switch (backend) {"
+              },
+              {
+                "line": 33,
+                "text": "    case BACKEND_AVX2: return 1;"
+              },
+              {
+                "line": 34,
+                "text": "    default: return 0;"
+              },
+              {
+                "line": 35,
+                "text": "  }"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete"
+          },
+          "file": "matrix.cpp",
+          "span": {
+            "end": {
+              "column": 35,
+              "line": 15
+            },
+            "start": {
+              "column": 31,
+              "line": 15
+            }
+          }
+        },
+        "provenance": [
+          {
+            "id": "fad826842de28f7fd47747c5077795eb099248fac968ac5dec3d18ddcd84be2e",
+            "kind": "evidence",
+            "producer": "tree-sitter-cpp@0.23.4"
+          }
+        ],
+        "symbol": "Backend::avx2"
+      },
+      "id": "finding:089d0865a065f80c8d306e34ea9d421ecd550aae14e86d2275b82c942c641cc4",
+      "occurrences": [
+        {
+          "configuration": "default",
+          "extensions": {
+            "org.rvport.kb-scanner.architecture-enum": {
+              "bindingStatus": "complete",
+              "enumName": "Backend",
+              "enumStyle": "scoped",
+              "evidenceKind": "enum_member_declaration",
+              "initializerPresent": true,
+              "memberName": "avx2",
+              "qualifiedName": "Backend::avx2"
+            }
+          },
+          "id": "occurrence:ce5f60b951350e31681badf0096dc13f28ad38438827771aec6abf68d481070c",
+          "kind": "enum_member_declaration",
+          "location": {
+            "context": {
+              "budget": {
+                "afterLines": 20,
+                "beforeLines": 20,
+                "maxCharacters": 65536,
+                "maxLines": 256,
+                "truncated": false
+              },
+              "highlights": [
+                {
+                  "endColumn": 34,
+                  "line": 1,
+                  "startColumn": 30
+                }
+              ],
+              "lines": [
+                {
+                  "line": 1,
+                  "text": "enum class Backend { scalar, avx2 = 2, riscv, portable };"
+                },
+                {
+                  "line": 2,
+                  "text": ""
+                },
+                {
+                  "line": 3,
+                  "text": "float avx2_sum(float *data);"
+                },
+                {
+                  "line": 4,
+                  "text": "float scalar_sum(float *data);"
+                },
+                {
+                  "line": 5,
+                  "text": ""
+                },
+                {
+                  "line": 6,
+                  "text": "float select_runtime(Backend backend, float *data) {"
+                },
+                {
+                  "line": 7,
+                  "text": "  if (backend == Backend::avx2) {"
+                },
+                {
+                  "line": 8,
+                  "text": "    return _mm256_cvtss_f32(_mm256_add_ps(*(__m256 *)data, *(__m256 *)data));"
+                },
+                {
+                  "line": 9,
+                  "text": "  }"
+                },
+                {
+                  "line": 10,
+                  "text": "  return scalar_sum(data);"
+                },
+                {
+                  "line": 11,
+                  "text": "}"
+                },
+                {
+                  "line": 12,
+                  "text": ""
+                },
+                {
+                  "line": 13,
+                  "text": "template <Backend B>"
+                },
+                {
+                  "line": 14,
+                  "text": "float select_template(float *data) {"
+                },
+                {
+                  "line": 15,
+                  "text": "  if constexpr (B == Backend::avx2) {"
+                },
+                {
+                  "line": 16,
+                  "text": "    return avx2_sum(data);"
+                },
+                {
+                  "line": 17,
+                  "text": "  }"
+                },
+                {
+                  "line": 18,
+                  "text": "  return scalar_sum(data);"
+                },
+                {
+                  "line": 19,
+                  "text": "}"
+                },
+                {
+                  "line": 20,
+                  "text": ""
+                },
+                {
+                  "line": 21,
+                  "text": "float select_switch(Backend backend, float *data) {"
+                }
+              ],
+              "reasonCodes": [],
+              "status": "complete"
+            },
+            "file": "matrix.cpp",
+            "span": {
+              "end": {
+                "column": 34,
+                "line": 1
+              },
+              "start": {
+                "column": 30,
+                "line": 1
+              }
+            }
+          },
+          "provenance": [
+            {
+              "id": "2301ff28e1c4007245ae52f0ba37e50e35c21598bc5b320d069b4c49ac775e3d",
+              "kind": "evidence",
+              "producer": "tree-sitter-cpp@0.23.4"
+            }
+          ],
+          "reasonCodes": [],
+          "selectionStatus": "unknown",
+          "status": "complete"
+        },
+        {
+          "configuration": "default",
+          "extensions": {
+            "org.rvport.kb-scanner.architecture-enum": {
+              "bindingStatus": "complete",
+              "evidenceKind": "constexpr_condition",
+              "selectionContext": "if_constexpr",
+              "templateDependent": true
+            }
+          },
+          "id": "occurrence:808f555b5672b27a6671d07fab959493303634e140796bc89613edf06b4ff61e",
+          "kind": "constexpr_condition",
+          "location": {
+            "context": {
+              "budget": {
+                "afterLines": 20,
+                "beforeLines": 20,
+                "maxCharacters": 65536,
+                "maxLines": 256,
+                "truncated": false
+              },
+              "highlights": [
+                {
+                  "endColumn": 36,
+                  "line": 15,
+                  "startColumn": 16
+                }
+              ],
+              "lines": [
+                {
+                  "line": 1,
+                  "text": "enum class Backend { scalar, avx2 = 2, riscv, portable };"
+                },
+                {
+                  "line": 2,
+                  "text": ""
+                },
+                {
+                  "line": 3,
+                  "text": "float avx2_sum(float *data);"
+                },
+                {
+                  "line": 4,
+                  "text": "float scalar_sum(float *data);"
+                },
+                {
+                  "line": 5,
+                  "text": ""
+                },
+                {
+                  "line": 6,
+                  "text": "float select_runtime(Backend backend, float *data) {"
+                },
+                {
+                  "line": 7,
+                  "text": "  if (backend == Backend::avx2) {"
+                },
+                {
+                  "line": 8,
+                  "text": "    return _mm256_cvtss_f32(_mm256_add_ps(*(__m256 *)data, *(__m256 *)data));"
+                },
+                {
+                  "line": 9,
+                  "text": "  }"
+                },
+                {
+                  "line": 10,
+                  "text": "  return scalar_sum(data);"
+                },
+                {
+                  "line": 11,
+                  "text": "}"
+                },
+                {
+                  "line": 12,
+                  "text": ""
+                },
+                {
+                  "line": 13,
+                  "text": "template <Backend B>"
+                },
+                {
+                  "line": 14,
+                  "text": "float select_template(float *data) {"
+                },
+                {
+                  "line": 15,
+                  "text": "  if constexpr (B == Backend::avx2) {"
+                },
+                {
+                  "line": 16,
+                  "text": "    return avx2_sum(data);"
+                },
+                {
+                  "line": 17,
+                  "text": "  }"
+                },
+                {
+                  "line": 18,
+                  "text": "  return scalar_sum(data);"
+                },
+                {
+                  "line": 19,
+                  "text": "}"
+                },
+                {
+                  "line": 20,
+                  "text": ""
+                },
+                {
+                  "line": 21,
+                  "text": "float select_switch(Backend backend, float *data) {"
+                },
+                {
+                  "line": 22,
+                  "text": "  switch (backend) {"
+                },
+                {
+                  "line": 23,
+                  "text": "    case Backend::avx2: return avx2_sum(data);"
+                },
+                {
+                  "line": 24,
+                  "text": "    case Backend::riscv: return scalar_sum(data);"
+                },
+                {
+                  "line": 25,
+                  "text": "    case Backend::portable: return scalar_sum(data);"
+                },
+                {
+                  "line": 26,
+                  "text": "    default: return scalar_sum(data);"
+                },
+                {
+                  "line": 27,
+                  "text": "  }"
+                },
+                {
+                  "line": 28,
+                  "text": "}"
+                },
+                {
+                  "line": 29,
+                  "text": ""
+                },
+                {
+                  "line": 30,
+                  "text": "enum LegacyBackend { BACKEND_SCALAR, BACKEND_AVX2 };"
+                },
+                {
+                  "line": 31,
+                  "text": "int select_unqualified(LegacyBackend backend) {"
+                },
+                {
+                  "line": 32,
+                  "text": "  switch (backend) {"
+                },
+                {
+                  "line": 33,
+                  "text": "    case BACKEND_AVX2: return 1;"
+                },
+                {
+                  "line": 34,
+                  "text": "    default: return 0;"
+                },
+                {
+                  "line": 35,
+                  "text": "  }"
+                }
+              ],
+              "reasonCodes": [],
+              "status": "complete"
+            },
+            "file": "matrix.cpp",
+            "span": {
+              "end": {
+                "column": 36,
+                "line": 15
+              },
+              "start": {
+                "column": 16,
+                "line": 15
+              }
+            }
+          },
+          "provenance": [
+            {
+              "id": "8447718ab479e0088f6bf310850b606b8a807bc188a20e71b15aa55c04cea031",
+              "kind": "evidence",
+              "producer": "tree-sitter-cpp@0.23.4"
+            }
+          ],
+          "reasonCodes": [],
+          "selectionStatus": "unknown",
+          "status": "complete"
+        },
+        {
+          "configuration": "default",
+          "extensions": {
+            "org.rvport.kb-scanner.architecture-enum": {
+              "bindingStatus": "complete",
+              "enumName": "Backend",
+              "evidenceKind": "enum_member_reference",
+              "memberName": "avx2",
+              "qualifiedName": "Backend::avx2",
+              "referenceContext": "if_constexpr",
+              "templateDependent": true
+            }
+          },
+          "id": "occurrence:a4add311872dc43b6e9fde3372100e60ca932fd61f3c199c2edc036011b6d325",
+          "kind": "enum_member_reference",
+          "location": {
+            "context": {
+              "budget": {
+                "afterLines": 20,
+                "beforeLines": 20,
+                "maxCharacters": 65536,
+                "maxLines": 256,
+                "truncated": false
+              },
+              "highlights": [
+                {
+                  "endColumn": 35,
+                  "line": 15,
+                  "startColumn": 31
+                }
+              ],
+              "lines": [
+                {
+                  "line": 1,
+                  "text": "enum class Backend { scalar, avx2 = 2, riscv, portable };"
+                },
+                {
+                  "line": 2,
+                  "text": ""
+                },
+                {
+                  "line": 3,
+                  "text": "float avx2_sum(float *data);"
+                },
+                {
+                  "line": 4,
+                  "text": "float scalar_sum(float *data);"
+                },
+                {
+                  "line": 5,
+                  "text": ""
+                },
+                {
+                  "line": 6,
+                  "text": "float select_runtime(Backend backend, float *data) {"
+                },
+                {
+                  "line": 7,
+                  "text": "  if (backend == Backend::avx2) {"
+                },
+                {
+                  "line": 8,
+                  "text": "    return _mm256_cvtss_f32(_mm256_add_ps(*(__m256 *)data, *(__m256 *)data));"
+                },
+                {
+                  "line": 9,
+                  "text": "  }"
+                },
+                {
+                  "line": 10,
+                  "text": "  return scalar_sum(data);"
+                },
+                {
+                  "line": 11,
+                  "text": "}"
+                },
+                {
+                  "line": 12,
+                  "text": ""
+                },
+                {
+                  "line": 13,
+                  "text": "template <Backend B>"
+                },
+                {
+                  "line": 14,
+                  "text": "float select_template(float *data) {"
+                },
+                {
+                  "line": 15,
+                  "text": "  if constexpr (B == Backend::avx2) {"
+                },
+                {
+                  "line": 16,
+                  "text": "    return avx2_sum(data);"
+                },
+                {
+                  "line": 17,
+                  "text": "  }"
+                },
+                {
+                  "line": 18,
+                  "text": "  return scalar_sum(data);"
+                },
+                {
+                  "line": 19,
+                  "text": "}"
+                },
+                {
+                  "line": 20,
+                  "text": ""
+                },
+                {
+                  "line": 21,
+                  "text": "float select_switch(Backend backend, float *data) {"
+                },
+                {
+                  "line": 22,
+                  "text": "  switch (backend) {"
+                },
+                {
+                  "line": 23,
+                  "text": "    case Backend::avx2: return avx2_sum(data);"
+                },
+                {
+                  "line": 24,
+                  "text": "    case Backend::riscv: return scalar_sum(data);"
+                },
+                {
+                  "line": 25,
+                  "text": "    case Backend::portable: return scalar_sum(data);"
+                },
+                {
+                  "line": 26,
+                  "text": "    default: return scalar_sum(data);"
+                },
+                {
+                  "line": 27,
+                  "text": "  }"
+                },
+                {
+                  "line": 28,
+                  "text": "}"
+                },
+                {
+                  "line": 29,
+                  "text": ""
+                },
+                {
+                  "line": 30,
+                  "text": "enum LegacyBackend { BACKEND_SCALAR, BACKEND_AVX2 };"
+                },
+                {
+                  "line": 31,
+                  "text": "int select_unqualified(LegacyBackend backend) {"
+                },
+                {
+                  "line": 32,
+                  "text": "  switch (backend) {"
+                },
+                {
+                  "line": 33,
+                  "text": "    case BACKEND_AVX2: return 1;"
+                },
+                {
+                  "line": 34,
+                  "text": "    default: return 0;"
+                },
+                {
+                  "line": 35,
+                  "text": "  }"
+                }
+              ],
+              "reasonCodes": [],
+              "status": "complete"
+            },
+            "file": "matrix.cpp",
+            "span": {
+              "end": {
+                "column": 35,
+                "line": 15
+              },
+              "start": {
+                "column": 31,
+                "line": 15
+              }
+            }
+          },
+          "provenance": [
+            {
+              "id": "fad826842de28f7fd47747c5077795eb099248fac968ac5dec3d18ddcd84be2e",
+              "kind": "evidence",
+              "producer": "tree-sitter-cpp@0.23.4"
+            }
+          ],
+          "reasonCodes": [],
+          "selectionStatus": "unknown",
+          "status": "complete"
+        },
+        {
+          "configuration": "default",
+          "id": "occurrence:2a29a26db20e69354c42f620cb24992eb65a5579f221e906eec8bbe9c3ba71fd",
+          "kind": "call_expression",
+          "location": {
+            "context": {
+              "budget": {
+                "afterLines": 20,
+                "beforeLines": 20,
+                "maxCharacters": 65536,
+                "maxLines": 256,
+                "truncated": false
+              },
+              "highlights": [
+                {
+                  "endColumn": 26,
+                  "line": 16,
+                  "startColumn": 12
+                }
+              ],
+              "lines": [
+                {
+                  "line": 1,
+                  "text": "enum class Backend { scalar, avx2 = 2, riscv, portable };"
+                },
+                {
+                  "line": 2,
+                  "text": ""
+                },
+                {
+                  "line": 3,
+                  "text": "float avx2_sum(float *data);"
+                },
+                {
+                  "line": 4,
+                  "text": "float scalar_sum(float *data);"
+                },
+                {
+                  "line": 5,
+                  "text": ""
+                },
+                {
+                  "line": 6,
+                  "text": "float select_runtime(Backend backend, float *data) {"
+                },
+                {
+                  "line": 7,
+                  "text": "  if (backend == Backend::avx2) {"
+                },
+                {
+                  "line": 8,
+                  "text": "    return _mm256_cvtss_f32(_mm256_add_ps(*(__m256 *)data, *(__m256 *)data));"
+                },
+                {
+                  "line": 9,
+                  "text": "  }"
+                },
+                {
+                  "line": 10,
+                  "text": "  return scalar_sum(data);"
+                },
+                {
+                  "line": 11,
+                  "text": "}"
+                },
+                {
+                  "line": 12,
+                  "text": ""
+                },
+                {
+                  "line": 13,
+                  "text": "template <Backend B>"
+                },
+                {
+                  "line": 14,
+                  "text": "float select_template(float *data) {"
+                },
+                {
+                  "line": 15,
+                  "text": "  if constexpr (B == Backend::avx2) {"
+                },
+                {
+                  "line": 16,
+                  "text": "    return avx2_sum(data);"
+                },
+                {
+                  "line": 17,
+                  "text": "  }"
+                },
+                {
+                  "line": 18,
+                  "text": "  return scalar_sum(data);"
+                },
+                {
+                  "line": 19,
+                  "text": "}"
+                },
+                {
+                  "line": 20,
+                  "text": ""
+                },
+                {
+                  "line": 21,
+                  "text": "float select_switch(Backend backend, float *data) {"
+                },
+                {
+                  "line": 22,
+                  "text": "  switch (backend) {"
+                },
+                {
+                  "line": 23,
+                  "text": "    case Backend::avx2: return avx2_sum(data);"
+                },
+                {
+                  "line": 24,
+                  "text": "    case Backend::riscv: return scalar_sum(data);"
+                },
+                {
+                  "line": 25,
+                  "text": "    case Backend::portable: return scalar_sum(data);"
+                },
+                {
+                  "line": 26,
+                  "text": "    default: return scalar_sum(data);"
+                },
+                {
+                  "line": 27,
+                  "text": "  }"
+                },
+                {
+                  "line": 28,
+                  "text": "}"
+                },
+                {
+                  "line": 29,
+                  "text": ""
+                },
+                {
+                  "line": 30,
+                  "text": "enum LegacyBackend { BACKEND_SCALAR, BACKEND_AVX2 };"
+                },
+                {
+                  "line": 31,
+                  "text": "int select_unqualified(LegacyBackend backend) {"
+                },
+                {
+                  "line": 32,
+                  "text": "  switch (backend) {"
+                },
+                {
+                  "line": 33,
+                  "text": "    case BACKEND_AVX2: return 1;"
+                },
+                {
+                  "line": 34,
+                  "text": "    default: return 0;"
+                },
+                {
+                  "line": 35,
+                  "text": "  }"
+                },
+                {
+                  "line": 36,
+                  "text": "}"
+                }
+              ],
+              "reasonCodes": [],
+              "status": "complete"
+            },
+            "file": "matrix.cpp",
+            "span": {
+              "end": {
+                "column": 26,
+                "line": 16
+              },
+              "start": {
+                "column": 12,
+                "line": 16
+              }
+            }
+          },
+          "provenance": [
+            {
+              "id": "2bccfd88d7a36eff3c6fd9749d80a00eb161ee422bb82949a5d5b584ecaee38e",
+              "kind": "evidence",
+              "producer": "tree-sitter-cpp@0.23.4"
+            }
+          ],
+          "reasonCodes": [],
+          "selectionStatus": "unknown",
+          "status": "complete"
+        }
+      ],
+      "primaryOccurrenceId": "occurrence:a4add311872dc43b6e9fde3372100e60ca932fd61f3c199c2edc036011b6d325"
+    }
+  ],
+  "project": {
+    "filesAnalyzed": 3,
+    "id": "project:f3221e2045dc1bfdf59d42d67fda1176588f6b4772de81957bebfe7c0af0fc3c",
+    "name": "architecture-enum",
+    "reasonCodes": [],
+    "status": "complete"
+  },
+  "scan": {
+    "artifactNames": [
+      "scan-result.json",
+      "scan-report.html",
+      "scan.log"
+    ],
+    "id": "scan:4be2d9ba4e62e57923f5749ebdb3fbe91e68f943482a7b4a29a7f3573f44ab94",
+    "knowledgeSources": [
+      {
+        "id": "binutils-2.42-x86",
+        "kind": "compiler-derived",
+        "sha256": "e3ff7d8acccd50fd7e8a2f8c64d4a303e147b7540702a362c1b00f9bbdf29345"
+      },
+      {
+        "id": "clang-x86-entries",
+        "kind": "compiler-derived",
+        "sha256": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7"
+      },
+      {
+        "id": "curated-x86-migration-semantics",
+        "kind": "curated",
+        "sha256": "21b7ccc36186a21994c4e39965ece16da429da916a9272112f38817d3bcccc6b"
+      },
+      {
+        "id": "gcc-14.2.0-x86-target",
+        "kind": "compiler-derived",
+        "sha256": "aa04d904fb8dd76c20898ec3b11355e3ed30c742865cdbe6bdfea9c084dea26c"
+      },
+      {
+        "id": "gcc-x86-entries",
+        "kind": "compiler-derived",
+        "sha256": "89775341ee880b13ac4f10a30558ff5d52875b25a3233114a5765601f0a9dad9"
+      },
+      {
+        "id": "llvm-18.1.8-x86",
+        "kind": "compiler-derived",
+        "sha256": "021708c5e89a9565c36d83f98e8175cd058b1afb9c39c660e0d7e1425ad64722"
+      }
+    ],
+    "scope": {
+      "compiled": false,
+      "domain": "c-cpp-x86-to-riscv",
+      "linked": false,
+      "staticAnalysisOnly": true,
+      "targetArchitecture": "riscv64",
+      "testsExecuted": false
+    },
+    "tool": {
+      "name": "kb-scanner",
+      "version": "0.1.0"
+    }
+  },
+  "schemaVersion": "2.0",
+  "summary": {
+    "blocking": 0,
+    "countUnit": "finding",
+    "files": 3,
+    "findings": 1,
+    "hints": 0,
+    "inactiveOrGuarded": 0,
+    "issues": 1,
+    "portabilityGaps": 0,
+    "readiness": "provisional",
+    "reasonCodes": [],
+    "referenceSources": 0,
+    "references": 0,
+    "status": "complete"
+  }
+}

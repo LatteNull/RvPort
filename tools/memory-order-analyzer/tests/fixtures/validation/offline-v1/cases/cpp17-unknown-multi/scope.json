@@ -1,0 +1,1 @@
+{"target_id":"cpp17-unknown-multi","roots":["main"],"translation_units":["producer.cpp","consumer.cpp","main.cpp"],"closed":true,"external_boundaries":["pthread"],"expected_frontier":["fence-rmw"]}

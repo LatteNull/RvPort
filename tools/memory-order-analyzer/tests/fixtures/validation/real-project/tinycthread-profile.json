@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "project": "TinyCThread",
+  "upstream": "https://github.com/tinycthread/tinycthread.git",
+  "revision": "6957fc8383d6c7db25b60b8c849b29caab1caaee",
+  "root": "tinycthread",
+  "source_tree_hash": "a14757b85a8acab53c184a65cff36974a9666bad77d3d8e1b3d1319eddb0ab24",
+  "license": {"path":"README.txt","sha256":"987a830d3f7b0eababac939990b0eb8ba398c2223ba37d9c79220cea8ca82758","spdx":"Zlib"},
+  "compile_commands": {"path":"compile_commands.json","sha256":"8be28a31f0297c26f24ed4b9a2c070f4e0a94b24996c11b1f3fbe574137c43e3"},
+  "scope": {"path":"scope.json","sha256":"bc8e0ea70ede2f67f6aa4be31d3295af69ee790789dfa00e54709a1ce1543aec"},
+  "included": [
+    {"path":"CMakeLists.txt","sha256":"0d0620eb8dff04022f550ad25a6012733f9f208c3c8e74cc0e78f1444d7bcaf2"},
+    {"path":"README.txt","sha256":"987a830d3f7b0eababac939990b0eb8ba398c2223ba37d9c79220cea8ca82758"},
+    {"path":"source/tinycthread.c","sha256":"2665df67c3db133130a42c6beeb9692b2c23ed35d8723218a97ff745493f9880"},
+    {"path":"source/tinycthread.h","sha256":"47d262662a5ed47ee1cecda589d763c6868affc1e9c44b0887a326ad19857c12"}
+  ],
+  "excluded": [
+    {"path":"test/test.c","reason":"测试目标不属于被审计静态库 scope，且未纳入必要快照"},
+    {"path":"doc/**","reason":"生成的 API 文档不包含分析 TU"},
+    {"path":"mkbuild.sh","reason":"配置脚本不执行、不进入 compile-only 分析"}
+  ]
+}

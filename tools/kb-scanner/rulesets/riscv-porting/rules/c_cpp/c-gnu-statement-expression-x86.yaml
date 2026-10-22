@@ -1,0 +1,21 @@
+id: C.GNU.X86_STATEMENT_EXPRESSION
+language: c
+severity: medium
+confidence: medium
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        ignoreCommentLines: true
+        symbolGroup: 1
+        regex: "\\(\\s*\\{[^\\n]*?(\\b(?:__m64|__m128|__m128i|__m128d|__m256|__m256i|__m256d|__m512|__m512i|__m512d|_mm[0-9A-Za-z_]*)\\b)"
+message:
+  zh-CN:
+    title: "GNU C statement expression 封装 x86 实现"
+    reason: "C 代码使用 GNU statement expression，并在表达式内部引用 x86 SIMD 类型或 intrinsic。这类宏通常会把 x86 实现隐藏在表达式宏中。"
+    suggestion: "建议将该宏改为普通函数或按架构拆分的 inline 实现，并为 RISC-V/portable 路径提供等价实现。"
+  en-US:
+    title: "GNU C statement expression wraps an x86 implementation"
+    reason: "The C code uses a GNU statement expression and references x86 SIMD types or intrinsics inside it. Such macros often hide x86 implementations inside expression-like macros."
+    suggestion: "Rewrite the macro as a normal function or architecture-specific inline implementation, and provide an equivalent RISC-V or portable path."

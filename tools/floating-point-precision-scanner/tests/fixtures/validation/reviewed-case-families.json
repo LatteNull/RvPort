@@ -1,0 +1,20 @@
+{
+  "kind": "FloatingPointScannerReviewedFamilies",
+  "schema_version": "1.0",
+  "reviewer": "RvPort floating-point scanner maintainers",
+  "review_revision": "p5.5-2026-10-12",
+  "source_profiles": ["x86_64-linux-gnu-clang21@1.0"],
+  "target_profiles": ["riscv64-linux-gnu-lp64d-clang21@1.0"],
+  "rules": {
+    "long-double-abi": "公开 ABI、变参、记录布局与纯局部 long double 边界",
+    "x87-excess-precision": "扩展中间精度、强制存储和求值方式边界",
+    "fma-contraction": "显式 FMA、可融合乘加与禁止 contraction 边界",
+    "unsafe-fp-optimization": "fast-math flags、特殊值和严格模式边界",
+    "floating-environment": "fenv pragma/API、摘要传播与间接调用 unknown",
+    "mixed-precision-conversion": "隐式窄化、精确可表示常量与显式 cast 边界",
+    "fragile-fp-comparison": "NaN 错误模式、精确比较和启发式人工确认",
+    "reduction-reassociation": "循环递推、补偿算法和 IR 归约证据",
+    "math-library-variance": "libm 身份、errno/exception 和输入域边界",
+    "architecture-specific-fp-api": "解析后声明、target feature 和条件编译保护"
+  }
+}

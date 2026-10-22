@@ -1,0 +1,2 @@
+#pragma once
+#define MOA_DEMAND_PROTOCOL_JSON R"json(@MOA_DEMAND_PROTOCOL_JSON@)json"

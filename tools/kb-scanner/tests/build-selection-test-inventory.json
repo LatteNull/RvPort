@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "1.0",
+  "coverageThresholds": {"linePercent": 90.0, "branchPercent": 80.0},
+  "layers": {
+    "unit": "tests/unit/build_selection; filesystem, parser, GraphStore, machine metadata and command boundaries are isolated or in-memory",
+    "component": "real locked Tree-sitter grammars and versioned build fixtures",
+    "integration": "real staged qualification without executing project code",
+    "contract": "manual AVX oracle, legacy import isolation, immutable compiler facts and output compatibility"
+  },
+  "modules": {
+    "frontends/build/rpm/macros.py": {"unit":"tests/unit/build_selection/test_rpm_macros.py","higherLayers":["tests/test_rpm_architecture_component.py"]},
+    "frontends/build/rpm/conditions.py": {"unit":"tests/unit/build_selection/test_rpm_conditions.py","higherLayers":["tests/test_rpm_architecture_component.py"]},
+    "frontends/build/rpm/records.py": {"unit":"tests/unit/build_selection/test_rpm_dependencies.py","higherLayers":["tests/test_rpm_architecture_component.py"]},
+    "frontends/build/rpm/dependencies.py": {"unit":"tests/unit/build_selection/test_rpm_dependencies.py","higherLayers":["tests/test_rpm_architecture_component.py"]},
+    "frontends/build/rpm/parser.py": {"unit":"tests/unit/build_selection/test_rpm_parser.py","higherLayers":["tests/test_rpm_architecture_component.py"]},
+    "frontends/build/rpm/shell.py": {"unit":"tests/unit/build_selection/test_rpm_shell.py","higherLayers":["tests/test_rpm_architecture_component.py"]},
+    "analyzers/rpm_selection.py": {"unit":"tests/unit/build_selection/test_rpm_graph.py","higherLayers":["tests/test_rpm_architecture_component.py"]},
+    "frontends/build/vocabulary.py": {"unit":"tests/unit/build_selection/test_vocabulary_safety.py","higherLayers":["tests/test_build_selection_contracts.py"]},
+    "frontends/build/safety.py": {"unit":"tests/unit/build_selection/test_vocabulary_safety.py","higherLayers":["tests/test_build_selection_contracts.py"]},
+    "frontends/build/workspace.py": {"unit":"tests/unit/build_selection/test_workspace_frontend.py","higherLayers":["tests/test_build_selection_component.py"]},
+    "frontends/build/make.py": {"unit":"tests/unit/build_selection/test_make.py","higherLayers":["tests/test_build_selection_component.py"]},
+    "frontends/build/adapters.py": {"unit":"tests/unit/build_selection/test_adapters.py","higherLayers":["tests/test_build_selection_component.py"]},
+    "frontends/build/frontend.py": {"unit":"tests/unit/build_selection/test_workspace_frontend.py","higherLayers":["tests/test_build_selection_component.py"]},
+    "normalization/build.py": {"unit":"tests/unit/build_selection/test_analysis.py","higherLayers":["tests/test_build_selection_component.py"]},
+    "analyzers/build_selection.py": {"unit":"tests/unit/build_selection/test_analysis.py","supportingUnits":["tests/unit/projection_reachability/test_build_reachability.py"],"higherLayers":["tests/test_build_selection_component.py"]},
+    "detectors/build_selection.py": {"unit":"tests/unit/build_selection/test_analysis.py","higherLayers":["tests/test_build_selection_component.py"]},
+    "pipeline/composite.py": {"unit":"tests/unit/build_selection/test_composite.py","higherLayers":["tests/test_build_selection_component.py"]}
+  }
+}

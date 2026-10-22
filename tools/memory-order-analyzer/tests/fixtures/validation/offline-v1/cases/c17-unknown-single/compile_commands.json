@@ -1,0 +1,3 @@
+[
+  {"directory":"/corpus/cases/c17-unknown-single","file":"main.c","arguments":["clang","-std=c17","-O1","-pthread","-c","main.c"]}
+]

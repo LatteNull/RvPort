@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "1.0",
+  "cases": [
+    {"id":"ctest-selected-x86","role":"confirmed","selection":"selected","proof":"complete","observation":"riscv_test_blocker","classification":"blocking_issue"},
+    {"id":"make-inactive-x86-test","role":"confirmed","selection":"inactive","proof":"complete","observation":"x86_test_guarded","classification":"guarded_inactive"},
+    {"id":"complete-portable-no-test","role":"confirmed","selection":"selected","coverage":"gap","observation":"riscv_test_coverage_gap","classification":"actionable_non_blocking"},
+    {"id":"test-name-only","role":"candidate","selection":"unknown","proof":"unknown","observation":"test_selection_unknown","classification":"unknown"},
+    {"id":"configuration-conflict","role":"confirmed","selection":"unknown","proof":"unknown","observation":"test_selection_unknown","classification":"unknown"}
+  ],
+  "rejectedInferences": [
+    "name-similarity-proves-test-role",
+    "name-similarity-proves-coverage",
+    "missing-test-means-covered",
+    "missing-x86-hit-means-ready",
+    "truncated-proof-means-selected"
+  ]
+}

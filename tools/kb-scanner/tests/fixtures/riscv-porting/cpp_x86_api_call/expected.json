@@ -1,0 +1,7 @@
+{
+  "ruleId": "C_CPP.X86.API_CALL",
+  "count": 2,
+  "symbols": ["__cpuid", "__rdtsc"]
+}
+
+

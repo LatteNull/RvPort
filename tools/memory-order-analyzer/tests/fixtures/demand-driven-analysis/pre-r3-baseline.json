@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "protocol_sha256": {
+    "protocols/extractor-protocol.json": "8192c7820d270bf0b81a57e9330d79d5d54e3b0e12c40c24191ef198d8d1bbe9",
+    "protocols/analysis-protocol.json": "df88cab09bd0226ad2718c1fb1690cd291f7754425c75f11841df5fa1ccb0090",
+    "protocols/thread-analysis-protocol.json": "08c350f2dd73535af40756d841357bce41a1eeec6f21c280832e3b475a3fc82e",
+    "protocols/publication-analysis-protocol.json": "cd5e93e7f1d866369133b1254bad0485124b0dcd94497436ab3b33c4765fda29",
+    "protocols/execution-root-analysis-protocol.json": "dffc62a9a6a21107b988198f78bb267b38828ff16682e35e3e76c4bdc639b435",
+    "protocols/thread-entry-discovery-protocol.json": "cdc34ba932b8996bebfe41281f06e7644ff3440be94e1cdd222ea8c6d321deb3",
+    "protocols/concurrent-access-candidate-protocol.json": "e83ca10e3290aded89c223a352ac23f0e160845c30bcee0a868d9682c79822c5"
+  },
+  "eager_cli": [
+    "build-concurrent-access-candidates",
+    "discover-thread-entries",
+    "collect",
+    "import-bc",
+    "summarize",
+    "model-threads",
+    "plan-execution-roots"
+  ],
+  "statement": "R3 is additive; these pre-R3 protocol bytes and eager command names remain unchanged."
+}

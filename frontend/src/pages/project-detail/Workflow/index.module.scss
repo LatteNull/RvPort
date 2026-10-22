@@ -1,0 +1,36 @@
+.canvasPanel {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 320px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+
+  @keyframes hoverEdgeFlow {
+    from {
+      stroke-dashoffset: 16;
+    }
+
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  :global(.workflow-edge-hover-underlay) {
+    fill: none;
+    stroke: transparent;
+    stroke-width: 7;
+    pointer-events: none;
+  }
+
+  :global(.workflow-edge-hovered .workflow-edge-hover-underlay) {
+    stroke: #f5f5f5;
+  }
+
+  :global(.workflow-edge-hovered .react-flow__edge-path) {
+    stroke-dasharray: 9 7;
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: hoverEdgeFlow 700ms linear infinite;
+    }
+  }
+}

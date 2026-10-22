@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "basis": "人工指定路径与分组期望，不由 scanner 自动更新",
+  "cases": [
+    {"paths": ["src/foo_x86.cpp", "src/foo_generic.cpp", "src/foo.cpp"], "sizes": [3]},
+    {"paths": ["src/x86_foo.cpp", "src/riscv_foo.cpp"], "sizes": [2]},
+    {"paths": ["arch/x86/math/foo.cpp", "arch/riscv/math/foo.cpp", "arch/arm/math/foo.cpp"], "sizes": [3]},
+    {"paths": ["vendor/a/foo_x86.cpp", "vendor/b/foo_generic.cpp", "vendor/a/foo_generic.h", "myx86helper.cpp"], "sizes": [1]},
+    {"paths": ["src/foo_riscv.cpp", "src/foo_generic.cpp"], "sizes": []},
+    {"paths": ["src/x86/foo_generic.cpp", "src/generic/foo.cpp"], "sizes": [1]},
+    {"paths": ["src/foo_x86.cpp", "src/foo_X86.cpp"], "sizes": [2], "status": "ambiguous"}
+  ]
+}

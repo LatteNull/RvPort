@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-scanner/extensions/runtime/1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "budgets", "cache"],
+  "properties": {
+    "schemaVersion": {"const": "1.0"},
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["limits", "logicalUsed", "frontiers"],
+      "properties": {
+        "limits": {"type": "object", "maxProperties": 64, "additionalProperties": {"type": "number", "minimum": 0}},
+        "logicalUsed": {"type": "object", "maxProperties": 64, "additionalProperties": {"type": "number", "minimum": 0}},
+        "frontiers": {"type": "array", "maxItems": 64, "items": {"type": "object", "maxProperties": 8}}
+      }
+    },
+    "cache": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "mode", "hit", "miss", "corrupt", "write"],
+      "properties": {
+        "schemaVersion": {"type": "string", "minLength": 1},
+        "mode": {"enum": ["off", "read-only", "write-only", "read-write"]},
+        "hit": {"type": "integer", "minimum": 0},
+        "miss": {"type": "integer", "minimum": 0},
+        "corrupt": {"type": "integer", "minimum": 0},
+        "write": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

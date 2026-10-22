@@ -1,0 +1,5 @@
+[
+  {"directory":"/corpus/cases/cpp17-unknown-multi","file":"producer.cpp","arguments":["g++","-std=c++17","-O2","-pthread","-c","producer.cpp"]},
+  {"directory":"/corpus/cases/cpp17-unknown-multi","file":"consumer.cpp","arguments":["g++","-std=c++17","-O2","-pthread","-c","consumer.cpp"]},
+  {"directory":"/corpus/cases/cpp17-unknown-multi","file":"main.cpp","arguments":["g++","-std=c++17","-O2","-pthread","-c","main.cpp"]}
+]

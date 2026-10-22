@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0",
+  "entries": [
+    {"path": "kb_scanner/adapters/legacy.py", "replacement": "kb_scanner/adapters/cli.py + kb_scanner/pipeline/default.py", "fixtures": ["generated-and-curated-facts", "avx-x86-only"], "disposition": "retained-deferred", "exitCondition": "remaining legacy behavior fixtures have frozen new-pipeline equivalents; module is test-oracle-only and unreachable from default/qualification"},
+    {"path": "kb_scanner/rules.py", "replacement": "kb_scanner/knowledge/provider.py + code-owned detector/projection policies", "fixtures": ["generated-and-curated-facts"], "disposition": "retained-deferred", "exitCondition": "all 24 YAML behavior fixtures have reviewed staged-pipeline goldens; runtime CLI never imports this module"},
+    {"path": "kb_scanner/cpp_frontend.py", "replacement": "kb_scanner/frontends/cpp", "fixtures": ["avx-x86-only"], "disposition": "retained-deferred", "exitCondition": "legacy oracle tests no longer execute the old parser"},
+    {"path": "kb_scanner/compile_commands.py", "replacement": "kb_scanner/frontends/cpp/compilation_database.py", "fixtures": ["build-selection"], "disposition": "retained-deferred", "exitCondition": "legacy oracle tests no longer execute old compile-context normalization"},
+    {"path": "kb_scanner/models.py", "replacement": "kb_scanner/core + kb_scanner/projection/contract.py", "fixtures": ["classification-assessment"], "disposition": "retained-deferred", "exitCondition": "legacy oracle DTO construction is replaced by frozen golden data"},
+    {"path": "kb_scanner/report.py", "replacement": "kb_scanner/projection", "fixtures": ["classification-assessment"], "disposition": "retained-deferred", "exitCondition": "legacy oracle artifact generation is replaced by frozen normalized goldens"},
+    {"path": "kb_scanner/technology", "replacement": "formal adapters in kb_scanner/frontends and kb_scanner/graph", "fixtures": ["avx-x86-only", "build-selection"], "disposition": "removed", "exitCondition": "completed: active spike modules, benchmarks and implementation tests removed; frozen archive retained"}
+  ]
+}

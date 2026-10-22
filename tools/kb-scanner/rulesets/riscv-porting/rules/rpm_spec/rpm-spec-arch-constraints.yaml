@@ -1,0 +1,33 @@
+id: RPM_SPEC.ARCH.CONSTRAINT
+language: rpm_spec
+severity: high
+confidence: high
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        pathSuffixIn:
+          - ".spec"
+        ignoreCommentLines: true
+        ignoreRpmChangelog: true
+        sourceKind: rpm_spec
+        symbolGroup: 0
+        regex: "^\\s*ExclusiveArch\\s*:\\s*(?=[^#]*(?:x86_64|amd64|i[3-6]86|%\\{\\??ix86\\}|%\\{\\??x86_64\\}))(?!(?:[^#]*(?:riscv64|riscv|%\\{\\??riscv64\\}|%\\{\\??riscv\\}))).*$"
+    - text:
+        pathSuffixIn:
+          - ".spec"
+        ignoreCommentLines: true
+        ignoreRpmChangelog: true
+        sourceKind: rpm_spec
+        symbolGroup: 0
+        regex: "^\\s*ExcludeArch\\s*:\\s*.*(?:riscv64|riscv|%\\{\\??riscv64\\}|%\\{\\??riscv\\}).*$"
+message:
+  zh-CN:
+    title: "RPM spec 存在架构限制"
+    reason: "RPM spec 中存在限制或排除目标架构的声明，可能导致 RISC-V 无法进入打包构建。"
+    suggestion: "检查该架构限制是否仍然成立；如果代码已支持 RISC-V，补充或移除对应架构限制。"
+  en-US:
+    title: "RPM spec contains architecture constraints"
+    reason: "The RPM spec declares architecture constraints that may prevent RISC-V package builds."
+    suggestion: "Review whether the constraint is still valid; add RISC-V support or remove the constraint when appropriate."

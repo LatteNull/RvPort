@@ -1,0 +1,6 @@
+{
+  "ruleId": "C.X86.GENERIC_DISPATCH",
+  "count": 1,
+  "symbols": ["__m128"]
+}
+

@@ -1,0 +1,17 @@
+@use '../../styles/mixins' as type;
+
+.modalTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .modalTitleText {
+    @include type.panel-title;
+    color: var(--ant-color-text);
+  }
+
+  .modalSubTitle {
+    @include type.helper-text;
+    color: var(--ant-color-text-secondary);
+  }
+}

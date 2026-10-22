@@ -1,0 +1,30 @@
+{
+  "protocol_version": 1,
+  "analysis_version": "0.1.0",
+  "llvm_version": "21.1.8",
+  "policy_id": "execution-root-driven-analysis-v1",
+  "cache_namespace": "execution-root-driven-analysis-v1",
+  "kinds": {
+    "ExecutionRootDiscoveryRequest": 1,
+    "ThreadCreationSiteIndex": 1,
+    "ExecutionRootIndex": 1,
+    "RootDrivenAnalysisPlan": 1,
+    "RootDrivenAnalysisReport": 1
+  },
+  "budgets": {
+    "translation_units": 4096,
+    "source_candidates": 262144,
+    "ir_candidates": 262144,
+    "binding_candidates": 262144,
+    "roots": 65536,
+    "functions": 1000000,
+    "contexts": 262144,
+    "call_edges": 2000000,
+    "wrapper_depth": 16,
+    "scc_iterations": 64,
+    "frontier_items": 262144,
+    "diagnostic_bytes": 4096,
+    "request_seconds": 3600,
+    "request_output_bytes": 268435456
+  }
+}

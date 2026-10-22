@@ -1,0 +1,36 @@
+{
+  "change": "improve-kb-scanner-macro-and-build-effect-proofs",
+  "reviewedAt": "2026-09-24",
+  "baselineCommit": "44c756faa7e7485c09e675f5fbeae7fd82407454",
+  "historicalBaselines": ["candidate-usage-report-differential.json", "cmake-risk-report-differential.json"],
+  "reviewedChanges": [
+    "以固定旧提交和当前 scanner 在同一镜像、同一输入路径独立生成 V1/V2，再逐字段比较；保留历史账本。",
+    "source-evidence-chain V2 只有 evidenceChain、intrinsic occurrence/configuration、primaryOccurrenceId 和 fact 的宏作用扩展变化；两条 Finding ID、结论、summary、用途审计及日志不变。",
+    "源码链新增 Makefile:6 的实际 CPPFLAGS 引用，保留 Makefile:1 参数来源、recipe、条件及两层宏；每个 primaryPath 相邻节点有真实边，知识匹配仍为旁支。",
+    "source-evidence-chain V1 仅 findings[].trace 与 summary.readiness.trace 变化，原字段结构、数量、严重度、建议与静态声明不变。",
+    "AVX 的 828 条 Finding、规则分布、严重度、blocking、actionable、建议与 diagnostics 均不变。V2 完整 JSON 摘要不变；V1 仅 12 个宏相关 Finding 的 trace 和汇总 trace 增加原始实参及调用作用关系，不表示数据参数被执行。",
+    "architecture-enum、architecture-candidate-noise、RPM 等未列出的固定样例继续逐字节匹配历史账本；不扩大允许差异范围。"
+  ],
+  "fixtures": {
+    "source-evidence-chain": {
+      "1.0": {
+        "before": "a90a588cbb4c68c6f71ab287e990fdec1e6ba07ec2237c922f6f8a6f825689d6",
+        "after": "d82a2ec0a12e3470a6b9b6ca884b1d48d97af0717a8ed15aec94225e70048ebd",
+        "logSha256": "e1e74781c2aebbf985b4ad8631018f799ce07c44b2131c988f40a5489dc076a2"
+      },
+      "2.0": {
+        "before": "439837776b1aeacd869aaee9f3d69088f9689fe5e8fc1c2b73d5d212bb875786",
+        "after": "b34325ea9e9e3c0cae57e4b8f82fd55cc3b41641741a717d38d315cd47ffab25",
+        "logSha256": "21aa1e7d9052004110785daa165f5f0dc9139b1fb42a77342c184af91a86c241",
+        "strippedSha256": "f401a6f6efac1b8f02c83532a416fedab5ee70cd2e9b8b85c3ea6bd6982bbd27",
+        "withoutCandidateUsageSha256": "7a26dddf690a24a8a7b470e186afc46c8cf3efbdf6b47f31f638db66e65dd298"
+      }
+    }
+  },
+  "matrixOverrides": {
+    "avx-x86-only": {
+      "semanticFindingsSha256": "4db3d5a7e5304ad59fc55598b4e38717aa3376f91fbfc42012228c3b9a710afc"
+    }
+  },
+  "avxV2UnchangedSha256": "659034777b7b54992ff115fa7af9b38aeebd6d543c60589314a0e3aa92f997c4"
+}

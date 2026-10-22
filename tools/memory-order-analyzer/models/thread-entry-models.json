@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "kind": "ThreadEntryModelRegistry",
+  "profiles": [
+    {
+      "id": "3f5e5097bb2a3971d4c8157c30c39a16b59322ce2bbb4e2ba60890420dc98af6",
+      "api_family": "std-jthread",
+      "vendor": "libstdc++",
+      "version": "13.3.0-6ubuntu2~24.04.1",
+      "language": "c++",
+      "standards": ["c++20"],
+      "target": "x86_64-pc-linux-gnu",
+      "data_layout": "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128",
+      "abi": "itanium",
+      "canonical_entities": [
+        {"id": "std::jthread", "qualified_name": "std::jthread", "origin": "/usr/include/c++/13/thread"}
+      ],
+      "header_digests": [
+        {"kind": "header", "id": "/usr/include/c++/13/thread", "digest": "fea05267771743b440228a690bcb9bc12bc306589050f36c40119cc1f3315552"}
+      ],
+      "brokers": [
+        {"role": "construct-attempt", "symbol": "_ZNSt6thread15_M_start_threadESt10unique_ptrINS_6_StateESt14default_deleteIS1_EEPFvvE", "callback_index": 1, "source_binding_required": true}
+      ],
+      "status": "verified",
+      "digest": "edbe561ba7470c6dad23345bf21832450ae2e77f87f04312dc5058a5d2f6cddf"
+    },
+    {
+      "id": "5d323cb669993d144c689c997b29c04d4901632429084386206bdf5a3cc42a6c",
+      "api_family": "std-jthread",
+      "vendor": "libc++",
+      "version": "21.1.8",
+      "language": "c++",
+      "standards": ["c++20"],
+      "target": "x86_64-pc-linux-gnu",
+      "data_layout": "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128",
+      "abi": "itanium",
+      "canonical_entities": [
+        {"id": "std::__1::jthread", "qualified_name": "std::__1::jthread", "origin": "/usr/lib/llvm-21/include/c++/v1/thread"}
+      ],
+      "header_digests": [
+        {"kind": "header", "id": "/usr/lib/llvm-21/include/c++/v1/thread", "digest": "6f34c51f960688fd3362e9a682855635a53ff4c94e5dc77ed81460bdecc6e744"}
+      ],
+      "brokers": [
+        {"role": "construct-attempt", "symbol": "_ZNSt3__122__libcpp_thread_createB8ne210108EPmPFPvS1_ES1_", "callback_index": 1, "source_binding_required": true}
+      ],
+      "status": "verified",
+      "digest": "ecf1e8ae1f38ddae0f94f0564ccf69b9f1c5d27fad938ce3696c0c7e3f0307a8"
+    },
+    {
+      "id": "c07e8fba3b81122bcc760f454981b61816d7d7acabaf8f14874c446356124694",
+      "api_family": "std-async",
+      "vendor": "libc++",
+      "version": "21.1.8",
+      "language": "c++",
+      "standards": ["c++17", "c++20"],
+      "target": "x86_64-pc-linux-gnu",
+      "data_layout": "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128",
+      "abi": "itanium",
+      "canonical_entities": [
+        {"id": "std::__1::async", "qualified_name": "std::__1::async", "origin": "/usr/lib/llvm-21/include/c++/v1/future"}
+      ],
+      "header_digests": [
+        {"kind": "header", "id": "/usr/lib/llvm-21/include/c++/v1/future", "digest": "d1b13cf93546eb6dfac1937eb678e508fa439fc6be04751919f705bc33dd3a8e"}
+      ],
+      "brokers": [
+        {"role": "async-start", "symbol": "_ZNSt3__122__libcpp_thread_createB8ne210108EPmPFPvS1_ES1_", "callback_index": 1, "source_binding_required": true}
+      ],
+      "status": "verified",
+      "digest": "c6d88fcb4fac054795f8002579b1894bb68b8e72ed1275a3d1c83dfba3e4c0dd"
+    },
+    {
+      "id": "dad0b414d1433d6cc05c881d69854730f47865d49b124664c4b8b11b69ce175b",
+      "api_family": "std-async",
+      "vendor": "libstdc++",
+      "version": "13.3.0-6ubuntu2~24.04.1",
+      "language": "c++",
+      "standards": ["c++17", "c++20"],
+      "target": "x86_64-pc-linux-gnu",
+      "data_layout": "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128",
+      "abi": "itanium",
+      "canonical_entities": [
+        {"id": "std::async", "qualified_name": "std::async", "origin": "/usr/include/c++/13/future"}
+      ],
+      "header_digests": [
+        {"kind": "header", "id": "/usr/include/c++/13/future", "digest": "9dd34dd311806a1a5fcb4d453e7d7c88f71d093907483b2da5d0c8f493ac919b"}
+      ],
+      "brokers": [
+        {"role": "async-start", "symbol": "_ZNSt6thread15_M_start_threadESt10unique_ptrINS_6_StateESt14default_deleteIS1_EEPFvvE", "callback_index": 1, "source_binding_required": true}
+      ],
+      "status": "verified",
+      "digest": "a43c64a68c8924ba48c771c2939a8f53f3018689ca77b9adb2e2d30dc75a2092"
+    }
+  ]
+}

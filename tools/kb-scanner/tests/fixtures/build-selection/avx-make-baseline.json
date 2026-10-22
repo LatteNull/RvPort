@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "fixtureId": "avx-avx2-example-code-build-selection",
+  "revision": "5029c4fa44bd01c61476189e11787511f89ddfcd",
+  "audit": "Manual Makefile review; input oracle, never generated from scanner output.",
+  "expectedCount": 24,
+  "entries": [
+    {"path":"Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-mavx","startColumn":22,"endColumn":27,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-mavx2","startColumn":28,"endColumn":34,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-mfma","startColumn":35,"endColumn":40,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-msse","startColumn":41,"endColumn":46,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-msse2","startColumn":47,"endColumn":53,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-msse3","startColumn":54,"endColumn":60,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Arithmetic_Intrinsics/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-mavx","startColumn":22,"endColumn":27,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Arithmetic_Intrinsics/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-mavx2","startColumn":28,"endColumn":34,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Arithmetic_Intrinsics/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-mfma","startColumn":35,"endColumn":40,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Arithmetic_Intrinsics/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-msse","startColumn":41,"endColumn":46,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Arithmetic_Intrinsics/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-msse2","startColumn":47,"endColumn":53,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Arithmetic_Intrinsics/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-msse3","startColumn":54,"endColumn":60,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Initialization_Intrinsics/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-mavx","startColumn":22,"endColumn":27,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Initialization_Intrinsics/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-mavx2","startColumn":28,"endColumn":34,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Initialization_Intrinsics/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-mfma","startColumn":35,"endColumn":40,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Initialization_Intrinsics/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-msse","startColumn":41,"endColumn":46,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Initialization_Intrinsics/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-msse2","startColumn":47,"endColumn":53,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Initialization_Intrinsics/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-msse3","startColumn":54,"endColumn":60,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Permuting_and_Shuffling/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-mavx","startColumn":22,"endColumn":27,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Permuting_and_Shuffling/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-mavx2","startColumn":28,"endColumn":34,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Permuting_and_Shuffling/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-mfma","startColumn":35,"endColumn":40,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Permuting_and_Shuffling/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-msse","startColumn":41,"endColumn":46,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Permuting_and_Shuffling/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-msse2","startColumn":47,"endColumn":53,"expectedStatus":"selected","reason":"unconditional-make-assignment"},
+    {"path":"Permuting_and_Shuffling/src/Makefile","line":5,"variable":"CFLAGS","target":"global","flag":"-msse3","startColumn":54,"endColumn":60,"expectedStatus":"selected","reason":"unconditional-make-assignment"}
+  ]
+}

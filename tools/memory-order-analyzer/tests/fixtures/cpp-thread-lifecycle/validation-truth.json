@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "CppThreadValidationTruth",
+  "analysis_version": "0.1.0",
+  "policy_id": "cpp-thread-lifecycle-v1",
+  "suite_version": "a3-lifecycle-v1",
+  "cases": [
+    {"case_id": "c11-pthread-single", "callables": [], "instances": [], "relations": [], "unknown": []},
+    {"case_id": "c17-pthread-cross-tu", "callables": [], "instances": [], "relations": [], "unknown": []},
+    {"case_id": "cpp17-gnu-abi-mismatch", "callables": [], "instances": [], "relations": [], "unknown": ["abi-wrapper-mismatch"]},
+    {"case_id": "cpp17-gnu-free-join", "callables": ["callable:worker"], "instances": ["instance:worker@main"], "relations": ["join-complete:instance:worker@main:join", "thread-start:construct:instance:worker@main"], "unknown": []},
+    {"case_id": "cpp17-gnu-lambda-detach", "callables": ["callable:lambda@launch"], "instances": ["instance:lambda@launch"], "relations": ["detach:detach:instance:lambda@launch", "may-parallel:root:instance:lambda@launch", "thread-start:construct:instance:lambda@launch"], "unknown": []},
+    {"case_id": "cpp20-libcxx-functor-unknown", "callables": [], "instances": [], "relations": [], "unknown": ["callable-ambiguous"]},
+    {"case_id": "cpp20-libcxx-member-move", "callables": ["callable:owner::run"], "instances": ["instance:owner::run@main"], "relations": ["join-complete:instance:owner::run@main:join", "thread-start:construct:instance:owner::run@main"], "unknown": []},
+    {"case_id": "cpp20-libcxx-open-scope", "callables": [], "instances": [], "relations": [], "unknown": ["scope-definition-missing"]}
+  ],
+  "semantic_digest": "fcb37bcbfbbd772116ec9ad1684066e50bd2ae4361b5312330123e284690b90f"
+}

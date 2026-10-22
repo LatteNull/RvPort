@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0",
+  "reviewDate": "2026-09-09",
+  "purpose": "Reviewed performance/serialization baseline, not a claim that all findings are true migration defects",
+  "fixtureDigest": "d56da6fcca683ca209242ac709ebadb8907a0285944ca175bfbf7dc62b67d631",
+  "scannerSourceDigest": "f3160210d8bd049294a8e7dc0b1038d006c2a652a388ef1d27709d4d87a6240e",
+  "reportSemanticDigest": "5bcca81443a8a5939e38be8cc13346396fefd8510e1d89482b5f455b9a7111dc",
+  "files": 810,
+  "facts": 154069,
+  "findings": 55,
+  "hints": 11,
+  "issues": 44,
+  "blocking": 0,
+  "readiness": "provisional",
+  "runs": [
+    {"seconds": 153.601137396879, "maxRssKiB": 611272, "exitCode": 0},
+    {"seconds": 131.984537950251, "maxRssKiB": 611168, "exitCode": 0}
+  ],
+  "knownLimitations": [
+    "CKSUM_SHA512 and CRC32 enum candidates are checksum/format noise, not proven architecture dependencies",
+    "_7Z_X86 and BOOT_PLATFORM_X86 describe encoded data/platform fields, not necessarily host dependencies",
+    "_rotl remains unknown despite a source-level portable alternative",
+    "Partial parsing, unresolved include/macro and generated test inputs prevent readiness assurance"
+  ],
+  "audit": "docs/large-project-performance.md"
+}

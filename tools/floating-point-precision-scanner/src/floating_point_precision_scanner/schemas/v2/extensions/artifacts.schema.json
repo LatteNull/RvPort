@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-scanner/extensions/artifacts/1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "artifactSet", "bitcodeProfiles", "bitcodeCapabilities", "irAnalysis", "sourceMapping"],
+  "properties": {
+    "schemaVersion": {"const": "1.0"},
+    "artifactSet": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["artifactSetId", "sourceRevision", "buildRunId", "manifestSha256"],
+      "properties": {
+        "artifactSetId": {"$ref": "#/$defs/digest"},
+        "sourceRevision": {"type": "string", "minLength": 1},
+        "buildRunId": {"type": "string", "minLength": 1},
+        "manifestSha256": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "bitcodeProfiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requested", "completed"],
+      "properties": {
+        "requested": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "completed": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "bitcodeCapabilities": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "irAnalysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "llvmVersion", "readerVersion", "extractorVersion"],
+      "properties": {
+        "status": {"enum": ["notRequested", "complete", "partial", "failed"]},
+        "llvmVersion": {"type": "string", "minLength": 1},
+        "readerVersion": {"type": "string", "minLength": 1},
+        "extractorVersion": {"type": "string", "minLength": 1}
+      }
+    },
+    "sourceMapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "status"],
+      "properties": {
+        "mode": {"enum": ["notRequested", "required", "best-effort", "off"]},
+        "status": {"enum": ["notRequested", "complete", "incomplete"]}
+      }
+    }
+  },
+  "$defs": {"digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}
+}

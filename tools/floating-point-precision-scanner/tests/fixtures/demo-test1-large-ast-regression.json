@@ -1,0 +1,33 @@
+{
+  "kind": "FloatingPointLargeAstRegressionFixture",
+  "schema_version": "1.0",
+  "source": "demo-test1-sanitized",
+  "translation_units": [
+    {
+      "path": "app/main.cpp",
+      "observed_ast_bytes": 138000000,
+      "characteristics": ["large_ast", "standard_library_dense"]
+    },
+    {
+      "path": "src/vectorcalc.cpp",
+      "observed_ast_bytes": 94000000,
+      "characteristics": ["large_ast", "project_facts"]
+    },
+    {
+      "path": "tests/vectorcalc_tests.cpp",
+      "observed_ast_bytes": 230000000,
+      "characteristics": ["large_ast", "standard_library_dense", "direct_evidence_dense"]
+    }
+  ],
+  "legacy_failure_chain": [
+    "frontend_invalid_json",
+    "source_fact_bundle_missing",
+    "internal_error"
+  ],
+  "expected": {
+    "minimum_frontend_budget_bytes": 268435456,
+    "maximum_provenance_items": 128,
+    "system_header_facts_excluded": true,
+    "truncated_json_must_not_be_parsed": true
+  }
+}

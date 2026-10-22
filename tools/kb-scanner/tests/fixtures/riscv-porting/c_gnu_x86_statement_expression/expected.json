@@ -1,0 +1,6 @@
+{
+  "ruleId": "C.GNU.X86_STATEMENT_EXPRESSION",
+  "count": 1,
+  "symbols": ["__m128"]
+}
+

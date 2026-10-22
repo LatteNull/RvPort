@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0",
+  "candidateNoiseInventory": "tests/architecture-candidate-noise-test-inventory.json",
+  "coverageThresholds": {"linePercent": 90.0, "branchPercent": 80.0},
+  "layers": {
+    "unit": "in-memory snapshots and fake/recording stages; no project command execution",
+    "component": "real locked parsers and versioned static fixtures",
+    "integration": "staged qualification with no-op projector",
+    "contract": "legacy schema, immutable compiler facts, container and no-side-effect boundaries"
+  },
+  "modules": {
+    "frontends/build/adapters.py": {"unit":"tests/unit/build_selection/test_adapters.py","higherLayers":["tests/test_classification_assessment_component.py"]},
+    "normalization/build.py": {"unit":"tests/unit/build_selection/test_analysis.py","higherLayers":["tests/test_classification_assessment_component.py"]},
+    "core/classifications.py": {"unit":"tests/unit/classification_assessment/test_core_models.py","higherLayers":["tests/test_classification_assessment_contracts.py"]},
+    "core/test_vocabulary.py": {"unit":"tests/unit/classification_assessment/test_core_models.py","higherLayers":["tests/test_classification_assessment_contracts.py"]},
+    "core/observations.py": {"unit":"tests/unit/classification_assessment/test_core_models.py","higherLayers":["tests/test_classification_assessment_component.py"]},
+    "core/results.py": {"unit":"tests/unit/knowledge_detection/test_core_snapshot_extensions.py","higherLayers":["tests/test_classification_assessment_component.py"]},
+    "analyzers/test_selection.py": {"unit":"tests/unit/classification_assessment/test_test_analysis.py","higherLayers":["tests/test_classification_assessment_component.py"]},
+    "detectors/test_selection.py": {"unit":"tests/unit/classification_assessment/test_test_detector.py","higherLayers":["tests/test_classification_assessment_component.py"]},
+    "classifiers/policy.py": {"unit":"tests/unit/classification_assessment/test_classifier.py","supportingUnits":["tests/unit/projection_reachability/test_classification_assessment.py","tests/unit/architecture_enum/test_architecture_enum.py","tests/unit/build_selection/test_rpm_graph.py"],"higherLayers":["tests/test_classification_assessment_component.py","tests/test_rpm_architecture_component.py"]},
+    "classifiers/migration.py": {"unit": "tests/unit/classification_assessment/test_classifier.py", "supportingUnits": ["tests/unit/projection_reachability/test_classification_assessment.py", "tests/unit/architecture_enum/test_architecture_enum.py", "tests/unit/candidate_semantics/test_admission.py"], "higherLayers": ["tests/test_classification_assessment_component.py"]},
+    "assessors/vocabulary.py": {"unit":"tests/unit/classification_assessment/test_assessor.py","higherLayers":["tests/test_classification_assessment_component.py"]},
+    "assessors/migration.py": {"unit":"tests/unit/classification_assessment/test_assessor.py","supportingUnits":["tests/unit/projection_reachability/test_classification_assessment.py"],"higherLayers":["tests/test_classification_assessment_component.py"]},
+    "pipeline/composite.py": {"unit":"tests/unit/build_selection/test_composite.py","higherLayers":["tests/test_classification_assessment_component.py"]},
+    "pipeline/qualification.py": {"unit":"tests/unit/knowledge_detection/test_qualification_profile.py","higherLayers":["tests/test_classification_assessment_component.py"]}
+  }
+}

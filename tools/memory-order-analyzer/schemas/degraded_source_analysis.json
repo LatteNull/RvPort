@@ -1,0 +1,202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Id": {"type": "string", "minLength": 1, "maxLength": 4096},
+    "Hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "Dependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "digest"],
+      "properties": {"kind": {"$ref": "#/$defs/Id"}, "id": {"$ref": "#/$defs/Id"}, "digest": {"$ref": "#/$defs/Hash"}}
+    },
+    "InputHash": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {"path": {"$ref": "#/$defs/Id"}, "sha256": {"$ref": "#/$defs/Hash"}}
+    },
+    "Diagnostic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "detail", "detail_en", "suggestion", "suggestion_en", "source"],
+      "properties": {
+        "code": {"$ref": "#/$defs/Id"}, "detail": {"type": "string", "maxLength": 4096},
+        "detail_en": {"type": "string", "maxLength": 4096},
+        "suggestion": {"type": ["string", "null"], "maxLength": 4096},
+        "suggestion_en": {"type": ["string", "null"], "maxLength": 4096},
+        "source": {"type": ["object", "null"]}
+      }
+    },
+    "Counts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["planned", "completed", "failed", "budget", "ratio"],
+      "properties": {
+        "planned": {"type": "integer", "minimum": 0}, "completed": {"type": "integer", "minimum": 0},
+        "failed": {"type": "integer", "minimum": 0}, "budget": {"type": "integer", "minimum": 0},
+        "ratio": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      }
+    },
+    "Budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["translation_units", "source_candidates", "dependency_nodes", "dependency_edges", "slice_items", "worker_seconds", "worker_output_bytes", "request_seconds", "request_output_bytes", "diagnostic_bytes"],
+      "properties": {
+        "translation_units": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "source_candidates": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "dependency_nodes": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "dependency_edges": {"type": "integer", "minimum": 1, "maximum": 524288},
+        "slice_items": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "worker_seconds": {"type": "integer", "minimum": 1, "maximum": 300},
+        "worker_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 16777216},
+        "request_seconds": {"type": "integer", "minimum": 1, "maximum": 3600},
+        "request_output_bytes": {"type": "integer", "minimum": 4096, "maximum": 67108864},
+        "diagnostic_bytes": {"type": "integer", "minimum": 128, "maximum": 4096}
+      }
+    },
+    "Common": {
+      "type": "object",
+      "required": ["schema_version", "kind", "analysis_version", "policy_id"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"$ref": "#/$defs/Id"},
+        "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "degraded-source-analysis-v1"}
+      }
+    },
+    "FailureRecord": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "physical_tu_id", "stage", "failure_class", "stability", "code", "detail", "detail_en", "suggestion", "suggestion_en", "dependency"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Hash"}, "physical_tu_id": {"$ref": "#/$defs/Id"},
+        "stage": {"enum": ["source", "bc", "p1", "p2", "p3", "p4"]},
+        "failure_class": {"enum": ["frontend-invalid", "profile-replay-incompatible", "external-artifact-missing", "external-build-failed", "artifact-format-unsupported", "reader-incompatible", "ir-generation-failed", "worker-budget", "artifact-validation-failed", "analysis-stage-failed"]},
+        "stability": {"enum": ["deterministic", "transient"]}, "code": {"$ref": "#/$defs/Id"},
+        "detail": {"type": "string", "maxLength": 4096}, "detail_en": {"type": "string", "maxLength": 4096},
+        "suggestion": {"type": "string", "maxLength": 4096}, "suggestion_en": {"type": "string", "maxLength": 4096},
+        "dependency": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]}
+      }
+    },
+    "DegradedSourceAnalysisRequest": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "source_requests", "ir_requests", "module_facts", "declared_failures", "products", "budgets"],
+        "properties": {
+          "schema_version": {"const": 1}, "kind": {"const": "DegradedSourceAnalysisRequest"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "degraded-source-analysis-v1"},
+          "scope_id": {"$ref": "#/$defs/Id"},
+          "source_requests": {"type": "array", "items": {"$ref": "#/$defs/InputHash"}},
+          "ir_requests": {"type": "array", "items": {"$ref": "#/$defs/InputHash"}},
+          "module_facts": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "declared_failures": {"type": "array", "items": {"$ref": "#/$defs/FailureRecord"}},
+          "products": {"type": "object", "additionalProperties": false,
+            "required": ["thread_graph", "publication_graph", "publication_report"],
+            "properties": {"thread_graph": {"anyOf": [{"$ref": "#/$defs/InputHash"}, {"type": "null"}]}, "publication_graph": {"anyOf": [{"$ref": "#/$defs/InputHash"}, {"type": "null"}]}, "publication_report": {"anyOf": [{"$ref": "#/$defs/InputHash"}, {"type": "null"}]}}
+          },
+          "budgets": {"$ref": "#/$defs/Budgets"}
+        }}]
+    },
+    "ProductState": {
+      "type": "object", "additionalProperties": false,
+      "required": ["stage", "status", "dependency", "failure_ids"],
+      "properties": {"stage": {"enum": ["source", "bc", "p1", "p2", "p3", "p4"]}, "status": {"enum": ["complete", "partial", "failed", "not-run"]}, "dependency": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]}, "failure_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Hash"}}}
+    },
+    "TUEvidenceAvailability": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "physical_tu_id", "profile_id", "language", "standard", "mode", "products", "failures", "dependencies", "status", "semantic_digest"],
+        "properties": {
+          "schema_version": {"const": 1}, "kind": {"const": "TUEvidenceAvailability"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "degraded-source-analysis-v1"},
+          "scope_id": {"$ref": "#/$defs/Id"}, "physical_tu_id": {"$ref": "#/$defs/Id"}, "profile_id": {"$ref": "#/$defs/Hash"},
+          "language": {"enum": ["c", "c++"]}, "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+          "mode": {"enum": ["ast-ir", "ir-only", "ast-only", "failed"]},
+          "products": {"type": "array", "items": {"$ref": "#/$defs/ProductState"}},
+          "failures": {"type": "array", "items": {"$ref": "#/$defs/FailureRecord"}},
+          "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "status": {"enum": ["complete", "partial", "failed"]}, "semantic_digest": {"$ref": "#/$defs/Hash"}
+        }}]
+    },
+    "SourceCandidate": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "id", "physical_tu_ids", "profile_ids", "language", "standard", "shape", "node_ids", "relation_ids", "evidence_level", "verdict", "safety", "mode", "assumptions", "missing_evidence", "dependencies", "diagnostics", "suggestion", "suggestion_en", "semantic_digest"],
+        "properties": {
+          "schema_version": {"const": 1}, "kind": {"const": "SourceCandidate"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "degraded-source-analysis-v1"},
+          "scope_id": {"$ref": "#/$defs/Id"}, "id": {"$ref": "#/$defs/Hash"}, "physical_tu_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}},
+          "profile_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/Hash"}},
+          "language": {"enum": ["c", "c++"]}, "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+          "shape": {"enum": ["pthread-create", "pthread-join", "pthread-mutex", "atomic", "memory-access", "control", "cross-tu-entity", "unknown-raii", "unknown-sync-wrapper"]},
+          "node_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}}, "relation_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}},
+          "evidence_level": {"const": "source-only"}, "verdict": {"const": "unknown"}, "safety": {"const": "not-established"},
+          "mode": {"enum": ["ast-ir", "ast-only"]}, "assumptions": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}},
+          "missing_evidence": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["memory-effect", "execution-order", "byte-range", "thread-instance", "reads-from", "synchronizes-with", "happens-before", "ir-binding", "callback-target", "object-identity", "synchronization-model"]}},
+          "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "suggestion": {"type": "string", "maxLength": 4096}, "suggestion_en": {"type": "string", "maxLength": 4096}, "semantic_digest": {"$ref": "#/$defs/Hash"}
+        }}]
+    },
+    "SynchronizationGap": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "id", "reason", "stage", "physical_tu_ids", "node_ids", "relation_ids", "object_candidates", "thread_candidates", "path_candidates", "budget", "dependencies", "detail", "detail_en", "suggestion", "suggestion_en", "semantic_digest"],
+        "properties": {
+          "schema_version": {"const": 1}, "kind": {"const": "SynchronizationGap"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "degraded-source-analysis-v1"},
+          "scope_id": {"$ref": "#/$defs/Id"}, "id": {"$ref": "#/$defs/Hash"},
+          "reason": {"enum": ["mutex-kind-unknown", "unmodeled-raii-lifetime", "unknown-synchronization-wrapper", "unresolved-lock-object", "unbalanced-or-conditional-lock", "synchronization-budget"]},
+          "stage": {"enum": ["source", "p3", "p4"]}, "physical_tu_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}},
+          "node_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}}, "relation_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}},
+          "object_candidates": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}}, "thread_candidates": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}}, "path_candidates": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}},
+          "budget": {"type": ["object", "null"]}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "detail": {"type": "string", "maxLength": 4096}, "detail_en": {"type": "string", "maxLength": 4096}, "suggestion": {"type": "string", "maxLength": 4096}, "suggestion_en": {"type": "string", "maxLength": 4096}, "semantic_digest": {"$ref": "#/$defs/Hash"}
+        }}]
+    },
+    "EffectiveAssessment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "original_id", "original_kind", "original_status", "effective_status", "reason_codes", "physical_tu_ids", "gap_ids", "slice", "detail", "detail_en", "suggestion", "suggestion_en"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Hash"}, "original_id": {"$ref": "#/$defs/Id"}, "original_kind": {"$ref": "#/$defs/Id"}, "original_status": {"$ref": "#/$defs/Id"},
+        "effective_status": {"enum": ["finding", "discharged", "unknown", "unsupported", "excluded"]}, "reason_codes": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}},
+        "physical_tu_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}}, "gap_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Hash"}},
+        "slice": {"$ref": "#/$defs/DependencySlice"}, "detail": {"type": "string", "maxLength": 4096}, "detail_en": {"type": "string", "maxLength": 4096}, "suggestion": {"type": "string", "maxLength": 4096}, "suggestion_en": {"type": "string", "maxLength": 4096}
+      }
+    },
+    "DependencySlice": {
+      "type": "object", "additionalProperties": false, "required": ["roots", "items", "status", "missing"],
+      "properties": {"roots": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}}, "items": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}}, "status": {"enum": ["complete", "partial"]}, "missing": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}}}
+    },
+    "DegradedSourceAnalysisReport": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "mode", "exit_code", "safety", "stages", "mode_counts", "availabilities", "source_candidates", "synchronization_gaps", "formal_assessments", "dependencies", "diagnostics", "frontier", "cache", "semantic_digest"],
+        "properties": {
+          "schema_version": {"const": 1}, "kind": {"const": "DegradedSourceAnalysisReport"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "degraded-source-analysis-v1"},
+          "scope_id": {"type": ["string", "null"]}, "request_hash": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+          "status": {"enum": ["complete", "partial", "failed"]}, "mode": {"enum": ["ast-ir", "ir-only", "ast-only", "failed", "mixed"]}, "exit_code": {"enum": [0, 1, 2, 3]}, "safety": {"const": "not-established"},
+          "stages": {"type": "object", "additionalProperties": {"$ref": "#/$defs/Counts"}}, "mode_counts": {"type": "object", "additionalProperties": false, "required": ["ast-ir", "ir-only", "ast-only", "failed"], "properties": {"ast-ir": {"type": "integer", "minimum": 0}, "ir-only": {"type": "integer", "minimum": 0}, "ast-only": {"type": "integer", "minimum": 0}, "failed": {"type": "integer", "minimum": 0}}},
+          "availabilities": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "source_candidates": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "synchronization_gaps": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "formal_assessments": {"type": "array", "items": {"$ref": "#/$defs/EffectiveAssessment"}},
+          "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "cache": {"type": "object", "additionalProperties": false, "required": ["hits", "misses"], "properties": {"hits": {"type": "integer", "minimum": 0}, "misses": {"type": "integer", "minimum": 0}}}, "semantic_digest": {"$ref": "#/$defs/Hash"}
+        }}]
+    },
+    "ValidationCase": {
+      "type": "object", "additionalProperties": false, "required": ["id", "language", "standard", "expected_mode", "expected_formal", "eligible", "input_digest"],
+      "properties": {"id": {"$ref": "#/$defs/Id"}, "language": {"enum": ["c", "c++"]}, "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]}, "expected_mode": {"enum": ["ast-ir", "ir-only", "ast-only", "failed", "mixed"]}, "expected_formal": {"enum": ["risk", "no-risk", "unknown", "failed"]}, "eligible": {"type": "boolean"}, "input_digest": {"$ref": "#/$defs/Hash"}}
+    },
+    "DegradedValidationSuite": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false, "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite_id", "suite_version", "cases", "semantic_digest"], "properties": {"schema_version": {"const": 1}, "kind": {"const": "DegradedValidationSuite"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "degraded-source-analysis-v1"}, "suite_id": {"$ref": "#/$defs/Id"}, "suite_version": {"const": 1}, "cases": {"type": "array", "items": {"$ref": "#/$defs/ValidationCase"}}, "semantic_digest": {"$ref": "#/$defs/Hash"}}}]
+    },
+    "DegradedValidationTruth": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false, "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite_id", "suite_digest", "cases", "review", "semantic_digest"], "properties": {"schema_version": {"const": 1}, "kind": {"const": "DegradedValidationTruth"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "degraded-source-analysis-v1"}, "suite_id": {"$ref": "#/$defs/Id"}, "suite_digest": {"$ref": "#/$defs/Hash"}, "cases": {"type": "array", "items": {"$ref": "#/$defs/TruthCase"}}, "review": {"$ref": "#/$defs/Review"}, "semantic_digest": {"$ref": "#/$defs/Hash"}}}]
+    },
+    "TruthCase": {
+      "type": "object", "additionalProperties": false, "required": ["case_id", "mode", "formal"],
+      "properties": {"case_id": {"$ref": "#/$defs/Id"}, "mode": {"enum": ["ast-ir", "ir-only", "ast-only", "failed", "mixed"]}, "formal": {"enum": ["risk", "no-risk", "unknown", "failed"]}}
+    },
+    "Review": {
+      "type": "object", "additionalProperties": false, "required": ["status", "method"],
+      "properties": {"status": {"const": "reviewed"}, "method": {"const": "manual"}}
+    },
+    "Metric": {
+      "type": "object", "additionalProperties": false, "required": ["hit", "total", "value"],
+      "properties": {"hit": {"type": "integer", "minimum": 0}, "total": {"type": "integer", "minimum": 0}, "value": {"type": ["number", "null"], "minimum": 0, "maximum": 1}}
+    },
+    "ValidationModes": {
+      "type": "object", "additionalProperties": false, "required": ["ast-ir", "ir-only", "ast-only", "failed", "mixed"],
+      "properties": {"ast-ir": {"type": "integer", "minimum": 0}, "ir-only": {"type": "integer", "minimum": 0}, "ast-only": {"type": "integer", "minimum": 0}, "failed": {"type": "integer", "minimum": 0}, "mixed": {"type": "integer", "minimum": 0}}
+    },
+    "ProfileMetrics": {
+      "type": "object", "additionalProperties": false,
+      "required": ["planned", "completed", "eligible", "modes", "source_candidates", "formal_candidates", "true_positive", "false_positive", "false_negative", "exact_match", "precision", "recall", "abstention"],
+      "properties": {"planned": {"type": "integer", "minimum": 0}, "completed": {"type": "integer", "minimum": 0}, "eligible": {"type": "integer", "minimum": 0}, "modes": {"$ref": "#/$defs/ValidationModes"}, "source_candidates": {"type": "integer", "minimum": 0}, "formal_candidates": {"type": "integer", "minimum": 0}, "true_positive": {"type": "integer", "minimum": 0}, "false_positive": {"type": "integer", "minimum": 0}, "false_negative": {"type": "integer", "minimum": 0}, "exact_match": {"$ref": "#/$defs/Metric"}, "precision": {"$ref": "#/$defs/Metric"}, "recall": {"$ref": "#/$defs/Metric"}, "abstention": {"$ref": "#/$defs/Metric"}}
+    },
+    "DegradedValidationReport": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false, "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite_id", "suite_digest", "truth_digest", "status", "profiles", "aggregate", "performance", "diagnostics", "frontier", "safety", "semantic_digest"], "properties": {"schema_version": {"const": 1}, "kind": {"const": "DegradedValidationReport"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "degraded-source-analysis-v1"}, "suite_id": {"$ref": "#/$defs/Id"}, "suite_digest": {"$ref": "#/$defs/Hash"}, "truth_digest": {"$ref": "#/$defs/Hash"}, "status": {"enum": ["complete", "partial", "failed"]}, "profiles": {"type": "object", "additionalProperties": false, "required": ["c11", "c17", "c++17", "c++20"], "properties": {"c11": {"$ref": "#/$defs/ProfileMetrics"}, "c17": {"$ref": "#/$defs/ProfileMetrics"}, "c++17": {"$ref": "#/$defs/ProfileMetrics"}, "c++20": {"$ref": "#/$defs/ProfileMetrics"}}}, "aggregate": {"$ref": "#/$defs/ProfileMetrics"}, "performance": {"type": "object"}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "safety": {"const": "not-established"}, "semantic_digest": {"$ref": "#/$defs/Hash"}}}]
+    }
+  }
+}

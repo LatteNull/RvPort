@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1.0",
+  "rulePack": {"id": "riscv-porting-rules", "version": "2026.06"},
+  "knowledgeManifest": {
+    "path": "knowledge-manifest.json",
+    "sha256": "4dfe40817300dff9db5a382be13c2404ba4407e738a9b978eb09ea15ccd38dc3"
+  },
+  "projectionPolicy": {"id": "kb-scanner.compatible-projection", "version": 1}
+}

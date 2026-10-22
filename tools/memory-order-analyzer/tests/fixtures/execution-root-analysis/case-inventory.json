@@ -1,0 +1,22 @@
+{
+  "suite_version": "execution-root-r1-v1",
+  "cases": [
+    {"capability": "c11-main-direct-pthread", "fixture": "c11/single.c", "test": "test_real_four_language_pthread_root_plan"},
+    {"capability": "c17-cross-tu-wrapper", "fixture": "c17/cross-main.c;c17/cross-worker.c", "test": "test_checked_in_fixture_truth_has_four_language_denominators"},
+    {"capability": "c17-nested-thread-creation", "fixture": "c17/nested.c", "test": "test_fixture_inventory_covers_required_r1_scenarios"},
+    {"capability": "cpp17-direct-pthread", "fixture": "cpp17/pthread.cpp", "test": "test_real_four_language_pthread_root_plan"},
+    {"capability": "cpp17-indirect-callback-frontier", "fixture": "cpp17/indirect.cpp", "test": "test_checked_in_fixture_truth_has_four_language_denominators"},
+    {"capability": "cpp20-verified-std-thread", "fixture": "cpp20/std-thread.cpp", "test": "test_checked_in_fixture_truth_has_four_language_denominators"},
+    {"capability": "exported-framework-explicit-root", "fixture": "cpp20/framework.cpp", "test": "test_discovery_main_explicit_thread_context_and_instance_separation"},
+    {"capability": "same-callback-multiple-callsites", "fixture": "c11/single.c", "test": "test_discovery_main_explicit_thread_context_and_instance_separation"},
+    {"capability": "recursive-fixed-point", "fixture": "c11/recursive.c", "test": "test_cross_tu_edges_recursion_relevant_unknown_overlay_reconciliation_and_frontier_limit"},
+    {"capability": "open-scope", "fixture": "c17/cross-main.c", "test": "test_plan_open_scope_missing_definition_and_budgets_produce_frontier"},
+    {"capability": "ir-only-no-debug", "fixture": "c11/single.c", "test": "test_union_alignment_classifications_and_zero_diagnostic"},
+    {"capability": "ast-only", "fixture": "c11/single.c", "test": "test_union_alignment_classifications_and_zero_diagnostic"},
+    {"capability": "callback-conflict", "fixture": "c11/single.c", "test": "test_union_alignment_classifications_and_zero_diagnostic"},
+    {"capability": "profile-abi-mismatch", "fixture": "cpp20/std-thread.cpp", "test": "test_cpp_adapter_requires_cpp_exact_callable_wrapper_and_binding"},
+    {"capability": "budget-frontier", "fixture": "c11/recursive.c", "test": "test_plan_open_scope_missing_definition_and_budgets_produce_frontier"},
+    {"capability": "cache-hit-and-invalidation", "fixture": "c11/single.c", "test": "test_cache_hit_invalidation_corruption_and_failure_rejection"},
+    {"capability": "plan-observation-mismatch", "fixture": "cpp20/framework.cpp", "test": "test_cross_tu_edges_recursion_relevant_unknown_overlay_reconciliation_and_frontier_limit"}
+  ]
+}

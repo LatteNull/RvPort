@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "NonEmpty": {"type": "string", "minLength": 1},
+    "Status": {"enum": ["complete", "partial", "failed"]},
+    "Mode": {"enum": ["ast+ir", "ir-only", "ast-only", "failed"]},
+    "Dependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "digest"],
+      "properties": {"kind": {"$ref": "#/$defs/NonEmpty"}, "id": {"$ref": "#/$defs/NonEmpty"}, "digest": {"$ref": "#/$defs/Digest"}}
+    },
+    "Diagnostic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "detail", "detail_en", "limitation", "limitation_en", "suggestion", "suggestion_en", "source"],
+      "properties": {
+        "code": {"$ref": "#/$defs/NonEmpty"}, "detail": {"$ref": "#/$defs/NonEmpty"}, "detail_en": {"$ref": "#/$defs/NonEmpty"},
+        "limitation": {"$ref": "#/$defs/NonEmpty"}, "limitation_en": {"$ref": "#/$defs/NonEmpty"},
+        "suggestion": {"type": ["string", "null"]}, "suggestion_en": {"type": ["string", "null"]}, "source": {"type": ["object", "null"]}
+      }
+    },
+    "Budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["translation_units", "source_nodes", "ir_nodes", "path_segments", "path_depth", "values", "candidate_targets", "guards", "load_hops", "aa_queries", "memoryssa_steps", "capture_uses", "call_contexts", "recursive_iterations", "relations", "diagnostic_bytes", "worker_seconds", "worker_output_bytes", "request_seconds", "request_output_bytes"],
+      "properties": {
+        "translation_units": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "source_nodes": {"type": "integer", "minimum": 1, "maximum": 1000000},
+        "ir_nodes": {"type": "integer", "minimum": 1, "maximum": 1000000},
+        "path_segments": {"type": "integer", "minimum": 1, "maximum": 64},
+        "path_depth": {"type": "integer", "minimum": 1, "maximum": 32},
+        "values": {"type": "integer", "minimum": 1, "maximum": 2000000},
+        "candidate_targets": {"type": "integer", "minimum": 1, "maximum": 64},
+        "guards": {"type": "integer", "minimum": 1, "maximum": 128},
+        "load_hops": {"type": "integer", "minimum": 1, "maximum": 16},
+        "aa_queries": {"type": "integer", "minimum": 1, "maximum": 2000000},
+        "memoryssa_steps": {"type": "integer", "minimum": 1, "maximum": 2000000},
+        "capture_uses": {"type": "integer", "minimum": 1, "maximum": 2000000},
+        "call_contexts": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "recursive_iterations": {"type": "integer", "minimum": 1, "maximum": 64},
+        "relations": {"type": "integer", "minimum": 1, "maximum": 2000000},
+        "diagnostic_bytes": {"type": "integer", "minimum": 128, "maximum": 4096},
+        "worker_seconds": {"type": "integer", "minimum": 1, "maximum": 300},
+        "worker_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 67108864},
+        "request_seconds": {"type": "integer", "minimum": 1, "maximum": 3600},
+        "request_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 268435456}
+      }
+    },
+    "Base": {
+      "type": "object", "required": ["schema_version", "kind", "analysis_version", "policy_id"],
+      "properties": {"schema_version": {"const": 1}, "kind": {"$ref": "#/$defs/NonEmpty"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "bounded-object-provenance-v1"}}
+    },
+    "Member": {
+      "type": "object", "additionalProperties": false,
+      "required": ["physical_tu_id", "profile_id", "language", "standard", "source_request", "llvm_request"],
+      "properties": {
+        "physical_tu_id": {"$ref": "#/$defs/NonEmpty"}, "profile_id": {"$ref": "#/$defs/Digest"},
+        "language": {"enum": ["c", "c++"]}, "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+        "source_request": {"type": ["string", "null"]}, "llvm_request": {"type": ["string", "null"]}
+      }
+    },
+    "SourceLocation": {"type": "object", "additionalProperties": true},
+    "PathSegment": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "field_id", "record_type", "access", "field_index", "offset_bits", "size_bits", "align_bits", "union_group"],
+      "properties": {
+        "kind": {"enum": ["field", "array-index", "deref", "cast", "byte-offset"]},
+        "field_id": {"type": ["string", "null"]}, "record_type": {"type": ["string", "null"]},
+        "access": {"enum": ["dot", "arrow", "index", "deref", "cast", "offset"]},
+        "field_index": {"type": ["integer", "null"], "minimum": 0}, "offset_bits": {"type": ["integer", "null"]},
+        "size_bits": {"type": ["integer", "null"], "minimum": 0}, "align_bits": {"type": ["integer", "null"], "minimum": 0},
+        "union_group": {"type": ["string", "null"]}
+      }
+    },
+    "SourcePath": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "expression_id", "role", "base", "segments", "status", "reason", "source", "evidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/NonEmpty"}, "expression_id": {"$ref": "#/$defs/NonEmpty"},
+        "role": {"enum": ["read", "write", "return", "argument", "receiver", "candidate"]},
+        "base": {"type": "object"}, "segments": {"type": "array", "items": {"$ref": "#/$defs/PathSegment"}},
+        "status": {"enum": ["exact", "candidate", "unknown"]}, "reason": {"type": ["string", "null"]},
+        "source": {"$ref": "#/$defs/SourceLocation"}, "evidence": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}
+      }
+    },
+    "Storage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "artifact_key", "source_id", "function_id", "invocation_id", "allocation", "lifetime", "address_space"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Digest"}, "kind": {"enum": ["global", "stack", "parameter", "receiver", "external", "unknown"]},
+        "artifact_key": {"type": ["string", "null"]}, "source_id": {"$ref": "#/$defs/NonEmpty"},
+        "function_id": {"type": ["string", "null"]}, "invocation_id": {"type": ["string", "null"]},
+        "allocation": {"enum": ["single", "merged", "unknown"]}, "lifetime": {"enum": ["live", "expired", "unknown"]},
+        "address_space": {"type": "integer", "minimum": 0}
+      }
+    },
+    "ByteRange": {
+      "type": "object", "additionalProperties": false, "required": ["offset", "size"],
+      "properties": {"offset": {"type": ["integer", "null"]}, "size": {"type": ["integer", "null"], "minimum": 0}}
+    },
+    "ObjectInstance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "storage", "path", "byte_range"],
+      "properties": {"id": {"$ref": "#/$defs/Digest"}, "storage": {"$ref": "#/$defs/Storage"}, "path": {"type": "array", "items": {"$ref": "#/$defs/PathSegment"}}, "byte_range": {"$ref": "#/$defs/ByteRange"}}
+    },
+    "Candidate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["object", "guards", "proof", "opposed", "dependencies"],
+      "properties": {"object": {"$ref": "#/$defs/ObjectInstance"}, "guards": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}, "proof": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}, "opposed": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}
+    }
+    },
+    "CandidateDomain": {
+      "type": "object", "additionalProperties": false, "required": ["state", "candidates", "reason"],
+      "properties": {"state": {"enum": ["must", "may", "unknown"]}, "candidates": {"type": "array", "items": {"$ref": "#/$defs/Candidate"}}, "reason": {"type": ["string", "null"]}}
+    },
+    "LLVMValue": {
+      "type": "object", "additionalProperties": true,
+      "required": ["id", "function_id", "opcode", "domain", "offset", "address_space", "evidence"],
+      "properties": {"id": {"$ref": "#/$defs/NonEmpty"}, "function_id": {"type": ["string", "null"]}, "opcode": {"$ref": "#/$defs/NonEmpty"}, "domain": {"$ref": "#/$defs/CandidateDomain"}, "offset": {"type": ["integer", "null"]}, "address_space": {"type": "integer", "minimum": 0}, "evidence": {"type": "array"}}
+    },
+    "Counts": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}},
+    "Cache": {"type": "object", "additionalProperties": false, "required": ["hits", "misses"], "properties": {"hits": {"type": "integer", "minimum": 0}, "misses": {"type": "integer", "minimum": 0}}},
+    "BoundedObjectProvenanceRequest": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "roots", "members", "dependencies", "budgets", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "BoundedObjectProvenanceRequest"}, "analysis_version": {}, "policy_id": {}, "scope_id": {"$ref": "#/$defs/NonEmpty"}, "roots": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}, "members": {"type": "array", "items": {"$ref": "#/$defs/Member"}, "minItems": 1}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "budgets": {"$ref": "#/$defs/Budgets"}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "SourceObjectPathRequest": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "profile", "physical_tu_id", "source_path", "budgets", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "SourceObjectPathRequest"}, "analysis_version": {}, "policy_id": {}, "profile": {"type": "object"}, "physical_tu_id": {"$ref": "#/$defs/NonEmpty"}, "source_path": {"$ref": "#/$defs/NonEmpty"}, "budgets": {"$ref": "#/$defs/Budgets"}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "SourceObjectPathFacts": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "profile_id", "physical_tu_id", "source_digest", "language", "standard", "mode", "status", "paths", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "SourceObjectPathFacts"}, "analysis_version": {}, "policy_id": {}, "profile_id": {"$ref": "#/$defs/Digest"}, "physical_tu_id": {"$ref": "#/$defs/NonEmpty"}, "source_digest": {"$ref": "#/$defs/Digest"}, "language": {"enum": ["c", "c++"]}, "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]}, "mode": {"const": "ast-only"}, "status": {"$ref": "#/$defs/Status"}, "paths": {"type": "array", "items": {"$ref": "#/$defs/SourcePath"}}, "counts": {"$ref": "#/$defs/Counts"}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "LLVMObjectProvenanceRequest": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "artifact_key", "profile_id", "physical_tu_id", "bitcode", "dependencies", "budgets", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "LLVMObjectProvenanceRequest"}, "analysis_version": {}, "policy_id": {}, "artifact_key": {"$ref": "#/$defs/Digest"}, "profile_id": {"$ref": "#/$defs/Digest"}, "physical_tu_id": {"$ref": "#/$defs/NonEmpty"}, "bitcode": {"type": "object"}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "budgets": {"$ref": "#/$defs/Budgets"}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "LLVMObjectProvenanceFacts": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "artifact_key", "profile_id", "physical_tu_id", "bitcode_digest", "target", "data_layout", "mode", "status", "values", "queries", "call_edges", "returns", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "LLVMObjectProvenanceFacts"}, "analysis_version": {}, "policy_id": {}, "artifact_key": {"$ref": "#/$defs/Digest"}, "profile_id": {"$ref": "#/$defs/Digest"}, "physical_tu_id": {"$ref": "#/$defs/NonEmpty"}, "bitcode_digest": {"$ref": "#/$defs/Digest"}, "target": {"$ref": "#/$defs/NonEmpty"}, "data_layout": {"type": "string"}, "mode": {"const": "ir-only"}, "status": {"$ref": "#/$defs/Status"}, "values": {"type": "array", "items": {"$ref": "#/$defs/LLVMValue"}}, "queries": {"type": "array", "items": {"type": "object"}}, "call_edges": {"type": "array", "items": {"type": "object"}}, "returns": {"type": "array", "items": {"type": "object"}}, "counts": {"$ref": "#/$defs/Counts"}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "BoundedObjectProvenanceGraph": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "members", "objects", "domains", "relations", "adapters", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "BoundedObjectProvenanceGraph"}, "analysis_version": {}, "policy_id": {}, "scope_id": {"$ref": "#/$defs/NonEmpty"}, "request_hash": {"$ref": "#/$defs/Digest"}, "status": {"$ref": "#/$defs/Status"}, "members": {"type": "array", "items": {"type": "object"}}, "objects": {"type": "array", "items": {"$ref": "#/$defs/ObjectInstance"}}, "domains": {"type": "array", "items": {"type": "object"}}, "relations": {"type": "array", "items": {"type": "object"}}, "adapters": {"type": "array", "items": {"type": "object"}}, "counts": {"$ref": "#/$defs/Counts"}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "BoundedObjectProvenanceReport": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "exit_code", "safety", "findings", "graph", "modes", "counts", "dependencies", "diagnostics", "frontier", "cache", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "BoundedObjectProvenanceReport"}, "analysis_version": {}, "policy_id": {}, "scope_id": {"type": ["string", "null"]}, "request_hash": {"type": ["string", "null"]}, "status": {"$ref": "#/$defs/Status"}, "exit_code": {"enum": [0, 1, 2]}, "safety": {"const": "not_established"}, "findings": {"type": "null"}, "graph": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]}, "modes": {"type": "object"}, "counts": {"$ref": "#/$defs/Counts"}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "cache": {"$ref": "#/$defs/Cache"}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "ObjectProvenanceValidationSuite": {"allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": true, "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite_version", "cases", "semantic_digest"], "properties": {"kind": {"const": "ObjectProvenanceValidationSuite"}, "cases": {"type": "array", "minItems": 4}}}]},
+    "ObjectProvenanceValidationTruth": {"allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": true, "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite_version", "cases", "semantic_digest"], "properties": {"kind": {"const": "ObjectProvenanceValidationTruth"}, "cases": {"type": "array", "minItems": 4}}}]},
+    "ObjectProvenanceValidationReport": {"allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": true, "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite_version", "status", "metrics", "languages", "diagnostics", "semantic_digest"], "properties": {"kind": {"const": "ObjectProvenanceValidationReport"}, "status": {"$ref": "#/$defs/Status"}}}]}
+  }
+}

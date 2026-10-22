@@ -1,0 +1,37 @@
+{
+  "protocol_version": 2,
+  "analysis_version": "0.1.0",
+  "llvm_version": "21.1.8",
+  "policy_id": "ast-cross-tu-evidence-v1",
+  "kinds": {
+    "CompilationProfileIdentity": 2,
+    "LLVMSourceBindingRequest": 1,
+    "LLVMSourceBindingFacts": 1,
+    "SourceSemanticRequest": 2,
+    "SourceSemanticFacts": 1,
+    "ProgramEntityIndexRequest": 1,
+    "ProgramEntityIndex": 1,
+    "SourceIRBindingRequest": 1,
+    "SourceIRBinding": 1,
+    "CanonicalObjectOverlay": 1,
+    "AstAssistedCandidateSlices": 1,
+    "AstAssistedAnalysisRequest": 1,
+    "AstAssistedAnalysisReport": 1,
+    "AstIrValidationSuite": 1,
+    "AstIrValidationTruth": 1,
+    "AstAssistedValidationReport": 1
+  },
+  "budgets": {
+    "translation_units": 4096,
+    "ast_nodes": 1000000,
+    "references": 2000000,
+    "diagnostics": 4096,
+    "entity_groups": 1000000,
+    "binding_candidates": 2000000,
+    "dependency_items": 2000000,
+    "worker_seconds": 120,
+    "worker_output_bytes": 67108864,
+    "request_seconds": 1800,
+    "request_output_bytes": 268435456
+  }
+}

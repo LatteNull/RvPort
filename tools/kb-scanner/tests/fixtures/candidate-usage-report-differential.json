@@ -1,0 +1,25 @@
+{
+  "change": "implement-kb-scanner-candidate-usage-proofs",
+  "reviewedAt": "2026-09-23",
+  "historicalBaselines": ["cmake-risk-report-differential.json", "function-multiversion-report-differential.json"],
+  "reviewedChanges": [
+    "关闭新增 collect_usage 与 CandidateUsageAnalyzer 后，四个固定样例 V1/V2 的 JSON 和日志 SHA-256 重现历史账本。",
+    "source-evidence-chain 的 V2 仅新增顶层用途审计及 defined(USE_AVX2) Finding 的 fact 扩展；定义根无法闭合，排除数为 0。",
+    "architecture-enum 的 V2 仅新增顶层用途审计与 5 个候选 Finding 的用途扩展；开放定义、复杂控制和调用仍为 unknown，排除数为 0。",
+    "补齐闭包中的已确认 x86 依赖：architecture-enum 一个 Backend::avx2 根记录 4 个 conflict Evidence 和 usage-known-execution-conflict；仅用途扩展变化，原有 high 结论不变。",
+    "这两个样例的全部原 Finding ID、fact、occurrence、conclusion、evidenceChain、summary 和静态声明保持不变。HTML 仅新增对应中文用途审计和源码来源。",
+    "四个样例的 V1 三工件不变；所有 scan.log 字节不变；architecture-candidate-noise、rpm-architecture 的 V2 三工件也不变。",
+    "保留历史账本，本账本不声称已完成真实 libarchive、规模性能或剩余用途证明边界验收。"
+  ],
+  "allowedV2Differences": ["extensions.org.rvport.kb-scanner.candidate-usage", "findings[].fact.extensions.org.rvport.kb-scanner.candidate-usage"],
+  "fixtures": {
+    "source-evidence-chain": {
+      "1.0": {"after": "a90a588cbb4c68c6f71ab287e990fdec1e6ba07ec2237c922f6f8a6f825689d6", "logSha256": "e1e74781c2aebbf985b4ad8631018f799ce07c44b2131c988f40a5489dc076a2", "strippedSha256": null},
+      "2.0": {"after": "439837776b1aeacd869aaee9f3d69088f9689fe5e8fc1c2b73d5d212bb875786", "logSha256": "21aa1e7d9052004110785daa165f5f0dc9139b1fb42a77342c184af91a86c241", "strippedSha256": "18d595998343871b444d8fca0a444160b09318441096e9f4d84f7afe01036471"}
+    },
+    "architecture-enum": {
+      "1.0": {"after": "b4f83ab5008c13187fe06b5786235879e869060749f7562e43e5b94e9b3c871e", "logSha256": "c141abbf107ce4ab52b8f87dfffb5022f4205e6e7e2815b057cf379948d5dfd8", "strippedSha256": null},
+      "2.0": {"after": "92b34eef4669ecd245f0f8d34e4be78c570a00619976d7d033ae83a13c498eb1", "logSha256": "4433105ad9c5da67a1332506bc0dcdc96f23145a92e805e464f250a49063b11a", "strippedSha256": "05f641654cad5aa07f863c68f891c571e0741be79a808fe99279020bd07de345"}
+    }
+  }
+}

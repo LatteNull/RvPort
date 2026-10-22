@@ -1,0 +1,111 @@
+# request-client Specification
+
+## Purpose
+
+定义前端共享请求客户端如何处理平台 API 响应包络、Cookie Session、统一错误反馈和业务 API 类型边界。
+
+## Requirements
+
+### Requirement: Backend API response envelope
+
+The frontend SHALL model platform API responses using the currently implemented backend `data/traceId/timestamp` envelope.
+
+#### Scenario: API response succeeds
+
+- **WHEN** the backend returns a successful JSON API response
+- **THEN** the response envelope SHALL contain `data`, `traceId` and `timestamp`
+- **AND** the response envelope SHALL NOT require a `success` field
+
+#### Scenario: API response fails
+
+- **WHEN** the backend returns an API error response
+- **THEN** the error body SHALL contain top-level `code`, `message`, optional `details`, `traceId` and `timestamp`
+- **AND** the error body SHALL NOT require a nested `error` object
+
+### Requirement: Backend pagination envelope
+
+The frontend SHALL model paginated backend responses using the currently implemented backend `items/page/pageSize/total/hasMore` envelope.
+
+#### Scenario: API response is paginated
+
+- **WHEN** a backend API returns a paginated list
+- **THEN** the frontend type SHALL expose `items`, `page`, `pageSize`, `total` and `hasMore`
+- **AND** the frontend type SHALL NOT require a `list` field
+
+### Requirement: Request client unwraps response data
+
+The frontend request client SHALL return unwrapped response data to business API callers.
+
+#### Scenario: Business API calls GET
+
+- **WHEN** a business API calls `request.get<T>(...)`
+- **THEN** TypeScript SHALL treat the returned promise as `Promise<T>`
+
+#### Scenario: Business API calls POST
+
+- **WHEN** a business API calls `request.post<T>(...)`
+- **THEN** TypeScript SHALL treat the returned promise as `Promise<T>`
+
+#### Scenario: Successful response is received
+
+- **WHEN** the request client receives a successful API envelope
+- **THEN** it SHALL resolve with the envelope `data`
+
+### Requirement: Request client handles API errors
+
+The frontend request client SHALL handle backend API errors consistently.
+
+#### Scenario: Failed response is received
+
+- **WHEN** the request client receives an HTTP error response with a backend API error body
+- **THEN** it SHALL 优先读取 `error.message`，其次读取顶层 `message`，并拒绝请求
+- **AND** 当前后端的顶层错误包络 SHALL 保持可用；兼容读取嵌套错误不代表后端必须返回该结构
+
+#### Scenario: Unauthorized response is received
+
+- **WHEN** an API request receives HTTP 401
+- **THEN** the request client SHALL clear auth user state and move the user toward login
+
+#### Scenario: Forbidden response is received
+
+- **WHEN** an API request receives HTTP 403
+- **THEN** `PASSWORD_CHANGE_REQUIRED` SHALL 导向 `/force-change-password`
+- **AND** 其他 403 SHALL 导向 `/403`
+
+### Requirement: Request client uses Cookie Session and CSRF
+
+The frontend request client SHALL align with the backend Cookie Session and CSRF model.
+
+#### Scenario: API request is sent
+
+- **WHEN** the request client sends API requests
+- **THEN** it SHALL enable browser cookie credentials
+
+#### Scenario: Unsafe method is sent
+
+- **WHEN** the request client sends `POST`, `PUT`, `PATCH` or `DELETE`
+- **THEN** it SHALL attach the CSRF token header returned by `GET /api/auth/csrf`
+
+#### Scenario: Safe method is sent
+
+- **WHEN** the request client sends `GET`, `HEAD` or `OPTIONS`
+- **THEN** it SHALL NOT require a CSRF token before sending the request
+
+#### Scenario: CSRF token is requested concurrently
+
+- **WHEN** multiple unsafe API requests need a CSRF token at the same time
+- **THEN** the request client SHALL reuse the in-flight CSRF request when possible
+
+### Requirement: 请求超时与服务不可用反馈
+
+请求客户端 SHALL 提供统一默认超时，并允许上传与长任务提交边界显式使用更长超时；页面 SHALL 不自行创建第二套 Axios 客户端。
+
+#### Scenario: 上游服务不可用
+
+- **WHEN** API 返回 HTTP 502、503 或 504
+- **THEN** 客户端 SHALL 导向 `/500`
+
+#### Scenario: 请求局部控制错误反馈
+
+- **WHEN** 调用方显式声明抑制通用错误提示或 401 自动跳转
+- **THEN** 客户端 SHALL 尊重对应请求配置，同时仍拒绝失败请求并清理失效认证状态

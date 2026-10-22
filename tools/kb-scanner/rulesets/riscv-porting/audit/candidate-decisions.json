@@ -1,0 +1,65 @@
+{
+  "decisions": [
+    {
+      "candidateValue": "vector_size(16/32/64)",
+      "category": "vector-width",
+      "decisionId": "278b1f06cdd9a26128133b8547fa40d1072aa497c73bc56048c76646b98f7799",
+      "rationale": "The extension is authoritative, but width alone is migration-sensitive rather than x86-only.",
+      "referenceIds": [
+        "gcc-14.2.0-vector-extensions"
+      ],
+      "runtimeFactKind": "vectorWidthMarkers",
+      "status": "accepted"
+    },
+    {
+      "candidateValue": "amd64/x64",
+      "category": "architecture-alias",
+      "decisionId": "53ceeb29911b0ec290074a8c4a2e161d062331ca5430f0001a8d960724bb38bc",
+      "rationale": "Common spellings require a fixed normative source and context-sensitive identifier policy before runtime acceptance.",
+      "referenceIds": [],
+      "status": "deferred"
+    },
+    {
+      "candidateValue": "toolchain tables",
+      "category": "assembly-instruction",
+      "decisionId": "56805ef2033fb5ee27c3cb35e7a7976e9146066923fca26c7bbf0aeea2fb70e5",
+      "rationale": "Opcode and register identities are deterministic upstream definitions.",
+      "referenceIds": [
+        "binutils-2.42-x86",
+        "llvm-18.1.8-x86"
+      ],
+      "runtimeFactKind": "assemblyInstructions",
+      "status": "generated"
+    },
+    {
+      "candidateValue": "clock_gettime",
+      "category": "cpu-platform-api",
+      "decisionId": "8f77d9a30c2c9a742675d1c7be9166bc66a8b507fbcebeeb7dcdd0a14a94d119",
+      "rationale": "Operating-system API migration is explicitly outside this change.",
+      "referenceIds": [],
+      "status": "rejected"
+    },
+    {
+      "candidateValue": "cpuid and rdtsc APIs",
+      "category": "cpu-platform-api",
+      "decisionId": "e0e566143caaab78814441612d3eafb00c91599b7f17768e2329fe6d3005c7ca",
+      "rationale": "GCC x86 headers define the compiler-facing source spellings.",
+      "referenceIds": [
+        "gcc-14.2.0-cpuid-header",
+        "gcc-14.2.0-ia32intrin-header"
+      ],
+      "runtimeFactKind": "cpuPlatformApis",
+      "status": "accepted"
+    },
+    {
+      "candidateValue": "ELF relocation and emulation tables",
+      "category": "linker-source",
+      "decisionId": "f09bebcddec6781b4dbf1644070b54b3049bfc4961cb897ffe2ee109448ee635",
+      "rationale": "They do not add source-level C/C++ facts that compiler or assembler definitions cannot provide in this change.",
+      "referenceIds": [],
+      "status": "rejected"
+    }
+  ],
+  "schemaVersion": "1.0",
+  "scope": "c-cpp-x86-to-riscv-static-analysis"
+}

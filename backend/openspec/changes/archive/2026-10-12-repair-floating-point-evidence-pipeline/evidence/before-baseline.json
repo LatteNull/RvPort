@@ -1,0 +1,45 @@
+{
+  "kind": "FloatingPointEvidenceRepairBaseline",
+  "schemaVersion": "1.0",
+  "source": "backend/runtime/fp-step-description-validation（根目录最新审计，明确排除 first-run）",
+  "identities": {
+    "projectId": "9915a12c-9338-419e-b589-9a3984d56c62",
+    "sourceRevisionId": "a019391f-89e6-4d8e-8eed-1b7871055541",
+    "buildRunId": "be53c759-1e2e-459a-9f73-ef8289ecfaf2",
+    "analysisId": "aee4ef66-6d81-4e88-afd7-606cc7d6cc9a",
+    "taskId": "a7653736-9b55-4b0c-89f1-12fb67c4b0c2"
+  },
+  "artifacts": {
+    "compileCommandsSha256": "e749c9d6270c8587613749aa717faa3dbdd98c2777c186038127969743f2f355",
+    "manifestSha256": "ca100684b6e72709feca687a18a2b5ec681e0b6c363f5d3ee1aae7258a73db35",
+    "bundleSha256": "ae90ee2aa9ed6f023dccbc0183641c8c8bde1960b2482be5c868505922c6094a",
+    "artifactSetId": "f9e95a698b4c5c97c60148791ce9daafbd906d7fd38f1f89550a530b65524af9",
+    "manifestSchemaVersion": "2.0",
+    "producer": {
+      "family": "clang",
+      "llvmVersion": "21.1.8",
+      "hostTriple": "x86_64-unknown-linux-gnu"
+    }
+  },
+  "observed": {
+    "analysisMode": "AST_ONLY",
+    "bcStatus": "INVALID",
+    "bcDegradationReason": "BITCODE_WORKER_VALIDATION_FAILED",
+    "status": "PARTIAL",
+    "exitCode": 4,
+    "diagnostics": [
+      {"code": "long_double_abi_provenance_budget_exceeded", "count": 1},
+      {"code": "mixed_precision_conversion_conversion_type_unknown", "count": 3},
+      {"code": "unsupported_floating_fact", "count": 3}
+    ],
+    "finding": {
+      "externalFindingId": "219d931e7ab442eee890b6eb880af89077555870ea5ad4787f0d8b3b0d6cda40",
+      "code": "reduction-reassociation",
+      "file": "src/vectorcalc.cpp",
+      "line": 62,
+      "evidenceOrigin": "heuristic",
+      "requiresHumanConfirmation": true
+    }
+  },
+  "immutability": "本文件只登记 before 证据；历史 result/run/task/findings/details/verification 不得修改。"
+}

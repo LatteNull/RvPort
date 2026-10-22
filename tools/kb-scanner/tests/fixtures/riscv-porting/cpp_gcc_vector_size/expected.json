@@ -1,0 +1,7 @@
+{
+  "ruleId": "C_CPP.GCC.VECTOR_SIZE",
+  "count": 1,
+  "symbols": ["32"]
+}
+
+

@@ -1,0 +1,27 @@
+{
+  "protocol_version": 1,
+  "analysis_version": "0.1.0",
+  "policy_id": "degraded-source-analysis-v1",
+  "kinds": {
+    "DegradedSourceAnalysisRequest": 1,
+    "TUEvidenceAvailability": 1,
+    "SourceCandidate": 1,
+    "SynchronizationGap": 1,
+    "DegradedSourceAnalysisReport": 1,
+    "DegradedValidationSuite": 1,
+    "DegradedValidationTruth": 1,
+    "DegradedValidationReport": 1
+  },
+  "budgets": {
+    "translation_units": 4096,
+    "source_candidates": 65536,
+    "dependency_nodes": 262144,
+    "dependency_edges": 524288,
+    "slice_items": 65536,
+    "worker_seconds": 300,
+    "worker_output_bytes": 16777216,
+    "request_seconds": 3600,
+    "request_output_bytes": 67108864,
+    "diagnostic_bytes": 4096
+  }
+}

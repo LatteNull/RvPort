@@ -1,0 +1,23 @@
+id: C_CPP.X86.TARGET_ATTRIBUTE
+language: c_cpp
+severity: high
+confidence: high
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        ignoreCommentLines: true
+        symbolGroup: 1
+        regex: "(?i)(?:#\\s*pragma\\s+GCC\\s+target\\s*\\(\\s*\"([^\"]*(?:mmx|sse|ssse3|avx|avx2|avx512|aes|pclmul|rdrnd)[^\"]*)\"|#\\s*pragma\\s+clang\\s+attribute\\s+push\\s*\\([^\\n]*target\\s*\\(\\s*\"([^\"]*(?:mmx|sse|ssse3|avx|avx2|avx512|aes|pclmul|rdrnd)[^\"]*)\"|__attribute__\\s*\\(\\([^\\n]*(?:target|target_clones)\\s*\\(\\s*\"([^\"]*(?:mmx|sse|ssse3|avx|avx2|avx512|aes|pclmul|rdrnd)[^\"]*)\")"
+message:
+  zh-CN:
+    title: "使用 x86 函数级目标架构标注"
+    reason: "源码中通过 pragma 或 attribute 将函数/代码块绑定到 x86 ISA，这会绕过普通构建参数并形成架构专属实现。"
+    suggestion: "建议为 RISC-V 拆分目标架构标注，或将该函数改为 portable/RISC-V 专属实现。"
+  en-US:
+    title: "Uses x86 function-level target annotations"
+    reason: "The source uses pragma or attribute annotations to bind a function or code block to an x86 ISA. This bypasses ordinary build flags and creates an architecture-specific implementation."
+    suggestion: "Split target-architecture annotations for RISC-V, or rewrite the function as a portable or RISC-V-specific implementation."
+
+

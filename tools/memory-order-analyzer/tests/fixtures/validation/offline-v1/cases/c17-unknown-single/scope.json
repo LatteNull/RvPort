@@ -1,0 +1,1 @@
+{"target_id":"c17-unknown-single","roots":["main"],"translation_units":["main.c"],"closed":true,"external_boundaries":["pthread"],"expected_frontier":["fence-rmw"]}

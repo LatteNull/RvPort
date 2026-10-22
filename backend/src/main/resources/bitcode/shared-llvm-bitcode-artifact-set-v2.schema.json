@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.cn/schemas/shared-llvm-bitcode-artifact-set-v2.schema.json",
+  "title": "RvPort Shared LLVM Bitcode Artifact Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "schema_version", "artifact_set_id", "source_identity_digest", "compile_context", "producer", "status", "counts", "records", "scopes", "generated_at", "semantic_digest"],
+  "properties": {
+    "kind": {"const": "SharedLlvmBitcodeArtifactSet"},
+    "schema_version": {"enum": ["2.0", "2.1"]},
+    "artifact_set_id": {"$ref": "#/$defs/hash"},
+    "source_identity_digest": {"$ref": "#/$defs/hash"},
+    "compile_context": {
+      "type": "object", "additionalProperties": false,
+      "required": ["raw_compile_commands_sha256", "normalized_digest"],
+      "properties": {
+        "raw_compile_commands_sha256": {"$ref": "#/$defs/hash"},
+        "normalized_digest": {"$ref": "#/$defs/hash"}
+      }
+    },
+    "producer": {"$ref": "#/$defs/producer"},
+    "status": {"enum": ["READY", "PARTIAL", "FAILED"]},
+    "counts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["planned_contexts", "planned_records", "produced", "missing", "failed", "total_bytes"],
+      "properties": {
+        "planned_contexts": {"type": "integer", "minimum": 0},
+        "planned_records": {"type": "integer", "minimum": 0},
+        "produced": {"type": "integer", "minimum": 0},
+        "missing": {"type": "integer", "minimum": 0},
+        "failed": {"type": "integer", "minimum": 0},
+        "total_bytes": {"type": "integer", "minimum": 0}
+      }
+    },
+    "records": {"type": "array", "items": {"$ref": "#/$defs/record"}},
+    "scopes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/scope"}},
+    "generated_at": {"type": "string", "format": "date-time"},
+    "semantic_digest": {"$ref": "#/$defs/hash"}
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"schema_version": {"const": "2.1"}},
+        "required": ["schema_version"]
+      },
+      "then": {
+        "properties": {
+          "records": {
+            "items": {
+              "required": ["dialect", "standard_source", "standard_option"]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "path": {"type": "string", "minLength": 1, "pattern": "^(?!/)(?![A-Za-z]:/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"},
+    "producer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["family", "version", "llvm_version", "host_triple"],
+      "properties": {
+        "family": {"enum": ["clang", "llvm-compatible"]},
+        "version": {"type": "string", "minLength": 1},
+        "llvm_version": {"type": "string", "minLength": 1},
+        "host_triple": {"type": "string", "minLength": 1}
+      }
+    },
+    "diagnostic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "detail", "detail_en", "suggestion", "suggestion_en"],
+      "properties": {
+        "code": {"type": "string", "minLength": 1}, "detail": {"type": "string"},
+        "detail_en": {"type": "string"}, "suggestion": {"type": "string"},
+        "suggestion_en": {"type": "string"}
+      }
+    },
+    "record": {
+      "type": "object", "additionalProperties": false,
+      "required": ["record_id", "physical_tu_id", "context_id", "artifact_key", "profile", "status", "diagnostic", "bitcode", "production_compiler", "producer", "target", "language", "standard", "optimization", "debug", "module_kind", "source", "compile_record_digest", "input_digests", "provenance", "capabilities", "sidecars", "semantic_digest"],
+      "properties": {
+        "record_id": {"$ref": "#/$defs/hash"}, "physical_tu_id": {"$ref": "#/$defs/hash"},
+        "context_id": {"$ref": "#/$defs/hash"}, "artifact_key": {"$ref": "#/$defs/hash"},
+        "profile": {
+          "type": "object", "additionalProperties": false, "required": ["name", "version"],
+          "properties": {"name": {"enum": ["source-preserving", "build-faithful"]}, "version": {"type": "string", "minLength": 1}}
+        },
+        "status": {"enum": ["produced", "missing", "failed"]},
+        "diagnostic": {"oneOf": [{"$ref": "#/$defs/diagnostic"}, {"type": "null"}]},
+        "bitcode": {
+          "oneOf": [{"type": "null"}, {"type": "object", "additionalProperties": false,
+            "required": ["path", "bytes", "sha256"],
+            "properties": {"path": {"$ref": "#/$defs/path"}, "bytes": {"type": "integer", "minimum": 4}, "sha256": {"$ref": "#/$defs/hash"}}}]
+        },
+        "production_compiler": {"type": "object", "required": ["family", "executable", "version"]},
+        "producer": {"$ref": "#/$defs/producer"},
+        "target": {"type": "object", "additionalProperties": false, "required": ["triple", "data_layout", "abi"], "properties": {"triple": {"type": "string", "minLength": 1}, "data_layout": {"type": "string", "minLength": 1}, "abi": {"type": "object"}}},
+        "language": {"enum": ["c", "c++"]},
+        "standard": {"enum": ["compiler-default", "unsupported", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+        "dialect": {"enum": ["compiler-default", "iso", "gnu"]},
+        "standard_source": {"enum": ["explicit", "compiler-default"]},
+        "standard_option": {"type": ["string", "null"]},
+        "optimization": {"enum": ["O0", "O1", "O2", "O3", "Os", "Oz", "Ofast", "unknown"]},
+        "debug": {"enum": ["full", "line-tables", "none", "unknown"]},
+        "module_kind": {"enum": ["translation-unit", "linked", "lto"]},
+        "source": {"type": "object", "additionalProperties": false, "required": ["path", "sha256"], "properties": {"path": {"$ref": "#/$defs/path"}, "sha256": {"$ref": "#/$defs/hash"}}},
+        "compile_record_digest": {"$ref": "#/$defs/hash"},
+        "input_digests": {"type": "object", "additionalProperties": {"$ref": "#/$defs/hash"}},
+        "provenance": {"type": "object", "additionalProperties": false, "required": ["completeness", "gaps"], "properties": {"completeness": {"enum": ["complete", "partial"]}, "gaps": {"type": "array", "items": {"type": "string"}}}},
+        "capabilities": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "sidecars": {"type": "array", "items": {"$ref": "#/$defs/sidecar"}},
+        "semantic_digest": {"$ref": "#/$defs/hash"}
+      }
+    },
+    "sidecar": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "schema_version", "path", "bytes", "sha256", "capabilities"],
+      "properties": {"kind": {"type": "string", "minLength": 1}, "schema_version": {"type": "string", "minLength": 1}, "path": {"$ref": "#/$defs/path"}, "bytes": {"type": "integer", "minimum": 0}, "sha256": {"$ref": "#/$defs/hash"}, "capabilities": {"type": "array", "uniqueItems": true, "items": {"type": "string"}}}
+    },
+    "scope": {
+      "type": "object", "additionalProperties": false,
+      "required": ["scope_id", "target_id", "record_ids", "evidence", "closed", "external_boundaries", "target_triple", "semantic_digest"],
+      "properties": {"scope_id": {"$ref": "#/$defs/hash"}, "target_id": {"$ref": "#/$defs/hash"}, "record_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/hash"}}, "evidence": {"type": "string", "minLength": 1}, "closed": {"type": "boolean"}, "external_boundaries": {"type": "array", "items": {"type": "string"}}, "target_triple": {"type": "string", "minLength": 1}, "semantic_digest": {"$ref": "#/$defs/hash"}}
+    }
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Id": {"type": "string", "minLength": 1, "maxLength": 1024},
+    "Hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "RelativePath": {"type": "string", "minLength": 1, "maxLength": 4096, "not": {"pattern": "(^[A-Za-z]:|^/|^\\\\|(^|[\\\\/])\\.\\.([\\\\/]|$)|\\u0000)"}},
+    "Status": {"enum": ["complete", "partial", "failed", "not_run"]},
+    "BilingualDiagnostic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "detail", "detail_en", "suggestion", "suggestion_en"],
+      "properties": {
+        "code": {"$ref": "#/$defs/Id"},
+        "detail": {"type": "string", "minLength": 1},
+        "detail_en": {"type": "string", "minLength": 1},
+        "suggestion": {"type": ["string", "null"]},
+        "suggestion_en": {"type": ["string", "null"]}
+      },
+      "allOf": [
+        {"if": {"properties": {"suggestion": {"type": "string"}}}, "then": {"properties": {"suggestion_en": {"type": "string"}}}},
+        {"if": {"properties": {"suggestion_en": {"type": "string"}}}, "then": {"properties": {"suggestion": {"type": "string"}}}}
+      ]
+    },
+    "SourceEntry": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256", "role"],
+      "properties": {
+        "path": {"$ref": "#/$defs/RelativePath"},
+        "sha256": {"$ref": "#/$defs/Hash"},
+        "role": {"enum": ["source", "header", "ir", "compile-database", "scope", "truth", "license", "backend-input", "backend-output"]}
+      }
+    },
+    "Profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "language", "standard", "compiler", "compiler_version", "target", "data_layout", "optimization", "debug", "compile_arguments"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"},
+        "language": {"enum": ["c", "c++"]},
+        "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+        "compiler": {"enum": ["gcc", "clang"]},
+        "compiler_version": {"$ref": "#/$defs/Id"},
+        "target": {"$ref": "#/$defs/Id"},
+        "data_layout": {"$ref": "#/$defs/Id"},
+        "optimization": {"enum": ["O0", "O1", "O2", "O3", "Os"]},
+        "debug": {"type": "boolean"},
+        "compile_arguments": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "StageSpec": {
+      "type": "object", "additionalProperties": false,
+      "required": ["operation", "arguments", "report", "allowed_exit_codes"],
+      "properties": {
+        "operation": {"enum": ["collect", "index", "summarize", "model-threads", "detect-publication-risks"]},
+        "arguments": {"type": "array", "items": {"type": "string", "maxLength": 4096}},
+        "report": {"$ref": "#/$defs/RelativePath"},
+        "allowed_exit_codes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": [0, 1, 2, 3]}}
+      }
+    },
+    "Case": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "profile_id", "category", "layout", "source_root", "sources", "compile_commands", "scope", "roots", "truth", "stages", "observation_report", "observation_graph"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"},
+        "profile_id": {"$ref": "#/$defs/Id"},
+        "category": {"enum": ["correct", "risk", "unknown"]},
+        "layout": {"enum": ["single-tu", "multi-tu", "real-project"]},
+        "source_root": {"$ref": "#/$defs/RelativePath"},
+        "sources": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/SourceEntry"}},
+        "compile_commands": {"$ref": "#/$defs/SourceEntry"},
+        "scope": {"$ref": "#/$defs/SourceEntry"},
+        "roots": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}},
+        "truth": {"$ref": "#/$defs/SourceEntry"},
+        "stages": {"type": "array", "items": {"$ref": "#/$defs/StageSpec"}},
+        "observation_report": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/RelativePath"}]},
+        "observation_graph": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/RelativePath"}]}
+      }
+    },
+    "FindingAssertion": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "object", "thread_relation", "evidence_relation"],
+      "properties": {
+        "code": {"$ref": "#/$defs/Id"},
+        "object": {"type": ["string", "null"]},
+        "thread_relation": {"type": ["string", "null"]},
+        "evidence_relation": {"type": ["string", "null"]}
+      }
+    },
+    "LayerState": {
+      "type": "object", "additionalProperties": false,
+      "required": ["status", "hit", "total"],
+      "properties": {
+        "status": {"$ref": "#/$defs/Status"},
+        "hit": {"type": "integer", "minimum": 0},
+        "total": {"type": "integer", "minimum": 0}
+      }
+    },
+    "Metric": {
+      "type": "object", "additionalProperties": false,
+      "required": ["hit", "total", "value"],
+      "properties": {
+        "hit": {"type": "integer", "minimum": 0},
+        "total": {"type": "integer", "minimum": 0},
+        "value": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      }
+    },
+    "Budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["max_cases", "case_seconds", "request_seconds", "output_bytes", "memory_bytes", "sample_per_stratum"],
+      "properties": {
+        "max_cases": {"type": "integer", "minimum": 1, "maximum": 1000},
+        "case_seconds": {"type": "integer", "minimum": 1, "maximum": 600},
+        "request_seconds": {"type": "integer", "minimum": 1, "maximum": 7200},
+        "output_bytes": {"type": "integer", "minimum": 1, "maximum": 1073741824},
+        "memory_bytes": {"type": "integer", "minimum": 1, "maximum": 8589934592},
+        "sample_per_stratum": {"type": "integer", "minimum": 1, "maximum": 100}
+      }
+    },
+    "ValidationSuiteManifest": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite_id", "suite_version", "title", "title_en", "profiles", "cases", "real_project_profile"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "ValidationSuiteManifest"},
+        "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "analysis-validation-v1"},
+        "suite_id": {"$ref": "#/$defs/Id"}, "suite_version": {"type": "integer", "minimum": 1},
+        "title": {"$ref": "#/$defs/Id"}, "title_en": {"$ref": "#/$defs/Id"},
+        "profiles": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/Profile"}},
+        "cases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/Case"}},
+        "real_project_profile": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/RelativePath"}]}
+      }
+    },
+    "TruthAnnotation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite_id", "suite_version", "case_id", "truth_version", "input_digest", "expected", "relations", "review"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "TruthAnnotation"},
+        "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "analysis-validation-v1"},
+        "suite_id": {"$ref": "#/$defs/Id"}, "suite_version": {"type": "integer", "minimum": 1},
+        "case_id": {"$ref": "#/$defs/Id"}, "truth_version": {"type": "integer", "minimum": 1},
+        "input_digest": {"$ref": "#/$defs/Hash"},
+        "expected": {
+          "type": "object", "additionalProperties": false,
+          "required": ["required_findings", "forbidden_findings", "verdicts", "statuses", "unknown_codes"],
+          "properties": {
+            "required_findings": {"type": "array", "items": {"$ref": "#/$defs/FindingAssertion"}},
+            "forbidden_findings": {"type": "array", "items": {"$ref": "#/$defs/FindingAssertion"}},
+            "verdicts": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["discharged", "risk", "unknown", "failed"]}},
+            "statuses": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["complete", "partial", "failed"]}},
+            "unknown_codes": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}}
+          }
+        },
+        "relations": {"type": "array", "items": {"$ref": "#/$defs/Id"}},
+        "review": {
+          "type": "object", "additionalProperties": false,
+          "required": ["status", "reviewer", "method", "reviewed_on", "basis", "basis_en"],
+          "properties": {
+            "status": {"enum": ["reviewed", "pending"]}, "reviewer": {"$ref": "#/$defs/Id"},
+            "method": {"const": "manual"}, "reviewed_on": {"type": "string", "format": "date"},
+            "basis": {"$ref": "#/$defs/Id"}, "basis_en": {"$ref": "#/$defs/Id"}
+          }
+        }
+      }
+    },
+    "AnalysisValidationRequest": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite", "suite_sha256", "case_ids", "run_modes", "requested_backends", "real_project_profile", "sampling_seed", "budgets"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "AnalysisValidationRequest"},
+        "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "analysis-validation-v1"},
+        "suite": {"type": "string", "minLength": 1, "maxLength": 4096}, "suite_sha256": {"$ref": "#/$defs/Hash"},
+        "case_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Id"}},
+        "run_modes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["cold", "warm"]}},
+        "requested_backends": {"type": "array", "uniqueItems": true, "items": {"enum": ["genmc", "herdtools7", "devkit"]}},
+        "real_project_profile": {"type": ["string", "null"]}, "sampling_seed": {"type": "integer", "minimum": 0},
+        "budgets": {"$ref": "#/$defs/Budgets"}
+      }
+    },
+    "CaseResult": {
+      "type": "object", "additionalProperties": false,
+      "required": ["case_id", "profile_id", "category", "status", "matched", "strict_fn", "abstained", "required_missing", "forbidden_observed", "semantic_digests", "resources", "diagnostics"],
+      "properties": {
+        "case_id": {"$ref": "#/$defs/Id"}, "profile_id": {"$ref": "#/$defs/Id"},
+        "category": {"enum": ["correct", "risk", "unknown"]}, "status": {"$ref": "#/$defs/Status"},
+        "matched": {"type": "boolean"}, "strict_fn": {"type": "integer", "minimum": 0}, "abstained": {"type": "boolean"},
+        "required_missing": {"type": "array", "items": {"$ref": "#/$defs/FindingAssertion"}},
+        "forbidden_observed": {"type": "array", "items": {"$ref": "#/$defs/FindingAssertion"}},
+        "semantic_digests": {"type": "object", "additionalProperties": {"$ref": "#/$defs/Hash"}},
+        "resources": {"type": "object", "additionalProperties": {"type": "number", "minimum": 0}},
+        "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/BilingualDiagnostic"}}
+      }
+    },
+    "AnalysisValidationReport": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "request_hash", "suite_digest", "layers", "cases", "metrics", "performance", "backend_dependencies", "diagnostics", "frontier", "safety", "verdict", "exit_code"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "AnalysisValidationReport"},
+        "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "analysis-validation-v1"},
+        "request_hash": {"$ref": "#/$defs/Hash"}, "suite_digest": {"$ref": "#/$defs/Hash"},
+        "layers": {"type": "object", "required": ["request_input", "compile", "p1", "p2", "p3", "p4", "truth", "sampling", "performance", "backend"], "additionalProperties": false, "properties": {"request_input": {"$ref": "#/$defs/LayerState"}, "compile": {"$ref": "#/$defs/LayerState"}, "p1": {"$ref": "#/$defs/LayerState"}, "p2": {"$ref": "#/$defs/LayerState"}, "p3": {"$ref": "#/$defs/LayerState"}, "p4": {"$ref": "#/$defs/LayerState"}, "truth": {"$ref": "#/$defs/LayerState"}, "sampling": {"$ref": "#/$defs/LayerState"}, "performance": {"$ref": "#/$defs/LayerState"}, "backend": {"$ref": "#/$defs/LayerState"}}},
+        "cases": {"type": "array", "items": {"$ref": "#/$defs/CaseResult"}},
+        "metrics": {"type": "object", "required": ["true_positive", "false_positive", "false_negative", "precision", "recall", "supported_precision", "supported_recall", "exact_match", "abstention"], "additionalProperties": false, "properties": {"true_positive": {"type": "integer", "minimum": 0}, "false_positive": {"type": "integer", "minimum": 0}, "false_negative": {"type": "integer", "minimum": 0}, "precision": {"$ref": "#/$defs/Metric"}, "recall": {"$ref": "#/$defs/Metric"}, "supported_precision": {"$ref": "#/$defs/Metric"}, "supported_recall": {"$ref": "#/$defs/Metric"}, "exact_match": {"$ref": "#/$defs/Metric"}, "abstention": {"$ref": "#/$defs/Metric"}}},
+        "performance": {"type": "object", "additionalProperties": true},
+        "backend_dependencies": {"type": "array", "items": {"$ref": "#/$defs/Hash"}},
+        "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/BilingualDiagnostic"}},
+        "frontier": {"type": "array", "items": {"$ref": "#/$defs/BilingualDiagnostic"}},
+        "safety": {"const": "not_established"}, "verdict": {"enum": ["matched", "mismatch", "inconclusive", "failed"]},
+        "exit_code": {"enum": [0, 1, 2, 3]}
+      }
+    },
+    "DecisionEntry": {
+      "type": "object", "additionalProperties": false,
+      "required": ["capability", "state", "blocking_cases", "blocking_tus", "blocking_candidates", "potential_coverage_gain", "cost", "compatibility", "detail", "detail_en", "suggestion", "suggestion_en", "human_confirmed"],
+      "properties": {
+        "capability": {"enum": ["b1-cmake-scope", "std-thread", "pointer-analysis", "fence-rmw"]},
+        "state": {"enum": ["recommend", "defer", "insufficient-evidence"]},
+        "blocking_cases": {"type": "integer", "minimum": 0}, "blocking_tus": {"type": "integer", "minimum": 0},
+        "blocking_candidates": {"type": "integer", "minimum": 0}, "potential_coverage_gain": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "cost": {"enum": ["low", "medium", "high", "unknown"]}, "compatibility": {"enum": ["compatible", "migration", "unknown"]},
+        "detail": {"$ref": "#/$defs/Id"}, "detail_en": {"$ref": "#/$defs/Id"},
+        "suggestion": {"$ref": "#/$defs/Id"}, "suggestion_en": {"$ref": "#/$defs/Id"},
+        "human_confirmed": {"type": "boolean"}
+      }
+    },
+    "AnalysisExtensionDecision": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "request_hash", "report_hash", "entries"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "AnalysisExtensionDecision"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "analysis-validation-v1"},
+        "request_hash": {"$ref": "#/$defs/Hash"}, "report_hash": {"$ref": "#/$defs/Hash"},
+        "entries": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"$ref": "#/$defs/DecisionEntry"}}
+      }
+    },
+    "BackendEvidenceBundle": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "backend", "backend_version", "license", "case_id", "applicability", "status", "command", "input_digest", "raw_output_hashes", "observation", "captured_on", "diagnostics"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "BackendEvidenceBundle"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "analysis-validation-v1"},
+        "backend": {"enum": ["genmc", "herdtools7", "devkit"]}, "backend_version": {"$ref": "#/$defs/Id"}, "license": {"$ref": "#/$defs/Id"}, "case_id": {"$ref": "#/$defs/Id"},
+        "applicability": {"enum": ["applicable", "not_applicable", "approximate"]}, "status": {"enum": ["complete", "partial", "failed", "not_run", "unavailable"]},
+        "command": {"type": "array", "items": {"type": "string"}}, "input_digest": {"$ref": "#/$defs/Hash"},
+        "raw_output_hashes": {"type": "array", "items": {"$ref": "#/$defs/Hash"}}, "observation": {"type": "object"},
+        "captured_on": {"type": "string", "format": "date"}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/BilingualDiagnostic"}}
+      }
+    }
+  }
+}

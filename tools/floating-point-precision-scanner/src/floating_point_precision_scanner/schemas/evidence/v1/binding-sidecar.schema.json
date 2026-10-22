@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-precision-scanner/evidence/v1/binding-sidecar.schema.json",
+  "title": "FloatingPointBindingSidecar",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "schema_version", "artifact_key", "context_id", "source_fact_bundle_digest", "ir_fact_bundle_digest", "bindings"],
+  "properties": {
+    "kind": {"const": "FloatingPointBindingSidecar"},
+    "schema_version": {"const": "1.0"},
+    "artifact_key": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "context_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "source_fact_bundle_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "ir_fact_bundle_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "bindings": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["source_fact_id", "ir_fact_id"],
+        "properties": {
+          "source_fact_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "ir_fact_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+        }
+      }
+    }
+  }
+}

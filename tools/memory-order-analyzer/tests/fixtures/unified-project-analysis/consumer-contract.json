@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "kind": "UnifiedAnalysisConsumerContract",
+  "report_schema": "schemas/unified_project_analysis.json#/$defs/UnifiedMemoryOrderAnalysisReport",
+  "finding_schema": "schemas/memory_order_finding.json#/$defs/MemoryOrderFindingProjection",
+  "list_fields": ["id", "scopeId", "ruleId", "conclusion.verdict", "conclusion.status", "conclusion.title", "conclusion.title_en", "primaryOccurrenceId"],
+  "detail_fields": ["fact", "conclusion", "occurrences", "primaryOccurrenceId", "evidenceChain"],
+  "code_context_fields": ["path", "span", "sourceSha256", "context.status", "context.lines", "highlights", "snapshot"],
+  "collections": {
+    "findings": "risk",
+    "source_candidates": "source-candidate",
+    "discharged_assessments": "discharged-within-bounded-model"
+  },
+  "bounded_wording": ["risk", "discharged-within-bounded-model", "inconclusive", "no-finding-within-supported-model"],
+  "forbidden_wording": ["safe", "thread-safe", "全程序安全", "线程安全"]
+}

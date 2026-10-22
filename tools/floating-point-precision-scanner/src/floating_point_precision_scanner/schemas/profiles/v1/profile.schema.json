@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-precision-scanner/profiles/v1/profile.schema.json",
+  "title": "FloatingPointTargetProfile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "schema_version", "profile_id", "profile_version", "target_triple", "abi", "compiler", "floating_types", "evaluation", "fma", "environment", "target_features", "math_library", "sources", "maintenance"],
+  "properties": {
+    "kind": {"const": "FloatingPointTargetProfile"},
+    "schema_version": {"const": "1.1"},
+    "profile_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+    "profile_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+    "target_triple": {"type": "string", "minLength": 1},
+    "abi": {"type": "string", "minLength": 1},
+    "compiler": {
+      "type": "object", "additionalProperties": false, "required": ["family", "version"],
+      "properties": {"family": {"const": "clang"}, "version": {"const": "21.1.8"}}
+    },
+    "floating_types": {
+      "type": "object", "additionalProperties": false, "required": ["float", "double", "long_double"],
+      "properties": {
+        "float": {"$ref": "#/$defs/floatingType"},
+        "double": {"$ref": "#/$defs/floatingType"},
+        "long_double": {"$ref": "#/$defs/longDoubleType"}
+      }
+    },
+    "evaluation": {"$ref": "#/$defs/valueOrUnknown"},
+    "fma": {"$ref": "#/$defs/valueOrUnknown"},
+    "environment": {"$ref": "#/$defs/valueOrUnknown"},
+    "target_features": {"$ref": "#/$defs/valueOrUnknown"},
+    "math_library": {"$ref": "#/$defs/valueOrUnknown"},
+    "sources": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "minLength": 1}},
+    "maintenance": {
+      "type": "object", "additionalProperties": false, "required": ["owner", "approved_by", "reviewed_on"],
+      "properties": {"owner": {"type": "string", "minLength": 1}, "approved_by": {"type": "string", "minLength": 1}, "reviewed_on": {"type": "string", "format": "date"}}
+    }
+  },
+  "$defs": {
+    "floatingType": {
+      "type": "object", "additionalProperties": false,
+      "required": ["format", "storage_bits", "alignment_bits", "source"],
+      "properties": {
+        "format": {"type": "string", "minLength": 1},
+        "storage_bits": {"type": "integer", "minimum": 1},
+        "alignment_bits": {"type": "integer", "minimum": 1},
+        "precision_bits": {"type": "integer", "minimum": 1},
+        "source": {"type": "string", "minLength": 1}
+      }
+    },
+    "longDoubleType": {
+      "type": "object", "additionalProperties": false,
+      "required": ["format", "storage_bits", "precision_bits", "alignment_bits", "abi_class", "calling_convention", "variadic", "source"],
+      "properties": {
+        "format": {"type": "string", "minLength": 1},
+        "storage_bits": {"type": "integer", "minimum": 1},
+        "precision_bits": {"type": "integer", "minimum": 1},
+        "alignment_bits": {"type": "integer", "minimum": 1},
+        "abi_class": {"type": "string", "minLength": 1},
+        "calling_convention": {"type": "string", "minLength": 1},
+        "variadic": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1}
+      }
+    },
+    "valueOrUnknown": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["status", "value", "source"], "properties": {"status": {"const": "known"}, "value": {}, "source": {"type": "string", "minLength": 1}}},
+        {"type": "object", "additionalProperties": false, "required": ["status", "reason", "source"], "properties": {"status": {"const": "unknown"}, "reason": {"type": "string", "minLength": 1}, "source": {"type": "string", "minLength": 1}}}
+      ]
+    }
+  }
+}

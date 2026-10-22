@@ -1,0 +1,23 @@
+id: C_CPP.GCC.VECTOR_SIZE
+language: c_cpp
+severity: medium
+confidence: medium
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        symbolGroup: 1
+        regex: "__attribute__\\s*\\(\\(\\s*vector_size\\s*\\(\\s*(16|32|64)\\s*\\)"
+message:
+  zh-CN:
+    title: "使用 GCC vector_size 扩展"
+    reason: "代码使用 GCC vector_size 扩展定义固定宽度向量类型。这不一定是 x86 专属语法，但在迁移中常与 SSE/AVX 数据布局和向量宽度强绑定。"
+    suggestion: "建议确认该类型的算法语义和向量宽度假设；迁移到 RISC-V 时可改为 portable 数据结构或 RISC-V Vector 后端。"
+  en-US:
+    title: "Uses the GCC vector_size extension"
+    reason: "The code defines fixed-width vector types with the GCC vector_size extension. This is not necessarily x86-only syntax, but it is often coupled with SSE/AVX data layout and vector-width assumptions during migration."
+    suggestion: "Confirm the algorithm semantics and vector-width assumptions. For RISC-V migration, consider portable data structures or a RISC-V Vector backend."
+
+
+

@@ -1,0 +1,6 @@
+{
+  "ruleId": "C_CPP.X86.TARGET_ATTRIBUTE",
+  "count": 3,
+  "symbols": ["sse2,avx2", "aes,avx,pclmul", "default,avx2"]
+}
+

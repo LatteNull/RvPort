@@ -1,0 +1,21 @@
+{
+  "change": "implement-kb-scanner-architecture-family-analysis",
+  "gate": "tests/run_source_chain_unit_tests.py",
+  "thresholds": {"line": 90, "branch": 90},
+  "unitSuite": "tests.unit.test_architecture_family",
+  "boundaries": {"parser": "synthetic snapshots / analyzer mocks", "filesystem": "authorized path tuples, no discovery", "publisher": "existing V2 publisher mocks", "graph": "synthetic Entity/Relation/ProofPath"},
+  "modules": [
+    "kb_scanner/frontends/family_inventory.py",
+    "kb_scanner/analyzers/architecture_family/__init__.py",
+    "kb_scanner/analyzers/architecture_family/paths.py",
+    "kb_scanner/analyzers/architecture_family/grouping.py",
+    "kb_scanner/analyzers/architecture_family/bindings.py",
+    "kb_scanner/analyzers/architecture_family/analyzer.py",
+    "kb_scanner/pipeline/composite.py",
+    "kb_scanner/projection/v2/families.py",
+    "kb_scanner/projection/v2/mapper.py",
+    "kb_scanner/projection/v2/projector.py",
+    "kb_scanner/projection/v2/renderers.py"
+  ],
+  "componentSuite": "tests.test_architecture_family_component"
+}

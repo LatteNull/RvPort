@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "CppRaiiValidationSuite",
+  "analysis_version": "0.1.0",
+  "policy_id": "cpp-raii-synchronization-v1",
+  "suite_version": "a4-v1",
+  "cases": [
+    {"id": "c11-direct-same", "language": "c", "standard": "c11", "vendor": null, "eligible": true, "fixture": "c11/direct_same.c"},
+    {"id": "c11-no-lock", "language": "c", "standard": "c11", "vendor": null, "eligible": true, "fixture": "c11/no_lock.c"},
+    {"id": "c17-different", "language": "c", "standard": "c17", "vendor": null, "eligible": true, "fixture": "c17/different_mutex.c"},
+    {"id": "c17-same", "language": "c", "standard": "c17", "vendor": null, "eligible": true, "fixture": "c17/direct_same.c"},
+    {"id": "cpp17-guard", "language": "c++", "standard": "c++17", "vendor": "libstdc++", "eligible": true, "fixture": "cpp17/lock_guard.cpp"},
+    {"id": "cpp17-unique", "language": "c++", "standard": "c++17", "vendor": "libstdc++", "eligible": true, "fixture": "cpp17/unique_lock.cpp"},
+    {"id": "cpp20-libcxx-guard", "language": "c++", "standard": "c++20", "vendor": "libc++", "eligible": true, "fixture": "cpp20/lock_guard.cpp"},
+    {"id": "cpp20-libstd-scoped", "language": "c++", "standard": "c++20", "vendor": "libstdc++", "eligible": true, "fixture": "cpp20/scoped_lock.cpp"}
+  ],
+  "semantic_digest": "5fc0cf1b2c754fbdb955e6dc24d57fc96f8f5ecff8669543c3e09b71803e678d"
+}

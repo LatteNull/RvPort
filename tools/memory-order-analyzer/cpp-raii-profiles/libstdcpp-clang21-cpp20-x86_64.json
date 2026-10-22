@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "kind": "CppRaiiSynchronizationProfile",
+  "analysis_version": "0.1.0",
+  "policy_id": "cpp-raii-synchronization-v1",
+  "profile_id": "92b81e1daf115d4419502981a7130477cb073d517d7b07cfe610925694b1ddba",
+  "vendor": "libstdc++",
+  "version": "20240904",
+  "cxx_standard": "c++20",
+  "cxx_abi": "itanium",
+  "target": "x86_64-pc-linux-gnu",
+  "data_layout": "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128",
+  "pointer_width": 64,
+  "exceptions": true,
+  "rtti": true,
+  "thread_backend": "pthread",
+  "toolchain_lineage": "memory-order-analyzer-dev:a3/clang-21.1.8",
+  "header_digests": [
+    {"kind": "Header", "id": "/usr/include/c++/13/mutex", "digest": "6ab5e4ab4efa4ec3c14cf80c1fd14e2783f8cd1e419b24e676f47195be403a94"}
+  ],
+  "wrapper_signatures": [
+    {"role": "mutex-lock", "symbol": "_ZNSt5mutex4lockEv", "calling_convention": "ccc", "parameter_roles": ["mutex"], "exception_behavior": "may-throw", "digest": "b31e8ae8ea85169c58ef8b5451115921f8e38c02f054f891afea332aa93c0bf0"},
+    {"role": "mutex-unlock", "symbol": "_ZNSt5mutex6unlockEv", "calling_convention": "ccc", "parameter_roles": ["mutex"], "exception_behavior": "nothrow", "digest": "610916a14c68939ee138985fa689592027a01679e5fca58544b6385b6b7006fa"}
+  ],
+  "model_version": "cpp-raii-sync-library-v1",
+  "status": "verified",
+  "provenance": ["compile-only", "llvm-ir", "profile_probe.cpp"],
+  "lifecycle_profile_id": "3988f720f560ba1fd63ca15b33ecadb466ed117ad727b0fdceb9adfe8be28551",
+  "semantic_digest": "c3c06f96f4147041798f73acef6e3bfe9f54cd3d5ce5dcc10769c1300ba6fafb"
+}

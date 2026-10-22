@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "policy": "human-review-only",
+  "entries": [
+    {"case_id":"c11-correct-single","truth_version":1,"truth_sha256":"2ef0d7e93068b74662a4c36076f3e617350a3264dc7fa801647456a8b3b4bcea","input_digest":"cbfd3de495dce934df19c21993ec3a3f96ad91749de14dc8dab4f2b53ff35d13"},
+    {"case_id":"c11-risk-multi","truth_version":1,"truth_sha256":"2fe1a635258106597a912d3811334dccaafa37810ab7b0badd4f2b11e6d078fe","input_digest":"d7e71adf36688e2dec944e28dd095f202290b8e0cf8f1953137230cacfcb0f0d"},
+    {"case_id":"c17-correct-multi","truth_version":1,"truth_sha256":"d652c14fafe28d1e6bee34621144d0068c81a07aeff56f1e686a5b7c52327a85","input_digest":"b257288da49eaea25ee805f0369fb5f025e5bc9f428fe1e8979ceb8007ca6541"},
+    {"case_id":"c17-unknown-single","truth_version":1,"truth_sha256":"911bdea8c82ba8a7c1121e4095702bd444d93afa3b7721acd374e12e583de023","input_digest":"d8ed459713b0ba36d5c989600151ad82370e3efd4614900335df82e55ce4e959"},
+    {"case_id":"cpp17-risk-single","truth_version":1,"truth_sha256":"7cc0256ff4c31106b0c32ec217553af981e98ef3aebb317d9ab84b7f9f7310e7","input_digest":"a02cd9be205f2c4668a89d3b95c79776e3fd0178f7a9bee67adce6e68be2c8a2"},
+    {"case_id":"cpp17-unknown-multi","truth_version":1,"truth_sha256":"7ad790cbd001221f9fad7f88aacc8dc858e2e5c5bef0916d8653a016ceb7e21a","input_digest":"d7db41cd3ecc295c082cddccb5b95cd5a540aa7909f3d09eb82903701436b579"},
+    {"case_id":"cpp20-correct-single","truth_version":1,"truth_sha256":"d7620ae0d533014ea768a505474f56a765b4d7d6aac420845d532b79b6786426","input_digest":"8afd916e1388d93128115add1b24b2aa47a296548f32d27231aa107cbf6f37bc"},
+    {"case_id":"cpp20-risk-multi","truth_version":1,"truth_sha256":"58f82f95680ce08e4ed704ab6776b61d56880f42301e7a2561f56b53f2dc473b","input_digest":"d74d105074ecebeb6f994fb0b746d1ed1f1c0e4d642e929aeb06deb172ced1fe"}
+  ]
+}

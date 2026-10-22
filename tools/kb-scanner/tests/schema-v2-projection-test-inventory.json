@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "1.0",
+  "candidateNoiseInventory": "tests/architecture-candidate-noise-test-inventory.json",
+  "change": "implement-kb-scanner-schema-v2-projection",
+  "coverageThresholds": {
+    "linePercent": 90,
+    "branchPercent": 80
+  },
+  "container": "kb-scanner-test",
+  "boundaries": "synthetic snapshots, fake readers/projectors/replacers, and temporary project/output roots only",
+  "modules": {
+    "projection/v2/suggestions.py": {
+      "unit": "tests/unit/schema_v2_projection/test_suggestions.py"
+    },
+    "projection/versioned.py": {
+      "unit": "tests/unit/schema_v2_projection/test_version_selector.py"
+    },
+    "projection/publisher.py": {
+      "unit": "tests/unit/schema_v2_projection/test_projector.py"
+    },
+    "projection/v2/models.py": {
+      "unit": "tests/unit/schema_v2_projection/test_models.py"
+    },
+    "projection/v2/context.py": {
+      "unit": "tests/unit/schema_v2_projection/test_source_context.py"
+    },
+    "projection/v2/index.py": {
+      "unit": "tests/unit/schema_v2_projection/test_evidence_chain_builder.py",
+      "supportingUnits": [
+        "tests/unit/candidate_semantics/test_projection.py"
+      ]
+    },
+    "projection/v2/chain.py": {
+      "unit": "tests/unit/schema_v2_projection/test_evidence_chain_builder.py",
+      "supportingUnits": [
+        "tests/unit/architecture_enum/test_architecture_enum.py",
+        "tests/unit/candidate_semantics/test_projection.py",
+        "tests/unit/schema_v2_projection/test_rpm_projection.py",
+        "tests/unit/test_source_evidence_chain.py",
+        "tests/unit/test_source_chain_quality_edges.py"
+      ]
+    },
+    "projection/v2/mapper.py": {
+      "unit": "tests/unit/schema_v2_projection/test_finding_mapper.py",
+      "supportingUnits": [
+        "tests/unit/architecture_enum/test_architecture_enum.py",
+        "tests/unit/candidate_semantics/test_projection.py",
+        "tests/unit/schema_v2_projection/test_rpm_projection.py"
+      ]
+    },
+    "projection/v2/diagnostics.py": {
+      "unit": "tests/unit/schema_v2_projection/test_diagnostics.py"
+    },
+    "projection/v2/summary.py": {
+      "unit": "tests/unit/schema_v2_projection/test_summary.py"
+    },
+    "projection/v2/validation.py": {
+      "unit": "tests/unit/schema_v2_projection/test_reference_validator.py",
+      "supportingUnits": [
+        "tests/unit/test_source_evidence_chain.py",
+        "tests/unit/test_source_chain_quality_edges.py"
+      ]
+    },
+    "projection/v2/renderers.py": {
+      "unit": "tests/unit/schema_v2_projection/test_serializer.py",
+      "supportingUnits": [
+        "tests/unit/schema_v2_projection/test_renderers.py"
+      ]
+    },
+    "projection/v2/projector.py": {
+      "unit": "tests/unit/schema_v2_projection/test_projector.py"
+    },
+    "adapters/cli.py": {
+      "unit": "tests/unit/schema_v2_projection/test_cli_schema_version.py",
+      "supportingUnits": [
+        "tests/unit/compatible_cutover/test_bundle_cli.py"
+      ]
+    }
+  }
+}

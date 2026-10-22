@@ -1,0 +1,169 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "NonEmpty": {"type": "string", "minLength": 1},
+    "Status": {"enum": ["complete", "partial", "failed"]},
+    "Dependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "digest"],
+      "properties": {
+        "kind": {"$ref": "#/$defs/NonEmpty"},
+        "id": {"$ref": "#/$defs/NonEmpty"},
+        "digest": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "EvidenceInput": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "digest", "path"],
+      "properties": {
+        "kind": {"$ref": "#/$defs/NonEmpty"},
+        "id": {"$ref": "#/$defs/NonEmpty"},
+        "digest": {"$ref": "#/$defs/Digest"},
+        "path": {"$ref": "#/$defs/NonEmpty"}
+      }
+    },
+    "Diagnostic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "detail", "detail_en", "limitation", "limitation_en", "suggestion", "suggestion_en", "source"],
+      "properties": {
+        "code": {"$ref": "#/$defs/NonEmpty"},
+        "detail": {"$ref": "#/$defs/NonEmpty"},
+        "detail_en": {"$ref": "#/$defs/NonEmpty"},
+        "limitation": {"$ref": "#/$defs/NonEmpty"},
+        "limitation_en": {"$ref": "#/$defs/NonEmpty"},
+        "suggestion": {"type": ["string", "null"]},
+        "suggestion_en": {"type": ["string", "null"]},
+        "source": {"type": ["object", "null"]}
+      }
+    },
+    "Budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["translation_units", "source_facts", "ir_facts", "type_depth", "alias_depth", "sites", "binding_candidates", "callback_candidates", "profiles", "wrapper_depth", "roots", "contexts", "scc_iterations", "frontier_items", "diagnostic_bytes", "worker_seconds", "request_seconds", "request_output_bytes"],
+      "properties": {
+        "translation_units": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "source_facts": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "ir_facts": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "type_depth": {"type": "integer", "minimum": 1, "maximum": 64},
+        "alias_depth": {"type": "integer", "minimum": 1, "maximum": 64},
+        "sites": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "binding_candidates": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "callback_candidates": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "profiles": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "wrapper_depth": {"type": "integer", "minimum": 0, "maximum": 16},
+        "roots": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "contexts": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "scc_iterations": {"type": "integer", "minimum": 1, "maximum": 64},
+        "frontier_items": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "diagnostic_bytes": {"type": "integer", "minimum": 128, "maximum": 4096},
+        "worker_seconds": {"type": "integer", "minimum": 1, "maximum": 600},
+        "request_seconds": {"type": "integer", "minimum": 1, "maximum": 3600},
+        "request_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 268435456}
+      }
+    },
+    "Member": {
+      "type": "object", "additionalProperties": false,
+      "required": ["physical_tu_id", "profile_id", "language", "standard", "evidence"],
+      "properties": {
+        "physical_tu_id": {"$ref": "#/$defs/NonEmpty"},
+        "profile_id": {"$ref": "#/$defs/Digest"},
+        "language": {"enum": ["c", "c++"]},
+        "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/EvidenceInput"}}
+      }
+    },
+    "ModelProfile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "api_family", "vendor", "version", "language", "standards", "target", "data_layout", "abi", "canonical_entities", "header_digests", "brokers", "status", "digest"],
+      "properties": {
+        "id": {"$ref": "#/$defs/NonEmpty"},
+        "api_family": {"enum": ["pthread", "c11-thread", "std-thread", "std-jthread", "std-async", "framework"]},
+        "vendor": {"$ref": "#/$defs/NonEmpty"},
+        "version": {"$ref": "#/$defs/NonEmpty"},
+        "language": {"enum": ["c", "c++"]},
+        "standards": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]}},
+        "target": {"$ref": "#/$defs/NonEmpty"},
+        "data_layout": {"$ref": "#/$defs/NonEmpty"},
+        "abi": {"$ref": "#/$defs/NonEmpty"},
+        "canonical_entities": {"type": "array", "items": {"type": "object"}},
+        "header_digests": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+        "brokers": {"type": "array", "items": {"type": "object"}},
+        "status": {"enum": ["verified", "unsupported"]},
+        "digest": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "Base": {
+      "type": "object",
+      "required": ["schema_version", "kind", "analysis_version", "policy_id"],
+      "properties": {
+        "schema_version": {"const": 1},
+        "kind": {"$ref": "#/$defs/NonEmpty"},
+        "analysis_version": {"const": "0.1.0"},
+        "policy_id": {"const": "thread-entry-discovery-v1"}
+      }
+    },
+    "CommonOutput": {
+      "type": "object",
+      "required": ["scope_id", "request_hash", "status", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+      "properties": {
+        "scope_id": {"$ref": "#/$defs/NonEmpty"},
+        "request_hash": {"$ref": "#/$defs/Digest"},
+        "status": {"$ref": "#/$defs/Status"},
+        "counts": {"type": "object", "additionalProperties": {"type": ["integer", "number", "null"]}},
+        "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+        "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+        "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+        "semantic_digest": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "ThreadEntryDiscoveryRequest": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "closed_scope", "members", "global_evidence", "model_profiles", "framework_descriptors", "budgets", "semantic_digest"],
+        "properties": {
+          "schema_version": {}, "kind": {"const": "ThreadEntryDiscoveryRequest"}, "analysis_version": {}, "policy_id": {},
+          "scope_id": {"$ref": "#/$defs/NonEmpty"}, "closed_scope": {"type": "boolean"},
+          "members": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/Member"}},
+          "global_evidence": {"type": "array", "items": {"$ref": "#/$defs/EvidenceInput"}},
+          "model_profiles": {"type": "array", "items": {"$ref": "#/$defs/ModelProfile"}},
+          "framework_descriptors": {"type": "array", "items": {"type": "object"}},
+          "budgets": {"$ref": "#/$defs/Budgets"}, "semantic_digest": {"$ref": "#/$defs/Digest"}
+        }
+      }]
+    },
+    "ThreadEntryLocalFacts": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"$ref": "#/$defs/CommonOutput"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "physical_tu_id", "profile_id", "language", "standard", "status", "source_candidates", "ir_candidates", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {
+          "schema_version": {}, "kind": {"const": "ThreadEntryLocalFacts"}, "analysis_version": {}, "policy_id": {}, "scope_id": {}, "request_hash": {},
+          "physical_tu_id": {"$ref": "#/$defs/NonEmpty"}, "profile_id": {"$ref": "#/$defs/Digest"}, "language": {"enum": ["c", "c++"]}, "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+          "status": {}, "source_candidates": {"type": "array", "items": {"type": "object"}}, "ir_candidates": {"type": "array", "items": {"type": "object"}},
+          "counts": {}, "dependencies": {}, "diagnostics": {}, "frontier": {}, "semantic_digest": {}
+        }
+      }]
+    },
+    "ThreadEntrySiteIndex": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"$ref": "#/$defs/CommonOutput"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "sites", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "ThreadEntrySiteIndex"}, "analysis_version": {}, "policy_id": {}, "scope_id": {}, "request_hash": {}, "status": {}, "sites": {"type": "array", "items": {"type": "object"}}, "counts": {}, "dependencies": {}, "diagnostics": {}, "frontier": {}, "semantic_digest": {}}
+      }]
+    },
+    "ThreadEntryRootOverlay": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"$ref": "#/$defs/CommonOutput"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "site_index", "base_execution_roots", "base_plan", "roots", "contexts", "demands", "reconciliation", "completeness", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "ThreadEntryRootOverlay"}, "analysis_version": {}, "policy_id": {}, "scope_id": {}, "request_hash": {}, "status": {}, "site_index": {"$ref": "#/$defs/Dependency"}, "base_execution_roots": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]}, "base_plan": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]}, "roots": {"type": "array", "items": {"type": "object"}}, "contexts": {"type": "array", "items": {"type": "object"}}, "demands": {"type": "array", "items": {"type": "object"}}, "reconciliation": {"type": "object"}, "completeness": {"type": "object"}, "counts": {}, "dependencies": {}, "diagnostics": {}, "frontier": {}, "semantic_digest": {}}
+      }]
+    },
+    "ThreadEntryDiscoveryReport": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "exit_code", "safety", "findings", "site_index", "root_overlay", "language_counts", "evidence_counts", "completeness", "dependencies", "diagnostics", "frontier", "cache", "semantic_digest"],
+        "properties": {
+          "schema_version": {}, "kind": {"const": "ThreadEntryDiscoveryReport"}, "analysis_version": {}, "policy_id": {},
+          "scope_id": {"type": ["string", "null"]}, "request_hash": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"}, "status": {"$ref": "#/$defs/Status"}, "exit_code": {"enum": [0, 1, 2]}, "safety": {"const": "not_evaluated"}, "findings": {"type": "null"},
+          "site_index": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]}, "root_overlay": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]},
+          "language_counts": {"type": "object"}, "evidence_counts": {"type": "object"}, "completeness": {"type": "object"}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "cache": {"type": "object", "additionalProperties": false, "required": ["hits", "misses"], "properties": {"hits": {"type": "integer", "minimum": 0}, "misses": {"type": "integer", "minimum": 0}}}, "semantic_digest": {"$ref": "#/$defs/Digest"}
+        }
+      }]
+    }
+  }
+}

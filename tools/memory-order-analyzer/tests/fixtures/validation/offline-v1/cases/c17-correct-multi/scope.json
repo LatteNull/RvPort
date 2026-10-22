@@ -1,0 +1,1 @@
+{"target_id":"c17-correct-multi","roots":["main"],"translation_units":["producer.c","consumer.c","main.c"],"closed":true,"external_boundaries":["pthread"]}

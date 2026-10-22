@@ -1,0 +1,332 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "Id": {"type": "string", "minLength": 1, "maxLength": 1024},
+    "NullableId": {"type": ["string", "null"], "minLength": 1, "maxLength": 1024},
+    "Status": {"enum": ["complete", "partial", "failed", "not_run"]},
+    "SourceRef": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_key", "function_id", "id"],
+      "properties": {
+        "artifact_key": {"$ref": "#/$defs/Hash"},
+        "function_id": {"$ref": "#/$defs/NullableId"},
+        "id": {"$ref": "#/$defs/Id"}
+      }
+    },
+    "AnalysisRef": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_key", "function_id", "analysis_id"],
+      "properties": {
+        "artifact_key": {"$ref": "#/$defs/Hash"},
+        "function_id": {"$ref": "#/$defs/Id"},
+        "analysis_id": {"$ref": "#/$defs/Id"}
+      }
+    },
+    "EvidenceRef": {"oneOf": [{"$ref": "#/$defs/SourceRef"}, {"$ref": "#/$defs/AnalysisRef"}]},
+    "AnalysisEvidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["ref", "kind", "source", "inputs", "result"],
+      "properties": {
+        "ref": {"$ref": "#/$defs/AnalysisRef"},
+        "kind": {"enum": ["pthread-call-eligibility", "callback-propagation", "execution-order"]},
+        "source": {"$ref": "#/$defs/SourceRef"},
+        "inputs": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}},
+        "result": {"enum": ["exact", "candidate", "unknown", "must-before", "may-before", "mutually-exclusive"]}
+      }
+    },
+    "Origin": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_key", "module_hash", "facts_hash", "profile", "extractor_version", "llvm_version"],
+      "properties": {
+        "artifact_key": {"$ref": "#/$defs/Hash"},
+        "module_hash": {"$ref": "#/$defs/Hash"},
+        "facts_hash": {"$ref": "#/$defs/Hash"},
+        "profile": {"enum": ["source-preserving", "build-faithful", "imported", "linked"]},
+        "extractor_version": {"$ref": "#/$defs/Id"},
+        "llvm_version": {"const": "21.1.8"}
+      }
+    },
+    "Budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["local_steps", "value_candidates", "thread_contexts", "thread_instances", "graph_items", "scc_iterations", "worker_seconds", "worker_output_bytes", "request_seconds", "request_output_bytes"],
+      "properties": {
+        "local_steps": {"type": "integer", "minimum": 1, "maximum": 100000},
+        "value_candidates": {"type": "integer", "minimum": 1, "maximum": 8},
+        "thread_contexts": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "thread_instances": {"type": "integer", "minimum": 1, "maximum": 16384},
+        "graph_items": {"type": "integer", "minimum": 1, "maximum": 100000},
+        "scc_iterations": {"type": "integer", "minimum": 1, "maximum": 16},
+        "worker_seconds": {"type": "integer", "minimum": 1, "maximum": 60},
+        "worker_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 16777216},
+        "request_seconds": {"type": "integer", "minimum": 1, "maximum": 300},
+        "request_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 67108864}
+      }
+    },
+    "Argument": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["kind", "bits", "hex"], "properties": {"kind": {"const": "integer"}, "bits": {"type": "integer", "minimum": 1}, "hex": {"type": "string", "pattern": "^[0-9a-f]+$"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "source"], "properties": {"kind": {"const": "object"}, "source": {"$ref": "#/$defs/SourceRef"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind"], "properties": {"kind": {"const": "null"}}},
+        {"type": "object", "additionalProperties": false, "required": ["kind", "reason"], "properties": {"kind": {"const": "unknown"}, "reason": {"$ref": "#/$defs/Id"}}}
+      ]
+    },
+    "Root": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_key", "function_id", "arguments"],
+      "properties": {
+        "artifact_key": {"$ref": "#/$defs/Hash"},
+        "function_id": {"$ref": "#/$defs/Id"},
+        "arguments": {"type": "array", "items": {"$ref": "#/$defs/Argument"}}
+      }
+    },
+    "Dependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "digest"],
+      "properties": {"kind": {"$ref": "#/$defs/Id"}, "id": {"$ref": "#/$defs/Id"}, "digest": {"$ref": "#/$defs/Hash"}}
+    },
+    "Diagnostic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "detail", "detail_en", "suggestion", "suggestion_en", "source", "thread_context_id", "thread_instance_id"],
+      "properties": {
+        "code": {"$ref": "#/$defs/Id"},
+        "detail": {"$ref": "#/$defs/Id"},
+        "detail_en": {"$ref": "#/$defs/Id"},
+        "suggestion": {"$ref": "#/$defs/NullableId"},
+        "suggestion_en": {"$ref": "#/$defs/NullableId"},
+        "source": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/SourceRef"}]},
+        "thread_context_id": {"$ref": "#/$defs/NullableId"},
+        "thread_instance_id": {"$ref": "#/$defs/NullableId"}
+      },
+      "allOf": [{"if": {"properties": {"suggestion": {"type": "null"}}}, "then": {"properties": {"suggestion_en": {"type": "null"}}}, "else": {"properties": {"suggestion_en": {"type": "string"}}}}]
+    },
+    "CallFact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source", "function", "symbol", "direct", "function_type", "calling_convention", "arguments", "result", "normal_successor", "unwind_successor", "noreturn", "success_test", "callback_metadata", "callback_targets", "handle_source", "mutex_source", "mutex_initializer", "status", "reason"],
+      "properties": {
+        "source": {"$ref": "#/$defs/SourceRef"},
+        "function": {"$ref": "#/$defs/SourceRef"},
+        "symbol": {"$ref": "#/$defs/NullableId"},
+        "direct": {"type": "boolean"},
+        "function_type": {"$ref": "#/$defs/Id"},
+        "calling_convention": {"type": "integer", "minimum": 0},
+        "arguments": {"type": "array", "items": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/SourceRef"}]}},
+        "result": {"$ref": "#/$defs/SourceRef"},
+        "normal_successor": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/SourceRef"}]},
+        "unwind_successor": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/SourceRef"}]},
+        "noreturn": {"type": "boolean"},
+        "success_test": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/SourceRef"}]},
+        "callback_metadata": {"type": "array", "items": {"type": "array", "items": {"type": "integer"}}},
+        "callback_targets": {"type": "array", "items": {"$ref": "#/$defs/SourceRef"}},
+        "handle_source": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/SourceRef"}]},
+        "mutex_source": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/SourceRef"}]},
+        "mutex_initializer": {"type": ["string", "null"]},
+        "status": {"enum": ["candidate", "unknown"]},
+        "reason": {"$ref": "#/$defs/NullableId"}
+      }
+    },
+    "Provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source", "kind", "value", "object", "proof", "status", "reason"],
+      "properties": {
+        "source": {"$ref": "#/$defs/SourceRef"},
+        "kind": {"enum": ["load", "store", "cast", "phi", "select", "clobber", "initializer"]},
+        "value": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/SourceRef"}]},
+        "object": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/SourceRef"}]},
+        "proof": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}},
+        "status": {"enum": ["exact", "candidate", "unknown"]},
+        "reason": {"$ref": "#/$defs/NullableId"}
+      }
+    },
+    "OrderNode": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source", "block", "index", "kind", "multiplicity"],
+      "properties": {
+        "source": {"$ref": "#/$defs/SourceRef"}, "block": {"$ref": "#/$defs/SourceRef"},
+        "index": {"type": "integer", "minimum": 0}, "kind": {"$ref": "#/$defs/Id"},
+        "multiplicity": {"enum": ["single", "repeated", "unknown"]}
+      }
+    },
+    "OrderEdge": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "before", "after", "relation", "guards", "proof", "reason"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "before": {"$ref": "#/$defs/SourceRef"}, "after": {"$ref": "#/$defs/SourceRef"},
+        "relation": {"enum": ["must-before", "may-before", "mutually-exclusive", "unknown"]},
+        "guards": {"type": "array", "items": {"$ref": "#/$defs/SourceRef"}},
+        "proof": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/EvidenceRef"}},
+        "reason": {"$ref": "#/$defs/Id"}
+      }
+    },
+    "ThreadContext": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "entry", "arguments", "status", "reason", "dependency"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "entry": {"$ref": "#/$defs/SourceRef"},
+        "arguments": {"type": "array", "items": {"$ref": "#/$defs/Argument"}},
+        "status": {"$ref": "#/$defs/Status"}, "reason": {"$ref": "#/$defs/NullableId"},
+        "dependency": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Dependency"}]}
+      }
+    },
+    "ThreadInstance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "root_id", "context_id", "parent_id", "create", "cardinality", "reason"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "root_id": {"$ref": "#/$defs/Id"}, "context_id": {"$ref": "#/$defs/Id"},
+        "parent_id": {"$ref": "#/$defs/NullableId"}, "create": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/SourceRef"}]},
+        "cardinality": {"enum": ["single", "merged", "unknown"]}, "reason": {"$ref": "#/$defs/NullableId"}
+      }
+    },
+    "LifecycleEvent": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "thread_instance_id", "source", "guards", "status", "proof"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "kind": {"enum": ["root-start", "create-attempt", "thread-start", "thread-exit", "join-attempt", "join-complete"]},
+        "thread_instance_id": {"$ref": "#/$defs/Id"}, "source": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/SourceRef"}]},
+        "guards": {"type": "array", "items": {"$ref": "#/$defs/Id"}}, "status": {"enum": ["must", "may", "unknown"]},
+        "proof": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}}
+      }
+    },
+    "ThreadEffect": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "effect_id", "source", "invocation_id", "thread_instance_id", "kind", "object_key", "offset_bytes", "size_bytes", "atomic", "ordering", "failure_ordering", "syncscope", "value_key", "guards"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "effect_id": {"$ref": "#/$defs/Id"}, "source": {"$ref": "#/$defs/SourceRef"},
+        "invocation_id": {"$ref": "#/$defs/Id"}, "thread_instance_id": {"$ref": "#/$defs/Id"},
+        "kind": {"enum": ["read", "write", "rmw", "cas", "fence", "unknown"]}, "object_key": {"$ref": "#/$defs/NullableId"},
+        "offset_bytes": {"type": ["string", "null"], "pattern": "^-?(0|[1-9][0-9]*)$"},
+        "size_bytes": {"type": ["string", "null"], "pattern": "^(0|[1-9][0-9]*)$"}, "atomic": {"type": "boolean"},
+        "ordering": {"$ref": "#/$defs/NullableId"}, "failure_ordering": {"$ref": "#/$defs/NullableId"}, "syncscope": {"$ref": "#/$defs/NullableId"},
+        "value_key": {"$ref": "#/$defs/NullableId"}, "guards": {"type": "array", "items": {"$ref": "#/$defs/Id"}}
+      }
+    },
+    "ThreadAnchor": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "source", "invocation_id", "thread_instance_id", "status", "proof"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "kind": {"enum": ["function-entry", "function-exit", "callsite", "normal-successor", "unwind-successor"]},
+        "source": {"$ref": "#/$defs/SourceRef"}, "invocation_id": {"$ref": "#/$defs/Id"}, "thread_instance_id": {"$ref": "#/$defs/Id"},
+        "status": {"enum": ["must", "may", "unknown"]}, "proof": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}}
+      }
+    },
+    "GraphEdge": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "before", "after", "relation", "guards", "proof"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "kind": {"enum": ["intra-thread", "call-entry", "call-exit", "create", "join", "mutex-candidate"]},
+        "before": {"$ref": "#/$defs/Id"}, "after": {"$ref": "#/$defs/Id"},
+        "relation": {"enum": ["must-before", "may-before", "candidate", "unknown"]},
+        "guards": {"type": "array", "items": {"$ref": "#/$defs/Id"}},
+        "proof": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}}
+      }
+    },
+    "Mhp": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "left", "right", "left_endpoint", "right_endpoint", "relation", "guards", "proof", "reason"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "left": {"$ref": "#/$defs/Id"}, "right": {"$ref": "#/$defs/Id"},
+        "left_endpoint": {"$ref": "#/$defs/NullableId"}, "right_endpoint": {"$ref": "#/$defs/NullableId"},
+        "relation": {"enum": ["may_parallel", "not_parallel", "unknown"]},
+        "guards": {"type": "array", "items": {"$ref": "#/$defs/Id"}},
+        "proof": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}}, "reason": {"$ref": "#/$defs/Id"}
+      }
+    },
+    "SyncCandidate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "kind", "object_key", "write_effect", "read_effect", "left_thread", "right_thread", "status", "guards", "proof", "reason"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "kind": {"enum": ["mutex", "reads-from"]}, "object_key": {"$ref": "#/$defs/NullableId"},
+        "write_effect": {"$ref": "#/$defs/NullableId"}, "read_effect": {"$ref": "#/$defs/NullableId"},
+        "left_thread": {"$ref": "#/$defs/Id"}, "right_thread": {"$ref": "#/$defs/Id"},
+        "status": {"enum": ["candidate", "excluded", "unknown"]},
+        "guards": {"type": "array", "items": {"$ref": "#/$defs/Id"}},
+        "proof": {"type": "array", "items": {"$ref": "#/$defs/EvidenceRef"}}, "reason": {"$ref": "#/$defs/Id"}
+      }
+    },
+    "PlannedItem": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "status", "reason"],
+      "properties": {"id": {"$ref": "#/$defs/Id"}, "status": {"$ref": "#/$defs/Status"}, "reason": {"$ref": "#/$defs/NullableId"}}
+    },
+    "Counts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["planned", "complete", "partial", "failed", "not_run", "complete_ratio"],
+      "properties": {
+        "planned": {"type": "integer", "minimum": 0}, "complete": {"type": "integer", "minimum": 0},
+        "partial": {"type": "integer", "minimum": 0}, "failed": {"type": "integer", "minimum": 0},
+        "not_run": {"type": "integer", "minimum": 0}, "complete_ratio": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+      }
+    },
+    "Common": {
+      "type": "object",
+      "required": ["schema_version", "kind", "analysis_version", "policy_id"],
+      "properties": {
+        "schema_version": {"const": 1}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "thread-sync-contexts-v1"}
+      }
+    },
+    "ThreadAnalysisRequest": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope", "roots", "model_id", "budgets"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "ThreadAnalysisRequest"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "thread-sync-contexts-v1"},
+        "scope": {"$ref": "#/$defs/Id"}, "roots": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/Root"}},
+        "model_id": {"const": "posix-pthread-v1"}, "budgets": {"$ref": "#/$defs/Budgets"}
+      }
+    },
+    "ThreadLocalFacts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "origin", "budgets", "calls", "provenance", "analysis_evidence", "diagnostics", "frontier", "status"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "ThreadLocalFacts"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "thread-sync-contexts-v1"},
+        "origin": {"$ref": "#/$defs/Origin"}, "budgets": {"$ref": "#/$defs/Budgets"},
+        "calls": {"type": "array", "items": {"$ref": "#/$defs/CallFact"}}, "provenance": {"type": "array", "items": {"$ref": "#/$defs/Provenance"}},
+        "analysis_evidence": {"type": "array", "items": {"$ref": "#/$defs/AnalysisEvidence"}},
+        "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "status": {"$ref": "#/$defs/Status"}
+      }
+    },
+    "ExecutionOrderFacts": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "origin", "budgets", "nodes", "edges", "analysis_evidence", "diagnostics", "frontier", "status"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "ExecutionOrderFacts"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "thread-sync-contexts-v1"},
+        "origin": {"$ref": "#/$defs/Origin"}, "budgets": {"$ref": "#/$defs/Budgets"},
+        "nodes": {"type": "array", "items": {"$ref": "#/$defs/OrderNode"}}, "edges": {"type": "array", "items": {"$ref": "#/$defs/OrderEdge"}},
+        "analysis_evidence": {"type": "array", "items": {"$ref": "#/$defs/AnalysisEvidence"}},
+        "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "status": {"$ref": "#/$defs/Status"}
+      }
+    },
+    "ThreadContextGraph": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "model_id", "budgets", "dependencies", "contexts", "instances", "lifecycles", "effects", "anchors", "order", "mhp", "synchronization", "frontier", "diagnostics", "status"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "ThreadContextGraph"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "thread-sync-contexts-v1"},
+        "scope_id": {"$ref": "#/$defs/Hash"}, "request_hash": {"$ref": "#/$defs/Hash"}, "model_id": {"const": "posix-pthread-v1"}, "budgets": {"$ref": "#/$defs/Budgets"},
+        "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "contexts": {"type": "array", "items": {"$ref": "#/$defs/ThreadContext"}},
+        "instances": {"type": "array", "items": {"$ref": "#/$defs/ThreadInstance"}}, "lifecycles": {"type": "array", "items": {"$ref": "#/$defs/LifecycleEvent"}},
+        "effects": {"type": "array", "items": {"$ref": "#/$defs/ThreadEffect"}},
+        "anchors": {"type": "array", "items": {"$ref": "#/$defs/ThreadAnchor"}},
+        "order": {"type": "array", "items": {"$ref": "#/$defs/GraphEdge"}}, "mhp": {"type": "array", "items": {"$ref": "#/$defs/Mhp"}},
+        "synchronization": {"type": "array", "items": {"$ref": "#/$defs/SyncCandidate"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+        "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "status": {"$ref": "#/$defs/Status"}
+      }
+    },
+    "ThreadAnalysisReport": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "kind", "analysis_version", "policy_id", "request_hash", "scope_id", "model_id", "budgets", "input_integrity", "effect_analysis", "local_thread_analysis", "thread_modeling", "synchronization_analysis", "source_mapping", "members", "roots", "contexts", "member_counts", "root_counts", "context_counts", "graph", "dependencies", "frontier", "diagnostics", "assumptions", "safety", "findings", "exit_code"],
+      "properties": {
+        "schema_version": {"const": 1}, "kind": {"const": "ThreadAnalysisReport"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "thread-sync-contexts-v1"},
+        "request_hash": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Hash"}]}, "scope_id": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Hash"}]},
+        "model_id": {"const": "posix-pthread-v1"}, "budgets": {"$ref": "#/$defs/Budgets"},
+        "input_integrity": {"$ref": "#/$defs/Status"}, "effect_analysis": {"$ref": "#/$defs/Status"}, "local_thread_analysis": {"$ref": "#/$defs/Status"},
+        "thread_modeling": {"$ref": "#/$defs/Status"}, "synchronization_analysis": {"$ref": "#/$defs/Status"},
+        "source_mapping": {"enum": ["complete", "partial", "unavailable", "not_run"]},
+        "members": {"type": "array", "items": {"$ref": "#/$defs/PlannedItem"}}, "roots": {"type": "array", "items": {"$ref": "#/$defs/PlannedItem"}},
+        "contexts": {"type": "array", "items": {"$ref": "#/$defs/PlannedItem"}}, "member_counts": {"$ref": "#/$defs/Counts"},
+        "root_counts": {"$ref": "#/$defs/Counts"}, "context_counts": {"$ref": "#/$defs/Counts"}, "graph": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Dependency"}]},
+        "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+        "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "assumptions": {"type": "array", "items": {"$ref": "#/$defs/Id"}},
+        "safety": {"const": "not_evaluated"}, "findings": {"type": "null"}, "exit_code": {"enum": [0, 1, 2]}
+      }
+    }
+  }
+}

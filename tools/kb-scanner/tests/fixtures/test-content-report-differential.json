@@ -1,0 +1,22 @@
+{
+  "change": "implement-kb-scanner-test-content-analysis",
+  "reviewedAt": "2026-09-24",
+  "baselineCommit": "9d331c6622a21cad13bb1c6ed4c69a127deb558c",
+  "reviewedChanges": [
+    "在同一容器和相同输入绝对路径，以固定 Git 归档代码和当前代码分别生成 V1；逐字段比较，不改历史账本。",
+    "build-selection 与 workspace-escape 共用同一 fixture。旧逻辑因 CTest 包含 src/rv.c，就把该文件编译数据库中的 -march=rv64gc 错当测试 exercises。删除无依据的派生测试关联，原始 compiler_argument Evidence 和独立 C_CPP.X86.COMPILER_FLAG Finding 保留。",
+    "TEST.X86.SELECTION 的 symbol 从借来的 -march 回到 ctest-v1.json，occurrenceCount 从 2 变为 1；只移除被误挂的编译参数 occurrence/knowledge/exercises/proof，不声称测试入口或执行已证明。",
+    "独立 -march=rv64gc Finding 的 trace 不再带 CTest 目标及测试 exercises，知识来源、原始命中、未知结论和风险不变。",
+    "两份报告均为 8 Findings、1 blocking、1 actionable、1 high/7 medium；所有 Classification ID、建议、readiness 状态/置信度和 diagnostics 摘要不变。仅 semanticFindingsSha256 覆盖上述 trace 修正。"
+  ],
+  "matrixOverrides": {
+    "build-selection": {
+      "semanticFindingsSha256": "b6b40511fd0c9577e8e1fa9c4231ba48c437fe9c1758e72b24d748d8103a328f"
+    },
+    "workspace-escape": {
+      "semanticFindingsSha256": "b6b40511fd0c9577e8e1fa9c4231ba48c437fe9c1758e72b24d748d8103a328f"
+    }
+  },
+  "historicalSemanticFindingsSha256": "63e8fd6face6af3b97844edd53c8c7a6b02dd171cee7c4817b26bedd13eb2a4b",
+  "unchangedDiagnosticsSha256": "012633bb7173438fa10c3e71069194d3c7a6891ba16be4a1cea65d04c859875f"
+}

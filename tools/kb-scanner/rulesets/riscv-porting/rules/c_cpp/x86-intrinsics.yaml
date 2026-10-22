@@ -1,0 +1,22 @@
+id: C_CPP.X86.INTRINSIC_CALL
+language: c_cpp
+severity: high
+confidence: high
+capability:
+  - ast.call
+match:
+  any:
+    - call:
+        generatedSet: "intrinsics"
+        nameRegex: "^_mm(128|256|512)?_"
+message:
+  zh-CN:
+    title: "使用 x86 SIMD intrinsic"
+    reason: "代码使用了 x86 平台专属 SIMD intrinsic，RISC-V 环境无法直接编译或运行。"
+    suggestion: "建议改为 portable C/C++ 实现，或针对 RISC-V Vector 扩展提供独立实现。"
+  en-US:
+    title: "Uses an x86 SIMD intrinsic"
+    reason: "The code uses an x86 platform-specific SIMD intrinsic, which cannot be compiled or run directly in a RISC-V environment."
+    suggestion: "Replace it with portable C/C++ code, or provide an independent implementation for the RISC-V Vector extension."
+
+

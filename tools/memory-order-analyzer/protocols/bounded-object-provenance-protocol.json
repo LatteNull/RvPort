@@ -1,0 +1,40 @@
+{
+  "protocol_version": 1,
+  "analysis_version": "0.1.0",
+  "llvm_version": "21.1.8",
+  "policy_id": "bounded-object-provenance-v1",
+  "kinds": {
+    "BoundedObjectProvenanceRequest": 1,
+    "SourceObjectPathRequest": 1,
+    "SourceObjectPathFacts": 1,
+    "LLVMObjectProvenanceRequest": 1,
+    "LLVMObjectProvenanceFacts": 1,
+    "BoundedObjectProvenanceGraph": 1,
+    "BoundedObjectProvenanceReport": 1,
+    "ObjectProvenanceValidationSuite": 1,
+    "ObjectProvenanceValidationTruth": 1,
+    "ObjectProvenanceValidationReport": 1
+  },
+  "budgets": {
+    "translation_units": 4096,
+    "source_nodes": 1000000,
+    "ir_nodes": 1000000,
+    "path_segments": 64,
+    "path_depth": 32,
+    "values": 2000000,
+    "candidate_targets": 64,
+    "guards": 128,
+    "load_hops": 16,
+    "aa_queries": 2000000,
+    "memoryssa_steps": 2000000,
+    "capture_uses": 2000000,
+    "call_contexts": 65536,
+    "recursive_iterations": 64,
+    "relations": 2000000,
+    "diagnostic_bytes": 4096,
+    "worker_seconds": 300,
+    "worker_output_bytes": 67108864,
+    "request_seconds": 3600,
+    "request_output_bytes": 268435456
+  }
+}

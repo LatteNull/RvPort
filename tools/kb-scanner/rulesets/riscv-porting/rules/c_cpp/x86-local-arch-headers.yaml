@@ -1,0 +1,28 @@
+id: C_CPP.X86.LOCAL_ARCH_HEADER
+language: c_cpp
+severity: medium
+confidence: medium
+capability:
+  - include.detect
+match:
+  any:
+    - include:
+        pathIn:
+          - "avx.h"
+          - "avx2.h"
+          - "sse.h"
+          - "sse2.h"
+          - "sse_type.h"
+          - "avx_type.h"
+message:
+  zh-CN:
+    title: "引用本地 x86 架构后端头文件"
+    reason: "代码引用了本地 avx/sse 相关头文件。这类头文件通常封装 x86 SIMD 类型、寄存器或汇编宏，需要继续检查其内容和调用点。"
+    suggestion: "建议将本地架构后端拆分为 portable/RISC-V/x86 多实现，并把公共接口与平台实现隔离。"
+  en-US:
+    title: "Includes a local x86 architecture backend header"
+    reason: "The code includes a local avx/sse-related header. Such headers usually wrap x86 SIMD types, registers, or assembly macros and require further inspection of their contents and call sites."
+    suggestion: "Split the local architecture backend into portable, RISC-V, and x86 implementations, and separate the public interface from platform-specific implementations."
+
+
+

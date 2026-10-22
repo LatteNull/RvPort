@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "FenceRmwValidationTruth",
+  "suite_id": "fence-rmw-publication-v1",
+  "review": {
+    "status": "reviewed",
+    "method": "manual-language-standard-and-llvm-ir-review",
+    "reviewed_on": "2026-09-24",
+    "basis": "C11/C17/C++17/C++20 release-sequence and acquire/release fence rules; LLVM 21 lowering"
+  },
+  "languages": {
+    "c11": {"planned": 3, "completed": 3, "tp": 1, "fp": 0, "fn": 0, "abstention": 2},
+    "c17": {"planned": 3, "completed": 3, "tp": 2, "fp": 0, "fn": 0, "abstention": 1},
+    "c++17": {"planned": 3, "completed": 3, "tp": 3, "fp": 0, "fn": 0, "abstention": 0},
+    "c++20": {"planned": 3, "completed": 3, "tp": 1, "fp": 0, "fn": 0, "abstention": 2}
+  },
+  "safety": "not_established"
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "1.0",
+  "change": "fix-kb-scanner-architecture-candidate-noise",
+  "container": "kb-scanner-test",
+  "coverageThresholds": {
+    "linePercent": 90,
+    "branchPercent": 80
+  },
+  "boundaries": "In-memory snapshots, fake Node/Tree and mocked parser/projector. Exclude historical real-parser ArchitectureEnumFrontendTests/ArchitectureEnumProjectionTests from this isolated gate; execute them only in regression gates.",
+  "modules": {
+    "frontends/cpp/tree_sitter_adapter.py": {
+      "unit": "tests/unit/frontends/cpp/test_tree_sitter_adapter.py",
+      "supportingUnits": ["tests/unit/frontends/cpp/test_fake_enum_graph.py"],
+      "coverageGate": "--architecture-candidate-noise-unit"
+    },
+    "analyzers/evidence_graph.py": {
+      "unit": "tests/unit/evidence_graph/test_architecture_guards.py",
+      "supportingUnits": ["tests/unit/evidence_graph/test_evidence_graph_analyzer.py", "tests/unit/frontends/cpp/test_fake_enum_graph.py"],
+      "coverageGate": "--architecture-candidate-noise-unit"
+    },
+    "analyzers/architecture_guards.py": {
+      "unit": "tests/unit/evidence_graph/test_architecture_guards.py",
+      "coverageGate": "--architecture-candidate-noise-unit"
+    },
+    "normalization/cpp.py": {
+      "unit": "tests/unit/knowledge_detection/test_candidate_contract.py",
+      "coverageGate": "--architecture-candidate-noise-unit"
+    },
+    "detectors/local.py": {
+      "unit": "tests/unit/knowledge_detection/test_candidate_contract.py",
+      "coverageGate": "--architecture-candidate-noise-unit",
+      "supportingUnits": [
+        "tests/unit/candidate_semantics/test_coverage.py"
+      ]
+    },
+    "core/candidate_contract.py": {
+      "unit": "tests/unit/knowledge_detection/test_candidate_contract.py",
+      "coverageGate": "--architecture-candidate-noise-unit"
+    },
+    "classifiers/migration.py": {
+      "unit": "tests/unit/knowledge_detection/test_candidate_contract.py",
+      "coverageGate": "--architecture-candidate-noise-unit",
+      "supportingUnits": [
+        "tests/unit/candidate_semantics/test_admission.py"
+      ]
+    },
+    "classifiers/policy.py": {
+      "unit": "tests/unit/knowledge_detection/test_candidate_contract.py",
+      "coverageGate": "--architecture-candidate-noise-unit"
+    },
+    "projection/projector.py": {
+      "unit": "tests/unit/knowledge_detection/test_candidate_contract.py",
+      "coverageGate": "--architecture-candidate-noise-unit"
+    },
+    "projection/v2/projector.py": {
+      "unit": "tests/unit/knowledge_detection/test_candidate_contract.py",
+      "coverageGate": "--architecture-candidate-noise-unit"
+    }
+  },
+  "higherLayers": [
+    "tests/test_architecture_candidate_noise.py",
+    "tests/test_architecture_enum_analysis.py",
+    "tests/test_tree_sitter_native_crash_regression.py"
+  ]
+}

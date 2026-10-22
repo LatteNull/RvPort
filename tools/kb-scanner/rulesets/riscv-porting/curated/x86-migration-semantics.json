@@ -1,0 +1,107 @@
+{
+  "entries": [
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "__cpuid",
+      "entryId": "590b8d6a3687a9c6eba3c7409bf4a8741396d38221a277d3575e35e914753aca",
+      "factKind": "cpuPlatformApis",
+      "referenceIds": [
+        "gcc-14.2.0-cpuid-header"
+      ],
+      "reviewStatus": "accepted",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "__cpuid_count",
+      "entryId": "da39cbf2227169ff8330875b9dcd78de7a3682554af7ef28ed2820470441bc04",
+      "factKind": "cpuPlatformApis",
+      "referenceIds": [
+        "gcc-14.2.0-cpuid-header"
+      ],
+      "reviewStatus": "accepted",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "__get_cpuid",
+      "entryId": "ead83baaec1a394f3b5f8f42e7fa3bb19da58e7e16f2ce79d587dd6c7a0d90c5",
+      "factKind": "cpuPlatformApis",
+      "referenceIds": [
+        "gcc-14.2.0-cpuid-header"
+      ],
+      "reviewStatus": "accepted",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "__get_cpuid_count",
+      "entryId": "542f537ad5299222258730a871f502fb08f320b51f9e8ce768b948517abf150f",
+      "factKind": "cpuPlatformApis",
+      "referenceIds": [
+        "gcc-14.2.0-cpuid-header"
+      ],
+      "reviewStatus": "accepted",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "__rdtsc",
+      "entryId": "7cb412df531a9ab9d67972d666e54e9df2b15d82dd973b6b7e18c2cc71ebcf87",
+      "factKind": "cpuPlatformApis",
+      "referenceIds": [
+        "gcc-14.2.0-ia32intrin-header"
+      ],
+      "reviewStatus": "accepted",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "__rdtscp",
+      "entryId": "b12022f6cc226fd21ffb8d42b0b0addedcc01a4f235b7bfc136a16ad98dbf048",
+      "factKind": "cpuPlatformApis",
+      "referenceIds": [
+        "gcc-14.2.0-ia32intrin-header"
+      ],
+      "reviewStatus": "accepted",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vector_size(16)",
+      "entryId": "e9410d3ed990de93905e652c61ec366d1eedc93c6d5fea671df850391fbb5d88",
+      "factKind": "vectorWidthMarkers",
+      "referenceIds": [
+        "gcc-14.2.0-vector-extensions"
+      ],
+      "reviewStatus": "accepted",
+      "semanticScope": "migration-sensitive"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vector_size(32)",
+      "entryId": "41507084aef743837467fcc6d559a9ffa7df65bc51318c956f71a733560d346f",
+      "factKind": "vectorWidthMarkers",
+      "referenceIds": [
+        "gcc-14.2.0-vector-extensions"
+      ],
+      "reviewStatus": "accepted",
+      "semanticScope": "migration-sensitive"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vector_size(64)",
+      "entryId": "50ad4b7c851d2f35ff47ca99b0a9c6756c0cd221fe9ededfd6255ffe01405bb8",
+      "factKind": "vectorWidthMarkers",
+      "referenceIds": [
+        "gcc-14.2.0-vector-extensions"
+      ],
+      "reviewStatus": "accepted",
+      "semanticScope": "migration-sensitive"
+    }
+  ],
+  "reviewPolicy": "authority-source-and-independent-maintainer-review",
+  "reviewPolicyVersion": "1.0",
+  "schemaVersion": "1.0",
+  "sourceId": "curated-x86-migration-semantics"
+}

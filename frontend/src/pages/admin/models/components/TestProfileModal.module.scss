@@ -1,0 +1,75 @@
+.profileContext {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: var(--ant-color-fill-alter);
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius);
+}
+
+.profileContextLabel {
+  flex: 0 0 auto;
+  color: var(--ant-color-text-secondary);
+  font-size: 13px;
+}
+
+.profileContextValue {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ant-color-text);
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.agentOptions {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+}
+
+.agentSelectToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: var(--ant-color-text-secondary);
+  font-size: 13px;
+}
+
+.agentOption {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 42px;
+  margin-inline-start: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius);
+
+  &:hover {
+    border-color: var(--ant-color-primary-border);
+  }
+
+  :global(.ant-checkbox + span) {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  :global(.ant-tag) {
+    flex: 0 0 auto;
+    margin-inline-end: 0;
+  }
+}
+
+.agentName {
+  overflow: hidden;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

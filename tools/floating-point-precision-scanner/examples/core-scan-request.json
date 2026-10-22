@@ -1,0 +1,17 @@
+{
+  "kind": "FloatingPointPrecisionScanRequest",
+  "schema_version": "1.2",
+  "request_id": "core-rules-example",
+  "project_root": "/workspace/project",
+  "source_profile": "x86_64-linux-gnu-clang21@1.0",
+  "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+  "input": {"compile_commands": "build/compile_commands.json"},
+  "budgets": {
+    "wall_seconds": 60,
+    "max_files": 1000,
+    "max_rule_assessments": 100000,
+    "max_related_locations": 100,
+    "max_response_depth": 8,
+    "max_response_bytes": 1048576
+  }
+}

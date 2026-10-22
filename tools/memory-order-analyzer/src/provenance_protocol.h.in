@@ -1,0 +1,3 @@
+// Generated from protocols/bounded-object-provenance-protocol.json; do not edit the generated file.
+#pragma once
+#define MOA_PROVENANCE_PROTOCOL_JSON R"moa(@MOA_PROVENANCE_PROTOCOL_JSON@)moa"

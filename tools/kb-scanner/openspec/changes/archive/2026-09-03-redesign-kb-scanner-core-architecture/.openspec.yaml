@@ -1,0 +1,3 @@
+schema: spec-driven
+created: 2026-09-03
+goal: 形成可评审的 KB Scanner 总体设计基线，为后续按能力拆分实现 change 提供约束。

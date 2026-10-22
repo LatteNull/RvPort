@@ -1,0 +1,31 @@
+schema: spec-driven
+
+context: |
+  Scope: tools/kb-scanner, a standalone analyzer for C/C++ x86-to-RISC-V migration.
+  Current implementation: Python CLI with YAML rule packs, generated compiler-derived knowledge sets, optional compile_commands.json context, and JSON/HTML/text outputs.
+  Analysis model: KB Scanner performs static analysis only. Real RISC-V compilation and test execution belong to later RvPort stages and are not inputs to this module's core conclusions.
+  Architecture-selection assumption: recognized probes such as uname may be analyzed as selectors, but assume they return the correct machine architecture. Do not model cross-compilation mis-selection from uname.
+  Knowledge-data rule: preserve rulesets/riscv-porting/generated/clang-x86-entries.json and gcc-x86-entries.json as compiler-derived x86 fact datasets. A redesign must continue loading their existing categories and generatedSet references without converting them into an incompatible replacement format.
+  Existing output contract: scan-result.json uses schemaVersion "1.0" and top-level tool, rulePack, project, summary, findings, diagnostics; scan-report.html and scan.log are fixed artifacts consumed by the backend.
+  Compatibility rule: internal redesigns must project into the existing output structure. Do not replace it with a new report schema or a second primary result file. New fields must be optional and backward-compatible.
+  Domain boundary: focus on C/C++ source, assembly, build configuration, RPM packaging, tests, and migration readiness. Exclude OS, kernel, syscall, driver, and board migration.
+  Integration boundary: RVWMO semantics belong to tools/memory-model-ir-checker; KB Scanner may reference its result but must not reimplement it.
+  Existing user changes elsewhere in the repository must not be modified.
+  Global testing rule: every newly implemented business module must be delivered with an isolated unit-test mapping in the same change. Unit tests must run in the standalone kb-scanner-test container, use fakes/mocks for third-party or process boundaries, and participate in an explicit line/branch coverage gate. Existing component, integration, contract, or end-to-end tests do not replace this requirement.
+
+rules:
+  proposal:
+    - State whether the change preserves the existing scan-result.json contract.
+    - Separate C/C++ migration concerns from operating-system migration concerns.
+    - Preserve current high-value x86 detection assets unless removal is explicitly justified.
+    - For implementation changes, state the unit-test scope for every new or modified business module; do not treat full-regression test count as evidence of unit coverage.
+  design:
+    - Explain how new internal concepts project into the existing result fields.
+    - Explain how the existing Clang/GCC generated x86 datasets remain reusable and traceable through the redesigned analyzer.
+    - Treat missing analysis evidence as unknown, not as proof of RISC-V readiness.
+    - Keep parser or implementation-library choices open unless the change specifically evaluates them.
+    - Map each new business module to isolated unit tests, describe external boundaries that must be faked or mocked, and define the applicable line/branch coverage gate.
+  tasks:
+    - Keep design-only changes free of runtime implementation tasks.
+    - Split implementation changes by independently verifiable capability rather than attempting a full rewrite at once.
+    - Every implementation module task must have corresponding isolated unit-test and container verification tasks; a change is not complete while a new business module lacks that mapping.

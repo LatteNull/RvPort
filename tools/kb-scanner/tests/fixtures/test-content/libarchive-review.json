@@ -1,0 +1,33 @@
+{
+  "change": "implement-kb-scanner-test-content-analysis",
+  "inputFiles": 822,
+  "inputDigest": "f52edca120bdcd98d6c3316a2c5a42c09e38a99fc2189fa07b33cd3eb85fd67c",
+  "scannerSourceDigest": "b0eddbcce8d4f8ab58db994dd5e840b90b20ace3d9287926df55066393ee5f84",
+  "historicalReview": "../macro-build-effects/libarchive-review-20260924.json",
+  "unchanged": {
+    "findings": 64,
+    "issues": 53,
+    "hints": 11,
+    "blocking": 0,
+    "allFindingIds": true,
+    "allConclusions": true,
+    "allEvidenceChains": true
+  },
+  "reviewedDifferences": [
+    "libarchive/test/test_read_format_rar5.c:406–408 注释 hint 附加测试候选语境；保持 info、非 blocking、入口/注册 unknown，不识别 DEFINE_TEST 为普通 main。",
+    "新增 build-frontend.partial 与 test-content.partial 诊断；后者明确相关测试清单不完整，不据此证明运行覆盖或修改原结论。",
+    "未覆写历史 810/822 文件清单及审校；新增记录只验收本 change 的语义增量。"
+  ],
+  "performance": {
+    "cpu": 2,
+    "memoryBytes": 2147483648,
+    "swapBytes": 0,
+    "timeoutSeconds": 300,
+    "seconds": [270.06163520600006, 254.99012837400005],
+    "maxRssKiB": [1410852, 1410300],
+    "exitCodes": [0, 0],
+    "oomKilled": false,
+    "semanticDigest": "f19ef24dad86cd727dc501266e0456aad1e760bc938c8d297e26cda4a746831a",
+    "passed": true
+  }
+}

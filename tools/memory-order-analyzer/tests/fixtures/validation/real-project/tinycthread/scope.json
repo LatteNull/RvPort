@@ -1,0 +1,9 @@
+{
+  "target_id": "tinycthread-static",
+  "roots": ["thrd_create", "thrd_join", "mtx_lock", "mtx_unlock"],
+  "translation_units": ["source/tinycthread.c"],
+  "closed": true,
+  "external_boundaries": ["pthread", "libc"],
+  "included": ["source/tinycthread.c", "source/tinycthread.h"],
+  "excluded": ["test/test.c", "doc/**"]
+}

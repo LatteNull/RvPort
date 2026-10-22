@@ -1,0 +1,114 @@
+{
+  "projectId": "9915a12c-9338-419e-b589-9a3984d56c62",
+  "sourceRevisionId": "a019391f-89e6-4d8e-8eed-1b7871055541",
+  "buildRunId": "be53c759-1e2e-459a-9f73-ef8289ecfaf2",
+  "historicalAnalysisId": "aee4ef66-6d81-4e88-afd7-606cc7d6cc9a",
+  "analysisId": "73181be9-97cf-47b5-9fc3-b2de266a7dd8",
+  "taskId": "fb5ae5b3-43ae-47b5-a922-5452ec31f475",
+  "taskStatus": "SUCCEEDED",
+  "runStatus": "COMPLETE",
+  "exitCode": 0,
+  "analysisMode": "AST_BC_COMPLETE",
+  "bcStatus": "READY",
+  "bcPlannedCount": 3,
+  "bcUsableCount": 3,
+  "bcFailedCount": 0,
+  "bcDegradationReason": null,
+  "bcAudit": {
+    "translationUnits": {
+      "failedCount": 0,
+      "missingCount": 0,
+      "excludedCount": 11,
+      "producedCount": 3,
+      "excludedReasons": {
+        "NON_C_CPP_COMMAND": 9,
+        "BUILD_SYSTEM_PROBE": 2
+      },
+      "rawCommandCount": 14,
+      "cCppCandidateCount": 5,
+      "projectTranslationUnitCount": 3
+    }
+  },
+  "artifactSetId": "f9e95a698b4c5c97c60148791ce9daafbd906d7fd38f1f89550a530b65524af9",
+  "resultStatus": "complete",
+  "resultTranslationUnits": {
+    "completed": 3,
+    "failed": 0,
+    "planned": 3,
+    "unknown": 0
+  },
+  "layerCounts": {
+    "artifact": {
+      "completed": 3,
+      "failed": 0,
+      "planned": 3,
+      "unknown": 0
+    },
+    "evidence": {
+      "completed": 3,
+      "failed": 0,
+      "planned": 3,
+      "unknown": 0
+    },
+    "ir": {
+      "completed": 3,
+      "failed": 0,
+      "planned": 3,
+      "unknown": 0
+    },
+    "rules": {
+      "completed": 64,
+      "failed": 0,
+      "planned": 64,
+      "unknown": 0
+    },
+    "source": {
+      "completed": 3,
+      "failed": 0,
+      "planned": 3,
+      "unknown": 0
+    }
+  },
+  "diagnosticCounts": {
+    "source_mapping_incomplete": 1
+  },
+  "assessmentReasonCounts": {
+    "conversion_exact": 36,
+    "no_reduction": 2,
+    "no_math_call": 3,
+    "no_float_comparison": 2,
+    "no_abi_boundary": 3,
+    "no_implicit_fma_candidate": 3,
+    "no_architecture_api": 3,
+    "no_environment_access": 3,
+    "comparison_guarded_or_stable": 1,
+    "no_operation_chain": 3,
+    "strict_fp_semantics": 3,
+    "no_conversion": 1,
+    "order_sensitive_reduction": 1
+  },
+  "findingCount": 1,
+  "findings": [
+    {
+      "id": "2b7e183e-41b8-4315-9732-1648c1fcba5e",
+      "externalFindingId": "219d931e7ab442eee890b6eb880af89077555870ea5ad4787f0d8b3b0d6cda40",
+      "code": "reduction-reassociation",
+      "file": "src/vectorcalc.cpp",
+      "line": 62,
+      "evidenceOrigin": "heuristic"
+    }
+  ],
+  "artifactSet": {
+    "artifactSetId": "f9e95a698b4c5c97c60148791ce9daafbd906d7fd38f1f89550a530b65524af9",
+    "buildRunId": "be53c759-1e2e-459a-9f73-ef8289ecfaf2",
+    "manifestSha256": "1c45f4afb009c1bd079b1f16e431d5bd53ba4feead68de44e818bf4f0a0be817",
+    "sourceRevision": "a019391f-89e6-4d8e-8eed-1b7871055541"
+  },
+  "irAnalysis": {
+    "extractorVersion": "1.1",
+    "llvmVersion": "21.1.8",
+    "readerVersion": "1.0",
+    "status": "complete"
+  },
+  "historicalUnchanged": true
+}

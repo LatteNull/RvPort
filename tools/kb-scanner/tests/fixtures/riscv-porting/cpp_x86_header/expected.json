@@ -1,0 +1,8 @@
+{
+  "ruleId": "C_CPP.X86.HEADER",
+  "count": 1,
+  "symbols": ["immintrin.h"],
+  "conditionMacros": ["USE_FAST_PATH"]
+}
+
+

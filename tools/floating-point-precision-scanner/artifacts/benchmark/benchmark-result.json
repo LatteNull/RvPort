@@ -1,0 +1,87 @@
+{
+  "environment": {
+    "architecture": "amd64",
+    "clang_llvm": "21.1.8",
+    "memory_bytes": 4294967296,
+    "network": "disabled",
+    "os": "linux",
+    "vcpus": 4
+  },
+  "kind": "FloatingPointScannerBenchmarkResult",
+  "passed": true,
+  "schema_version": "1.0",
+  "tiers": [
+    {
+      "cold_median": {
+        "cpu_seconds": 0.684602,
+        "result_bytes": 6136.0,
+        "rss_bytes": 88023040.0,
+        "wall_seconds": 0.799975171999904
+      },
+      "environment_applicable": true,
+      "gates": {
+        "absolute": true,
+        "hot_ratio": true,
+        "passed": true,
+        "regression": true
+      },
+      "hot_median": {
+        "cpu_seconds": 0.059155999999999764,
+        "result_bytes": 6135.0,
+        "rss_bytes": 88023040.0,
+        "wall_seconds": 0.05868674400153395
+      },
+      "semantic_equal": true,
+      "tier": "S",
+      "workload_digest": "c059596b190f39b86b6dba3dd58c5a9555a34dbfc621297d3ebea600d971d357"
+    },
+    {
+      "cold_median": {
+        "cpu_seconds": 3.739082,
+        "result_bytes": 12388.0,
+        "rss_bytes": 88027136.0,
+        "wall_seconds": 4.267336712000542
+      },
+      "environment_applicable": true,
+      "gates": {
+        "absolute": true,
+        "hot_ratio": true,
+        "passed": true,
+        "regression": true
+      },
+      "hot_median": {
+        "cpu_seconds": 0.22403300000000037,
+        "result_bytes": 12386.0,
+        "rss_bytes": 88031232.0,
+        "wall_seconds": 0.22346899600051984
+      },
+      "semantic_equal": true,
+      "tier": "M",
+      "workload_digest": "fdd8b7673a4ac305246e8e07b40faab54b26d0bac64e15d1a118d0ba55ba9793"
+    },
+    {
+      "cold_median": {
+        "cpu_seconds": 18.580477999999996,
+        "result_bytes": 43590.0,
+        "rss_bytes": 88031232.0,
+        "wall_seconds": 21.251617296000404
+      },
+      "environment_applicable": true,
+      "gates": {
+        "absolute": true,
+        "hot_ratio": true,
+        "passed": true,
+        "regression": true
+      },
+      "hot_median": {
+        "cpu_seconds": 0.9798119999999955,
+        "result_bytes": 43588.0,
+        "rss_bytes": 88031232.0,
+        "wall_seconds": 0.9794971440005611
+      },
+      "semantic_equal": true,
+      "tier": "L",
+      "workload_digest": "b73752876dc5ff4f051a0eb15ea715c85cc5c10b2541691ea4d268d635ce93a6"
+    }
+  ]
+}

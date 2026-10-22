@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "basis": "人工指定结构状态，不由 scanner 自动生成或更新",
+  "reportExpectations": {
+    "single": {"multiversionUnknown": 0, "requiredFindingTypes": ["x86_target_feature"], "highTypes": ["x86_target_feature"]},
+    "versions": {"multiversionUnknown": 1, "requiredFindingTypes": ["x86_target_feature"], "highTypes": ["x86_target_feature"]},
+    "declaration": {"multiversionUnknown": 1, "requiredFindingTypes": ["x86_target_feature"], "highTypes": ["x86_target_feature"]},
+    "clones": {"multiversionUnknown": 1, "requiredFindingTypes": ["x86_target_feature"], "highTypes": ["x86_target_feature"]},
+    "mixed": {"multiversionUnknown": 1, "requiredFindingTypes": ["x86_target_feature"], "highTypes": ["x86_target_feature"]},
+    "missing": {"multiversionUnknown": 1, "requiredFindingTypes": ["x86_target_feature"], "highTypes": ["x86_target_feature"]},
+    "macro": {"multiversionUnknown": 1, "requiredFindingTypes": [], "highTypes": []},
+    "default_avx": {"multiversionUnknown": 0, "requiredFindingTypes": ["x86_intrinsic_reference"], "highTypes": ["x86_intrinsic_reference"]},
+    "unknown_call": {"multiversionUnknown": 1, "requiredFindingTypes": ["x86_target_feature"], "highTypes": ["x86_target_feature"]},
+    "overload": {"multiversionUnknown": 0, "requiredFindingTypes": ["x86_target_feature"], "highTypes": ["x86_target_feature"]},
+    "namespace": {"multiversionUnknown": 0, "requiredFindingTypes": ["x86_target_feature"], "highTypes": ["x86_target_feature"]},
+    "conditional": {"multiversionUnknown": 1, "requiredFindingTypes": ["x86_target_feature"], "highTypes": ["x86_target_feature"]},
+    "unrelated": {"multiversionUnknown": 0, "requiredFindingTypes": [], "highTypes": []},
+    "dispatch": {"multiversionUnknown": 1, "requiredFindingTypes": [], "highTypes": []}
+  },
+  "reportForbidden": {"blocking": true, "findingType": "function_multiversion_fallback_gap", "readyForMultiversionUnknown": true},
+  "cases": [
+    {"name": "single", "source": "__attribute__((target(\"avx2\"))) int f(){return 0;}", "mechanism": "single_target", "defaultPresence": "not_applicable"},
+    {"name": "versions", "source": "__attribute__((target(\"avx2\"))) int f(){return 1;}\n__attribute__((target(\"default\"))) int f(){return 0;}", "mechanism": "target", "defaultPresence": "present", "defaultDefinition": "present"},
+    {"name": "declaration", "source": "__attribute__((target(\"avx2\"))) int f(){return 1;}\n__attribute__((target(\"default\"))) int f();", "defaultPresence": "present", "defaultDefinition": "declaration_only"},
+    {"name": "clones", "source": "__attribute__((target_clones(\"avx2,default\"))) int f(){return 0;}", "mechanism": "target_clones", "defaultPresence": "present", "bodyCount": 1},
+    {"name": "mixed", "source": "__attribute__((target_clones(\"avx2,sse4.2\",\"default\"))) int f(){return 0;}", "defaultPresence": "present", "bodyCount": 1},
+    {"name": "missing", "source": "__attribute__((target_clones(\"avx2\",\"sse4.2\"))) int f(){return 0;}", "defaultPresence": "unknown", "targetApplicability": "unknown", "blocking": false, "reason": "无编译器 profile，不能将列表缺失升级为已确认缺口；可信 profile 的反例另由单元测试覆盖"},
+    {"name": "macro", "source": "__attribute__((target_clones(FEATURES))) int f(){return 0;}", "defaultPresence": "unknown"},
+    {"name": "default_avx", "source": "__attribute__((target(\"default\"))) void f(){_mm256_setzero_ps();}", "defaultPresence": "present", "dependencyPreserved": "_mm256_setzero_ps"},
+    {"name": "unknown_call", "source": "__attribute__((target_clones(\"avx2,default\"))) int f(){return external();}", "bodyDependency": "unknown"},
+    {"name": "overload", "source": "__attribute__((target(\"avx2\"))) int f(int n){return n;}\n__attribute__((target(\"default\"))) int f(double n){return 0;}", "groups": 2},
+    {"name": "namespace", "source": "namespace A { __attribute__((target(\"avx2\"))) int f(){return 1;} }\nnamespace B { __attribute__((target(\"default\"))) int f(){return 0;} }", "groups": 2},
+    {"name": "conditional", "source": "#if X\n__attribute__((target(\"default\"))) int f(){return 0;}\n#endif\n__attribute__((target(\"avx2\"))) int f(){return 1;}", "groupCompleteness": "unknown"},
+    {"name": "unrelated", "source": "__attribute__((no_sanitize(\"memory\"))) int f(){return 0;}", "groups": 0},
+    {"name": "dispatch", "source": "__attribute__((cpu_dispatch(ivybridge))) int f();", "defaultPresence": "unknown"}
+  ],
+  "invariants": ["不同文件的 static 函数不能合并", "不同配置不能借用 default", "共享体与同一源码位置不按 clone 数重复", "无 profile 不能确认 default 缺口", "default 不能撤销原 high/blocker", "不能从未发现依赖推出 ready"]
+}

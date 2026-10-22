@@ -1,0 +1,8 @@
+{
+  "input": {
+    "path": "src/目录/a.c",
+    "profile": {"name": "source-preserving", "version": "1"},
+    "capabilities": ["memory.fence", "fp.operations"]
+  },
+  "sha256": "4f3fa09da25853b5937198db216e813fbec940151f6f146fef0c0e575ed275ce"
+}

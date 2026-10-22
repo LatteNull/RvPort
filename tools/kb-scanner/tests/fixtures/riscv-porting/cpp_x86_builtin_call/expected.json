@@ -1,0 +1,7 @@
+{
+  "ruleId": "C_CPP.X86.BUILTIN_CALL",
+  "count": 2,
+  "symbols": ["__builtin_cpu_supports", "__builtin_ia32_rdtsc"]
+}
+
+

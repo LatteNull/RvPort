@@ -1,0 +1,11 @@
+# Test-only additions. Runtime packages are inherited without version changes.
+-r runtime.lock
+coverage==7.10.6
+attrs==26.1.0
+jsonschema==4.26.0
+jsonschema-specifications==2025.9.1
+PyYAML==6.0.3
+referencing==0.37.0
+rpm==0.4.0
+rpds-py==2026.6.3
+specfile==0.41.1

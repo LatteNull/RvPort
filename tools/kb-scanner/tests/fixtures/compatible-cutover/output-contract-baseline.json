@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "1.0",
+  "topLevelFields": ["schemaVersion", "tool", "rulePack", "project", "summary", "findings", "diagnostics"],
+  "artifacts": ["scan-result.json", "scan-report.html", "scan.log"],
+  "findingFields": [
+    "id", "rule_id", "severity", "confidence", "title", "title_en", "file", "line", "column",
+    "symbol", "reason", "reason_en", "suggestion", "suggestion_en", "snippet", "scan_mode",
+    "finding_type", "source_kind", "is_actionable", "is_reference_source", "is_blocking",
+    "arch_reachability", "branch_group_id", "branch_role", "compatible_sibling_branch",
+    "compatible_branch_kind", "build_context", "alternative_impl", "condition_macros", "trace",
+    "location", "context"
+  ],
+  "summaryFields": [
+    "files", "findings", "issues", "hints", "blocking", "portabilityGaps", "inactiveOrGuarded",
+    "referenceSources", "references"
+  ],
+  "exitCodes": {"success": 0, "diagnostic": 1, "fatal": 2},
+  "optionalExtensions": ["summary.readiness", "findings[].trace"],
+  "optionalTraceFields": ["referenceClosure", "primarySpan", "occurrenceCount", "occurrences"],
+  "diagnosticCompatibility": "array-of-strings-with-deterministic-aggregation"
+}

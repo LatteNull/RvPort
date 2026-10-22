@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "1.0",
+  "rules": [
+    "primaryOccurrenceId resolves inside the containing finding",
+    "all step, edge, primaryPath, impactStepIds, and diagnostic findingIds resolve uniquely",
+    "typed references resolve through the analysis object catalog with producer, schemaVersion, and digest",
+    "complete evidence chains have no breaks",
+    "partial, unknown, and ambiguous evidence chains contain at least one break",
+    "primaryPath contains no cycle"
+  ]
+}

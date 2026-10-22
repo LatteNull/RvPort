@@ -1,0 +1,98 @@
+{
+  "id": "73181be9-97cf-47b5-9fc3-b2de266a7dd8",
+  "projectId": "9915a12c-9338-419e-b589-9a3984d56c62",
+  "taskId": "fb5ae5b3-43ae-47b5-a922-5452ec31f475",
+  "analyzerType": "FLOATING_POINT",
+  "sourceRevisionId": "a019391f-89e6-4d8e-8eed-1b7871055541",
+  "buildRunId": "be53c759-1e2e-459a-9f73-ef8289ecfaf2",
+  "artifactSetId": "f9e95a698b4c5c97c60148791ce9daafbd906d7fd38f1f89550a530b65524af9",
+  "analysisMode": "AST_BC_COMPLETE",
+  "bcStatus": "READY",
+  "bcPlannedCount": 3,
+  "bcUsableCount": 3,
+  "bcFailedCount": 0,
+  "astOnlyCount": 0,
+  "bcDegradationReason": null,
+  "environmentConfigVersion": 2,
+  "toolVersion": "0.5.1",
+  "status": "COMPLETE",
+  "verdict": "complete",
+  "exitCode": 0,
+  "summary": {
+    "status": "complete",
+    "bcAudit": {
+      "translationUnits": {
+        "failedCount": 0,
+        "missingCount": 0,
+        "excludedCount": 11,
+        "producedCount": 3,
+        "excludedReasons": {
+          "NON_C_CPP_COMMAND": 9,
+          "BUILD_SYSTEM_PROBE": 2
+        },
+        "rawCommandCount": 14,
+        "cCppCandidateCount": 5,
+        "projectTranslationUnitCount": 3
+      }
+    },
+    "verdict": "analyzed",
+    "bcStatus": "READY",
+    "analysisMode": "AST_BC_COMPLETE",
+    "analyzerType": "FLOATING_POINT",
+    "astOnlyCount": 0,
+    "findingCount": 1,
+    "bcFailedCount": 0,
+    "bcUsableCount": 3,
+    "bcPlannedCount": 3,
+    "candidateCount": 0,
+    "diagnosticCount": 1,
+    "languageContexts": [
+      {
+        "dialect": "compiler-default",
+        "compiler": "c++",
+        "language": "c++",
+        "standard": "compiler-default",
+        "standardOption": null,
+        "standardSource": "compiler-default"
+      },
+      {
+        "dialect": "compiler-default",
+        "compiler": "ld",
+        "language": "c",
+        "standard": "compiler-default",
+        "standardOption": null,
+        "standardSource": "compiler-default"
+      },
+      {
+        "dialect": "iso",
+        "compiler": "c++",
+        "language": "c++",
+        "standard": "c++17",
+        "standardOption": "-std=c++17",
+        "standardSource": "explicit"
+      },
+      {
+        "dialect": "compiler-default",
+        "compiler": "ar",
+        "language": "c",
+        "standard": "compiler-default",
+        "standardOption": null,
+        "standardSource": "compiler-default"
+      }
+    ],
+    "sourceRootDigest": "cf77ff4ee3f9e61fd5ce0c1bdeb34c48ca25507d421a963536a1eb2e074b13c7",
+    "bcDegradationReason": null
+  },
+  "findingCount": 1,
+  "candidateCount": 0,
+  "diagnosticCount": 1,
+  "currentSourceRevision": true,
+  "staleReasons": [],
+  "requestArtifactId": "89474b92-dc8e-496e-9b93-55c7ea4cc90d",
+  "resultJsonArtifactId": "a73b4e9a-cce1-4949-9ba5-835870166896",
+  "resultHtmlArtifactId": "3210ab2e-1bf9-4c4a-98c2-25bd081fec46",
+  "auditBundleArtifactId": null,
+  "startedAt": "2026-10-12T05:27:33.875445Z",
+  "finishedAt": "2026-10-12T05:29:33.633135Z",
+  "createdAt": "2026-10-12T05:27:32.719704Z"
+}

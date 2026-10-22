@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "kind": "ValidationSuiteManifest",
+  "analysis_version": "0.1.0",
+  "policy_id": "analysis-validation-v1",
+  "suite_id": "offline-language-matrix",
+  "suite_version": 1,
+  "title": "C/C++ 一次性发布离线人工真值语料",
+  "title_en": "C/C++ single-publication offline human-truth corpus",
+  "profiles": [
+    {"id":"c11-clang","language":"c","standard":"c11","compiler":"clang","compiler_version":"21.1.8","target":"x86_64-unknown-linux-gnu","data_layout":"e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128","optimization":"O0","debug":true,"compile_arguments":["-std=c11","-pthread","-O0","-g"]},
+    {"id":"c11-gcc","language":"c","standard":"c11","compiler":"gcc","compiler_version":"13.2.0","target":"x86_64-linux-gnu","data_layout":"e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128","optimization":"O0","debug":false,"compile_arguments":["-std=c11","-pthread","-O0"]},
+    {"id":"c17-clang","language":"c","standard":"c17","compiler":"clang","compiler_version":"21.1.8","target":"x86_64-unknown-linux-gnu","data_layout":"e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128","optimization":"O1","debug":false,"compile_arguments":["-std=c17","-pthread","-O1"]},
+    {"id":"c17-gcc","language":"c","standard":"c17","compiler":"gcc","compiler_version":"13.2.0","target":"x86_64-linux-gnu","data_layout":"e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128","optimization":"O1","debug":true,"compile_arguments":["-std=c17","-pthread","-O1","-g"]},
+    {"id":"cpp17-clang","language":"c++","standard":"c++17","compiler":"clang","compiler_version":"21.1.8","target":"x86_64-unknown-linux-gnu","data_layout":"e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128","optimization":"O2","debug":true,"compile_arguments":["-std=c++17","-pthread","-O2","-g"]},
+    {"id":"cpp17-gcc","language":"c++","standard":"c++17","compiler":"gcc","compiler_version":"13.2.0","target":"x86_64-linux-gnu","data_layout":"e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128","optimization":"O2","debug":false,"compile_arguments":["-std=c++17","-pthread","-O2"]},
+    {"id":"cpp20-clang","language":"c++","standard":"c++20","compiler":"clang","compiler_version":"21.1.8","target":"x86_64-unknown-linux-gnu","data_layout":"e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128","optimization":"O3","debug":false,"compile_arguments":["-std=c++20","-pthread","-O3"]},
+    {"id":"cpp20-gcc","language":"c++","standard":"c++20","compiler":"gcc","compiler_version":"13.2.0","target":"x86_64-linux-gnu","data_layout":"e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128","optimization":"Os","debug":true,"compile_arguments":["-std=c++20","-pthread","-Os","-g"]}
+  ],
+  "cases": [
+    {
+      "id":"c11-correct-single","profile_id":"c11-clang","category":"correct","layout":"single-tu","source_root":"cases/c11-correct-single",
+      "sources":[{"path":"cases/c11-correct-single/main.c","sha256":"98922092d6f0b87a3ea85167c4a49080b08a6ae6c13b80afd6257d9e940bd1c6","role":"source"}],
+      "compile_commands":{"path":"cases/c11-correct-single/compile_commands.json","sha256":"5a9746ff623ad28be00faf635529ba1f883ee22add2a90944df7df744c33cac8","role":"compile-database"},
+      "scope":{"path":"cases/c11-correct-single/scope.json","sha256":"57ee93669c7036991f5d2332dc071f825f609fbf5e9bc39a934d4c67d0f6e89f","role":"scope"},"roots":["main"],
+      "truth":{"path":"cases/c11-correct-single/truth.json","sha256":"2ef0d7e93068b74662a4c36076f3e617350a3264dc7fa801647456a8b3b4bcea","role":"truth"},"stages":[],"observation_report":null,"observation_graph":null
+    },
+    {
+      "id":"c11-risk-multi","profile_id":"c11-gcc","category":"risk","layout":"multi-tu","source_root":"cases/c11-risk-multi",
+      "sources":[{"path":"cases/c11-risk-multi/consumer.c","sha256":"f3af19fc5321a5896a417ae89c99a36fc05e66d7a75cd0520b46b9718b0eaa34","role":"source"},{"path":"cases/c11-risk-multi/main.c","sha256":"cc16a3f642f07357383a1579f8e0632651c902891e0fc465d7099387862e7a3a","role":"source"},{"path":"cases/c11-risk-multi/producer.c","sha256":"2abe1b3798970e3de2ba954696a53d461b87e2a90d27617166aacf13d87c31ef","role":"source"},{"path":"cases/c11-risk-multi/shared.h","sha256":"7d907592781fa910ad67d7280f97b0ea3c3b22104b236d62e61e2d9dd8c7f8df","role":"header"}],
+      "compile_commands":{"path":"cases/c11-risk-multi/compile_commands.json","sha256":"62913eaa0e430bcaf5034707de9bf707f9ffc0f01b74759acd33f486150c367e","role":"compile-database"},
+      "scope":{"path":"cases/c11-risk-multi/scope.json","sha256":"6c781b92fc4a3a5683476b2aff602562f8c588826a9e2bf13cff156dfa4e0668","role":"scope"},"roots":["main"],
+      "truth":{"path":"cases/c11-risk-multi/truth.json","sha256":"2fe1a635258106597a912d3811334dccaafa37810ab7b0badd4f2b11e6d078fe","role":"truth"},"stages":[],"observation_report":null,"observation_graph":null
+    },
+    {
+      "id":"c17-correct-multi","profile_id":"c17-gcc","category":"correct","layout":"multi-tu","source_root":"cases/c17-correct-multi",
+      "sources":[{"path":"cases/c17-correct-multi/consumer.c","sha256":"4c01177385e71e56bcb03dfd3d8eedb3a2b59f9f5b1776b17e55eaea6632f76f","role":"source"},{"path":"cases/c17-correct-multi/main.c","sha256":"cc16a3f642f07357383a1579f8e0632651c902891e0fc465d7099387862e7a3a","role":"source"},{"path":"cases/c17-correct-multi/producer.c","sha256":"1a3b96894cf2b6b54c9cf51f31551e5a48da7b42b67650a98833c84e45403b32","role":"source"},{"path":"cases/c17-correct-multi/shared.h","sha256":"7d907592781fa910ad67d7280f97b0ea3c3b22104b236d62e61e2d9dd8c7f8df","role":"header"}],
+      "compile_commands":{"path":"cases/c17-correct-multi/compile_commands.json","sha256":"9ea9a9331889c99294569597fc69b1f1a29a169328c2993c0addb1b86bc187d8","role":"compile-database"},
+      "scope":{"path":"cases/c17-correct-multi/scope.json","sha256":"346acba73be1fa74da6c63261465c3c65202ef222ec83b67d2d8a6c025817a81","role":"scope"},"roots":["main"],
+      "truth":{"path":"cases/c17-correct-multi/truth.json","sha256":"d652c14fafe28d1e6bee34621144d0068c81a07aeff56f1e686a5b7c52327a85","role":"truth"},"stages":[],"observation_report":null,"observation_graph":null
+    },
+    {
+      "id":"c17-unknown-single","profile_id":"c17-clang","category":"unknown","layout":"single-tu","source_root":"cases/c17-unknown-single",
+      "sources":[{"path":"cases/c17-unknown-single/main.c","sha256":"89ce546a2ce340f07900aad9599c72e81ef8a355e02492665fd1c922ac5af17b","role":"source"}],
+      "compile_commands":{"path":"cases/c17-unknown-single/compile_commands.json","sha256":"94a6df91c02068956ed93d1d8e9cdd235dc06ef96cd6d05be1bf0ab304bdbf0c","role":"compile-database"},
+      "scope":{"path":"cases/c17-unknown-single/scope.json","sha256":"f11c39e8a7f336ef5fb4d9b4a77f7fb25992f67f80b5160a7ef810e023b4383a","role":"scope"},"roots":["main"],
+      "truth":{"path":"cases/c17-unknown-single/truth.json","sha256":"911bdea8c82ba8a7c1121e4095702bd444d93afa3b7721acd374e12e583de023","role":"truth"},"stages":[],"observation_report":null,"observation_graph":null
+    },
+    {
+      "id":"cpp17-risk-single","profile_id":"cpp17-clang","category":"risk","layout":"single-tu","source_root":"cases/cpp17-risk-single",
+      "sources":[{"path":"cases/cpp17-risk-single/main.cpp","sha256":"dd74d301a9c63872fdd7ae58eb811c8a71ff818012471975542772f2da42d118","role":"source"}],
+      "compile_commands":{"path":"cases/cpp17-risk-single/compile_commands.json","sha256":"a038ca3215b9e95b927a6d7517e4a1d320cc810899ba10181cfd705f75e9c2ea","role":"compile-database"},
+      "scope":{"path":"cases/cpp17-risk-single/scope.json","sha256":"bd7c44dee9de31ad2e01162500612df56066df1530b7cc00900a7b6bdd81ee24","role":"scope"},"roots":["main"],
+      "truth":{"path":"cases/cpp17-risk-single/truth.json","sha256":"7cc0256ff4c31106b0c32ec217553af981e98ef3aebb317d9ab84b7f9f7310e7","role":"truth"},"stages":[],"observation_report":null,"observation_graph":null
+    },
+    {
+      "id":"cpp17-unknown-multi","profile_id":"cpp17-gcc","category":"unknown","layout":"multi-tu","source_root":"cases/cpp17-unknown-multi",
+      "sources":[{"path":"cases/cpp17-unknown-multi/consumer.cpp","sha256":"f8e0512e6f0687e7633e68f9fee93204b3169f2e81a5166034e75245941d111f","role":"source"},{"path":"cases/cpp17-unknown-multi/main.cpp","sha256":"5ff0fc9f2d2f6b7acb28d2fb7eca83fcd5160132c845a5b3025e0334c14a8775","role":"source"},{"path":"cases/cpp17-unknown-multi/producer.cpp","sha256":"d5062280cbfc538496681bd6f8268f23d84910497063fd194b3936c37deecff5","role":"source"},{"path":"cases/cpp17-unknown-multi/shared.hpp","sha256":"c1f166b7373ba04365021afd4c1aa404a4f592363096853c6730268c02891f98","role":"header"}],
+      "compile_commands":{"path":"cases/cpp17-unknown-multi/compile_commands.json","sha256":"ab39acc8b79d06d4306dd39c09ba663d2f2fe0667789fd51e8d4906e72b72687","role":"compile-database"},
+      "scope":{"path":"cases/cpp17-unknown-multi/scope.json","sha256":"6a357bc2a52d80919bf44b972825edde40125699e04d92341ee6446d9395bb10","role":"scope"},"roots":["main"],
+      "truth":{"path":"cases/cpp17-unknown-multi/truth.json","sha256":"7ad790cbd001221f9fad7f88aacc8dc858e2e5c5bef0916d8653a016ceb7e21a","role":"truth"},"stages":[],"observation_report":null,"observation_graph":null
+    },
+    {
+      "id":"cpp20-correct-single","profile_id":"cpp20-clang","category":"correct","layout":"single-tu","source_root":"cases/cpp20-correct-single",
+      "sources":[{"path":"cases/cpp20-correct-single/main.cpp","sha256":"4ecc2099027385ec45e90618e420a36a02b6d33f70680f8e6a931f3bf955a017","role":"source"}],
+      "compile_commands":{"path":"cases/cpp20-correct-single/compile_commands.json","sha256":"83c61dad689dd29008d91944a529a2b5d795f06f76d8f89b29166c7b4d768934","role":"compile-database"},
+      "scope":{"path":"cases/cpp20-correct-single/scope.json","sha256":"ca136032b583559b25879975f52925ffb7fe311a8191f8b0bc69e75483e04a59","role":"scope"},"roots":["main"],
+      "truth":{"path":"cases/cpp20-correct-single/truth.json","sha256":"d7620ae0d533014ea768a505474f56a765b4d7d6aac420845d532b79b6786426","role":"truth"},"stages":[],"observation_report":null,"observation_graph":null
+    },
+    {
+      "id":"cpp20-risk-multi","profile_id":"cpp20-gcc","category":"risk","layout":"multi-tu","source_root":"cases/cpp20-risk-multi",
+      "sources":[{"path":"cases/cpp20-risk-multi/consumer.cpp","sha256":"f8e0512e6f0687e7633e68f9fee93204b3169f2e81a5166034e75245941d111f","role":"source"},{"path":"cases/cpp20-risk-multi/main.cpp","sha256":"5ff0fc9f2d2f6b7acb28d2fb7eca83fcd5160132c845a5b3025e0334c14a8775","role":"source"},{"path":"cases/cpp20-risk-multi/producer.cpp","sha256":"63099af5c16d38ed600d63cbc10c1b9842fbe8d0ce3064ac28ecd77005d16771","role":"source"},{"path":"cases/cpp20-risk-multi/shared.hpp","sha256":"c1f166b7373ba04365021afd4c1aa404a4f592363096853c6730268c02891f98","role":"header"}],
+      "compile_commands":{"path":"cases/cpp20-risk-multi/compile_commands.json","sha256":"bc1cd831973073df8e21888a244e5bbe0eabebb98bfe930dd2d8be8d9cfad6f1","role":"compile-database"},
+      "scope":{"path":"cases/cpp20-risk-multi/scope.json","sha256":"ccd984e56b0761dad5a97d6c541c916950e99a5aea8ef115f24f4c050eea23c7","role":"scope"},"roots":["main"],
+      "truth":{"path":"cases/cpp20-risk-multi/truth.json","sha256":"58f82f95680ce08e4ed704ab6776b61d56880f42301e7a2561f56b53f2dc473b","role":"truth"},"stages":[],"observation_report":null,"observation_graph":null
+    }
+  ],
+  "real_project_profile": null
+}

@@ -1,0 +1,22 @@
+id: CPP.X86.CONSTEXPR_ARCH_BRANCH
+language: cpp
+severity: medium
+confidence: medium
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        ignoreCommentLines: true
+        symbolGroup: 1
+        regex: "\\bif\\s+constexpr\\s*\\([^\\n;]*(\\b(?:x86|avx[0-9]*|sse[0-9]*|__AVX[0-9A-Z_]*__|__SSE[0-9A-Z_]*__)\\b)"
+message:
+  zh-CN:
+    title: "C++ if constexpr 分支绑定 x86 后端"
+    reason: "C++ 代码使用 if constexpr 选择 x86/SSE/AVX 相关路径，这通常表示编译期架构分派中存在 x86-only 分支。"
+    suggestion: "建议确认该分派是否包含 RISC-V/portable 分支；如果没有，需要补充目标架构分支并避免让 x86 分支成为默认路径。"
+  en-US:
+    title: "C++ if constexpr branch is bound to an x86 backend"
+    reason: "The C++ code uses if constexpr to select an x86/SSE/AVX-related path, which usually means the compile-time architecture dispatch contains an x86-only branch."
+    suggestion: "Check whether the dispatch includes a RISC-V or portable branch. If not, add a target-architecture branch and avoid making the x86 branch the default path."
+

@@ -1,0 +1,26 @@
+id: RPM_SPEC.ARCH.CONDITIONAL_DEPENDENCY
+language: rpm_spec
+severity: medium
+confidence: medium
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        pathSuffixIn:
+          - ".spec"
+        ignoreCommentLines: true
+        ignoreRpmChangelog: true
+        sourceKind: rpm_spec
+        symbolGroup: 1
+        singleFindingPerLine: true
+        regex: "^\\s*(BuildRequires|Requires(?:\\([^)]*\\))?|Source[0-9]*|Patch[0-9]*)\\s*[:=].*(?:x86_64|amd64|i[3-6]86|%\\{\\??ix86\\}|%\\{\\??x86_64\\}|sse|avx|avx2|avx512|aesni).*$"
+message:
+  zh-CN:
+    title: "RPM spec 存在架构相关依赖或资源选择"
+    reason: "RPM spec 中的依赖、Source 或 Patch 声明包含 x86/SIMD 线索，可能代表打包阶段选择了架构专属资源。"
+    suggestion: "检查该依赖或资源是否只适用于 x86；如果 RISC-V 需要不同资源，应补充对应条件分支。"
+  en-US:
+    title: "RPM spec contains architecture-related dependency or resource selection"
+    reason: "The RPM spec dependency, Source, or Patch declaration contains x86/SIMD signals that may select architecture-specific packaging resources."
+    suggestion: "Verify whether the dependency or resource is x86-only; add a RISC-V branch when different resources are required."

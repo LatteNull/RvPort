@@ -1,0 +1,250 @@
+{
+  "schemaVersion": "2.0",
+  "scan": {
+    "id": "scan-complete",
+    "tool": {"name": "kb-scanner", "version": "design-contract"},
+    "scope": {
+      "domain": "c-cpp-x86-to-riscv",
+      "targetArchitecture": "riscv64",
+      "staticAnalysisOnly": true,
+      "compiled": false,
+      "linked": false,
+      "testsExecuted": false
+    },
+    "artifactNames": ["scan-result.json", "scan-report.html", "scan.log"],
+    "knowledgeSources": [
+      {
+        "id": "clang-x86-entries",
+        "kind": "compiler-derived",
+        "sha256": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7"
+      }
+    ]
+  },
+  "project": {
+    "id": "project-example",
+    "name": "schema-v2-example",
+    "filesAnalyzed": 1,
+    "status": "complete",
+    "reasonCodes": []
+  },
+  "summary": {
+    "files": 1,
+    "findings": 1,
+    "issues": 1,
+    "hints": 0,
+    "blocking": 1,
+    "portabilityGaps": 1,
+    "inactiveOrGuarded": 0,
+    "referenceSources": 0,
+    "references": 0,
+    "countUnit": "finding",
+    "readiness": "x86_only",
+    "status": "complete",
+    "reasonCodes": []
+  },
+  "findings": [
+    {
+      "id": "finding-intrinsic-call",
+      "fact": {
+        "kind": "intrinsic_call",
+        "symbol": "_mm256_add_ps",
+        "matchedText": "_mm256_add_ps",
+        "primaryLocation": {
+          "file": "src/vector.c",
+          "span": {
+            "start": {"line": 12, "column": 12},
+            "end": {"line": 12, "column": 25}
+          },
+          "context": {
+            "status": "complete",
+            "reasonCodes": [],
+            "lines": [
+              {"line": 11, "text": "static __m256 add(__m256 a, __m256 b) {"},
+              {"line": 12, "text": "    return _mm256_add_ps(a, b);"},
+              {"line": 13, "text": "}"}
+            ],
+            "highlights": [
+              {"line": 12, "startColumn": 12, "endColumn": 25}
+            ],
+            "budget": {"beforeLines": 2, "afterLines": 2, "maxLines": 16, "maxCharacters": 4096, "truncated": false}
+          }
+        },
+        "provenance": [
+          {"kind": "evidence", "id": "evidence-intrinsic-call", "producer": "cpp-frontend"}
+        ]
+      },
+      "conclusion": {
+        "title": "AVX intrinsic is selected for the RISC-V target",
+        "severity": "high",
+        "confidence": 1.0,
+        "findingType": "x86_intrinsic",
+        "actionable": true,
+        "blocking": true,
+        "archReachability": "selected",
+        "status": "complete",
+        "reason": "The selected source calls an AVX intrinsic confirmed by compiler-derived knowledge.",
+        "suggestion": "Replace or guard the AVX implementation with a RISC-V or portable implementation."
+      },
+      "occurrences": [
+        {
+          "id": "occurrence-intrinsic-call",
+          "kind": "source-call",
+          "location": {
+            "file": "src/vector.c",
+            "span": {
+              "start": {"line": 12, "column": 12},
+              "end": {"line": 12, "column": 25}
+            },
+            "context": {
+              "status": "complete",
+              "reasonCodes": [],
+              "lines": [
+                {"line": 11, "text": "static __m256 add(__m256 a, __m256 b) {"},
+                {"line": 12, "text": "    return _mm256_add_ps(a, b);"},
+                {"line": 13, "text": "}"}
+              ],
+              "highlights": [
+                {"line": 12, "startColumn": 12, "endColumn": 25}
+              ],
+              "budget": {"beforeLines": 2, "afterLines": 2, "maxLines": 16, "maxCharacters": 4096, "truncated": false}
+            }
+          },
+          "configuration": "target-riscv64",
+          "selectionStatus": "selected",
+          "status": "complete",
+          "reasonCodes": [],
+          "provenance": [
+            {"kind": "evidence", "id": "evidence-intrinsic-call", "producer": "cpp-frontend"}
+          ]
+        }
+      ],
+      "primaryOccurrenceId": "occurrence-intrinsic-call",
+      "evidenceChain": {
+        "status": "complete",
+        "reasonCodes": [],
+        "rootStepId": "step-01-source",
+        "primaryPath": ["step-01-source", "step-02-knowledge", "step-03-classification", "step-04-assessment"],
+        "steps": [
+          {
+            "id": "step-01-source",
+            "kind": "intrinsic_call",
+            "title": "Source calls _mm256_add_ps",
+            "status": "complete",
+            "reason": "The C++ frontend recovered the intrinsic call token.",
+            "reasonCodes": [],
+            "symbol": "_mm256_add_ps",
+            "configuration": "target-riscv64",
+            "selectionStatus": "selected",
+            "source": {
+              "file": "src/vector.c",
+              "span": {
+                "start": {"line": 12, "column": 12},
+                "end": {"line": 12, "column": 25}
+              },
+              "context": {
+                "status": "complete",
+                "reasonCodes": [],
+                "lines": [
+                  {"line": 11, "text": "static __m256 add(__m256 a, __m256 b) {"},
+                  {"line": 12, "text": "    return _mm256_add_ps(a, b);"},
+                  {"line": 13, "text": "}"}
+                ],
+                "highlights": [
+                  {"line": 12, "startColumn": 12, "endColumn": 25}
+                ],
+                "budget": {"beforeLines": 2, "afterLines": 2, "maxLines": 16, "maxCharacters": 4096, "truncated": false}
+              }
+            },
+            "provenance": [
+              {"kind": "evidence", "id": "evidence-intrinsic-call", "producer": "cpp-frontend"}
+            ]
+          },
+          {
+            "id": "step-02-knowledge",
+            "kind": "knowledge_match",
+            "title": "Compiler facts classify _mm256_add_ps as x86 AVX",
+            "status": "complete",
+            "reason": "The symbol exactly matches a compiler-derived intrinsic entry.",
+            "reasonCodes": [],
+            "symbol": "_mm256_add_ps",
+            "knowledge": {
+              "entryId": "clang-intrinsic-mm256-add-ps",
+              "category": "intrinsics",
+              "symbol": "_mm256_add_ps",
+              "producer": "compiler-facts",
+              "sourceId": "clang-x86-entries",
+              "sourceSha256": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7",
+              "provenance": [
+                {"kind": "knowledge", "id": "clang-intrinsic-mm256-add-ps", "producer": "compiler-facts"}
+              ]
+            },
+            "provenance": [
+              {"kind": "knowledge", "id": "clang-intrinsic-mm256-add-ps", "producer": "compiler-facts"}
+            ]
+          },
+          {
+            "id": "step-03-classification",
+            "kind": "classification",
+            "title": "Selected x86 dependency is blocking and actionable",
+            "status": "complete",
+            "reason": "Reachability and x86 knowledge are both complete.",
+            "reasonCodes": [],
+            "provenance": [
+              {"kind": "classification", "id": "classification-blocking-x86", "producer": "migration-classifier"}
+            ]
+          },
+          {
+            "id": "step-04-assessment",
+            "kind": "assessment",
+            "title": "Finding contributes to x86-only readiness",
+            "status": "complete",
+            "reason": "No portable or RISC-V alternative was found in the complete applicable scope.",
+            "reasonCodes": [],
+            "provenance": [
+              {"kind": "assessment", "id": "assessment-x86-only", "producer": "migration-assessor"}
+            ]
+          }
+        ],
+        "edges": [
+          {
+            "id": "edge-01-source-knowledge",
+            "fromStepId": "step-01-source",
+            "toStepId": "step-02-knowledge",
+            "kind": "matches_knowledge",
+            "status": "complete",
+            "reasonCodes": [],
+            "provenance": [
+              {"kind": "relation", "id": "relation-source-knowledge", "producer": "local-detector"}
+            ]
+          },
+          {
+            "id": "edge-02-knowledge-classification",
+            "fromStepId": "step-02-knowledge",
+            "toStepId": "step-03-classification",
+            "kind": "classified_as",
+            "status": "complete",
+            "reasonCodes": [],
+            "provenance": [
+              {"kind": "proofPath", "id": "proof-selected-x86", "producer": "migration-classifier"}
+            ]
+          },
+          {
+            "id": "edge-03-classification-assessment",
+            "fromStepId": "step-03-classification",
+            "toStepId": "step-04-assessment",
+            "kind": "impacts_assessment",
+            "status": "complete",
+            "reasonCodes": [],
+            "provenance": [
+              {"kind": "assessment", "id": "assessment-x86-only", "producer": "migration-assessor"}
+            ]
+          }
+        ],
+        "breaks": [],
+        "impactStepIds": ["step-03-classification", "step-04-assessment"],
+        "budget": {"maxDepth": 16, "maxVisited": 256, "maxPaths": 32, "visited": 4, "paths": 1, "truncated": false}
+      }
+    }
+  ],
+  "diagnostics": []
+}

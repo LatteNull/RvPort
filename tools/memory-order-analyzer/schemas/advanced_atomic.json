@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Id": {"type": "string", "minLength": 1, "maxLength": 4096},
+    "Hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "NullableId": {"type": ["string", "null"], "minLength": 1, "maxLength": 4096},
+    "Status": {"enum": ["complete", "partial", "failed", "not_run"]},
+    "Language": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+    "Dependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "digest"],
+      "properties": {"kind": {"$ref": "#/$defs/Id"}, "id": {"$ref": "#/$defs/Id"}, "digest": {"$ref": "#/$defs/Hash"}}
+    },
+    "Input": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {"path": {"$ref": "#/$defs/Id"}, "sha256": {"$ref": "#/$defs/Hash"}}
+    },
+    "Diagnostic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "detail", "detail_en", "suggestion", "suggestion_en", "relevant", "references"],
+      "properties": {
+        "code": {"$ref": "#/$defs/Id"}, "detail": {"$ref": "#/$defs/Id"}, "detail_en": {"$ref": "#/$defs/Id"},
+        "suggestion": {"type": ["string", "null"]}, "suggestion_en": {"type": ["string", "null"]},
+        "relevant": {"type": "boolean"}, "references": {"type": "array", "items": {"$ref": "#/$defs/Id"}}
+      }
+    },
+    "Budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["atomic_events", "objects", "rf_edges", "mo_nodes", "mo_branches", "assignments", "guards", "frontier_items", "scc_iterations", "worker_seconds", "worker_output_bytes", "request_seconds", "request_output_bytes"],
+      "properties": {
+        "atomic_events": {"type": "integer", "minimum": 1, "maximum": 100000},
+        "objects": {"type": "integer", "minimum": 1, "maximum": 10000},
+        "rf_edges": {"type": "integer", "minimum": 1, "maximum": 200000},
+        "mo_nodes": {"type": "integer", "minimum": 1, "maximum": 100000},
+        "mo_branches": {"type": "integer", "minimum": 1, "maximum": 200000},
+        "assignments": {"type": "integer", "minimum": 1, "maximum": 100000},
+        "guards": {"type": "integer", "minimum": 1, "maximum": 100000},
+        "frontier_items": {"type": "integer", "minimum": 1, "maximum": 100000},
+        "scc_iterations": {"type": "integer", "minimum": 1, "maximum": 32},
+        "worker_seconds": {"type": "integer", "minimum": 1, "maximum": 120},
+        "worker_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 67108864},
+        "request_seconds": {"type": "integer", "minimum": 1, "maximum": 600},
+        "request_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 134217728}
+      }
+    },
+    "Common": {
+      "type": "object",
+      "required": ["schema_version", "kind", "analysis_version", "policy_id"],
+      "properties": {"schema_version": {"const": 1}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "fence-rmw-publication-v1"}}
+    },
+    "AtomicEvent": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "artifact_key", "function_id", "context_id", "thread_instance_id", "source_id", "kind", "outcome", "object_key", "offset_bytes", "size_bytes", "address_space", "ordering", "failure_ordering", "syncscope", "operation", "compare_ref", "desired_ref", "observed_ref", "value", "weak", "guards", "multiplicity", "mo_member", "read_effect", "write_effect", "status", "reason", "evidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Id"}, "artifact_key": {"$ref": "#/$defs/Hash"}, "function_id": {"$ref": "#/$defs/Id"},
+        "context_id": {"$ref": "#/$defs/NullableId"}, "thread_instance_id": {"$ref": "#/$defs/NullableId"}, "source_id": {"$ref": "#/$defs/Id"},
+        "kind": {"enum": ["load", "store", "rmw", "cas", "fence", "initialization"]},
+        "outcome": {"enum": ["single", "success", "failure", "spurious-failure"]},
+        "object_key": {"$ref": "#/$defs/NullableId"}, "offset_bytes": {"type": ["integer", "null"]}, "size_bytes": {"type": ["integer", "null"], "minimum": 0},
+        "address_space": {"type": ["integer", "null"], "minimum": 0}, "ordering": {"$ref": "#/$defs/NullableId"}, "failure_ordering": {"$ref": "#/$defs/NullableId"},
+        "syncscope": {"$ref": "#/$defs/NullableId"}, "operation": {"$ref": "#/$defs/NullableId"}, "compare_ref": {"$ref": "#/$defs/NullableId"},
+        "desired_ref": {"$ref": "#/$defs/NullableId"}, "observed_ref": {"$ref": "#/$defs/NullableId"}, "value": {}, "weak": {"type": "boolean"},
+        "guards": {"type": "array", "uniqueItems": true, "items": {}}, "multiplicity": {"enum": ["single", "repeated", "unknown"]},
+        "mo_member": {"type": "boolean"}, "read_effect": {"type": "boolean"}, "write_effect": {"type": "boolean"},
+        "status": {"enum": ["exact", "candidate", "unknown"]}, "reason": {"$ref": "#/$defs/NullableId"},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/Id"}}
+      }
+    },
+    "FenceRmwPublicationRequest": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "model_id", "scope_id", "language_standard", "closed_scope", "module_facts", "source_facts", "thread_graph", "provenance_graph", "publication_graph", "root_plan", "demand_graph", "candidate_graph", "budgets"],
+        "properties": {
+          "schema_version": {"const": 1}, "kind": {"const": "FenceRmwPublicationRequest"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "fence-rmw-publication-v1"},
+          "model_id": {"const": "bounded-advanced-atomic-publication-v1"}, "scope_id": {"$ref": "#/$defs/Id"}, "language_standard": {"$ref": "#/$defs/Language"}, "closed_scope": {"type": "boolean"},
+          "module_facts": {"type": "array", "items": {"$ref": "#/$defs/Input"}}, "source_facts": {"type": "array", "items": {"$ref": "#/$defs/Input"}},
+          "thread_graph": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Input"}]}, "provenance_graph": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Input"}]},
+          "publication_graph": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Input"}]}, "root_plan": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Input"}]},
+          "demand_graph": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Input"}]}, "candidate_graph": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Input"}]},
+          "budgets": {"$ref": "#/$defs/Budgets"}
+        }}]
+    },
+    "AtomicSourceConstructFacts": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "language_standard", "dependencies", "constructs", "status", "frontier", "diagnostics", "semantic_digest"],
+        "properties": {"schema_version": {"const": 1}, "kind": {"const": "AtomicSourceConstructFacts"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "fence-rmw-publication-v1"}, "scope_id": {"$ref": "#/$defs/Id"}, "language_standard": {"$ref": "#/$defs/Language"}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "constructs": {"type": "array", "items": {"type": "object"}}, "status": {"$ref": "#/$defs/Status"}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "semantic_digest": {"$ref": "#/$defs/Hash"}}}]
+    },
+    "AdvancedAtomicFunctionFacts": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "artifact_key", "function_id", "function_name", "context_id", "layer", "status", "facts", "counts", "error", "semantic_digest"],
+        "properties": {
+          "schema_version": {"const": 1}, "kind": {"const": "AdvancedAtomicFunctionFacts"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "fence-rmw-publication-v1"},
+          "artifact_key": {"$ref": "#/$defs/Hash"}, "function_id": {"$ref": "#/$defs/Id"}, "function_name": {"$ref": "#/$defs/Id"}, "context_id": {"$ref": "#/$defs/NullableId"},
+          "layer": {"const": "advanced-atomic"}, "status": {"$ref": "#/$defs/Status"}, "facts": {"type": "object"}, "counts": {"type": "object"}, "error": {}, "semantic_digest": {"$ref": "#/$defs/Hash"}
+        }}]
+    },
+    "AdvancedAtomicLocalFacts": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "language_standard", "dependencies", "events", "local_order", "status", "frontier", "diagnostics", "semantic_digest"],
+        "properties": {"schema_version": {"const": 1}, "kind": {"const": "AdvancedAtomicLocalFacts"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "fence-rmw-publication-v1"}, "scope_id": {"$ref": "#/$defs/Id"}, "language_standard": {"$ref": "#/$defs/Language"}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "events": {"type": "array", "items": {"$ref": "#/$defs/AtomicEvent"}}, "local_order": {"type": "array", "items": {"type": "object"}}, "status": {"$ref": "#/$defs/Status"}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "semantic_digest": {"$ref": "#/$defs/Hash"}}}]
+    },
+    "BoundedAtomicCommunicationGraph": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "model_id", "scope_id", "language_standard", "release_sequence_policy", "dependencies", "events", "rf_edges", "mo_orders", "assignments", "release_sequences", "fence_pairings", "assessments", "counts", "status", "frontier", "diagnostics", "semantic_digest"],
+        "properties": {"schema_version": {"const": 1}, "kind": {"const": "BoundedAtomicCommunicationGraph"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "fence-rmw-publication-v1"}, "model_id": {"const": "bounded-advanced-atomic-publication-v1"}, "scope_id": {"$ref": "#/$defs/Id"}, "language_standard": {"$ref": "#/$defs/Language"}, "release_sequence_policy": {"enum": ["c11-c17-cpp17-v1", "cpp20-v1"]}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "events": {"type": "array", "items": {"$ref": "#/$defs/AtomicEvent"}}, "rf_edges": {"type": "array", "items": {"type": "object"}}, "mo_orders": {"type": "array", "items": {"type": "object"}}, "assignments": {"type": "array", "items": {"type": "object"}}, "release_sequences": {"type": "array", "items": {"type": "object"}}, "fence_pairings": {"type": "array", "items": {"type": "object"}}, "assessments": {"type": "array", "items": {"type": "object"}}, "counts": {"type": "object"}, "status": {"$ref": "#/$defs/Status"}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "semantic_digest": {"$ref": "#/$defs/Hash"}}}]
+    },
+    "AdvancedPublicationProtocolOverlay": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "dependencies", "protocols", "status", "frontier", "diagnostics", "semantic_digest"],
+        "properties": {"schema_version": {"const": 1}, "kind": {"const": "AdvancedPublicationProtocolOverlay"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "fence-rmw-publication-v1"}, "scope_id": {"$ref": "#/$defs/Id"}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "protocols": {"type": "array", "items": {"type": "object"}}, "status": {"$ref": "#/$defs/Status"}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "semantic_digest": {"$ref": "#/$defs/Hash"}}}]
+    },
+    "FenceRmwPublicationReport": {
+      "allOf": [{"$ref": "#/$defs/Common"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "model_id", "scope_id", "language_standard", "status", "verdict", "safety", "exit_code", "stages", "counts", "outputs", "cache", "findings", "frontier", "diagnostics", "limitations", "semantic_digest"],
+        "properties": {"schema_version": {"const": 1}, "kind": {"const": "FenceRmwPublicationReport"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "fence-rmw-publication-v1"}, "model_id": {"const": "bounded-advanced-atomic-publication-v1"}, "scope_id": {"type": ["string", "null"]}, "language_standard": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/Language"}]}, "status": {"$ref": "#/$defs/Status"}, "verdict": {"enum": ["complete-no-supported-risk", "risk", "inconclusive", "failed"]}, "safety": {"const": "not_established"}, "exit_code": {"enum": [0, 1, 2, 3]}, "stages": {"type": "object"}, "counts": {"type": "object"}, "outputs": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "cache": {"type": "object"}, "findings": {"type": "array", "items": {"type": "object"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "limitations": {"type": "array", "items": {"$ref": "#/$defs/Id"}}, "semantic_digest": {"$ref": "#/$defs/Hash"}}}]
+    }
+  }
+}

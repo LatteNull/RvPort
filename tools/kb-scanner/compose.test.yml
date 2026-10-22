@@ -1,0 +1,18 @@
+name: rvport-kb-scanner-test
+
+services:
+  kb-scanner-test:
+    image: rvport-kb-scanner-test:local
+    build:
+      context: ../..
+      dockerfile: tools/kb-scanner/Dockerfile.test
+      target: kb-scanner-test
+    network_mode: none
+    read_only: true
+    tmpfs:
+      - /tmp:size=512m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: "no"

@@ -1,0 +1,35 @@
+id: C_CPP.X86.REGISTER_NAME
+language: c_cpp
+severity: high
+confidence: high
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        pathSuffixIn:
+          - ".c"
+          - ".cc"
+          - ".cpp"
+          - ".cxx"
+          - ".h"
+          - ".hh"
+          - ".hpp"
+          - ".hxx"
+          - ".S"
+          - ".s"
+          - ".asm"
+          - ".inc"
+        symbolGroup: 1
+        regex: "(?<![A-Za-z0-9_])(%?(?:xmm|ymm|zmm)(?:[0-9]|[12][0-9]|3[01]))\\b"
+message:
+  zh-CN:
+    title: "硬编码 x86 SIMD 寄存器名"
+    reason: "代码中硬编码了 xmm/ymm/zmm 寄存器名，说明实现依赖 x86 SIMD 寄存器分配和汇编约束。"
+    suggestion: "建议重新设计向量后端，不要在公共逻辑中直接绑定寄存器名；RISC-V 侧应使用独立汇编或 intrinsic 后端。"
+  en-US:
+    title: "Hard-codes x86 SIMD register names"
+    reason: "The code hard-codes xmm/ymm/zmm register names, which means the implementation depends on x86 SIMD register allocation and assembly constraints."
+    suggestion: "Redesign the vector backend and avoid binding public logic directly to register names. The RISC-V side should use an independent assembly or intrinsic backend."
+
+

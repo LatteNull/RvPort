@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "CppRaiiValidationTruth",
+  "analysis_version": "0.1.0",
+  "policy_id": "cpp-raii-synchronization-v1",
+  "suite_version": "a4-v1",
+  "cases": [
+    {"case_id": "c11-direct-same", "mutexes": ["c11-direct-same:mutex"], "owners": ["c11-direct-same:owner"], "regions": ["c11-direct-same:owner:c11-direct-same:thread"], "proofs": ["mutual-exclusion:c11-direct-same:mutex"], "unknown": []},
+    {"case_id": "c11-no-lock", "mutexes": [], "owners": [], "regions": [], "proofs": [], "unknown": []},
+    {"case_id": "c17-different", "mutexes": ["c17-different:mutex"], "owners": ["c17-different:owner"], "regions": ["c17-different:owner:c17-different:thread"], "proofs": [], "unknown": []},
+    {"case_id": "c17-same", "mutexes": ["c17-same:mutex"], "owners": ["c17-same:owner"], "regions": ["c17-same:owner:c17-same:thread"], "proofs": ["mutual-exclusion:c17-same:mutex"], "unknown": []},
+    {"case_id": "cpp17-guard", "mutexes": ["cpp17-guard:mutex"], "owners": ["cpp17-guard:owner"], "regions": ["cpp17-guard:owner:cpp17-guard:thread"], "proofs": ["mutual-exclusion:cpp17-guard:mutex"], "unknown": []},
+    {"case_id": "cpp17-unique", "mutexes": ["cpp17-unique:mutex"], "owners": ["cpp17-unique:owner"], "regions": ["cpp17-unique:owner:cpp17-unique:thread"], "proofs": [], "unknown": []},
+    {"case_id": "cpp20-libcxx-guard", "mutexes": ["cpp20-libcxx-guard:mutex"], "owners": ["cpp20-libcxx-guard:owner"], "regions": ["cpp20-libcxx-guard:owner:cpp20-libcxx-guard:thread"], "proofs": ["mutual-exclusion:cpp20-libcxx-guard:mutex"], "unknown": []},
+    {"case_id": "cpp20-libstd-scoped", "mutexes": ["cpp20-libstd-scoped:mutex"], "owners": ["cpp20-libstd-scoped:owner"], "regions": ["cpp20-libstd-scoped:owner:cpp20-libstd-scoped:thread"], "proofs": [], "unknown": []}
+  ],
+  "semantic_digest": "f053c9fce20c848cd9fb647919bb71103e78dc16f23ad7cf8b6e821b259fb70c"
+}

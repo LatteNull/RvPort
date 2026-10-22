@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-precision-scanner/validation/v1/validation-result.schema.json",
+  "type": "object",
+  "required": ["kind", "schema_version", "corpus_digest", "oracle_digest", "tool_version", "request_schema_version", "result_schema_version", "case_results", "per_rule", "overall", "gates", "semantic_digest"],
+  "properties": {
+    "kind": {"const": "FloatingPointScannerValidationResult"},
+    "schema_version": {"const": "1.0"},
+    "corpus_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "oracle_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "tool_version": {"type": "string", "minLength": 1},
+    "request_schema_version": {"type": "string", "minLength": 1},
+    "result_schema_version": {"type": "string", "minLength": 1},
+    "case_results": {"type": "array"},
+    "per_rule": {"type": "object"},
+    "overall": {"type": "object"},
+    "gates": {"type": "object"},
+    "semantic_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  }
+}

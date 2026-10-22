@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "NonEmpty": {"type": "string", "minLength": 1},
+    "Status": {"enum": ["complete", "partial", "failed"]},
+    "Dependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "digest"],
+      "properties": {
+        "kind": {"$ref": "#/$defs/NonEmpty"},
+        "id": {"$ref": "#/$defs/NonEmpty"},
+        "digest": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "Diagnostic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "detail", "detail_en", "limitation", "limitation_en", "suggestion", "suggestion_en", "source"],
+      "properties": {
+        "code": {"$ref": "#/$defs/NonEmpty"},
+        "detail": {"$ref": "#/$defs/NonEmpty"},
+        "detail_en": {"$ref": "#/$defs/NonEmpty"},
+        "limitation": {"$ref": "#/$defs/NonEmpty"},
+        "limitation_en": {"$ref": "#/$defs/NonEmpty"},
+        "suggestion": {"type": ["string", "null"]},
+        "suggestion_en": {"type": ["string", "null"]},
+        "source": {"type": ["object", "null"]}
+      }
+    },
+    "Budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["translation_units", "source_nodes", "ir_nodes", "profiles", "mutexes", "owners", "wrappers", "call_contexts", "transitions", "held_regions", "relations", "recursive_iterations", "candidate_targets", "worker_seconds", "worker_output_bytes", "request_seconds", "request_output_bytes", "diagnostic_bytes"],
+      "properties": {
+        "translation_units": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "source_nodes": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "ir_nodes": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "profiles": {"type": "integer", "minimum": 1, "maximum": 64},
+        "mutexes": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "owners": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "wrappers": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "call_contexts": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "transitions": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "held_regions": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "relations": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "recursive_iterations": {"type": "integer", "minimum": 1, "maximum": 64},
+        "candidate_targets": {"type": "integer", "minimum": 1, "maximum": 64},
+        "worker_seconds": {"type": "integer", "minimum": 1, "maximum": 300},
+        "worker_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 67108864},
+        "request_seconds": {"type": "integer", "minimum": 1, "maximum": 3600},
+        "request_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 268435456},
+        "diagnostic_bytes": {"type": "integer", "minimum": 128, "maximum": 4096}
+      }
+    },
+    "Base": {
+      "type": "object",
+      "required": ["schema_version", "kind", "analysis_version", "policy_id"],
+      "properties": {
+        "schema_version": {"const": 1},
+        "kind": {"$ref": "#/$defs/NonEmpty"},
+        "analysis_version": {"const": "0.1.0"},
+        "policy_id": {"const": "cpp-raii-synchronization-v1"}
+      }
+    },
+    "Member": {
+      "type": "object", "additionalProperties": false,
+      "required": ["physical_tu_id", "profile_id", "language", "standard", "source_facts", "ir_facts"],
+      "properties": {
+        "physical_tu_id": {"$ref": "#/$defs/NonEmpty"},
+        "profile_id": {"$ref": "#/$defs/Digest"},
+        "language": {"enum": ["c", "c++"]},
+        "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+        "source_facts": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]},
+        "ir_facts": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]}
+      }
+    },
+    "WrapperSignature": {
+      "type": "object", "additionalProperties": false,
+      "required": ["role", "symbol", "calling_convention", "parameter_roles", "exception_behavior", "digest"],
+      "properties": {
+        "role": {"enum": ["mutex-lock", "mutex-unlock", "owner-construct", "owner-destruct", "owner-move", "owner-lock", "owner-unlock", "owner-owns-lock", "scoped-lock"]},
+        "symbol": {"$ref": "#/$defs/NonEmpty"},
+        "calling_convention": {"$ref": "#/$defs/NonEmpty"},
+        "parameter_roles": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "exception_behavior": {"enum": ["nothrow", "may-throw", "cleanup", "unknown"]},
+        "digest": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "Mutex": {
+      "type": "object", "additionalProperties": true,
+      "required": ["id", "object_id", "kind", "resolution", "source_nodes", "ir_nodes"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Digest"}, "object_id": {"$ref": "#/$defs/NonEmpty"},
+        "kind": {"enum": ["plain", "recursive", "timed", "robust", "unknown"]},
+        "resolution": {"enum": ["exact", "candidate", "ambiguous", "unresolved"]},
+        "source_nodes": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "ir_nodes": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}
+      }
+    },
+    "Owner": {
+      "type": "object", "additionalProperties": true,
+      "required": ["id", "object_id", "owner_kind", "mutex_ids", "state", "thread_id", "guard", "source_nodes", "ir_nodes"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Digest"}, "object_id": {"$ref": "#/$defs/NonEmpty"},
+        "owner_kind": {"enum": ["lock-guard", "unique-lock", "scoped-lock", "pthread-direct", "unknown"]},
+        "mutex_ids": {"type": "array", "items": {"$ref": "#/$defs/Digest"}, "uniqueItems": true},
+        "state": {"enum": ["uninitialized", "owns", "deferred", "moved-from", "released", "unknown"]},
+        "thread_id": {"type": ["string", "null"]}, "guard": {"type": ["string", "null"]},
+        "source_nodes": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "ir_nodes": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}
+      }
+    },
+    "Operation": {
+      "type": "object", "additionalProperties": true,
+      "required": ["id", "operation", "owner_id", "mutex_ids", "outcome", "guard", "thread_id", "source_nodes", "ir_nodes"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Digest"},
+        "operation": {"enum": ["construct", "destruct", "move", "lock", "unlock", "owns-lock", "access", "unknown"]},
+        "owner_id": {"type": ["string", "null"]},
+        "mutex_ids": {"type": "array", "items": {"$ref": "#/$defs/Digest"}, "uniqueItems": true},
+        "outcome": {"enum": ["success", "failure", "throw", "unknown"]},
+        "guard": {"type": ["string", "null"]}, "thread_id": {"type": ["string", "null"]},
+        "source_nodes": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "ir_nodes": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}
+      }
+    },
+    "Access": {
+      "type": "object", "additionalProperties": true,
+      "required": ["id", "object_id", "access_kind", "owner_id", "thread_id", "evidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/NonEmpty"}, "object_id": {"$ref": "#/$defs/NonEmpty"},
+        "access_kind": {"enum": ["read", "write", "read-write", "unknown"]},
+        "owner_id": {"$ref": "#/$defs/Digest"}, "thread_id": {"type": ["string", "null"]},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}
+      }
+    },
+    "HeldRegion": {
+      "type": "object", "additionalProperties": true,
+      "required": ["id", "owner_id", "mutex_ids", "thread_id", "acquire_id", "release_id", "access_ids", "guard", "status", "evidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Digest"}, "owner_id": {"$ref": "#/$defs/Digest"},
+        "mutex_ids": {"type": "array", "items": {"$ref": "#/$defs/Digest"}, "uniqueItems": true},
+        "thread_id": {"type": ["string", "null"]}, "acquire_id": {"$ref": "#/$defs/Digest"},
+        "release_id": {"$ref": "#/$defs/Digest"},
+        "access_ids": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "guard": {"type": ["string", "null"]}, "status": {"$ref": "#/$defs/Status"},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}
+      }
+    },
+    "Proof": {
+      "type": "object", "additionalProperties": true,
+      "required": ["id", "proof_kind", "mutex_id", "region_ids", "thread_ids", "guard", "status", "evidence", "limitations"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Digest"}, "proof_kind": {"enum": ["mutual-exclusion", "mutex-sync-candidate"]},
+        "mutex_id": {"$ref": "#/$defs/Digest"},
+        "region_ids": {"type": "array", "items": {"$ref": "#/$defs/Digest"}, "minItems": 2, "uniqueItems": true},
+        "thread_ids": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "guard": {"type": ["string", "null"]}, "status": {"$ref": "#/$defs/Status"},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "limitations": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}
+      }
+    },
+    "Counts": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}},
+    "Cache": {
+      "type": "object", "additionalProperties": false,
+      "required": ["hits", "misses"],
+      "properties": {"hits": {"type": "integer", "minimum": 0}, "misses": {"type": "integer", "minimum": 0}}
+    },
+    "CppRaiiSynchronizationRequest": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "roots", "members", "dependencies", "synchronization_profiles", "budgets", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "CppRaiiSynchronizationRequest"}, "analysis_version": {}, "policy_id": {},
+          "scope_id": {"$ref": "#/$defs/NonEmpty"}, "roots": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "minItems": 1, "uniqueItems": true},
+          "members": {"type": "array", "items": {"$ref": "#/$defs/Member"}, "minItems": 1},
+          "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "synchronization_profiles": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "budgets": {"$ref": "#/$defs/Budgets"}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "CppRaiiSynchronizationProfile": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "profile_id", "vendor", "version", "cxx_standard", "cxx_abi", "target", "data_layout", "pointer_width", "exceptions", "rtti", "thread_backend", "toolchain_lineage", "header_digests", "wrapper_signatures", "model_version", "status", "provenance", "lifecycle_profile_id", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "CppRaiiSynchronizationProfile"}, "analysis_version": {}, "policy_id": {},
+          "profile_id": {"$ref": "#/$defs/Digest"}, "vendor": {"enum": ["libstdc++", "libc++"]}, "version": {"$ref": "#/$defs/NonEmpty"},
+          "cxx_standard": {"enum": ["c++17", "c++20"]}, "cxx_abi": {"$ref": "#/$defs/NonEmpty"}, "target": {"$ref": "#/$defs/NonEmpty"},
+          "data_layout": {"$ref": "#/$defs/NonEmpty"}, "pointer_width": {"enum": [32, 64]}, "exceptions": {"type": "boolean"}, "rtti": {"type": "boolean"},
+          "thread_backend": {"const": "pthread"}, "toolchain_lineage": {"$ref": "#/$defs/NonEmpty"},
+          "header_digests": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "wrapper_signatures": {"type": "array", "items": {"$ref": "#/$defs/WrapperSignature"}, "minItems": 2},
+          "model_version": {"const": "cpp-raii-sync-library-v1"}, "status": {"enum": ["verified", "unsupported"]},
+          "provenance": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "minItems": 1, "uniqueItems": true},
+          "lifecycle_profile_id": {"type": ["string", "null"]}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "CppRaiiLocalFacts": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "physical_tu_id", "profile_id", "language", "standard", "status", "synchronization_profile_id", "mutexes", "owners", "operations", "accesses", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "CppRaiiLocalFacts"}, "analysis_version": {}, "policy_id": {},
+          "scope_id": {"$ref": "#/$defs/NonEmpty"}, "physical_tu_id": {"$ref": "#/$defs/NonEmpty"}, "profile_id": {"$ref": "#/$defs/Digest"},
+          "language": {"enum": ["c", "c++"]}, "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]}, "status": {"$ref": "#/$defs/Status"},
+          "synchronization_profile_id": {"type": ["string", "null"]}, "mutexes": {"type": "array", "items": {"$ref": "#/$defs/Mutex"}},
+          "owners": {"type": "array", "items": {"$ref": "#/$defs/Owner"}}, "operations": {"type": "array", "items": {"$ref": "#/$defs/Operation"}},
+          "accesses": {"type": "array", "items": {"type": "object"}}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "CppRaiiSynchronizationGraph": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "profiles", "mutexes", "owners", "operations", "accesses", "held_regions", "proofs", "gaps", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "CppRaiiSynchronizationGraph"}, "analysis_version": {}, "policy_id": {},
+          "scope_id": {"$ref": "#/$defs/NonEmpty"}, "request_hash": {"$ref": "#/$defs/Digest"}, "status": {"$ref": "#/$defs/Status"},
+          "profiles": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "mutexes": {"type": "array", "items": {"$ref": "#/$defs/Mutex"}},
+          "owners": {"type": "array", "items": {"$ref": "#/$defs/Owner"}}, "operations": {"type": "array", "items": {"$ref": "#/$defs/Operation"}},
+          "accesses": {"type": "array", "items": {"$ref": "#/$defs/Access"}},
+          "held_regions": {"type": "array", "items": {"$ref": "#/$defs/HeldRegion"}}, "proofs": {"type": "array", "items": {"$ref": "#/$defs/Proof"}},
+          "gaps": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "counts": {"$ref": "#/$defs/Counts"},
+          "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "CppRaiiSynchronizationReport": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "exit_code", "safety", "findings", "graph", "profiles", "counts", "dependencies", "diagnostics", "frontier", "cache", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "CppRaiiSynchronizationReport"}, "analysis_version": {}, "policy_id": {},
+          "scope_id": {"type": ["string", "null"]}, "request_hash": {"type": ["string", "null"]}, "status": {"$ref": "#/$defs/Status"},
+          "exit_code": {"enum": [0, 1, 2]}, "safety": {"const": "not_established"}, "findings": {"type": "null"},
+          "graph": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]}, "profiles": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "counts": {"$ref": "#/$defs/Counts"}, "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "cache": {"$ref": "#/$defs/Cache"}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "CppRaiiValidationSuite": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite_version", "cases", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "CppRaiiValidationSuite"}, "analysis_version": {}, "policy_id": {}, "suite_version": {"$ref": "#/$defs/NonEmpty"}, "cases": {"type": "array", "items": {"type": "object"}, "minItems": 4}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "CppRaiiValidationTruth": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite_version", "cases", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "CppRaiiValidationTruth"}, "analysis_version": {}, "policy_id": {}, "suite_version": {"$ref": "#/$defs/NonEmpty"}, "cases": {"type": "array", "items": {"type": "object"}, "minItems": 4}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "CppRaiiValidationReport": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite_version", "status", "profiles", "metrics", "languages", "diagnostics", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "CppRaiiValidationReport"}, "analysis_version": {}, "policy_id": {}, "suite_version": {"$ref": "#/$defs/NonEmpty"}, "status": {"$ref": "#/$defs/Status"}, "profiles": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "metrics": {"$ref": "#/$defs/Counts"}, "languages": {"type": "object"}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    }
+  }
+}

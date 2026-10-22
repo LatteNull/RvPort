@@ -1,0 +1,8 @@
+{
+  "schemaVersion": "1.0",
+  "referenceKinds": ["sourceFact", "irFact", "binding", "profile", "buildContext", "compileOption", "assessment"],
+  "stepKinds": ["sourceObservation", "irObservation", "binding", "profile", "buildContext", "compileOption", "assessment", "conclusion", "observation"],
+  "edgeKinds": ["supports", "derivedFrom", "binds", "mapsTo", "assessedAs"],
+  "confidence": ["high", "medium", "low"],
+  "evidenceOrigin": ["deterministic", "heuristic"]
+}

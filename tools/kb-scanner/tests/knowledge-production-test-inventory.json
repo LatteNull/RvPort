@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0",
+  "coverageThresholds": {"linePercent": 90.0, "branchPercent": 80.0},
+  "layers": {
+    "unit": "tests/unit/knowledge_production; upstream files and filesystem failures use temporary fixed fixtures",
+    "component": "tests/test_knowledge_production_contracts.py; committed generated, curated and audit data",
+    "integration": "tests/test_knowledge_detection_staged_integration.py; v2 Provider through Local Detector",
+    "contract": "tests/test_knowledge_detection_contracts.py; v1 identities, legacy hashes and v2 manifest"
+  },
+  "modules": {
+    "knowledge/production.py": {"unit": "tests/unit/knowledge_production/test_production.py", "higherLayers": ["tests/test_knowledge_production_contracts.py"]},
+    "knowledge/extractors.py": {"unit": "tests/unit/knowledge_production/test_extractors.py", "higherLayers": ["tests/test_knowledge_production_contracts.py"]}
+  }
+}

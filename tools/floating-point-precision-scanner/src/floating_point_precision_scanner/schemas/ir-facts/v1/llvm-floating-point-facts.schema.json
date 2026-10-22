@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-precision-scanner/ir-facts/v1/llvm-floating-point-facts.schema.json",
+  "title": "LLVMFloatingPointFactBundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "schema_version", "producer", "artifact", "module", "functions", "facts", "unknowns", "diagnostics", "budgets", "frontier", "semantic_digest"],
+  "properties": {
+    "kind": {"const": "LLVMFloatingPointFactBundle"},
+    "schema_version": {"const": "1.1"},
+    "producer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["tool_version", "llvm_version", "reader_version", "extractor_version", "worker_protocol_version"],
+      "properties": {
+        "tool_version": {"type": "string"},
+        "llvm_version": {"const": "21.1.8"},
+        "reader_version": {"type": "string"},
+        "extractor_version": {"type": "string"},
+        "worker_protocol_version": {"const": "1.1"}
+      }
+    },
+    "artifact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["artifact_set_id", "artifact_key", "physical_tu_id", "context_id", "profile", "sha256"],
+      "properties": {
+        "artifact_set_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "artifact_key": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "physical_tu_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "context_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "profile": {"enum": ["source-preserving", "build-faithful"]},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "module": {
+      "type": "object", "additionalProperties": false,
+      "required": ["identifier", "target_triple", "data_layout", "module_flags"],
+      "properties": {
+        "identifier": {"type": "string"},
+        "target_triple": {"type": "string"},
+        "data_layout": {"type": "string"},
+        "module_flags": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "functions": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["function_id", "name", "attributes", "environment_summary"],
+        "properties": {
+          "function_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "name": {"type": "string"},
+          "attributes": {"type": "array", "items": {"type": "string"}},
+          "environment_summary": {
+            "type": "object", "additionalProperties": false,
+            "required": ["actions", "unknown_effect", "direct_calls", "propagated_callee_ids", "propagation_depth", "frontier"],
+            "properties": {
+              "actions": {"type": "array", "items": {"type": "string"}},
+              "unknown_effect": {"type": "boolean"},
+              "direct_calls": {
+                "type": "array",
+                "items": {
+                  "type": "object", "additionalProperties": false,
+                  "required": ["callee_function_id", "call_site_id"],
+                  "properties": {
+                    "callee_function_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+                    "call_site_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+                  }
+                }
+              },
+              "propagated_callee_ids": {"type": "array", "items": {"type": "string", "pattern": "^[a-f0-9]{64}$"}},
+              "propagation_depth": {"type": "integer", "minimum": 0},
+              "frontier": {
+                "type": "array",
+                "items": {
+                  "type": "object", "additionalProperties": false,
+                  "required": ["reason", "callee_function_id", "call_site_id", "depth"],
+                  "properties": {
+                    "reason": {"enum": ["recursive_call", "summary_depth_exceeded", "summary_call_edge_budget_exceeded"]},
+                    "callee_function_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+                    "call_site_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+                    "depth": {"type": "integer", "minimum": 1}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "facts": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["fact_id", "function_id", "function", "basic_block", "instruction_index", "opcode", "result_type", "operand_types", "operand_fact_ids", "use_fact_ids", "predicate", "reduction_group", "fast_math_flags", "instruction_attributes", "callee", "intrinsic_id", "constrained", "rounding_mode", "exception_behavior", "debug_location"],
+        "properties": {
+          "fact_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "function_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "function": {"type": "string"},
+          "basic_block": {"type": "string"},
+          "instruction_index": {"type": "integer", "minimum": 0},
+          "opcode": {"type": "string"},
+          "result_type": {"type": "string"},
+          "operand_types": {"type": "array", "items": {"type": "string"}},
+          "operand_fact_ids": {"type": "array", "items": {"type": "string", "pattern": "^[a-f0-9]{64}$"}},
+          "use_fact_ids": {"type": "array", "items": {"type": "string", "pattern": "^[a-f0-9]{64}$"}},
+          "predicate": {"type": ["string", "null"]},
+          "reduction_group": {
+            "oneOf": [
+              {"type": "null"},
+              {
+                "type": "object", "additionalProperties": false,
+                "required": ["kind", "group_id"],
+                "properties": {
+                  "kind": {"enum": ["phi-recurrence", "vector-reduction"]},
+                  "group_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+                }
+              }
+            ]
+          },
+          "fast_math_flags": {"type": "array", "items": {"type": "string"}},
+          "instruction_attributes": {"type": "array", "items": {"type": "string"}},
+          "callee": {"type": ["string", "null"]},
+          "intrinsic_id": {"type": ["integer", "null"], "minimum": 0},
+          "constrained": {"type": "boolean"},
+          "rounding_mode": {"type": ["string", "null"]},
+          "exception_behavior": {"type": ["string", "null"]},
+          "debug_location": {
+            "oneOf": [
+              {"type": "null"},
+              {"$ref": "#/$defs/debugLocation"}
+            ]
+          }
+        }
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "blocking"],
+        "properties": {
+          "kind": {"enum": ["budget_exceeded", "use_chain_budget_exceeded", "unsupported_intrinsic", "debug_location_outside_project"]},
+          "function_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "basic_block": {"type": "string"},
+          "instruction_index": {"type": "integer", "minimum": 0},
+          "fact_id": {"type": "string"},
+          "name": {"type": "string"},
+          "blocking": {"type": "boolean"}
+        }
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["code", "message", "message_en"],
+        "properties": {
+          "code": {"type": "string"},
+          "message": {"type": "string"},
+          "message_en": {"type": "string"}
+        }
+      }
+    },
+    "budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["max_facts", "max_use_edges", "max_summary_depth", "max_summary_call_edges", "facts_emitted", "use_edges_emitted", "summary_call_edges_emitted", "exhausted", "use_chain_exhausted", "summary_depth_exhausted", "summary_call_edges_exhausted"],
+      "properties": {
+        "max_facts": {"type": "integer", "minimum": 0},
+        "max_use_edges": {"type": "integer", "minimum": 0},
+        "max_summary_depth": {"type": "integer", "minimum": 0},
+        "max_summary_call_edges": {"type": "integer", "minimum": 0},
+        "facts_emitted": {"type": "integer", "minimum": 0},
+        "use_edges_emitted": {"type": "integer", "minimum": 0},
+        "summary_call_edges_emitted": {"type": "integer", "minimum": 0},
+        "exhausted": {"type": "boolean"},
+        "use_chain_exhausted": {"type": "boolean"},
+        "summary_depth_exhausted": {"type": "boolean"},
+        "summary_call_edges_exhausted": {"type": "boolean"}
+      }
+    },
+    "frontier": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["function_id", "basic_block", "instruction_index"],
+          "properties": {
+            "function_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "basic_block": {"type": "string"},
+            "instruction_index": {"type": "integer", "minimum": 0}
+          }
+        }
+      ]
+    },
+    "semantic_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "$defs": {
+    "debugPoint": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "line", "column", "scope"],
+      "properties": {
+        "path": {"type": "string"},
+        "line": {"type": "integer", "minimum": 0},
+        "column": {"type": "integer", "minimum": 0},
+        "scope": {"type": "string"}
+      }
+    },
+    "debugLocation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "line", "column", "scope", "inlined_at"],
+      "properties": {
+        "path": {"type": "string"},
+        "line": {"type": "integer", "minimum": 0},
+        "column": {"type": "integer", "minimum": 0},
+        "scope": {"type": "string"},
+        "inlined_at": {"type": "array", "items": {"$ref": "#/$defs/debugPoint"}}
+      }
+    }
+  }
+}

@@ -1,0 +1,294 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-scanner/result/2.0",
+  "title": "FloatingPointPrecisionScanResultV2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "scan", "project", "summary", "findings", "diagnostics", "extensions"],
+  "properties": {
+    "schemaVersion": {"const": "2.0"},
+    "scan": {"$ref": "#/$defs/scan"},
+    "project": {"$ref": "#/$defs/project"},
+    "summary": {"$ref": "#/$defs/summary"},
+    "findings": {"type": "array", "maxItems": 100000, "items": {"$ref": "#/$defs/finding"}},
+    "diagnostics": {"type": "array", "maxItems": 1000, "items": {"$ref": "#/$defs/diagnostic"}},
+    "extensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "org.rvport.floating-point-scanner.analysis",
+        "org.rvport.floating-point-scanner.profiles",
+        "org.rvport.floating-point-scanner.artifacts",
+        "org.rvport.floating-point-scanner.suppressions",
+        "org.rvport.floating-point-scanner.runtime"
+      ],
+      "properties": {
+        "org.rvport.floating-point-scanner.analysis": {"type": "object"},
+        "org.rvport.floating-point-scanner.profiles": {"type": "object"},
+        "org.rvport.floating-point-scanner.artifacts": {"type": "object"},
+        "org.rvport.floating-point-scanner.suppressions": {"type": "object"},
+        "org.rvport.floating-point-scanner.runtime": {"type": "object"}
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {"type": "string", "minLength": 1, "maxLength": 256},
+    "digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "count": {"type": "integer", "minimum": 0},
+    "location": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["file", "line", "column"],
+      "properties": {
+        "file": {"type": "string", "minLength": 1, "maxLength": 4096, "pattern": "^(?![A-Za-z]:)(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"},
+        "line": {"type": "integer", "minimum": 1},
+        "column": {"type": "integer", "minimum": 1},
+        "origin": {"enum": ["macroExpansion"]}
+      }
+    },
+    "typedReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id", "producer", "schemaVersion", "digest"],
+      "properties": {
+        "kind": {"enum": ["sourceFact", "irFact", "binding", "profile", "buildContext", "compileOption", "assessment"]},
+        "id": {"$ref": "#/$defs/identifier"},
+        "producer": {"$ref": "#/$defs/identifier"},
+        "schemaVersion": {"$ref": "#/$defs/identifier"},
+        "digest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "scan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "tool", "analysisVersion", "requestSchemaVersion", "analysisScope", "status", "semanticDigest"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "tool": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "version"],
+          "properties": {
+            "name": {"const": "floating-point-precision-scanner"},
+            "version": {"$ref": "#/$defs/identifier"}
+          }
+        },
+        "analysisVersion": {"$ref": "#/$defs/identifier"},
+        "requestSchemaVersion": {"$ref": "#/$defs/identifier"},
+        "analysisScope": {"enum": ["factsOnly", "coreMigrationRisks", "migrationRisks"]},
+        "status": {"enum": ["complete", "partial", "invalid_request", "failed", "internal_error"]},
+        "semanticDigest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceRevision", "status", "filesAnalyzed", "translationUnits", "reasonCodes"],
+      "properties": {
+        "sourceRevision": {"type": ["string", "null"], "maxLength": 512},
+        "status": {"enum": ["complete", "partial", "unknown"]},
+        "filesAnalyzed": {"$ref": "#/$defs/count"},
+        "translationUnits": {"$ref": "#/$defs/denominator"},
+        "reasonCodes": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/identifier"}}
+      }
+    },
+    "denominator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["planned", "completed", "failed", "unknown"],
+      "properties": {
+        "planned": {"$ref": "#/$defs/count"},
+        "completed": {"$ref": "#/$defs/count"},
+        "failed": {"$ref": "#/$defs/count"},
+        "unknown": {"$ref": "#/$defs/count"}
+      }
+    },
+    "assessmentCounts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["planned", "completed", "matched", "notMatched", "unknown", "skipped", "failed"],
+      "properties": {
+        "planned": {"$ref": "#/$defs/count"},
+        "completed": {"$ref": "#/$defs/count"},
+        "matched": {"$ref": "#/$defs/count"},
+        "notMatched": {"$ref": "#/$defs/count"},
+        "unknown": {"$ref": "#/$defs/count"},
+        "skipped": {"$ref": "#/$defs/count"},
+        "failed": {"$ref": "#/$defs/count"}
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["findings", "suppressed", "diagnostics", "assessments", "layers"],
+      "properties": {
+        "findings": {"$ref": "#/$defs/count"},
+        "suppressed": {"$ref": "#/$defs/count"},
+        "diagnostics": {"$ref": "#/$defs/count"},
+        "assessments": {"$ref": "#/$defs/assessmentCounts"},
+        "layers": {"type": "object", "maxProperties": 32, "additionalProperties": {"$ref": "#/$defs/denominator"}}
+      }
+    },
+    "validationPlan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["inputClasses", "errorMetrics", "thresholdSource", "repeatStrategy"],
+      "properties": {
+        "inputClasses": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/identifier"}},
+        "errorMetrics": {"type": "array", "uniqueItems": true, "items": {"enum": ["absolute", "relative", "ulp", "classification", "errno", "exceptions"]}},
+        "thresholdSource": {"enum": ["standard", "profile", "project-policy", "user-provided", "unknown"]},
+        "repeatStrategy": {"type": "string", "minLength": 1, "maxLength": 1024}
+      }
+    },
+    "fact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "matchedText", "primaryLocation", "provenance"],
+      "properties": {
+        "id": {"$ref": "#/$defs/digest"},
+        "kind": {"$ref": "#/$defs/identifier"},
+        "matchedText": {"type": "string", "minLength": 1, "maxLength": 4096},
+        "primaryLocation": {"$ref": "#/$defs/location"},
+        "provenance": {"type": "array", "maxItems": 128, "items": {"$ref": "#/$defs/typedReference"}}
+      }
+    },
+    "conclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["findingCode", "ruleVersion", "assessmentId", "category", "severity", "confidence", "evidenceOrigin", "requiresHumanConfirmation", "status", "rationale", "title", "titleEn", "message", "messageEn", "impact", "impactEn", "suggestion", "suggestionEn", "testSuggestion", "testSuggestionEn", "validationPlan", "affectedCount", "aggregationKey", "sourceProfileFingerprint", "targetProfileFingerprint", "sourceBuildContextFingerprint", "targetBuildContextFingerprint", "semantic"],
+      "properties": {
+        "findingCode": {"$ref": "#/$defs/identifier"},
+        "ruleVersion": {"$ref": "#/$defs/identifier"},
+        "assessmentId": {"$ref": "#/$defs/identifier"},
+        "category": {"$ref": "#/$defs/identifier"},
+        "severity": {"enum": ["info", "low", "medium", "high", "critical"]},
+        "confidence": {"enum": ["low", "medium", "high"]},
+        "evidenceOrigin": {"enum": ["deterministic", "heuristic"]},
+        "requiresHumanConfirmation": {"type": "boolean"},
+        "status": {"enum": ["complete", "partial", "unknown"]},
+        "rationale": {"$ref": "#/$defs/identifier"},
+        "title": {"type": "string", "minLength": 1, "maxLength": 4096},
+        "titleEn": {"type": "string", "minLength": 1, "maxLength": 4096},
+        "message": {"type": "string", "minLength": 1, "maxLength": 8192},
+        "messageEn": {"type": "string", "minLength": 1, "maxLength": 8192},
+        "impact": {"type": "string", "minLength": 1, "maxLength": 8192},
+        "impactEn": {"type": "string", "minLength": 1, "maxLength": 8192},
+        "suggestion": {"type": "string", "minLength": 1, "maxLength": 8192},
+        "suggestionEn": {"type": "string", "minLength": 1, "maxLength": 8192},
+        "testSuggestion": {"type": "string", "minLength": 1, "maxLength": 8192},
+        "testSuggestionEn": {"type": "string", "minLength": 1, "maxLength": 8192},
+        "validationPlan": {"$ref": "#/$defs/validationPlan"},
+        "affectedCount": {"type": "integer", "minimum": 1},
+        "aggregationKey": {"type": ["string", "null"], "maxLength": 4096},
+        "sourceProfileFingerprint": {"type": ["string", "null"]},
+        "targetProfileFingerprint": {"type": ["string", "null"]},
+        "sourceBuildContextFingerprint": {"type": ["string", "null"]},
+        "targetBuildContextFingerprint": {"type": ["string", "null"]},
+        "semantic": {"type": "object", "maxProperties": 128}
+      }
+    },
+    "occurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "location", "configuration", "status", "reasonCodes", "provenance"],
+      "properties": {
+        "id": {"$ref": "#/$defs/digest"},
+        "kind": {"enum": ["primary", "related"]},
+        "location": {"$ref": "#/$defs/location"},
+        "configuration": {"$ref": "#/$defs/identifier"},
+        "status": {"enum": ["confirmed", "partial", "unknown"]},
+        "reasonCodes": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/identifier"}},
+        "provenance": {"type": "array", "maxItems": 128, "items": {"$ref": "#/$defs/typedReference"}}
+      }
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "status", "reasonCodes", "references", "title", "titleEn", "reason", "reasonEn"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "\\S"},
+        "titleEn": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "\\S"},
+        "reason": {"type": "string", "minLength": 1, "maxLength": 4096, "pattern": "\\S"},
+        "reasonEn": {"type": "string", "minLength": 1, "maxLength": 4096, "pattern": "\\S"},
+        "id": {"$ref": "#/$defs/digest"},
+        "kind": {"enum": ["sourceObservation", "irObservation", "binding", "profile", "buildContext", "compileOption", "assessment", "conclusion", "observation"]},
+        "status": {"enum": ["complete", "partial", "unknown", "ambiguous"]},
+        "reasonCodes": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/identifier"}},
+        "references": {"type": "array", "maxItems": 128, "items": {"$ref": "#/$defs/typedReference"}}
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "fromStepId", "toStepId"],
+      "properties": {
+        "id": {"$ref": "#/$defs/digest"},
+        "kind": {"enum": ["supports", "derivedFrom", "binds", "mapsTo", "assessedAs"]},
+        "fromStepId": {"$ref": "#/$defs/digest"},
+        "toStepId": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "chainBudget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maxDepth", "maxVisited", "maxPaths", "visited", "paths", "truncated"],
+      "properties": {
+        "maxDepth": {"$ref": "#/$defs/count"},
+        "maxVisited": {"$ref": "#/$defs/count"},
+        "maxPaths": {"$ref": "#/$defs/count"},
+        "visited": {"$ref": "#/$defs/count"},
+        "paths": {"$ref": "#/$defs/count"},
+        "truncated": {"type": "boolean"}
+      }
+    },
+    "evidenceChain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "rootStepId", "steps", "edges", "primaryPath", "breaks", "impactStepIds", "budget"],
+      "properties": {
+        "status": {"enum": ["complete", "partial", "unknown", "ambiguous"]},
+        "rootStepId": {"$ref": "#/$defs/digest"},
+        "steps": {"type": "array", "minItems": 2, "maxItems": 512, "items": {"$ref": "#/$defs/step"}},
+        "edges": {"type": "array", "minItems": 1, "maxItems": 1024, "items": {"$ref": "#/$defs/edge"}},
+        "primaryPath": {"type": "array", "minItems": 2, "uniqueItems": true, "items": {"$ref": "#/$defs/digest"}},
+        "breaks": {"type": "array", "maxItems": 128, "items": {"type": "object", "required": ["reasonCode"], "properties": {"reasonCode": {"$ref": "#/$defs/identifier"}}, "additionalProperties": false}},
+        "impactStepIds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/digest"}},
+        "budget": {"$ref": "#/$defs/chainBudget"}
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "fact", "conclusion", "occurrences", "primaryOccurrenceId", "evidenceChain"],
+      "properties": {
+        "id": {"$ref": "#/$defs/digest"},
+        "fact": {"$ref": "#/$defs/fact"},
+        "conclusion": {"$ref": "#/$defs/conclusion"},
+        "occurrences": {"type": "array", "minItems": 1, "maxItems": 256, "items": {"$ref": "#/$defs/occurrence"}},
+        "primaryOccurrenceId": {"$ref": "#/$defs/digest"},
+        "evidenceChain": {"$ref": "#/$defs/evidenceChain"},
+        "extensions": {"type": "object", "propertyNames": {"pattern": "^org\\.rvport\\.floating-point-scanner\\."}}
+      }
+    },
+    "diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "code", "stage", "severity", "message", "messageEn", "suggestion", "suggestionEn", "retryable", "count", "location", "translationUnitId", "findingIds"],
+      "properties": {
+        "id": {"$ref": "#/$defs/digest"},
+        "code": {"$ref": "#/$defs/identifier"},
+        "stage": {"$ref": "#/$defs/identifier"},
+        "severity": {"enum": ["info", "warning", "error"]},
+        "message": {"type": "string", "minLength": 1, "maxLength": 8192},
+        "messageEn": {"type": "string", "minLength": 1, "maxLength": 8192},
+        "suggestion": {"type": "string", "minLength": 1, "maxLength": 8192},
+        "suggestionEn": {"type": "string", "minLength": 1, "maxLength": 8192},
+        "retryable": {"type": "boolean"},
+        "count": {"type": "integer", "minimum": 1},
+        "location": {"$ref": "#/$defs/location"},
+        "translationUnitId": {"type": ["string", "null"]},
+        "findingIds": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/digest"}}
+      }
+    }
+  }
+}

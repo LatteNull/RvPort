@@ -1,0 +1,145 @@
+@use '../../../styles/mixins' as type;
+
+.page {
+  min-height: 100%;
+
+  .pageHeader {
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--ant-color-border-secondary);
+  }
+
+  .title {
+    @include type.page-title;
+    margin: 0;
+    color: var(--ant-color-text);
+  }
+
+  .description {
+    margin: 4px 0 0;
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size, 14px);
+    line-height: 22px;
+  }
+
+  .headerActions {
+    flex-shrink: 0;
+    padding-top: 16px;
+  }
+
+  .enabledStatus,
+  .disabledStatus {
+    display: inline-flex;
+    align-items: center;
+    color: var(--ant-color-success);
+    font-size: var(--ant-font-size, 14px);
+    white-space: nowrap;
+
+    &::before {
+      width: 8px;
+      height: 8px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      content: '';
+    }
+  }
+
+  .disabledStatus {
+    color: var(--ant-color-text-tertiary);
+  }
+
+  .settingsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 48px;
+    max-width: 1200px;
+    padding: 24px 0;
+  }
+
+  .settingsSection,
+  .formSection {
+    h2 {
+      @include type.section-title;
+      margin: 0 0 12px;
+      color: var(--ant-color-text);
+    }
+  }
+
+  .settingItem {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 16px;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--ant-color-border-secondary);
+
+    span {
+      color: var(--ant-color-text-secondary);
+      font-size: var(--ant-font-size, 14px);
+    }
+
+    strong {
+      overflow: hidden;
+      color: var(--ant-color-text);
+      font-size: var(--ant-font-size, 14px);
+      font-weight: 400;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .editForm {
+    max-width: 1100px;
+  }
+
+  .formSection {
+    margin: 24px 0;
+    border-bottom: 1px solid var(--ant-color-border-secondary);
+  }
+
+  .serviceControls {
+    .serviceControl {
+      margin-bottom: 0;
+    }
+  }
+
+  .formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 24px;
+  }
+
+  .portInput {
+    width: 100%;
+  }
+
+  .formActions {
+    position: sticky;
+    bottom: -24px;
+    z-index: 1;
+    padding: 16px 0;
+    background: var(--ant-color-bg-container);
+  }
+
+  @media (max-width: 1199px) {
+    .pageHeader {
+      align-items: flex-start;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .headerActions {
+      padding-top: 0;
+    }
+
+    .settingsGrid,
+    .formGrid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .settingsGrid {
+      gap: 32px;
+    }
+  }
+}

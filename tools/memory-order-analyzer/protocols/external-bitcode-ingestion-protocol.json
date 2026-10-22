@@ -1,0 +1,19 @@
+{
+  "protocol_version": 2,
+  "ingestion_version": "0.1.0",
+  "llvm_version": "21.1.8",
+  "policy_id": "external-bitcode-ingestion-v1",
+  "cache_namespace": "external-bitcode-ingestion-v1",
+  "kinds": {
+    "ExternalBitcodeBundleManifest": 1,
+    "ExternalBitcodeArtifactRecord": 2,
+    "ExternalBitcodeIngestionReport": 1
+  },
+  "budgets": {
+    "max_records": 10000,
+    "max_artifact_bytes": 1073741824,
+    "max_total_bytes": 8589934592,
+    "max_worker_seconds": 120,
+    "max_output_bytes": 16777216
+  }
+}

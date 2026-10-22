@@ -1,0 +1,6 @@
+{
+  "ruleId": "C_CPP.X86.COMPILER_FLAG",
+  "count": 1,
+  "symbols": ["-mavx512fp16"]
+}
+

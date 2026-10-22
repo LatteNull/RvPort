@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1.0",
+  "catalogId": "riscv-porting-x86-facts",
+  "version": "2026.09",
+  "generatedSources": [
+    {"sourceId": "clang-x86-entries", "path": "generated/clang-x86-entries.json", "sha256": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7"},
+    {"sourceId": "gcc-x86-entries", "path": "generated/gcc-x86-entries.json", "sha256": "22d68c2ab3c8c40c8606451af2e5f493877661d031b6b2f379eff7886c23d191"}
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "1.0",
+  "projectFacts": {
+    "realScalarNarrowing": 1,
+    "longDoubleAbiBoundariesMinimum": 1,
+    "reductionMinimum": 1
+  },
+  "excludedAsScalarConversions": [
+    "float *",
+    "float (*)(real64)",
+    "std::array<float, 2>"
+  ],
+  "excludedOrigins": ["<scratch space>", "<built-in>", "<command line>"],
+  "notes": "系统数学头可能产生大量虚拟声明，但不得成为项目 source facts。"
+}

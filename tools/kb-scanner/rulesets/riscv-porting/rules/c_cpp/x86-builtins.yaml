@@ -1,0 +1,22 @@
+id: C_CPP.X86.BUILTIN_CALL
+language: c_cpp
+severity: high
+confidence: high
+capability:
+  - ast.call
+match:
+  any:
+    - call:
+        generatedSet: "builtins"
+        nameRegex: "^(__builtin_ia32_.*|__builtin_cpu_init|__builtin_cpu_is|__builtin_cpu_supports)$"
+message:
+  zh-CN:
+    title: "调用 x86 相关编译器 builtin"
+    reason: "代码调用了 x86 相关 GCC/Clang builtin，例如 __builtin_ia32_* 或 CPU feature 查询 builtin。这类接口通常绑定 x86 CPU 能力。"
+    suggestion: "建议封装为平台能力层，并为 RISC-V 使用 hwprobe、系统接口或目标架构等价实现。"
+  en-US:
+    title: "Calls an x86-related compiler builtin"
+    reason: "The code calls x86-related GCC/Clang builtins, such as __builtin_ia32_* or CPU feature query builtins. These interfaces are usually tied to x86 CPU capabilities."
+    suggestion: "Wrap this behind a platform capability layer, and use hwprobe, system APIs, or target-architecture equivalents on RISC-V."
+
+

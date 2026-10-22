@@ -1,0 +1,5 @@
+{
+  "ruleId": "RPM_SPEC.ARCH.CONDITIONAL_DEPENDENCY",
+  "count": 2,
+  "symbols": ["BuildRequires", "Patch0"]
+}

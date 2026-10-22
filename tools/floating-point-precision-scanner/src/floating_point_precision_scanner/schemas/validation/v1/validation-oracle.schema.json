@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-precision-scanner/validation/v1/validation-oracle.schema.json",
+  "$defs": {
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["case_id", "fixture_digest", "language_standard", "input_mode", "source_profile", "target_profile", "rule_code", "scope", "expected_status", "finding_keys", "diagnostic_codes", "suppression_ids", "unsupported", "lifecycle", "review_basis"],
+      "properties": {
+        "case_id": {"type": "string", "minLength": 1},
+        "fixture_digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "language_standard": {"enum": ["c11", "c17", "c++17", "c++20"]},
+        "input_mode": {"enum": ["ast-only", "shared-bitcode", "ast-ir-evidence"]},
+        "source_profile": {"type": "string", "minLength": 1},
+        "target_profile": {"type": "string", "minLength": 1},
+        "rule_code": {"type": "string", "minLength": 1},
+        "scope": {"type": "string", "minLength": 1},
+        "expected_status": {"enum": ["matched", "not_matched", "unknown", "skipped", "failed"]},
+        "finding_keys": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "diagnostic_codes": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "suppression_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "unsupported": {"type": "boolean"},
+        "lifecycle": {"type": "boolean"},
+        "review_basis": {"type": "string", "minLength": 1}
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "schema_version", "cases"],
+  "properties": {
+    "kind": {"const": "FloatingPointScannerValidationOracle"},
+    "schema_version": {"const": "1.0"},
+    "cases": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/case"}}
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "suite_version": "thread-entry-discovery-v1",
+  "cases": [
+    {"id": "c11-pthread-dual", "standard": "c11", "mode": "AST+IR", "source": "sources/c11-pthread.c"},
+    {"id": "c11-thrd-dual", "standard": "c11", "mode": "AST+IR", "source": "sources/c11-thrd.c"},
+    {"id": "c17-pthread-ir-only", "standard": "c17", "mode": "IR-only/no-debug", "source": "sources/c17-pthread-no-debug.c"},
+    {"id": "c17-thrd-ast-only", "standard": "c17", "mode": "AST-only", "source": "sources/c17-thrd-ast-only.c"},
+    {"id": "cpp17-thread-dual", "standard": "c++17", "mode": "AST+IR", "source": "sources/cpp17-thread.cpp"},
+    {"id": "cpp17-async-policy", "standard": "c++17", "mode": "AST+IR", "source": "sources/cpp17-async.cpp"},
+    {"id": "cpp20-jthread-dual", "standard": "c++20", "mode": "AST+IR", "source": "sources/cpp20-jthread.cpp"},
+    {"id": "cpp20-async-conditional", "standard": "c++20", "mode": "AST+IR", "source": "sources/cpp20-async-default.cpp"}
+  ]
+}

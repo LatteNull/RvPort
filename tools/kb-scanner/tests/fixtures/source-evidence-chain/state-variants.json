@@ -1,0 +1,120 @@
+{
+  "schemaVersion": "source-chain-contract-variants",
+  "base": "complete-report.json",
+  "variants": [
+    {
+      "name": "complete",
+      "operations": []
+    },
+    {
+      "name": "partial",
+      "operations": [
+        {
+          "op": "set",
+          "path": "findings.0.evidenceChain.status",
+          "value": "partial"
+        },
+        {
+          "op": "set",
+          "path": "findings.0.evidenceChain.reasonCodes",
+          "value": [
+            "missing_input"
+          ]
+        },
+        {
+          "op": "set",
+          "path": "findings.0.evidenceChain.breaks",
+          "value": [
+            {
+              "id": "break-partial",
+              "status": "partial",
+              "reasonCode": "missing_input",
+              "stage": "source-upstream",
+              "fromStepId": "step:dc379c1a6e53a9d43d8bf21f2ea00547fccdd0fe402f184d958b9480b21a8410",
+              "candidateStepIds": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ambiguous",
+      "operations": [
+        {
+          "op": "set",
+          "path": "findings.0.evidenceChain.status",
+          "value": "ambiguous"
+        },
+        {
+          "op": "set",
+          "path": "findings.0.evidenceChain.reasonCodes",
+          "value": [
+            "configuration_conflict"
+          ]
+        },
+        {
+          "op": "set",
+          "path": "findings.0.evidenceChain.breaks",
+          "value": [
+            {
+              "id": "break-ambiguous",
+              "status": "ambiguous",
+              "reasonCode": "configuration_conflict",
+              "stage": "source-upstream",
+              "fromStepId": "step:dc379c1a6e53a9d43d8bf21f2ea00547fccdd0fe402f184d958b9480b21a8410",
+              "candidateStepIds": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "inactive",
+      "operations": [
+        {
+          "op": "set",
+          "path": "findings.0.evidenceChain.status",
+          "value": "inactive"
+        },
+        {
+          "op": "set",
+          "path": "findings.0.evidenceChain.reasonCodes",
+          "value": [
+            "inactive_branch"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "unknown",
+      "operations": [
+        {
+          "op": "set",
+          "path": "findings.0.evidenceChain.status",
+          "value": "unknown"
+        },
+        {
+          "op": "set",
+          "path": "findings.0.evidenceChain.reasonCodes",
+          "value": [
+            "missing_input"
+          ]
+        },
+        {
+          "op": "set",
+          "path": "findings.0.evidenceChain.breaks",
+          "value": [
+            {
+              "id": "break-unknown",
+              "status": "unknown",
+              "reasonCode": "missing_input",
+              "stage": "source-upstream",
+              "fromStepId": "step:dc379c1a6e53a9d43d8bf21f2ea00547fccdd0fe402f184d958b9480b21a8410",
+              "candidateStepIds": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"target_id":"cpp20-risk-multi","roots":["main"],"translation_units":["producer.cpp","consumer.cpp","main.cpp"],"closed":true,"external_boundaries":["pthread"]}

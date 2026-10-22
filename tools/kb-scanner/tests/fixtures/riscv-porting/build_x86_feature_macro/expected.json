@@ -1,0 +1,5 @@
+{
+  "ruleId": "BUILD.X86.FEATURE_MACRO",
+  "count": 4,
+  "symbols": ["HAVE_AVX2INTRIN_H", "HAVE_AMD64_ASM", "aesni/aead_aes256gcm_aesni.c", "xmm6/salsa20_xmm6-asm.S"]
+}

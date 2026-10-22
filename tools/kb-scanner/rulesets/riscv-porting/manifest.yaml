@@ -1,0 +1,8 @@
+id: riscv-porting-rules
+name: RISC-V Porting Knowledge Base
+version: 2026.06
+languages:
+  - c
+  - cpp
+compatibleScanner: ">=0.1.0"
+

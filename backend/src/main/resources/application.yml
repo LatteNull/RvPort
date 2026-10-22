@@ -1,0 +1,163 @@
+spring:
+  application:
+    name: rvport-backend
+  datasource:
+    url: ${RVPORT_DB_URL:jdbc:postgresql://localhost:${POSTGRES_PORT:5432}/${POSTGRES_DB:rvport}}
+    username: ${RVPORT_DB_USER:${POSTGRES_USER:rvport}}
+    password: ${RVPORT_DB_PASSWORD:${POSTGRES_PASSWORD:change_me}}
+  liquibase:
+    enabled: ${RVPORT_LIQUIBASE_ENABLED:false}
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+  jooq:
+    sql-dialect: postgres
+  data:
+    redis:
+      host: ${RVPORT_REDIS_HOST:localhost}
+      port: ${RVPORT_REDIS_PORT:${REDIS_PORT:6379}}
+      password: ${RVPORT_REDIS_PASSWORD:${REDIS_PASSWORD:change_me}}
+  rabbitmq:
+    host: ${RVPORT_RABBITMQ_HOST:localhost}
+    port: ${RVPORT_RABBITMQ_PORT:${RABBITMQ_AMQP_PORT:5672}}
+    username: ${RVPORT_RABBITMQ_USERNAME:${RABBITMQ_DEFAULT_USER:rvport}}
+    password: ${RVPORT_RABBITMQ_PASSWORD:${RABBITMQ_DEFAULT_PASS:change_me}}
+    virtual-host: ${RVPORT_RABBITMQ_VHOST:${RABBITMQ_DEFAULT_VHOST:rvport}}
+    listener:
+      simple:
+        acknowledge-mode: ${RVPORT_RABBITMQ_LISTENER_ACK_MODE:manual}
+    publisher-returns: ${RVPORT_RABBITMQ_PUBLISHER_RETURNS:true}
+    template:
+      mandatory: ${RVPORT_RABBITMQ_TEMPLATE_MANDATORY:true}
+  session:
+    store-type: redis
+    timeout: ${RVPORT_SESSION_TIMEOUT:2h}
+    redis:
+      namespace: ${RVPORT_SESSION_REDIS_NAMESPACE:rvport:sessions}
+  servlet:
+    multipart:
+      max-file-size: ${RVPORT_MAX_FILE_SIZE:10GB}
+      max-request-size: ${RVPORT_MAX_REQUEST_SIZE:10GB}
+  threads:
+    virtual:
+      enabled: true
+
+server:
+  servlet:
+    session:
+      cookie:
+        name: RVPORT_SESSION
+        http-only: true
+        same-site: lax
+        secure: ${RVPORT_SESSION_COOKIE_SECURE:false}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+rvport:
+  cache:
+    namespace: ${RVPORT_CACHE_NAMESPACE:rvport:cache}
+  sse:
+    broadcast:
+      enabled: ${RVPORT_SSE_BROADCAST_ENABLED:true}
+      namespace: ${RVPORT_SSE_BROADCAST_NAMESPACE:rvport:sse}
+      task-events-channel: ${RVPORT_SSE_TASK_EVENTS_CHANNEL:task-events}
+      task-log-events-channel: ${RVPORT_SSE_TASK_LOG_EVENTS_CHANNEL:task-log-events}
+  queue:
+    task:
+      exchange: ${RVPORT_TASK_QUEUE_EXCHANGE:rvport.tasks}
+      queue: ${RVPORT_TASK_QUEUE_NAME:rvport.tasks.default}
+      routing-key: ${RVPORT_TASK_QUEUE_ROUTING_KEY:task.default}
+      dead-letter-exchange: ${RVPORT_TASK_QUEUE_DLX:rvport.tasks.dlx}
+      dead-letter-queue: ${RVPORT_TASK_QUEUE_DLQ:rvport.tasks.default.dlq}
+      dead-letter-routing-key: ${RVPORT_TASK_QUEUE_DLQ_ROUTING_KEY:task.default.dead}
+      max-attempts: ${RVPORT_TASK_QUEUE_MAX_ATTEMPTS:3}
+    task-cancel:
+      exchange: ${RVPORT_TASK_CANCEL_EXCHANGE:rvport.tasks.cancel}
+      queue-prefix: ${RVPORT_TASK_CANCEL_QUEUE_PREFIX:rvport.tasks.cancel}
+      routing-key-prefix: ${RVPORT_TASK_CANCEL_ROUTING_KEY_PREFIX:worker.cancel}
+      dead-letter-exchange: ${RVPORT_TASK_CANCEL_DLX:rvport.tasks.cancel.dlx}
+      dead-letter-queue: ${RVPORT_TASK_CANCEL_DLQ:rvport.tasks.cancel.dlq}
+      dead-letter-routing-key: ${RVPORT_TASK_CANCEL_DLQ_ROUTING_KEY:worker.cancel.dead}
+      max-attempts: ${RVPORT_TASK_CANCEL_MAX_ATTEMPTS:3}
+      grace-period-seconds: ${RVPORT_TASK_CANCEL_GRACE_PERIOD_SECONDS:5}
+  runtime:
+    log-dir: ${RVPORT_LOG_DIR:./backend/runtime/logs}
+    archive-dir: ${RVPORT_ARCHIVE_DIR:./backend/runtime/archives}
+    upload-dir: ${RVPORT_UPLOAD_DIR:./backend/runtime/uploads}
+    source-dir: ${RVPORT_SOURCE_DIR:./backend/runtime/sources}
+  bitcode:
+    enabled: ${RVPORT_BITCODE_ENABLED:true}
+    toolchain-id: ${RVPORT_BITCODE_TOOLCHAIN_ID:llvm-21.1.8-linux-x64}
+    toolchain-version: ${RVPORT_BITCODE_TOOLCHAIN_VERSION:21.1.8}
+    bundle-path: ${RVPORT_BITCODE_BUNDLE_PATH:/opt/rvport/toolchains/LLVM-21.1.8-Linux-X64.tar.xz}
+    bundle-sha256: ${RVPORT_BITCODE_BUNDLE_SHA256:b456e58a78fc48d9f0cf3d767762840baf0346806f71d399d1dfffff58c5b489}
+    remote-cache-directory: ${RVPORT_BITCODE_REMOTE_CACHE_DIRECTORY:.rvport/toolchains}
+    max-translation-units: ${RVPORT_BITCODE_MAX_TRANSLATION_UNITS:5000}
+    max-translation-unit-bytes: ${RVPORT_BITCODE_MAX_TRANSLATION_UNIT_BYTES:268435456}
+    max-bundle-bytes: ${RVPORT_BITCODE_MAX_BUNDLE_BYTES:8589934592}
+    translation-unit-timeout-seconds: ${RVPORT_BITCODE_TRANSLATION_UNIT_TIMEOUT_SECONDS:120}
+    timeout-seconds: ${RVPORT_BITCODE_TIMEOUT_SECONDS:1800}
+    transfer-timeout-seconds: ${RVPORT_BITCODE_TRANSFER_TIMEOUT_SECONDS:1800}
+  specialized-analysis:
+    enabled: ${RVPORT_SPECIALIZED_ANALYSIS_ENABLED:true}
+    work-dir: ${RVPORT_SPECIALIZED_ANALYSIS_WORK_DIR:./backend/runtime/specialized-analysis}
+    timeout-seconds: ${RVPORT_SPECIALIZED_ANALYSIS_TIMEOUT_SECONDS:3600}
+    max-output-bytes: ${RVPORT_SPECIALIZED_ANALYSIS_MAX_OUTPUT_BYTES:536870912}
+    floating-frontend-output-bytes: ${RVPORT_FLOATING_POINT_MAX_FRONTEND_OUTPUT_BYTES:536870912}
+    max-extracted-bytes: ${RVPORT_SPECIALIZED_ANALYSIS_MAX_EXTRACTED_BYTES:8589934592}
+    max-files: ${RVPORT_SPECIALIZED_ANALYSIS_MAX_FILES:25000}
+    floating-python: ${RVPORT_FLOATING_POINT_PYTHON:/opt/specialized-analysis-venv/bin/python}
+    floating-scanner: ${RVPORT_FLOATING_POINT_SCANNER:/opt/specialized-analysis-venv/bin/fp-precision-scanner}
+    floating-clang: ${RVPORT_FLOATING_POINT_CLANG:/usr/bin/clang-21}
+    floating-ir-worker: ${RVPORT_FLOATING_POINT_IR_WORKER:/opt/rvport/analysis-tools/bin/fp-ir-worker}
+    memory-order-python: ${RVPORT_MEMORY_ORDER_PYTHON:/opt/specialized-analysis-venv/bin/python}
+    memory-order-ir-worker: ${RVPORT_MEMORY_ORDER_IR_WORKER:/opt/rvport/analysis-tools/bin/moa-worker}
+    memory-order-source-worker: ${RVPORT_MEMORY_ORDER_SOURCE_WORKER:/opt/rvport/analysis-tools/bin/memory-order-source-worker}
+  object-storage:
+    enabled: ${RVPORT_OBJECT_STORAGE_ENABLED:true}
+    endpoint: ${RVPORT_OBJECT_STORAGE_ENDPOINT:http://localhost:9000}
+    region: ${RVPORT_OBJECT_STORAGE_REGION:us-east-1}
+    bucket: ${RVPORT_OBJECT_STORAGE_BUCKET:rvport-artifacts}
+    access-key: ${RVPORT_OBJECT_STORAGE_ACCESS_KEY:rvport}
+    secret-key: ${RVPORT_OBJECT_STORAGE_SECRET_KEY:change_me_minio}
+    path-style: ${RVPORT_OBJECT_STORAGE_PATH_STYLE:true}
+    auto-create-bucket: ${RVPORT_OBJECT_STORAGE_AUTO_CREATE_BUCKET:true}
+  kb-scan:
+    python-command: ${RVPORT_KB_SCAN_PYTHON_COMMAND:python}
+    scanner-root: ${RVPORT_KB_SCAN_SCANNER_ROOT:./tools/kb-scanner}
+    ruleset-path: ${RVPORT_KB_SCAN_RULESET_PATH:rulesets/riscv-porting}
+    output-dir: ${RVPORT_KB_SCAN_OUTPUT_DIR:./backend/runtime/kb-scans}
+    timeout-seconds: ${RVPORT_KB_SCAN_TIMEOUT_SECONDS:1800}
+    max-output-bytes: ${RVPORT_KB_SCAN_MAX_OUTPUT_BYTES:10485760}
+    language: ${RVPORT_KB_SCAN_LANGUAGE:c,cpp}
+    target-arch: ${RVPORT_KB_SCAN_TARGET_ARCH:riscv64}
+    context-lines: ${RVPORT_KB_SCAN_CONTEXT_LINES:20}
+  worker:
+    enabled: ${RVPORT_WORKER_ENABLED:false}
+    instance-id: ${RVPORT_WORKER_INSTANCE_ID:}
+    mode: ${RVPORT_APP_MODE:combined}
+    concurrency-limit: ${RVPORT_WORKER_CONCURRENCY_LIMIT:1}
+    max-concurrency-limit: ${RVPORT_WORKER_MAX_CONCURRENCY_LIMIT:8}
+    heartbeat-interval-seconds: ${RVPORT_WORKER_HEARTBEAT_INTERVAL_SECONDS:10}
+    offline-timeout-seconds: ${RVPORT_WORKER_OFFLINE_TIMEOUT_SECONDS:60}
+    cleanup:
+      enabled: ${RVPORT_WORKER_CLEANUP_ENABLED:true}
+      interval-ms: ${RVPORT_WORKER_CLEANUP_INTERVAL_MS:300000}
+      lost-timeout-seconds: ${RVPORT_WORKER_CLEANUP_LOST_TIMEOUT_SECONDS:300}
+      retention-hours: ${RVPORT_WORKER_CLEANUP_RETENTION_HOURS:24}
+      batch-size: ${RVPORT_WORKER_CLEANUP_BATCH_SIZE:100}
+  user-action-token:
+    cleanup:
+      enabled: ${RVPORT_USER_ACTION_TOKEN_CLEANUP_ENABLED:true}
+      cron: ${RVPORT_USER_ACTION_TOKEN_CLEANUP_CRON:0 0 3 * * *}
+      retention-days: ${RVPORT_USER_ACTION_TOKEN_RETENTION_DAYS:30}
+  security:
+    credentials:
+      master-key: ${RVPORT_CREDENTIAL_MASTER_KEY:}
+      key-id: ${RVPORT_CREDENTIAL_KEY_ID:local-v1}

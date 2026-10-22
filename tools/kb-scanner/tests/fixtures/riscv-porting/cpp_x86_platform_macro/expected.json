@@ -1,0 +1,6 @@
+{
+  "ruleId": "C_CPP.X86.PLATFORM_MACRO",
+  "count": 1,
+  "symbols": ["__AVX2__"]
+}
+

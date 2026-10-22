@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "kind": "AstIrValidationSuite",
+  "analysis_version": "0.1.0",
+  "policy_id": "ast-cross-tu-evidence-v1",
+  "suite_id": "ast-ir-cross-tu-matrix",
+  "suite_version": 2,
+  "baseline": {"path": "../offline-v1/suite.json", "sha256": "42a513bd8364b8b22ed1618b5599f030fcd348ca14138b817649a475fe59ad00"},
+  "cases": [
+    {"id":"c11-correct-single","baseline_case_id":"c11-correct-single","profile_id":"c11-clang","compiler":"clang","language":"c","standard":"c11","layout":"single-tu","features":["atomic","debug","macro","release-acquire"],"input_digest":"cbfd3de495dce934df19c21993ec3a3f96ad91749de14dc8dab4f2b53ff35d13"},
+    {"id":"c11-risk-multi","baseline_case_id":"c11-risk-multi","profile_id":"c11-gcc","compiler":"gcc","language":"c","standard":"c11","layout":"three-tu","features":["cross-tu-wrapper","external","no-debug","pthread-handle"],"input_digest":"d7e71adf36688e2dec944e28dd095f202290b8e0cf8f1953137230cacfcb0f0d"},
+    {"id":"c17-correct-multi","baseline_case_id":"c17-correct-multi","profile_id":"c17-gcc","compiler":"gcc","language":"c","standard":"c17","layout":"three-tu","features":["common","external","path-map","tentative"],"input_digest":"b257288da49eaea25ee805f0369fb5f025e5bc9f428fe1e8979ceb8007ca6541"},
+    {"id":"c17-unknown-single","baseline_case_id":"c17-unknown-single","profile_id":"c17-clang","compiler":"clang","language":"c","standard":"c17","layout":"single-tu","features":["ambiguous","budget","fence","same-name-static","unsupported"],"input_digest":"d8ed459713b0ba36d5c989600151ad82370e3efd4614900335df82e55ce4e959"},
+    {"id":"cpp17-risk-single","baseline_case_id":"cpp17-risk-single","profile_id":"cpp17-clang","compiler":"clang","language":"c++","standard":"c++17","layout":"single-tu","features":["cas","debug","macro","rmw","tls","weak"],"input_digest":"a02cd9be205f2c4668a89d3b95c79776e3fd0178f7a9bee67adce6e68be2c8a2"},
+    {"id":"cpp17-unknown-multi","baseline_case_id":"cpp17-unknown-multi","profile_id":"cpp17-gcc","compiler":"gcc","language":"c++","standard":"c++17","layout":"three-tu","features":["anonymous-namespace","inline","no-debug","odr","template"],"input_digest":"d7db41cd3ecc295c082cddccb5b95cd5a540aa7909f3d09eb82903701436b579"},
+    {"id":"cpp20-correct-single","baseline_case_id":"cpp20-correct-single","profile_id":"cpp20-clang","compiler":"clang","language":"c++","standard":"c++20","layout":"single-tu","features":["debug","internal","same-name-static","visibility"],"input_digest":"8afd916e1388d93128115add1b24b2aa47a296548f32d27231aa107cbf6f37bc"},
+    {"id":"cpp20-risk-multi","baseline_case_id":"cpp20-risk-multi","profile_id":"cpp20-gcc","compiler":"gcc","language":"c++","standard":"c++20","layout":"three-tu","features":["comdat","profile-conflict","pthread-callback","template"],"input_digest":"d74d105074ecebeb6f994fb0b746d1ed1f1c0e4d642e929aeb06deb172ced1fe"}
+  ],
+  "semantic_digest": "b687329531e2758b8bcb53bcaa049a2eef707a0b1fcc92cedaa26c58a4978c5b"
+}

@@ -1,0 +1,2021 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "guards",
+        "proof"
+      ],
+      "properties": {
+        "value": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/Value"
+            },
+            {
+              "not": {
+                "properties": {
+                  "kind": {
+                    "const": "unknown"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "guards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Guard"
+          },
+          "uniqueItems": true
+        },
+        "proof": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "CandidateDomain": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "candidates",
+            "reason"
+          ],
+          "properties": {
+            "state": {
+              "const": "finite"
+            },
+            "candidates": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Candidate"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "reason": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "candidates",
+            "reason"
+          ],
+          "properties": {
+            "state": {
+              "const": "unknown"
+            },
+            "candidates": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Candidate"
+              },
+              "maxItems": 0
+            },
+            "reason": {
+              "$ref": "#/$defs/Id"
+            }
+          }
+        }
+      ]
+    },
+    "EvaluatedValue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "domain"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "domain": {
+          "$ref": "#/$defs/CandidateDomain"
+        }
+      }
+    },
+    "EvaluatedBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "state",
+        "proof"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "state": {
+          "enum": [
+            "reachable",
+            "unreachable",
+            "pending"
+          ]
+        },
+        "proof": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "LocalCallRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "arguments",
+        "guards"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "arguments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CandidateDomain"
+          }
+        },
+        "guards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Guard"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "LocalEvaluationRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "analysis_version",
+        "policy_id",
+        "scope_id",
+        "context_id",
+        "function",
+        "invocation_id",
+        "invocations",
+        "origins",
+        "arguments",
+        "adoptions",
+        "dependencies",
+        "local_dependencies",
+        "budgets",
+        "call_bindings"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "LocalEvaluationRequest"
+        },
+        "analysis_version": {
+          "const": "0.1.0"
+        },
+        "policy_id": {
+          "const": "scoped-effects-v1"
+        },
+        "scope_id": {
+          "$ref": "#/$defs/Hash"
+        },
+        "context_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "function": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "invocation_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "invocations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Invocation"
+          },
+          "minItems": 1
+        },
+        "origins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Origin"
+          },
+          "minItems": 1
+        },
+        "arguments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CandidateDomain"
+          }
+        },
+        "adoptions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Adoption"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dependency"
+          }
+        },
+        "local_dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LocalDependency"
+          },
+          "minItems": 1
+        },
+        "budgets": {
+          "$ref": "#/$defs/Budgets"
+        },
+        "call_bindings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source",
+              "context_id"
+            ],
+            "properties": {
+              "source": {
+                "$ref": "#/$defs/SourceRef"
+              },
+              "context_id": {
+                "$ref": "#/$defs/Id"
+              }
+            }
+          }
+        }
+      }
+    },
+    "LocalEvaluationResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "analysis_version",
+        "policy_id",
+        "request",
+        "request_hash",
+        "scope_id",
+        "context_id",
+        "budgets",
+        "values",
+        "blocks",
+        "call_requests",
+        "effects",
+        "order",
+        "returns",
+        "escape",
+        "resolutions",
+        "frontier",
+        "diagnostics",
+        "status",
+        "steps"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "LocalEvaluationResult"
+        },
+        "analysis_version": {
+          "const": "0.1.0"
+        },
+        "policy_id": {
+          "const": "scoped-effects-v1"
+        },
+        "request": {
+          "$ref": "#/$defs/LocalEvaluationRequest"
+        },
+        "request_hash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "scope_id": {
+          "$ref": "#/$defs/Hash"
+        },
+        "context_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "budgets": {
+          "$ref": "#/$defs/Budgets"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvaluatedValue"
+          }
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvaluatedBlock"
+          }
+        },
+        "call_requests": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LocalCallRequest"
+          }
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Effect"
+          }
+        },
+        "order": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OrderEdge"
+          }
+        },
+        "returns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Return"
+          }
+        },
+        "escape": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Value"
+          }
+        },
+        "resolutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Resolution"
+          }
+        },
+        "frontier": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Diagnostic"
+          }
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Diagnostic"
+          }
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "steps": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "Hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "Id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "NullableId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1
+    },
+    "Status": {
+      "enum": [
+        "complete",
+        "partial",
+        "failed",
+        "not_run"
+      ]
+    },
+    "SourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_key",
+        "function_id",
+        "id"
+      ],
+      "properties": {
+        "artifact_key": {
+          "$ref": "#/$defs/Hash"
+        },
+        "function_id": {
+          "$ref": "#/$defs/NullableId"
+        },
+        "id": {
+          "$ref": "#/$defs/Id"
+        }
+      }
+    },
+    "Diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "detail",
+        "source",
+        "context_id"
+      ],
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/Id"
+        },
+        "detail": {
+          "type": "string"
+        },
+        "source": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/SourceRef"
+            }
+          ]
+        },
+        "context_id": {
+          "$ref": "#/$defs/NullableId"
+        }
+      }
+    },
+    "Budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "local_steps",
+        "condition_states",
+        "value_candidates",
+        "contexts_per_function",
+        "contexts_per_request",
+        "scc_iterations",
+        "effect_items",
+        "worker_seconds",
+        "worker_output_bytes",
+        "request_seconds",
+        "request_output_bytes"
+      ],
+      "properties": {
+        "local_steps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "condition_states": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32
+        },
+        "value_candidates": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "contexts_per_function": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32
+        },
+        "contexts_per_request": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "scc_iterations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        },
+        "effect_items": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "worker_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60
+        },
+        "worker_output_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16777216
+        },
+        "request_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 300
+        },
+        "request_output_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 67108864
+        }
+      }
+    },
+    "Allocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "invocation_id",
+        "cardinality",
+        "reason"
+      ],
+      "properties": {
+        "invocation_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "cardinality": {
+          "enum": [
+            "single",
+            "merged",
+            "unknown"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/NullableId"
+        }
+      }
+    },
+    "Invocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "context_id",
+        "function",
+        "parent_id",
+        "callsite",
+        "cardinality",
+        "reason"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "context_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "function": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "parent_id": {
+          "$ref": "#/$defs/NullableId"
+        },
+        "callsite": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/SourceRef"
+            }
+          ]
+        },
+        "cardinality": {
+          "enum": [
+            "single",
+            "merged",
+            "unknown"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/NullableId"
+        }
+      }
+    },
+    "Value": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "bits",
+            "hex"
+          ],
+          "properties": {
+            "kind": {
+              "const": "integer"
+            },
+            "bits": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8388608
+            },
+            "hex": {
+              "type": "string",
+              "pattern": "^[0-9A-F]+$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "source",
+            "offset",
+            "address_space",
+            "allocation"
+          ],
+          "properties": {
+            "kind": {
+              "const": "object"
+            },
+            "source": {
+              "$ref": "#/$defs/SourceRef"
+            },
+            "offset": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "pattern": "^-?(0|[1-9][0-9]*)$"
+            },
+            "address_space": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "allocation": {
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "#/$defs/Allocation"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "source",
+            "invocation_id"
+          ],
+          "properties": {
+            "kind": {
+              "const": "parameter"
+            },
+            "source": {
+              "$ref": "#/$defs/SourceRef"
+            },
+            "invocation_id": {
+              "$ref": "#/$defs/NullableId"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "address_space"
+          ],
+          "properties": {
+            "kind": {
+              "const": "null"
+            },
+            "address_space": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "reason"
+          ],
+          "properties": {
+            "kind": {
+              "enum": [
+                "unknown",
+                "poison",
+                "undef",
+                "freeze"
+              ]
+            },
+            "reason": {
+              "$ref": "#/$defs/Id"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "source",
+            "operands",
+            "invocation_id"
+          ],
+          "properties": {
+            "kind": {
+              "const": "expression"
+            },
+            "source": {
+              "$ref": "#/$defs/SourceRef"
+            },
+            "invocation_id": {
+              "$ref": "#/$defs/NullableId"
+            },
+            "operands": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Value"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Root": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_key",
+        "function_id",
+        "arguments"
+      ],
+      "properties": {
+        "artifact_key": {
+          "$ref": "#/$defs/Hash"
+        },
+        "function_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "arguments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Value"
+          }
+        }
+      }
+    },
+    "EffectAnalysisRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "analysis_version",
+        "policy_id",
+        "scope",
+        "mode",
+        "roots",
+        "budgets"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "EffectAnalysisRequest"
+        },
+        "analysis_version": {
+          "const": "0.1.0"
+        },
+        "policy_id": {
+          "const": "scoped-effects-v1"
+        },
+        "scope": {
+          "$ref": "#/$defs/Id"
+        },
+        "mode": {
+          "enum": [
+            "roots",
+            "all-defined"
+          ]
+        },
+        "roots": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/Root"
+          }
+        },
+        "budgets": {
+          "$ref": "#/$defs/Budgets"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mode": {
+                "const": "roots"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "roots": {
+                "minItems": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "roots": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_key",
+        "module_hash",
+        "facts_hash",
+        "extractor_version",
+        "llvm_version",
+        "profile"
+      ],
+      "properties": {
+        "artifact_key": {
+          "$ref": "#/$defs/Hash"
+        },
+        "module_hash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "facts_hash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "extractor_version": {
+          "const": "0.2.0"
+        },
+        "llvm_version": {
+          "const": "21.1.8"
+        },
+        "profile": {
+          "enum": [
+            "source-preserving",
+            "build-faithful",
+            "imported",
+            "linked"
+          ]
+        }
+      }
+    },
+    "Attribute": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "slot",
+        "text",
+        "status",
+        "reason"
+      ],
+      "properties": {
+        "slot": {
+          "type": "integer"
+        },
+        "text": {
+          "$ref": "#/$defs/Id"
+        },
+        "status": {
+          "enum": [
+            "modeled",
+            "conservatively-ignored",
+            "unsupported"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/Id"
+        }
+      }
+    },
+    "Interface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "function_type",
+        "return_type",
+        "parameter_types",
+        "calling_convention",
+        "vararg",
+        "attributes",
+        "status",
+        "nounwind",
+        "noreturn"
+      ],
+      "properties": {
+        "function_type": {
+          "$ref": "#/$defs/Id"
+        },
+        "return_type": {
+          "$ref": "#/$defs/Id"
+        },
+        "parameter_types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        },
+        "calling_convention": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "vararg": {
+          "type": "boolean"
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Attribute"
+          }
+        },
+        "status": {
+          "enum": [
+            "supported",
+            "unsupported"
+          ]
+        },
+        "nounwind": {
+          "type": "boolean"
+        },
+        "noreturn": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Function": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "linkage",
+        "visibility",
+        "dso_local",
+        "declaration",
+        "interposable",
+        "exact_definition",
+        "comdat",
+        "selection",
+        "interface",
+        "body_fingerprint"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "linkage": {
+          "$ref": "#/$defs/Id"
+        },
+        "visibility": {
+          "$ref": "#/$defs/Id"
+        },
+        "dso_local": {
+          "type": "boolean"
+        },
+        "declaration": {
+          "type": "boolean"
+        },
+        "interposable": {
+          "type": "boolean"
+        },
+        "exact_definition": {
+          "type": "boolean"
+        },
+        "comdat": {
+          "$ref": "#/$defs/NullableId"
+        },
+        "selection": {
+          "$ref": "#/$defs/NullableId"
+        },
+        "interface": {
+          "$ref": "#/$defs/Interface"
+        },
+        "body_fingerprint": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Hash"
+            }
+          ]
+        }
+      }
+    },
+    "LocalObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "allocated_type",
+        "size_bytes",
+        "address_space",
+        "private",
+        "reason"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "allocated_type": {
+          "$ref": "#/$defs/Id"
+        },
+        "size_bytes": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^(0|[1-9][0-9]*)$"
+        },
+        "address_space": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "private": {
+          "type": "boolean"
+        },
+        "reason": {
+          "$ref": "#/$defs/NullableId"
+        }
+      }
+    },
+    "CallInterface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "interface",
+        "target",
+        "tail",
+        "bundles"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "interface": {
+          "$ref": "#/$defs/Interface"
+        },
+        "target": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/SourceRef"
+            }
+          ]
+        },
+        "tail": {
+          "$ref": "#/$defs/Id"
+        },
+        "bundles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        }
+      }
+    },
+    "Resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "facts_hash",
+        "source",
+        "reason",
+        "context_id",
+        "invocation_id",
+        "rule",
+        "evidence",
+        "status"
+      ],
+      "properties": {
+        "facts_hash": {
+          "$ref": "#/$defs/Hash"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "reason": {
+          "$ref": "#/$defs/Id"
+        },
+        "context_id": {
+          "$ref": "#/$defs/NullableId"
+        },
+        "invocation_id": {
+          "$ref": "#/$defs/NullableId"
+        },
+        "rule": {
+          "$ref": "#/$defs/Id"
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          }
+        },
+        "status": {
+          "enum": [
+            "explained",
+            "unreachable",
+            "irrelevant"
+          ]
+        }
+      }
+    },
+    "Guard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "edge",
+        "invocation_id",
+        "multiplicity"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "edge": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "invocation_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "multiplicity": {
+          "enum": [
+            "single",
+            "repeated",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "Effect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "source",
+        "context_id",
+        "invocation_id",
+        "kind",
+        "address",
+        "size_bytes",
+        "value",
+        "atomic",
+        "volatile",
+        "ordering",
+        "failure_ordering",
+        "syncscope",
+        "visibility",
+        "guards",
+        "occurrence",
+        "multiplicity",
+        "proof",
+        "call_path"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "context_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "invocation_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "kind": {
+          "enum": [
+            "read",
+            "write",
+            "rmw",
+            "cas",
+            "fence",
+            "unknown"
+          ]
+        },
+        "address": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Value"
+            }
+          ]
+        },
+        "size_bytes": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^(0|[1-9][0-9]*)$"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Value"
+            }
+          ]
+        },
+        "atomic": {
+          "type": "boolean"
+        },
+        "volatile": {
+          "type": "boolean"
+        },
+        "ordering": {
+          "$ref": "#/$defs/NullableId"
+        },
+        "failure_ordering": {
+          "$ref": "#/$defs/NullableId"
+        },
+        "syncscope": {
+          "$ref": "#/$defs/NullableId"
+        },
+        "visibility": {
+          "enum": [
+            "local",
+            "observable",
+            "unknown"
+          ]
+        },
+        "guards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Guard"
+          }
+        },
+        "occurrence": {
+          "enum": [
+            "may",
+            "must-normal-return"
+          ]
+        },
+        "multiplicity": {
+          "enum": [
+            "single",
+            "repeated",
+            "unknown"
+          ]
+        },
+        "proof": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          }
+        },
+        "call_path": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SourceRef"
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "occurrence": {
+                "const": "must-normal-return"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "proof": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "OrderEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "before",
+        "after",
+        "guards"
+      ],
+      "properties": {
+        "before": {
+          "$ref": "#/$defs/Id"
+        },
+        "after": {
+          "$ref": "#/$defs/Id"
+        },
+        "guards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Guard"
+          }
+        }
+      }
+    },
+    "Return": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "value",
+        "guards",
+        "exit",
+        "invocation_id"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "invocation_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Value"
+            }
+          ]
+        },
+        "guards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Guard"
+          }
+        },
+        "exit": {
+          "enum": [
+            "normal",
+            "unwind",
+            "noreturn",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "Adoption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "call",
+        "target",
+        "kind",
+        "reason",
+        "assumptions"
+      ],
+      "properties": {
+        "call": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "target": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/SourceRef"
+            }
+          ]
+        },
+        "kind": {
+          "enum": [
+            "unique-definition",
+            "odr-body-under-contract",
+            "unknown"
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/Id"
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        }
+      }
+    },
+    "Dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "context_id",
+        "digest"
+      ],
+      "properties": {
+        "context_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "digest": {
+          "$ref": "#/$defs/Hash"
+        }
+      }
+    },
+    "EffectSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "analysis_version",
+        "policy_id",
+        "scope_id",
+        "context_id",
+        "root",
+        "root_invocation_id",
+        "invocations",
+        "origins",
+        "budgets",
+        "effects",
+        "order",
+        "returns",
+        "escape",
+        "adoptions",
+        "dependencies",
+        "resolutions",
+        "diagnostics",
+        "status",
+        "local_dependencies"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "EffectSummary"
+        },
+        "analysis_version": {
+          "const": "0.1.0"
+        },
+        "policy_id": {
+          "const": "scoped-effects-v1"
+        },
+        "scope_id": {
+          "$ref": "#/$defs/Hash"
+        },
+        "context_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "root": {
+          "$ref": "#/$defs/Root"
+        },
+        "origins": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/Origin"
+          }
+        },
+        "budgets": {
+          "$ref": "#/$defs/Budgets"
+        },
+        "root_invocation_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "invocations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/Invocation"
+          }
+        },
+        "effects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Effect"
+          }
+        },
+        "order": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/OrderEdge"
+          }
+        },
+        "returns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Return"
+          }
+        },
+        "escape": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Value"
+          }
+        },
+        "adoptions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Adoption"
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dependency"
+          }
+        },
+        "resolutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Resolution"
+          }
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Diagnostic"
+          }
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "local_dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LocalDependency"
+          }
+        }
+      }
+    },
+    "PlannedItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "status",
+        "reason"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id"
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "reason": {
+          "$ref": "#/$defs/NullableId"
+        }
+      }
+    },
+    "Counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "planned",
+        "complete",
+        "partial",
+        "failed",
+        "not_run",
+        "complete_ratio"
+      ],
+      "properties": {
+        "planned": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "complete": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "partial": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "not_run": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "complete_ratio": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "EffectAnalysisReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "analysis_version",
+        "policy_id",
+        "request_hash",
+        "scope_id",
+        "budgets",
+        "input_integrity",
+        "raw_fact_extraction",
+        "local_analysis",
+        "interprocedural_analysis",
+        "source_mapping",
+        "members",
+        "roots",
+        "contexts",
+        "member_counts",
+        "root_counts",
+        "context_counts",
+        "frontier",
+        "summaries",
+        "resolutions",
+        "diagnostics",
+        "assumptions",
+        "safety",
+        "findings",
+        "exit_code",
+        "local_dependencies"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "EffectAnalysisReport"
+        },
+        "analysis_version": {
+          "const": "0.1.0"
+        },
+        "policy_id": {
+          "const": "scoped-effects-v1"
+        },
+        "request_hash": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Hash"
+            }
+          ]
+        },
+        "scope_id": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/Hash"
+            }
+          ]
+        },
+        "budgets": {
+          "$ref": "#/$defs/Budgets"
+        },
+        "input_integrity": {
+          "$ref": "#/$defs/Status"
+        },
+        "raw_fact_extraction": {
+          "$ref": "#/$defs/Status"
+        },
+        "local_analysis": {
+          "$ref": "#/$defs/Status"
+        },
+        "interprocedural_analysis": {
+          "$ref": "#/$defs/Status"
+        },
+        "source_mapping": {
+          "enum": [
+            "complete",
+            "partial",
+            "unavailable",
+            "not_run"
+          ]
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlannedItem"
+          }
+        },
+        "roots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlannedItem"
+          }
+        },
+        "contexts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PlannedItem"
+          }
+        },
+        "member_counts": {
+          "$ref": "#/$defs/Counts"
+        },
+        "root_counts": {
+          "$ref": "#/$defs/Counts"
+        },
+        "context_counts": {
+          "$ref": "#/$defs/Counts"
+        },
+        "frontier": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Diagnostic"
+          }
+        },
+        "summaries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Dependency"
+          }
+        },
+        "resolutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Resolution"
+          }
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Diagnostic"
+          }
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Id"
+          }
+        },
+        "safety": {
+          "const": "not_evaluated"
+        },
+        "findings": {
+          "type": "null"
+        },
+        "exit_code": {
+          "enum": [
+            0,
+            1,
+            2
+          ]
+        },
+        "local_dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LocalDependency"
+          }
+        }
+      }
+    },
+    "LocalAnalysisFacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "kind",
+        "analysis_version",
+        "policy_id",
+        "origin",
+        "budgets",
+        "functions",
+        "calls",
+        "objects",
+        "resolutions",
+        "diagnostics",
+        "status",
+        "ir_nodes",
+        "analysis_evidence"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "kind": {
+          "const": "LocalAnalysisFacts"
+        },
+        "analysis_version": {
+          "const": "0.1.0"
+        },
+        "policy_id": {
+          "const": "scoped-effects-v1"
+        },
+        "origin": {
+          "$ref": "#/$defs/Origin"
+        },
+        "budgets": {
+          "$ref": "#/$defs/Budgets"
+        },
+        "functions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Function"
+          }
+        },
+        "calls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CallInterface"
+          }
+        },
+        "objects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LocalObject"
+          }
+        },
+        "resolutions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Resolution"
+          }
+        },
+        "diagnostics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Diagnostic"
+          }
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "ir_nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/IRNode"
+          }
+        },
+        "analysis_evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/AnalysisEvidence"
+          }
+        }
+      }
+    },
+    "AnalysisRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_key",
+        "function_id",
+        "analysis_id"
+      ],
+      "properties": {
+        "artifact_key": {
+          "$ref": "#/$defs/Hash"
+        },
+        "function_id": {
+          "$ref": "#/$defs/Id"
+        },
+        "analysis_id": {
+          "$ref": "#/$defs/Id"
+        }
+      }
+    },
+    "EvidenceRef": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/SourceRef"
+        },
+        {
+          "$ref": "#/$defs/AnalysisRef"
+        }
+      ]
+    },
+    "IRNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "block",
+        "opcode",
+        "type"
+      ],
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "block": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "opcode": {
+          "$ref": "#/$defs/Id"
+        },
+        "type": {
+          "$ref": "#/$defs/Id"
+        }
+      }
+    },
+    "AnalysisEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "kind",
+        "source",
+        "inputs",
+        "result"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/AnalysisRef"
+        },
+        "kind": {
+          "enum": [
+            "dominance",
+            "memory_live_on_entry",
+            "memory_phi",
+            "memory_def",
+            "memory_use",
+            "aa_clobber"
+          ]
+        },
+        "source": {
+          "$ref": "#/$defs/SourceRef"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EvidenceRef"
+          }
+        },
+        "result": {
+          "enum": [
+            "reachable",
+            "unreachable",
+            "candidate"
+          ]
+        }
+      }
+    },
+    "LocalDependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_key",
+        "digest"
+      ],
+      "properties": {
+        "artifact_key": {
+          "$ref": "#/$defs/Hash"
+        },
+        "digest": {
+          "$ref": "#/$defs/Hash"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "protocol_version": 1,
+  "analysis_version": "0.1.0",
+  "llvm_version": "21.1.8",
+  "policy_id": "concurrent-access-candidate-graph-v1",
+  "cache_namespace": "concurrent-access-candidate-graph-v1",
+  "kinds": {
+    "ConcurrentAccessCandidateRequest": 1,
+    "ConcurrentAccessProjectionFacts": 1,
+    "ExecutionInstanceBindingOverlay": 1,
+    "AccessProtectionOverlay": 1,
+    "ConcurrentAccessCandidateGraph": 1,
+    "ConcurrentAccessCandidateReport": 1
+  },
+  "budgets": {
+    "translation_units": 4096,
+    "roots": 65536,
+    "contexts": 262144,
+    "effects": 2000000,
+    "accesses": 2000000,
+    "instances": 262144,
+    "object_candidates": 2000000,
+    "buckets": 2000000,
+    "alias_comparisons": 4000000,
+    "mhp_queries": 4000000,
+    "candidate_pairs": 2000000,
+    "exclusions": 2000000,
+    "protection_queries": 2000000,
+    "frontier_items": 262144,
+    "recursive_iterations": 64,
+    "scc_iterations": 64,
+    "diagnostic_bytes": 4096,
+    "worker_seconds": 600,
+    "request_seconds": 3600,
+    "request_output_bytes": 268435456
+  }
+}

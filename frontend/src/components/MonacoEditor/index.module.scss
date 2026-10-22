@@ -1,0 +1,96 @@
+.loading,
+.editor {
+  box-sizing: border-box;
+  overflow: hidden;
+  min-height: 0;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: var(--ant-border-radius-lg, 12px);
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.highlightedLine {
+  background: var(--ant-color-warning-bg);
+}
+
+.highlightedLineDecoration {
+  box-sizing: border-box;
+  border-inline-end: 3px solid var(--ant-color-warning);
+}
+
+.highlightedRange {
+  border-radius: 2px;
+  background: var(--ant-color-warning-bg-hover);
+  box-shadow: inset 0 -2px 0 var(--ant-color-warning);
+}
+
+.sourceGap,
+.sourceGapZone {
+  box-sizing: border-box;
+  height: 40px;
+  border-block: 1px dashed var(--ant-color-border);
+  background: var(--ant-color-fill-quaternary);
+}
+
+.sourceGap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--ant-color-text-secondary);
+  font-family: var(--ant-font-family);
+  font-size: var(--ant-font-size-sm, 12px);
+  pointer-events: auto;
+}
+
+.sourceGapAction {
+  padding: 0;
+  border: 0;
+  color: var(--ant-color-primary);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  pointer-events: auto;
+  position: relative;
+  z-index: 1;
+
+  &:hover {
+    color: var(--ant-color-primary-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ant-color-primary-border);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    color: var(--ant-color-text-disabled);
+    cursor: default;
+  }
+}
+
+.editor :global(.monaco-editor .margin) {
+  background:
+    linear-gradient(var(--ant-color-fill-quaternary), var(--ant-color-fill-quaternary)),
+    var(--ant-color-bg-container);
+}
+
+.editor :global(.monaco-editor .line-numbers) {
+  box-sizing: content-box;
+  padding-inline-start: 6px;
+  color: var(--ant-color-text-tertiary) !important;
+  font-family: var(--ant-font-family-code);
+}
+
+// Monaco uses its own DOM scrollbar rather than the browser scrollbar.
+// Mirror the application scrollbar's transparent inset and pill-shaped thumb.
+.editor :global(.monaco-scrollable-element > .scrollbar > .slider) {
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background-clip: content-box;
+}

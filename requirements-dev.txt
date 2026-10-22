@@ -1,5 +1,0 @@
-# 开发环境依赖（可复现锁定）
-# 运行时依赖（精确锁定，由 pip freeze 校准）
--r server/requirements.txt
-# 测试依赖
--r tests/requirements.txt

@@ -1,0 +1,17 @@
+{
+  "schemas/cpp_raii_synchronization.json": {
+    "historical_sha256": "47cfa9d9fb4316e881f64c3090743348f298f46cdd68a68ad572da519f1c5ca6",
+    "migration_sha256": "68f78160147236410be49035d329808f70aa5613acac3d2e788f4ff06c161ab2",
+    "reason": "Schema 标识随产品改名；历史验收摘要原样保留，当前文件独立核验。"
+  },
+  "schemas/cpp_thread_lifecycle.json": {
+    "historical_sha256": "048899a4641ff12dd64f593f9bda427a5c822a424f13afb57a5a7264e74e1f7d",
+    "migration_sha256": "1e4614c4daf089cac163515c8cc267d6569194c4a441f09cb278f482140caff1",
+    "reason": "Schema 标识随产品改名；历史验收摘要原样保留，当前文件独立核验。"
+  },
+  "schemas/degraded_source_analysis.json": {
+    "historical_sha256": "23878ed845225c3a3c9b7bdc5c854b804904dccc0834a40e354b5d77a8a024bf",
+    "migration_sha256": "b2d136933e36594c61644b87c8d01a6867a693c0c29ba5d35758aebc4c79fb12",
+    "reason": "Schema 标识随产品改名；历史验收摘要原样保留，当前文件独立核验。"
+  }
+}

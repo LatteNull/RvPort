@@ -1,0 +1,24 @@
+{
+  "kind": "FloatingPointScannerAcceptedBenchmarkBaseline",
+  "schema_version": "1.0",
+  "environment": "linux-amd64-clang-llvm-21.1.8-4vcpu-4gib",
+  "review_revision": "p5-2026-09-24",
+  "S": {
+    "wall_seconds": 1.802904109004885,
+    "cpu_seconds": 1.5626429999999996,
+    "rss_bytes": 90165248.0,
+    "workload_digest": "c059596b190f39b86b6dba3dd58c5a9555a34dbfc621297d3ebea600d971d357"
+  },
+  "M": {
+    "wall_seconds": 6.6362838160130195,
+    "cpu_seconds": 5.837629,
+    "rss_bytes": 90177536.0,
+    "workload_digest": "fdd8b7673a4ac305246e8e07b40faab54b26d0bac64e15d1a118d0ba55ba9793"
+  },
+  "L": {
+    "wall_seconds": 35.54434644599678,
+    "cpu_seconds": 30.552255000000002,
+    "rss_bytes": 90177536.0,
+    "workload_digest": "b73752876dc5ff4f051a0eb15ea715c85cc5c10b2541691ea4d268d635ce93a6"
+  }
+}

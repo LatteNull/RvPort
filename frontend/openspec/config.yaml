@@ -1,0 +1,30 @@
+schema: spec-driven
+
+context: |
+  RvPort 是面向个人用户的 x86 到 RISC-V 迁移门户。
+  前端位于 monorepo 的 frontend/；前端 OpenSpec 位于 frontend/openspec/。
+  前端 change 默认限于 frontend/，跨端契约变更必须明确说明影响范围。
+
+  工作前读取以下权威入口，不在本配置中复制其详细规则：
+  - frontend/AGENTS.md：产品定位、视觉方向和代码组织规则。
+  - frontend/openspec/project.md：工程约束、契约边界、测试与交付验证矩阵。
+  - frontend/openspec/specs/README.md：当前已交付能力索引及实现入口。
+  - 本轮相关的能力规范、实现、测试和活动 change。
+
+  主规范只记录当前已交付能力；未完成需求保留在 changes 中，交付后再同步主规范。
+  已删除、已替代的功能不因历史文档或原型而恢复。
+  根目录 docs/、reference/、prototypes/、历史 Figma 和 changes/archive/ 只提供背景。
+  规范与代码不一致时核对契约、测试和变更记录，不自动把实现缺陷改写为需求。
+
+  工具链版本与命令以 frontend/package.json、锁文件和配置为准。
+  本地开发通过 Vite API 代理连接真实后端，不提供业务 Mock 模式；测试替身保持隔离。
+  API 包络、认证和错误处理以 request-client 与 frontend-application-foundation 规范为准。
+  验证、依赖变更和提交要求遵循 project.md，不在此维护第二份验证矩阵。
+
+  前端 OpenSpec 文档默认使用中文；包名、API、路径、代码标识符、协议字段和 SHALL/MAY 等关键字保留原文。
+
+rules:
+  specs:
+    - 只描述已明确采用的能力边界，不将被替代要求保留为并行方案。
+    - 每项行为只有一个权威规范归属；阶段规范引用共享能力，不重复维护共享规则。
+    - 主规范描述已交付行为；未实现提案留在 changes，临时范围和实施进度不写入主规范。

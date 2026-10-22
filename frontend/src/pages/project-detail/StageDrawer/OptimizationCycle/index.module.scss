@@ -1,0 +1,358 @@
+@use '../../../../styles/mixins' as type;
+.content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.statePanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+}
+
+.overviewSection {
+  flex: 0 0 auto;
+}
+
+.cycleSummary {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.conclusion {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 12px 16px;
+  border-left: 4px solid var(--ant-color-warning);
+  border-radius: calc(var(--ant-border-radius, 4px) * 2);
+  background: var(--ant-color-warning-bg);
+
+  &[data-tone='success'] {
+    border-left-color: var(--ant-color-success);
+    background: var(--ant-color-success-bg);
+  }
+
+  &[data-tone='error'] {
+    border-left-color: var(--ant-color-error);
+    background: var(--ant-color-error-bg);
+  }
+}
+
+.conclusionMain {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+
+  > strong {
+    font-size: var(--ant-font-size-heading-3, 20px);
+    font-weight: 600;
+    line-height: 30px;
+  }
+
+  > p {
+    max-width: 680px;
+    margin: 0;
+    color: var(--ant-color-text-secondary);
+    line-height: 22px;
+  }
+}
+
+.eyebrow,
+.cycleTimes span {
+  color: var(--ant-color-text-secondary);
+  font-size: var(--ant-font-size-sm, 12px);
+  line-height: 18px;
+}
+
+.conclusionAside {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+
+  :global(.ant-tag) {
+    margin-inline-end: 0;
+  }
+}
+
+.cycleTimes {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+
+  time {
+    font-size: var(--ant-font-size, 14px);
+    font-weight: 500;
+  }
+}
+
+.sectionBlock,
+.convergenceBlock,
+.pendingBlock {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sectionHeading {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h3 {
+    @include type.section-title;
+    color: var(--ant-color-text);
+  }
+
+  p {
+    color: var(--ant-color-text-secondary);
+    font-size: 13px;
+    line-height: 20px;
+  }
+}
+
+.checkpointRail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.checkpoint {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 12px;
+
+  &:not(:last-child)::after {
+    position: absolute;
+    top: 15px;
+    left: 42px;
+    width: calc(100% - 30px);
+    height: 1px;
+    background: var(--ant-color-border-secondary);
+    content: '';
+  }
+
+  strong {
+    font-size: var(--ant-font-size, 14px);
+    line-height: 21px;
+  }
+}
+
+.checkpointHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  .statusTag {
+    position: relative;
+    z-index: 1;
+    background: var(--ant-color-bg-container);
+  }
+}
+
+.checkpointIndex {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: 50%;
+  color: var(--ant-color-text-secondary);
+  background: var(--ant-color-bg-container);
+  font-size: var(--ant-font-size-sm, 12px);
+  place-items: center;
+}
+
+.checkpointContent {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+
+  > span {
+    overflow: hidden;
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size-sm, 12px);
+    line-height: 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ant-color-border-secondary);
+}
+
+.pendingBlock {
+  padding-left: 24px;
+  border-left: 1px solid var(--ant-color-border-secondary);
+}
+
+.metricList {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+}
+
+.metric {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+  padding-right: 12px;
+
+  &:not(:first-child) {
+    padding-left: 12px;
+    border-left: 1px solid var(--ant-color-border-secondary);
+  }
+
+  dt {
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size-sm, 12px);
+    line-height: 18px;
+  }
+
+  dd {
+    margin: 0;
+    font-size: var(--ant-font-size-heading-5, 16px);
+    font-weight: 500;
+    line-height: 26px;
+    overflow-wrap: anywhere;
+  }
+}
+
+.riskSummary {
+  margin: 0;
+  color: var(--ant-color-text-secondary);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.pendingList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pendingItem {
+  display: grid;
+  grid-template-columns: 8px minmax(0, 1fr);
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--ant-color-fill-quaternary);
+  border-radius: calc(var(--ant-border-radius, 4px) * 2);
+
+  > div {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  strong {
+    font-size: var(--ant-font-size, 14px);
+    line-height: 21px;
+  }
+
+  p {
+    margin: 0;
+    color: var(--ant-color-text-secondary);
+    font-size: 13px;
+    line-height: 20px;
+    overflow-wrap: anywhere;
+  }
+}
+
+.pendingMarker {
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--ant-color-warning);
+}
+
+.readyState {
+  padding: 10px 12px;
+  border-radius: calc(var(--ant-border-radius, 4px) * 2);
+  background: var(--ant-color-success-bg);
+  color: var(--ant-color-success-text);
+  font-size: 13px;
+}
+
+.statusTag {
+  margin-inline-end: 0;
+}
+
+.historyRevision {
+  display: block;
+  color: var(--ant-color-text-secondary);
+  font-size: 13px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1199px) {
+  .conclusion {
+    flex-direction: column;
+  }
+
+  .conclusionAside,
+  .cycleTimes {
+    align-items: flex-start;
+  }
+
+  .checkpointRail,
+  .detailGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .checkpointRail {
+    gap: 14px;
+  }
+
+  .checkpoint:not(:last-child)::after {
+    top: 30px;
+    bottom: -14px;
+    left: 27px;
+    width: 1px;
+    height: auto;
+  }
+
+  .checkpointContent {
+    padding-left: 38px;
+  }
+
+  .detailGrid {
+    gap: 24px;
+  }
+
+  .pendingBlock {
+    padding-top: 24px;
+    padding-left: 0;
+    border-top: 1px solid var(--ant-color-border-secondary);
+    border-left: 0;
+  }
+}

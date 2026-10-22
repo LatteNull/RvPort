@@ -1,3 +1,0 @@
-MY4 = -fsigned-char # aaa
-# MY6 = -m64
-GLIBS = -aaa -lm

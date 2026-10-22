@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "ObjectProvenanceValidationTruth",
+  "analysis_version": "0.1.0",
+  "policy_id": "bounded-object-provenance-v1",
+  "suite_version": "1",
+  "cases": [
+    {"id": "01-c11-objects", "case_id": "01-c11-objects", "standard": "c11", "expected_status": "complete", "must_objects": ["conservative-load", "distinct-storage", "nested-source-path", "runtime-object", "union-overlap"]},
+    {"id": "02-c11-cross", "case_id": "02-c11-cross", "standard": "c11", "expected_status": "complete", "must_objects": ["distinct-storage", "exact-direct-binding", "exact-return-binding", "runtime-object"]},
+    {"id": "03-c17-objects", "case_id": "03-c17-objects", "standard": "c17", "expected_status": "complete", "must_objects": ["conservative-load", "distinct-storage", "runtime-object"]},
+    {"id": "04-c17-clobber", "case_id": "04-c17-clobber", "standard": "c17", "expected_status": "complete", "must_objects": ["conservative-load", "distinct-storage", "runtime-object"]},
+    {"id": "05-cpp17-objects", "case_id": "05-cpp17-objects", "standard": "c++17", "expected_status": "complete", "must_objects": ["distinct-storage", "runtime-object"]},
+    {"id": "06-cpp17-cross", "case_id": "06-cpp17-cross", "standard": "c++17", "expected_status": "complete", "must_objects": ["distinct-storage", "exact-direct-binding", "exact-return-binding", "runtime-object"]},
+    {"id": "07-cpp20-mutex", "case_id": "07-cpp20-mutex", "standard": "c++20", "expected_status": "complete", "must_objects": ["conservative-load", "distinct-storage", "runtime-object"]},
+    {"id": "08-cpp20-casts", "case_id": "08-cpp20-casts", "standard": "c++20", "expected_status": "complete", "must_objects": ["conservative-load", "distinct-storage", "nested-source-path", "runtime-object", "source-cast"]}
+  ],
+  "semantic_digest": "3190be9c4ff04422f620e6de87f2817a5279f7229c2d202b73dab4451388eeef"
+}

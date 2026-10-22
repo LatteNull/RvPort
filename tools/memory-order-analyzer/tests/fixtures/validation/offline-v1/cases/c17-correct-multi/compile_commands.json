@@ -1,0 +1,5 @@
+[
+  {"directory":"/corpus/cases/c17-correct-multi","file":"producer.c","arguments":["gcc","-std=c17","-O1","-g","-pthread","-c","producer.c"]},
+  {"directory":"/corpus/cases/c17-correct-multi","file":"consumer.c","arguments":["gcc","-std=c17","-O1","-g","-pthread","-c","consumer.c"]},
+  {"directory":"/corpus/cases/c17-correct-multi","file":"main.c","arguments":["gcc","-std=c17","-O1","-g","-pthread","-c","main.c"]}
+]

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "kind": "ConcurrentAccessValidationSuite",
+  "cases": [
+    {"case_id": "c11-pthread-struct", "standard": "c11", "mode": "ast+ir", "sources": ["c11/pthread-struct.c"], "features": ["pthread", "struct-field", "mutex", "single-tu"]},
+    {"case_id": "c11-ast-only-union", "standard": "c11", "mode": "ast-only", "sources": ["c11/ast-only-union.c"], "features": ["union", "open-scope"]},
+    {"case_id": "c11-compile-failed", "standard": "c11", "mode": "failed", "sources": ["c11/compile-failed.c"], "features": ["compile-failure"]},
+    {"case_id": "c17-thrd-pointer", "standard": "c17", "mode": "ast+ir", "sources": ["c17/thrd-pointer.c"], "features": ["thrd_create", "pointer-field", "single-tu"]},
+    {"case_id": "c17-cross-tu", "standard": "c17", "mode": "ast+ir", "sources": ["c17/cross/main.c", "c17/cross/worker.c", "c17/cross/shared.h"], "features": ["pthread", "cross-tu", "c-linkage"]},
+    {"case_id": "c17-ir-only", "standard": "c17", "mode": "ir-only", "sources": ["c17/ir-only.c"], "features": ["ir-only", "open-scope"]},
+    {"case_id": "cpp17-thread-mutex", "standard": "c++17", "mode": "ast+ir", "sources": ["cpp17/thread-mutex.cpp"], "features": ["std::thread", "lock_guard", "object-field"]},
+    {"case_id": "cpp17-move-detach", "standard": "c++17", "mode": "ast+ir", "sources": ["cpp17/move-detach.cpp"], "features": ["std::thread", "move", "detach"]},
+    {"case_id": "cpp17-no-debug", "standard": "c++17", "mode": "ir-only", "sources": ["cpp17/no-debug.cpp"], "features": ["std::thread", "lambda", "no-debug"]},
+    {"case_id": "cpp17-archived-pthread-mutex", "standard": "c++17", "mode": "ast+ir", "sources": ["imported/pthread-mutex-minimal.cpp"], "features": ["pthread", "mutex", "imported-provenance"]},
+    {"case_id": "cpp20-jthread-fields", "standard": "c++20", "mode": "ast+ir", "sources": ["cpp20/jthread-fields.cpp"], "features": ["std::jthread", "must-disjoint", "object-field"]},
+    {"case_id": "cpp20-async-policy", "standard": "c++20", "mode": "ast+ir", "sources": ["cpp20/async-policy.cpp"], "features": ["std::async", "launch-async"]},
+    {"case_id": "cpp20-deferred", "standard": "c++20", "mode": "ast+ir", "sources": ["cpp20/deferred.cpp"], "features": ["std::async", "launch-deferred"]}
+  ]
+}

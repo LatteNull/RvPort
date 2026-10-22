@@ -1,0 +1,58 @@
+{
+  "change": "improve-kb-scanner-macro-and-build-effect-proofs",
+  "reviewedAt": "2026-09-24",
+  "sourceCommit": "c4cfba676d2b86d6a2a7c508cd90a75c4dfaa1d9",
+  "inputFiles": 822,
+  "inputDigest": "f52edca120bdcd98d6c3316a2c5a42c09e38a99fc2189fa07b33cd3eb85fd67c",
+  "scannerSourceDigest": "df9a867e4b57935d8464d27e991d1d7750c590cee74e73e0246094b6b0d5d5fe",
+  "historicalReview": "../candidate-usage-performance/review-round33.json",
+  "summary": {"findings": 64, "issues": 53, "hints": 11, "blocking": 0, "excludedCandidates": 0},
+  "reviewedDifferences": [
+    {
+      "file": "libarchive/archive_ppmd_private.h",
+      "symbol": "MY_CPU_X86",
+      "beforeFindingId": "finding:ed8f496a2839ca2f1774fce82dab13e79958a6aaff4e42249312c65b7f3355c1",
+      "afterFindingId": "finding:28134dae8053a1f8c4f1f7ab02dfb82c0a749dfeb3caa1026affd5fa5ca45cba",
+      "beforeReason": "candidate-evidence-not-sufficient",
+      "afterReason": "input-or-relation-unknown",
+      "review": "新增宏条件作用关系仍有未知输入；保持 medium/unknown、非 blocking 和原双语建议，不证明目标选择。"
+    },
+    {
+      "file": "libarchive/archive_ppmd_private.h",
+      "symbol": "defined(MY_CPU_X86) || defined(_M_ARM)",
+      "beforeFindingId": "finding:e074ddb7e8558a71d4de161d258b355a4d3e69218f8d3084d4fdfc283e6bdd49",
+      "afterFindingId": "finding:b21df9358a45d738748f9b1bd7a0c21160d65e96d8f994e62b01cffd1f1723c8",
+      "beforeReason": "candidate-evidence-not-sufficient",
+      "afterReason": "input-or-relation-unknown",
+      "review": "同上，未把 x86/ARM 条件推断为 RISC-V 可达。"
+    },
+    {
+      "file": "libarchive/archive_ppmd_private.h",
+      "line": 79,
+      "symbol": "MY_CPU_X86",
+      "review": "另一个共同 ID 的宏使用只增补 evidenceChain 未知来源；结论保持不变。其余共同 ID 的全部结论不变。"
+    },
+    {
+      "file": "libarchive_fe/lafe_setmode.c",
+      "lines": [59, 60],
+      "review": "SET_LEN/SET_LEN_INCR 注释中的 # 不属于字符串化运算符。独立真实 grammar 对照旧/新词法确认：旧词法产生 stringification 警告，新词法保留完整 comment token，不再产生该误报；故聚合诊断减少一项。新增 fake parser 单元固定此边界。"
+    }
+  ],
+  "artifactsSha256": {
+    "scan-result.json": "8ec2a023e8d6573f8e6015cfaeac5b6db6c70ef211d37c10bc7c3becc22061f2",
+    "scan-report.html": "bf4135f48662ede6e6a91f7f1e475781769d74f22d7c8e5a90913d1ebc0787f1",
+    "scan.log": "9beda58e2b1c23ec64b8b1d5cdeed4cd73fac18a2fae1def34500b99c0262d24"
+  },
+  "performance": {
+    "cpu": 2,
+    "memoryBytes": 2147483648,
+    "swapBytes": 0,
+    "timeoutSeconds": 300,
+    "seconds": [256.30963414901635, 248.300146426016],
+    "maxRssKiB": [1275192, 1272092],
+    "oomKilled": false,
+    "semanticDigest": "c544b2a4fee73e2a7798e868bfa534177ad07222090fba1d0d879da587248c43",
+    "passed": true
+  },
+  "limitations": "26 项历史数据用途候选仍未被自动排除；unknown 不等于缺口已解决。V2/V1 核心 schema 和两份 compiler facts 原字节未改。保留所有中途失败性能报告，不保证任意宿主并发负载下均低于 300 秒。"
+}

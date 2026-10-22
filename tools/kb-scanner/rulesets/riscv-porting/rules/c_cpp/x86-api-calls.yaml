@@ -1,0 +1,21 @@
+id: C_CPP.X86.API_CALL
+language: c_cpp
+severity: high
+confidence: high
+capability:
+  - ast.call
+match:
+  any:
+    - call:
+        nameRegex: "^(__cpuid|__cpuid_count|__get_cpuid|__get_cpuid_count|__rdtsc|_rdtsc|__rdtscp|_rdtscp|_xgetbv|__xgetbv)$"
+message:
+  zh-CN:
+    title: "调用 x86 专属或强相关 API"
+    reason: "代码调用了 x86 专属或强相关的 CPU 接口，例如 CPUID、RDTSC 或 XGETBV。这些接口在 RISC-V 环境中无法直接使用。"
+    suggestion: "建议抽象为平台能力层：在 x86 分支保留原实现，在 RISC-V 分支使用 hwprobe、系统接口、标准计时接口或目标架构等价实现。"
+  en-US:
+    title: "Calls an x86-specific or x86-related API"
+    reason: "The code calls x86-specific or strongly x86-related CPU APIs such as CPUID, RDTSC, or XGETBV. These APIs cannot be used directly in a RISC-V environment."
+    suggestion: "Abstract this behind a platform capability layer. Keep the original implementation for x86, and use hwprobe, system APIs, standard timing APIs, or target-architecture equivalents for RISC-V."
+
+

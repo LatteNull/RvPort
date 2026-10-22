@@ -1,0 +1,23 @@
+spring:
+  liquibase:
+    enabled: false
+  session:
+    store-type: none
+  task:
+    scheduling:
+      enabled: false
+
+rvport:
+  object-storage:
+    enabled: false
+    auto-create-bucket: false
+  sse:
+    broadcast:
+      enabled: false
+  worker:
+    enabled: false
+    cleanup:
+      enabled: false
+  user-action-token:
+    cleanup:
+      enabled: false

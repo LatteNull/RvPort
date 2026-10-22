@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "1.0",
+  "beforeRevision": "c37d0de4300bf8bb1f0f7db1a65ced02968699d3",
+  "method": "Independent HEAD git archive and current CLI executed in the test container against identical read-only fixtures and rules. No Legacy engine run.",
+  "notes": [
+    "V1 fields/schema remain supported, not frozen incorrect candidate title/confidence/duplicate Observation references.",
+    "V2 unknown completeness, intrinsic labels and proof-backed alternatives are intentional corrections."
+  ],
+  "architecture-candidate-noise": {
+    "before": {
+      "1.0": "71d25f034944d028b2e7c1b8ee4c67f148814fd1261d351390a2731add1f6960",
+      "2.0": "9160694f45e34604ab7d9e3c92cb3e00facc05d809ed162f100a0861246052cd"
+    },
+    "after": {
+      "1.0": "cb90bf06ce580eff26a51b4fac56120a7c79524f3f61b95fe0e495d0b3c4c0b0",
+      "2.0": "4b5bb330ee4d3136ab3612c643f902606ab15987d873ad51a728cde8c8f99937"
+    },
+    "v1FieldChanges": [
+      [
+        "/findings/0/confidence",
+        "medium",
+        "high"
+      ],
+      [
+        "/findings/0/title",
+        "Architecture Identifier Candidate",
+        "X86 Platform Macro Reference"
+      ],
+      [
+        "/findings/0/title_en",
+        "Architecture Identifier Candidate",
+        "X86 Platform Macro Reference"
+      ],
+      [
+        "/findings/0/trace/observationIds/length",
+        2,
+        1
+      ],
+      [
+        "/summary/readiness/trace/observationIds/length",
+        4,
+        3
+      ]
+    ],
+    "v2ReviewedChanges": [
+      "Duplicate architecture candidate no longer becomes the displayed representative of a confirmed platform-macro classification; exact source Evidence and guarded state remain.",
+      "Undetermined candidate conclusion and evidence chain consistently show unknown; IDs derived from status change.",
+      "Supplemental same-kind links do not imply an alternative; only explicit endpoint-backed graph alternatives are projected."
+    ]
+  },
+  "formal-cpp-frontend": {
+    "before": {
+      "1.0": "ee45fbb1fb1cdd149e920b0b88ddc19169e6867e6e1afb6f86aae1545bc6d713",
+      "2.0": "96fb6ad205b2087579aa396512b6bb2a46da990346c13ccb1243a38065cdfe27"
+    },
+    "after": {
+      "1.0": "23c96c4b6d56dfff64793f9ceb6db275cc0af10f64058000dbb9699dc4606c86",
+      "2.0": "d25f5e8aba18c14734af7a0cd55927a6ae83d16a3cf3ecdc7d36046c3f1768ef"
+    },
+    "v1FieldChanges": [
+      [
+        "/findings/1/confidence",
+        "medium",
+        "high"
+      ],
+      [
+        "/findings/1/title",
+        "Architecture Identifier Candidate",
+        "X86 Platform Macro Reference"
+      ],
+      [
+        "/findings/1/title_en",
+        "Architecture Identifier Candidate",
+        "X86 Platform Macro Reference"
+      ],
+      [
+        "/findings/1/trace/observationIds/length",
+        2,
+        1
+      ],
+      [
+        "/summary/readiness/trace/observationIds/length",
+        4,
+        3
+      ]
+    ],
+    "v2ReviewedChanges": [
+      "Duplicate architecture candidate no longer becomes the displayed representative of a confirmed platform-macro classification; exact source Evidence and guarded state remain.",
+      "Undetermined candidate conclusion and evidence chain consistently show unknown; IDs derived from status change.",
+      "Supplemental same-kind links do not imply an alternative; only explicit endpoint-backed graph alternatives are projected."
+    ]
+  }
+}

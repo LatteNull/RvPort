@@ -1,0 +1,30 @@
+// Semantic roles consume the official Ant Design tokens defined in src/theme.ts.
+@mixin page-title {
+  font-size: var(--ant-font-size-heading-3, 20px);
+  font-weight: 500;
+  line-height: var(--ant-line-height-heading-3, 1.4);
+}
+
+@mixin panel-title {
+  font-size: var(--ant-font-size-heading-4, 18px);
+  font-weight: 500;
+  line-height: var(--ant-line-height-heading-4, 1.3333333333);
+}
+
+@mixin section-title {
+  font-size: var(--ant-font-size-heading-5, 16px);
+  font-weight: 500;
+  line-height: var(--ant-line-height-heading-5, 1.5);
+}
+
+@mixin body-text {
+  font-size: var(--ant-font-size, 14px);
+  font-weight: 400;
+  line-height: var(--ant-line-height, 1.5714285714);
+}
+
+@mixin helper-text {
+  font-size: var(--ant-font-size-sm, 12px);
+  font-weight: 400;
+  line-height: var(--ant-line-height-sm, 1.6666666667);
+}

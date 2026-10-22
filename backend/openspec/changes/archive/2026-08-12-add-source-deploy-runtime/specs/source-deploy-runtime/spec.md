@@ -1,0 +1,138 @@
+## ADDED Requirements
+
+### Requirement: 源码部署任务必须绑定项目源码版本和环境
+后端 SHALL 提供源码部署创建 API，将指定项目的指定源码版本部署到一个或多个指定环境，并 SHALL 使用异步任务运行时执行。
+
+#### Scenario: 创建源码部署任务
+- **WHEN** 已登录用户调用 `POST /api/projects/{projectId}/source-deployments` 并提交 `sourceRevisionId` 和 `environmentIds`
+- **THEN** 后端 SHALL 校验当前用户有权访问该项目
+- **AND** 后端 SHALL 校验源码版本属于 URL 中的 `projectId`
+- **AND** 后端 SHALL 校验每个环境属于 URL 中的 `projectId` 且已启用
+- **AND** 后端 SHALL 为每个需要新部署的环境创建任务类型为 `SOURCE_DEPLOY` 的 `tasks` 记录
+- **AND** 后端 SHALL 为每个环境创建或复用对应 `source_deploy_runs` 记录
+- **AND** 后端 SHALL 投递新创建的任务 ID 到 RabbitMQ
+- **AND** 响应 SHALL 返回源码部署项列表，每项包含任务 ID、任务类型、初始状态、环境 ID 和源码部署 ID
+
+#### Scenario: 创建双环境源码部署任务
+- **WHEN** 已登录用户调用源码部署创建 API 并提交 x86 原始环境 ID 和 RISC-V 目标环境 ID
+- **THEN** 后端 SHALL 分别为两个环境创建或复用源码部署记录
+- **AND** 两个部署记录 SHALL 绑定同一个 `sourceRevisionId`
+- **AND** 两个部署记录 SHALL 拥有各自基于环境工作目录生成的 `remote_path`
+
+#### Scenario: 拒绝跨项目源码部署
+- **WHEN** 用户调用源码部署创建 API
+- **AND** `sourceRevisionId` 或任一 `environmentIds` 不属于 URL 中的 `projectId`
+- **THEN** 后端 SHALL 拒绝请求
+- **AND** 后端 MUST NOT 创建任务、源码部署记录或队列消息
+
+#### Scenario: 拒绝不可用源码工作副本
+- **WHEN** 用户创建源码部署任务
+- **AND** 源码版本缺少可读的后端本机工作副本
+- **THEN** 后端 SHALL 返回 `SOURCE_REVISION_WORKING_COPY_NOT_FOUND`
+- **AND** 错误响应 MUST NOT 暴露服务器本机源码路径
+- **AND** 后端 MUST NOT 投递队列消息
+
+### Requirement: 源码部署路径必须由后端生成
+后端 SHALL 使用环境工作目录生成远端源码部署路径，并 MUST NOT 接受客户端提交的任意远端部署路径。
+
+#### Scenario: 生成远端部署路径
+- **WHEN** 后端创建源码部署记录
+- **THEN** `remote_path` SHALL 使用 `<environment.working_directory>/rvport-sources/<sourceRevisionId>` 生成
+- **AND** 后端 SHALL 将该路径保存到 `source_deploy_runs.remote_path`
+- **AND** 任务输入快照 SHALL 只保存部署记录 ID、项目 ID、源码版本 ID、环境 ID、force 和 timeout 配置
+
+#### Scenario: 拒绝缺少工作目录的环境
+- **WHEN** 用户创建源码部署任务
+- **AND** 目标环境 `working_directory` 为空
+- **THEN** 后端 SHALL 返回 `ENVIRONMENT_WORKING_DIRECTORY_REQUIRED`
+- **AND** 后端 MUST NOT 创建部署任务或投递队列消息
+
+#### Scenario: 不允许客户端指定远端路径
+- **WHEN** 用户创建源码部署任务并提交 `remotePath` 或等效字段
+- **THEN** 后端 SHALL 忽略该字段或返回参数校验错误
+- **AND** 实际部署路径 MUST 继续使用后端生成路径
+
+### Requirement: SOURCE_DEPLOY Worker 必须通过 SSH 同步源码
+`SOURCE_DEPLOY` handler SHALL 通过现有任务执行上下文和 SSH runtime 将源码工作副本同步到远端部署路径。
+
+#### Scenario: 源码部署成功
+- **WHEN** worker 认领 `SOURCE_DEPLOY` 任务
+- **THEN** worker SHALL 读取 `source_deploy_runs`、`source_revisions` 和 `environments`
+- **AND** worker SHALL 使用 tar over SSH 将源码工作副本传输到远端生成路径
+- **AND** worker SHALL 写入任务进度、任务日志事件和工具执行记录
+- **AND** worker SHALL 将任务和源码部署记录标记为 `SUCCEEDED`
+- **AND** worker SHALL 保存文件数量、总字节数、退出码、开始时间和结束时间
+
+#### Scenario: 远端缺少 tar
+- **WHEN** worker 执行源码部署且远端环境缺少可用 `tar`
+- **THEN** worker SHALL 将任务和源码部署记录标记为 `FAILED`
+- **AND** 错误码 SHALL 为 `SOURCE_DEPLOY_REMOTE_TAR_REQUIRED`
+- **AND** 错误摘要 MUST NOT 暴露明文凭据或服务器本机路径
+
+#### Scenario: 源码部署失败
+- **WHEN** SSH 连接失败、认证失败、传输失败、远端命令失败或本机打包失败
+- **THEN** worker SHALL 将任务和源码部署记录标记为 `FAILED`
+- **AND** worker SHALL 保存安全错误摘要和可下载日志元数据
+- **AND** worker MUST NOT 将失败部署作为后续构建可用输入
+
+#### Scenario: 取消源码部署任务
+- **WHEN** 用户取消正在运行的 `SOURCE_DEPLOY` 任务
+- **THEN** 后端 SHALL 按既有运行中任务取消机制将任务标记为 `CANCELLED`
+- **AND** 取消处理 SHALL 尝试终止本机打包进程或远端 SSH 命令
+- **AND** `source_deploy_runs.status` SHALL 最终与任务终态一致
+
+### Requirement: 源码部署必须支持复用和强制重新部署
+后端 SHALL 避免默认重复传输相同源码版本到相同环境，并 SHALL 允许调用方显式强制重新部署。
+
+#### Scenario: 复用进行中部署
+- **WHEN** 用户创建源码部署任务且 `force=false`
+- **AND** 同项目、同源码版本、同环境存在 `PENDING`、`QUEUED` 或 `RUNNING` 部署
+- **THEN** 后端 SHALL 返回既有部署关联任务
+- **AND** 后端 MUST NOT 创建重复任务或重复队列消息
+
+#### Scenario: 复用成功部署
+- **WHEN** 用户创建源码部署任务且 `force=false`
+- **AND** 同项目、同源码版本、同环境存在最近一次 `SUCCEEDED` 部署
+- **THEN** 后端 SHALL 返回既有成功部署
+- **AND** 后端 MUST NOT 重复传输源码
+
+#### Scenario: 强制重新部署
+- **WHEN** 用户创建源码部署任务且 `force=true`
+- **THEN** 后端 SHALL 创建新的 `SOURCE_DEPLOY` 任务和源码部署记录
+- **AND** worker SHALL 覆盖后端生成的远端部署目录
+- **AND** 后端 SHALL 保留旧部署记录用于审计
+
+### Requirement: 源码部署查询必须支持分页排序过滤
+后端 SHALL 提供源码部署列表和详情查询 API，并 SHALL 对所有查询执行项目访问守卫。
+
+#### Scenario: 查询项目源码部署列表
+- **WHEN** 用户调用 `GET /api/projects/{projectId}/source-deployments`
+- **THEN** 后端 SHALL 校验当前用户有权访问该项目
+- **AND** 后端 SHALL 返回分页源码部署列表
+- **AND** 列表 SHALL 支持按 `sourceRevisionId`、`environmentId`、`status` 和创建时间范围过滤
+- **AND** 列表 SHALL 支持按 `createdAt`、`startedAt`、`finishedAt` 和 `status` 排序
+
+#### Scenario: 查询源码部署详情
+- **WHEN** 用户调用 `GET /api/source-deployments/{sourceDeploymentId}`
+- **THEN** 后端 SHALL 根据源码部署所属项目执行项目访问守卫
+- **AND** 响应 SHALL 包含源码部署 ID、项目 ID、源码版本摘要、环境摘要、任务 ID、远端路径、状态、统计摘要和时间字段
+- **AND** 响应 MUST NOT 返回后端本机源码工作副本路径
+
+#### Scenario: 无权限查询源码部署
+- **WHEN** 无项目权限用户查询源码部署列表、详情或取消源码部署
+- **THEN** 后端 SHALL 返回与资源不存在一致的安全错误
+- **AND** 后端 MUST NOT 暴露项目、源码版本、环境、任务或远端路径是否存在
+
+### Requirement: 构建验证必须使用成功的源码部署作为远端输入
+源码部署运行时 SHALL 为后续构建验证提供稳定的远端源码目录事实。
+
+#### Scenario: 构建验证引用成功部署
+- **WHEN** 后续构建验证任务需要在远端环境执行
+- **THEN** 构建验证 SHALL 使用状态为 `SUCCEEDED` 的源码部署记录作为远端源码输入
+- **AND** 构建验证运行目录 SHALL 基于 `source_deploy_runs.remote_path`
+- **AND** 构建验证 MUST NOT 使用失败、取消、超时或仍在运行的部署记录作为输入
+
+#### Scenario: 不隐式触发源码部署
+- **WHEN** 用户创建后续构建验证任务
+- **THEN** 后端 SHOULD 要求已有可用源码部署记录或明确的源码部署 ID
+- **AND** 后端 SHOULD NOT 在构建验证创建 API 中隐式执行源码传输和覆盖

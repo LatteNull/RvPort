@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "source": "memory-model-ir-checker/samples/legacy",
+  "eligible": [
+    {"path": "safe/03_pthread_mutex.cpp", "classification": "unknown-raii-regression", "source_sha256": "f37e516834a9511b5591deb6a2b83ea31332a6923d2d6b932d93f217b9d89eae", "local": "cpp17/archived_safe_03_pthread_mutex.cpp"},
+    {"path": "unsafe/03_pthread.cpp", "classification": "direct-pthread-risk-regression", "source_sha256": "08e700e1e5ff8dc48555e6050a9e21c4de98430a54b3a2fec31c332e4992c726", "local": "cpp17/direct_pthread_risk.cpp"}
+  ],
+  "excluded": [
+    {"class": "windows-msvc", "reason": "Windows, MSVC and clang-cl are outside the analyzer scope"},
+    {"class": "invalid-source", "reason": "Compiler-invalid inputs are failure-classification fixtures, not accuracy cases"},
+    {"class": "unsupported-cpp-concurrency", "reason": "std::thread, thread pools and full RAII semantics are future changes"}
+  ]
+}

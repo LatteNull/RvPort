@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "2.0",
+  "listProjection": {
+    "source": "findings[]",
+    "fields": [
+      "id",
+      "fact.kind",
+      "fact.symbol",
+      "fact.primaryLocation.file",
+      "fact.primaryLocation.span.start.line",
+      "conclusion.title",
+      "conclusion.severity",
+      "conclusion.archReachability",
+      "conclusion.status"
+    ],
+    "mustNotLoad": ["Catalog", "Explanation", "trace"]
+  },
+  "detailProjection": {
+    "source": "one findings[] object",
+    "initialRenderOrder": [
+      "fact",
+      "conclusion",
+      "primary occurrence",
+      "evidenceChain.status and breaks",
+      "evidenceChain.primaryPath"
+    ],
+    "primaryPathResolution": "resolve every primaryPath id against evidenceChain.steps and every adjacent pair against evidenceChain.edges",
+    "stepRendering": "render source.span, numbered context.lines and highlights for every code-backed step",
+    "expandableSections": ["other steps", "other edges", "occurrences", "break candidates", "related diagnostics"],
+    "externalAssemblyRequired": false,
+    "mustNotLoad": ["Catalog", "Explanation", "trace"]
+  }
+}

@@ -1,0 +1,67 @@
+@use '../../styles/mixins' as type;
+
+.state {
+  display: flex;
+  width: 100%;
+  min-height: 240px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px 24px;
+  color: var(--ant-color-text-secondary);
+  text-align: center;
+
+  > svg {
+    width: 72px;
+    height: 64px;
+    flex: 0 0 auto;
+  }
+
+  &[data-state='empty'],
+  &[data-state='filtered'] {
+    .copy > strong {
+      color: var(--ant-color-text-secondary);
+    }
+  }
+}
+
+.copy {
+  display: flex;
+  max-width: 560px;
+  flex-direction: column;
+  gap: 4px;
+  overflow-wrap: anywhere;
+
+  > strong {
+    @include type.section-title;
+    color: var(--ant-color-text);
+  }
+
+  > span {
+    @include type.helper-text;
+    color: var(--ant-color-text-secondary);
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.compact {
+  min-height: 160px;
+  gap: 12px;
+  padding: 24px 16px;
+
+  > svg {
+    width: 54px;
+    height: 48px;
+  }
+
+  .copy > strong {
+    @include type.body-text;
+  }
+}

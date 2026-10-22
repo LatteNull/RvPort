@@ -1,0 +1,12 @@
+[
+  {
+    "directory": "${PROJECT_ROOT}",
+    "file": "source/tinycthread.c",
+    "arguments": ["clang-21", "-I${PROJECT_ROOT}/source", "-fPIC", "-O0", "-g", "-c", "source/tinycthread.c"]
+  },
+  {
+    "directory": "${PROJECT_ROOT}",
+    "file": "source/tinycthread.c",
+    "arguments": ["gcc", "-I${PROJECT_ROOT}/source", "-fPIC", "-O2", "-c", "source/tinycthread.c"]
+  }
+]

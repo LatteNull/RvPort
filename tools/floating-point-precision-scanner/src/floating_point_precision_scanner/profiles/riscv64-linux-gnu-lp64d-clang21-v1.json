@@ -1,0 +1,25 @@
+{
+  "kind": "FloatingPointTargetProfile",
+  "schema_version": "1.1",
+  "profile_id": "riscv64-linux-gnu-lp64d-clang21",
+  "profile_version": "1.0",
+  "target_triple": "riscv64-unknown-linux-gnu",
+  "abi": "lp64d",
+  "compiler": {"family": "clang", "version": "21.1.8"},
+  "floating_types": {
+    "float": {"format": "ieee754-binary32", "storage_bits": 32, "precision_bits": 24, "alignment_bits": 32, "source": "clang21-target-probe"},
+    "double": {"format": "ieee754-binary64", "storage_bits": 64, "precision_bits": 53, "alignment_bits": 64, "source": "clang21-target-probe"},
+    "long_double": {"format": "ieee754-binary128", "storage_bits": 128, "precision_bits": 113, "alignment_bits": 128, "abi_class": "ieee-quad", "calling_convention": "lp64d-memory", "variadic": "memory-16-byte", "source": "clang21-target-probe"}
+  },
+  "evaluation": {"status": "known", "value": {"flt_eval_method": 0, "x87_extended_available": false, "forced_store_rounding": true, "default_excess_precision": "standard"}, "source": "clang21-predefined-macros"},
+  "fma": {"status": "known", "value": {"available": true, "default_contraction": "on", "constrained": true}, "source": "clang21-target-and-option-review"},
+  "environment": {"status": "known", "value": {"rounding_modes": true, "exception_flags": true, "thread_local": true, "constrained_fp": true, "subnormals": true, "signed_zero": true}, "source": "iso-c-and-clang-target-probe"},
+  "target_features": {"status": "known", "value": {"architecture": "riscv64", "x86_intrinsics": false, "riscv_vector": "profile-dependent"}, "source": "clang21-target-probe"},
+  "math_library": {"status": "unknown", "reason": "selected-by-sysroot-and-runtime-image", "source": "request-context"},
+  "sources": {
+    "target": "Clang 21.1.8 target and predefined macro probes",
+    "abi": "RISC-V ELF psABI LP64D review",
+    "types": "Clang 21.1.8 target layout probe"
+  },
+  "maintenance": {"owner": "RvPort floating-point scanner", "approved_by": "OpenSpec P1 review", "reviewed_on": "2026-09-23"}
+}

@@ -1,0 +1,45 @@
+{
+  "title": "Schema v1/v2 contract differences and consumer migration checklist",
+  "generationModel": {
+    "kind": "independent-projectors-from-staged-snapshots",
+    "snapshotInputs": ["Evidence", "Relation", "ProofPath", "Classification", "Assessment"],
+    "projectors": ["v1", "v2"],
+    "v2ReadsV1Result": false,
+    "v2ConvertsV1Finding": false,
+    "v2ConvertsV1Trace": false,
+    "v2FallsBackToV1": false
+  },
+  "sameOriginDifferentContract": [
+    {"semantic": "scan identity", "v1": "scanId", "v2": "scan.id"},
+    {"semantic": "project identity", "v1": "project.id/name", "v2": "project.id/name"},
+    {"semantic": "finding source", "v1": "finding.file/line/evidence", "v2": "finding.fact.primaryLocation and occurrences"},
+    {"semantic": "conclusion", "v1": "finding severity/category/message/suggestion", "v2": "finding.conclusion"},
+    {"semantic": "aggregate counts", "v1": "summary", "v2": "summary with countUnit=finding"},
+    {"semantic": "diagnostics", "v1": "string array", "v2": "structured diagnostic objects"}
+  ],
+  "v2Only": [
+    "self-contained evidenceChain",
+    "primaryPath and branch edges",
+    "typed provenance",
+    "complete/partial/ambiguous/inactive/unknown status",
+    "break reason codes and candidates",
+    "exact line/column spans with numbered context and highlights",
+    "compact per-Finding KnowledgeEntry projection",
+    "static-analysis scope declaration"
+  ],
+  "notLosslesslyExpressibleInV1": [
+    "directed chain topology",
+    "candidate ambiguity",
+    "explicit analysis break location",
+    "step-level source context",
+    "typed internal references"
+  ],
+  "consumerChecklist": [
+    "select exactly one schema version per scan",
+    "parse v2 independently instead of normalizing through a v1 DTO",
+    "render the list from finding fact and conclusion only",
+    "render detail from the same Finding object",
+    "show status and breaks before presenting an incomplete conclusion as certain",
+    "retain v1 consumer until the explicit default-cutover change"
+  ]
+}

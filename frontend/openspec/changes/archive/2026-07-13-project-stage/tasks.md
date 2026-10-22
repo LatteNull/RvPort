@@ -1,0 +1,10 @@
+- [x] 收敛 StageDrawer，只保留 Project 和 Default
+- [x] 将 project 阶段详情数据结构改为 basicInfo/statusInfo
+- [x] 按 StageContent.md 渲染 Project
+- [x] 确保只有项目描述可编辑
+- [x] 更新 mock 阶段详情接口的 project 数据
+- [x] 通过 typecheck、lint、format 校验
+- [x] 将项目创建 Actions 移到 Drawer footer
+- [x] 将 StageDrawer 重构为按 Stage 文件夹分发
+- [x] 将项目创建阶段查询下沉到 Project
+- [x] 精简 StageDrawer 共享组件，只保留有视觉语义的原子组件

@@ -1,0 +1,59 @@
+.editor {
+  box-sizing: border-box;
+  overflow: hidden;
+  min-height: 0;
+  border: 1px solid var(--ant-color-border);
+  border-radius: var(--ant-border-radius);
+
+  :global(.cm-editor) {
+    height: 100%;
+    min-height: 0;
+    background: var(--ant-color-bg-container);
+  }
+
+  :global(.cm-scroller) {
+    min-height: 0;
+    overflow: auto;
+    font-family: var(--ant-font-family-code);
+    font-size: var(--ant-font-size, 14px);
+    line-height: 1.6;
+  }
+
+  :global(.cm-gutters) {
+    color: var(--ant-color-text-tertiary);
+    // CodeMirror keeps this element sticky while .cm-scroller moves horizontally.
+    // The fill token is translucent in some Ant Design themes, so compose it over
+    // an opaque surface to prevent scrolled source text from showing through.
+    position: sticky;
+    inset-inline-start: 0;
+    z-index: 2;
+    background:
+      linear-gradient(var(--ant-color-fill-quaternary), var(--ant-color-fill-quaternary)),
+      var(--ant-color-bg-container);
+    border-right-color: var(--ant-color-border-secondary);
+  }
+
+  :global(.cm-content) {
+    padding: 10px 0;
+  }
+
+  :global(.cm-line) {
+    padding: 0 12px;
+  }
+
+  :global(.cm-focused) {
+    outline: 2px solid var(--ant-color-primary-outline);
+    outline-offset: -2px;
+  }
+}
+
+.highlightedLine {
+  background: var(--ant-color-warning-bg);
+  box-shadow: inset 3px 0 0 var(--ant-color-warning);
+}
+
+.highlightedLineNumber {
+  color: var(--ant-color-warning) !important;
+  font-weight: 700;
+  background: var(--ant-color-warning-bg);
+}

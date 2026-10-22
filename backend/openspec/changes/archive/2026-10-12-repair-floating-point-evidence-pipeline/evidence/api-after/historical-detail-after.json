@@ -1,0 +1,372 @@
+{
+  "id": "40546c30-01a9-4c22-be32-1329d520b222",
+  "runId": "8f6a9c4f-8c85-4c72-9685-f632493343ca",
+  "analyzerType": "FLOATING_POINT",
+  "externalFindingId": "219d931e7ab442eee890b6eb880af89077555870ea5ad4787f0d8b3b0d6cda40",
+  "findingKind": "FINDING",
+  "findingCode": "reduction-reassociation",
+  "category": "reduction-semantics",
+  "severity": "MEDIUM",
+  "confidence": "medium",
+  "resultStatus": "COMPLETE",
+  "title": "浮点归约顺序可能改变",
+  "titleEn": "Floating-point reduction order may change",
+  "message": "累加、点积或向量归约可能因重结合或向量化采用不同顺序。",
+  "messageEn": "An accumulation, dot product, or vector reduction may use a different order after reassociation or vectorization.",
+  "suggestion": "固定所需顺序或采用经过验证的补偿/成对归约算法。",
+  "suggestionEn": "Fix the required order or use a validated compensated or pairwise reduction.",
+  "testSuggestion": "使用病态顺序、正负抵消和不同向量宽度重复测试。",
+  "testSuggestionEn": "Repeat with ill-conditioned orders, cancellation, and different vector widths.",
+  "filePath": "src/vectorcalc.cpp",
+  "startLine": 62,
+  "startColumn": 9,
+  "endLine": 62,
+  "endColumn": 9,
+  "requiresHumanConfirmation": true,
+  "semanticDigest": null,
+  "detail": {
+    "id": "219d931e7ab442eee890b6eb880af89077555870ea5ad4787f0d8b3b0d6cda40",
+    "fact": {
+      "id": "25f23ea6292e5ee1686ffe15be32168ea20b1116e18c0d90cdf06d9405f18617",
+      "kind": "reduction-reassociation",
+      "provenance": [
+        {
+          "id": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+          "kind": "sourceFact",
+          "digest": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+          "producer": "clang-ast-fact-mapper",
+          "schemaVersion": "1.0"
+        }
+      ],
+      "matchedText": "reduction-reassociation",
+      "primaryLocation": {
+        "file": "src/vectorcalc.cpp",
+        "line": 62,
+        "column": 9
+      }
+    },
+    "conclusion": {
+      "title": "浮点归约顺序可能改变",
+      "impact": "病态输入、抵消和长归约的误差可能扩大。",
+      "status": "complete",
+      "message": "累加、点积或向量归约可能因重结合或向量化采用不同顺序。",
+      "titleEn": "Floating-point reduction order may change",
+      "category": "reduction-semantics",
+      "impactEn": "Error may grow for ill-conditioned inputs, cancellation, and long reductions.",
+      "semantic": {
+        "irFactIds": [],
+        "rationale": "order_sensitive_reduction",
+        "compensationInvalidated": false
+      },
+      "severity": "medium",
+      "messageEn": "An accumulation, dot product, or vector reduction may use a different order after reassociation or vectorization.",
+      "rationale": "reduction-reassociation",
+      "confidence": "medium",
+      "suggestion": "固定所需顺序或采用经过验证的补偿/成对归约算法。",
+      "findingCode": "reduction-reassociation",
+      "ruleVersion": "1.0",
+      "assessmentId": "f0826c0a9d27b0ffe9cd438009d044a9552ef3e7c18ea8d6ee425c2a11c53ef6",
+      "suggestionEn": "Fix the required order or use a validated compensated or pairwise reduction.",
+      "affectedCount": 1,
+      "aggregationKey": null,
+      "evidenceOrigin": "heuristic",
+      "testSuggestion": "使用病态顺序、正负抵消和不同向量宽度重复测试。",
+      "validationPlan": {
+        "errorMetrics": [
+          "absolute",
+          "relative",
+          "ulp"
+        ],
+        "inputClasses": [
+          "cancellation",
+          "ill-conditioned-order",
+          "long-sequence"
+        ],
+        "repeatStrategy": "repeat across order, vector width, and thread count",
+        "thresholdSource": "project-policy"
+      },
+      "testSuggestionEn": "Repeat with ill-conditioned orders, cancellation, and different vector widths.",
+      "sourceProfileFingerprint": "68e8c233d91de98c66decb5c92d6515b9700110d905c4b81bbd28f0b85fda882",
+      "targetProfileFingerprint": "70c3bb5e2679aa8c96685e580bcff5f11944639229a61d3c403a4086aa2d6980",
+      "requiresHumanConfirmation": true,
+      "sourceBuildContextFingerprint": null,
+      "targetBuildContextFingerprint": null
+    },
+    "occurrences": [
+      {
+        "id": "0baa61e951199742c501e6a8655088212aa3aeaf0f39083e7a6975060f893d2f",
+        "kind": "primary",
+        "status": "confirmed",
+        "location": {
+          "file": "src/vectorcalc.cpp",
+          "line": 62,
+          "column": 9
+        },
+        "provenance": [
+          {
+            "id": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+            "kind": "sourceFact",
+            "digest": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+            "producer": "clang-ast-fact-mapper",
+            "schemaVersion": "1.0"
+          }
+        ],
+        "reasonCodes": [],
+        "configuration": "default"
+      }
+    ],
+    "evidenceChain": {
+      "edges": [
+        {
+          "id": "7368d57d8860755de8c1eb5e2fac9e4cc41dd16e0f152c27e0938fe53f4d4cd7",
+          "kind": "assessedAs",
+          "toStepId": "c9bf282b8c594c4ac158442e7be958e4925f1bfe7ce8d199d3de1380ad44c586",
+          "fromStepId": "05ba789f8e5aac6ef35909c136916a2430be3035e5dd2144941848bb36136ae5"
+        },
+        {
+          "id": "ac561fa4005e2d6b43e0999033826d209f1faf2ba5260edfabe51d6be004e258",
+          "kind": "supports",
+          "toStepId": "05ba789f8e5aac6ef35909c136916a2430be3035e5dd2144941848bb36136ae5",
+          "fromStepId": "32ddbf847fd6ca834c2d4ebbf3f2e051ab063119b9b508501c4d2c93fc252220"
+        }
+      ],
+      "steps": [
+        {
+          "id": "05ba789f8e5aac6ef35909c136916a2430be3035e5dd2144941848bb36136ae5",
+          "kind": "assessment",
+          "status": "complete",
+          "references": [
+            {
+              "id": "f0826c0a9d27b0ffe9cd438009d044a9552ef3e7c18ea8d6ee425c2a11c53ef6",
+              "kind": "assessment",
+              "digest": "f0826c0a9d27b0ffe9cd438009d044a9552ef3e7c18ea8d6ee425c2a11c53ef6",
+              "producer": "floating-point-rule-engine",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "reasonCodes": []
+        },
+        {
+          "id": "32ddbf847fd6ca834c2d4ebbf3f2e051ab063119b9b508501c4d2c93fc252220",
+          "kind": "sourceObservation",
+          "status": "complete",
+          "references": [
+            {
+              "id": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+              "kind": "sourceFact",
+              "digest": "f411304924cb6125fb4b12c03e9af0cfa21aea1a70daae189a516e355fc2a062",
+              "producer": "clang-ast-fact-mapper",
+              "schemaVersion": "1.0"
+            }
+          ],
+          "reasonCodes": []
+        },
+        {
+          "id": "c9bf282b8c594c4ac158442e7be958e4925f1bfe7ce8d199d3de1380ad44c586",
+          "kind": "conclusion",
+          "status": "complete",
+          "references": [],
+          "reasonCodes": []
+        }
+      ],
+      "breaks": [],
+      "budget": {
+        "paths": 1,
+        "visited": 3,
+        "maxDepth": 3,
+        "maxPaths": 1,
+        "truncated": false,
+        "maxVisited": 3
+      },
+      "status": "complete",
+      "rootStepId": "32ddbf847fd6ca834c2d4ebbf3f2e051ab063119b9b508501c4d2c93fc252220",
+      "primaryPath": [
+        "32ddbf847fd6ca834c2d4ebbf3f2e051ab063119b9b508501c4d2c93fc252220",
+        "05ba789f8e5aac6ef35909c136916a2430be3035e5dd2144941848bb36136ae5",
+        "c9bf282b8c594c4ac158442e7be958e4925f1bfe7ce8d199d3de1380ad44c586"
+      ],
+      "impactStepIds": [
+        "c9bf282b8c594c4ac158442e7be958e4925f1bfe7ce8d199d3de1380ad44c586"
+      ]
+    },
+    "primaryOccurrenceId": "0baa61e951199742c501e6a8655088212aa3aeaf0f39083e7a6975060f893d2f"
+  },
+  "reportInclusion": {
+    "migrationInputRefId": null,
+    "migrationInputStatus": null,
+    "confirmedForNextReport": false,
+    "includedInLatestReport": false,
+    "latestReportId": null
+  },
+  "createdAt": "2026-10-10T08:22:28.685091Z",
+  "codeContext": {
+    "findingId": "40546c30-01a9-4c22-be32-1329d520b222",
+    "runId": "8f6a9c4f-8c85-4c72-9685-f632493343ca",
+    "sourceRevisionId": "a019391f-89e6-4d8e-8eed-1b7871055541",
+    "filePath": "src/vectorcalc.cpp",
+    "contextBefore": 20,
+    "contextAfter": 20,
+    "startLine": 42,
+    "endLine": 72,
+    "highlightStartLine": 62,
+    "highlightEndLine": 62,
+    "lines": [
+      {
+        "lineNumber": 42,
+        "text": "}  // namespace",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 43,
+        "text": "",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 44,
+        "text": "void add_vectors(",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 45,
+        "text": "    const float* left,",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 46,
+        "text": "    const float* right,",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 47,
+        "text": "    float* output,",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 48,
+        "text": "    const std::size_t count) {",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 49,
+        "text": "    validate_inputs(left, right, output, count);",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 50,
+        "text": "    for (std::size_t index = 0; index < count; ++index) {",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 51,
+        "text": "        output[index] = left[index] + right[index];",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 52,
+        "text": "    }",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 53,
+        "text": "}",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 54,
+        "text": "",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 55,
+        "text": "float dot_product(",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 56,
+        "text": "    const float* left,",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 57,
+        "text": "    const float* right,",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 58,
+        "text": "    const std::size_t count) {",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 59,
+        "text": "    validate_dot_inputs(left, right, count);",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 60,
+        "text": "    float result = 0.0F;",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 61,
+        "text": "    for (std::size_t index = 0; index < count; ++index) {",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 62,
+        "text": "        result += left[index] * right[index];",
+        "highlighted": true
+      },
+      {
+        "lineNumber": 63,
+        "text": "    }",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 64,
+        "text": "    return result;",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 65,
+        "text": "}",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 66,
+        "text": "",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 67,
+        "text": "const char* implementation_name() {",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 68,
+        "text": "    return \"portable-scalar\";",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 69,
+        "text": "}",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 70,
+        "text": "",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 71,
+        "text": "}  // namespace vectorcalc",
+        "highlighted": false
+      },
+      {
+        "lineNumber": 72,
+        "text": "",
+        "highlighted": false
+      }
+    ]
+  },
+  "codeContextUnavailableReason": null
+}

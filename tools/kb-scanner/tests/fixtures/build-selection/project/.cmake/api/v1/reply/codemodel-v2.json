@@ -1,0 +1,1 @@
+{"version":{"major":2,"minor":7},"name":"riscv64-debug","configurations":[{"name":"riscv64-debug","targets":[{"name":"demo","sources":[{"path":"src/rv.c"}],"compile_args":["-march=rv64gc"],"dependencies":[{"id":"portable"}],"artifacts":[{"path":"build/demo"}]}]}]}

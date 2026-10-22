@@ -1,0 +1,17 @@
+{
+  "change": "refine-kb-scanner-source-evidence-chain",
+  "beforeRevision": "7ac4273",
+  "fixture": "tests/fixtures/architecture-candidate-noise",
+  "method": "Independent Git archive and current code, same read-only input and compiler knowledge in kb-scanner-test; normalized snapshots and complete non-chain/non-context report fields compared.",
+  "before": {
+    "1.0": "cb90bf06ce580eff26a51b4fac56120a7c79524f3f61b95fe0e495d0b3c4c0b0",
+    "2.0": "4b5bb330ee4d3136ab3612c643f902606ab15987d873ad51a728cde8c8f99937"
+  },
+  "after": {
+    "1.0": "cb90bf06ce580eff26a51b4fac56120a7c79524f3f61b95fe0e495d0b3c4c0b0",
+    "2.0": "14a9c04f7031c45f2cb556fa0986f29f8662eb870f01541c47b73a8b6c16f5b5"
+  },
+  "unchanged": ["normalizer snapshot", "classifier snapshot", "assessor snapshot", "summary", "all Finding conclusions", "fact and occurrence fields other than source context", "V1 entire canonical report"],
+  "reviewedChanges": ["evidenceChain now uses source endpoints, no analysis stages and empty impactStepIds", "knowledge matches remain off primaryPath", "source context defaults to 20/20 rather than 2/2 and handles budgets without losing hit columns"],
+  "historicalBaseline": "../candidate-semantic-admission/report-differential.json"
+}

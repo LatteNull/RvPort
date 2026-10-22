@@ -1,0 +1,21 @@
+id: C_CPP.X86.INLINE_ASM
+language: c_cpp
+severity: high
+confidence: medium
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        regex: "\\b(__asm__|__asm|asm)\\b.*\\b(xmm|ymm|zmm|eax|ebx|ecx|edx|rax|rbx|rcx|rdx|cpuid|rdtsc|rdtscp|xgetbv|mfence|lfence|sfence|pause)\\b"
+message:
+  zh-CN:
+    title: "使用 x86 inline assembly"
+    reason: "代码中出现 x86 寄存器或指令相关 inline assembly，RISC-V 环境无法直接使用。"
+    suggestion: "建议改为编译器内建、portable C/C++，或提供 RISC-V 汇编实现。"
+  en-US:
+    title: "Uses x86 inline assembly"
+    reason: "The code contains inline assembly related to x86 registers or instructions, which cannot be used directly in a RISC-V environment."
+    suggestion: "Replace it with compiler builtins, portable C/C++, or a RISC-V assembly implementation."
+
+

@@ -1,0 +1,36 @@
+{
+  "protocol_version": 1,
+  "analysis_version": "0.1.0",
+  "llvm_version": "21.1.8",
+  "policy_id": "cpp-raii-synchronization-v1",
+  "kinds": {
+    "CppRaiiSynchronizationRequest": 1,
+    "CppRaiiSynchronizationProfile": 1,
+    "CppRaiiLocalFacts": 1,
+    "CppRaiiSynchronizationGraph": 1,
+    "CppRaiiSynchronizationReport": 1,
+    "CppRaiiValidationSuite": 1,
+    "CppRaiiValidationTruth": 1,
+    "CppRaiiValidationReport": 1
+  },
+  "budgets": {
+    "translation_units": 4096,
+    "source_nodes": 262144,
+    "ir_nodes": 262144,
+    "profiles": 64,
+    "mutexes": 65536,
+    "owners": 65536,
+    "wrappers": 65536,
+    "call_contexts": 65536,
+    "transitions": 262144,
+    "held_regions": 262144,
+    "relations": 262144,
+    "recursive_iterations": 64,
+    "candidate_targets": 64,
+    "worker_seconds": 300,
+    "worker_output_bytes": 67108864,
+    "request_seconds": 3600,
+    "request_output_bytes": 268435456,
+    "diagnostic_bytes": 4096
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "2.0-design",
+  "resultVersion": "2.0",
+  "suggestionLanguages": {
+    "suggestion": "zh-CN",
+    "suggestion_en": "en-US",
+    "producerRequiresBoth": true,
+    "historicalEnglishFieldMayBeAbsent": true,
+    "localeIndependent": true,
+    "htmlDefaultField": "suggestion"
+  },
+  "sourceChainRevision": {
+    "producerExcludedStepKinds": ["classification", "assessment"],
+    "producerExcludedEdgeKinds": ["classified_as", "impacts_assessment"],
+    "primaryPathExcludedKinds": ["classification", "assessment", "knowledge_match"],
+    "impactStepIds": [],
+    "contextDefaults": {"beforeLines": 20, "afterLines": 20, "maxLines": 256, "maxCharacters": 65536},
+    "historicalStageChainsAccepted": true
+  },
+  "completionStatuses": ["complete", "partial", "ambiguous", "inactive", "unknown"],
+  "selectionStatuses": ["selected", "inactive", "not_selected", "unknown"],
+  "severities": ["info", "low", "medium", "high", "critical"],
+  "factKinds": [
+    "architecture_probe",
+    "build_argument",
+    "compiler_flag",
+    "header_include",
+    "intrinsic_call",
+    "macro_invocation",
+    "macro_replacement",
+    "test_asset",
+    "vector_type"
+  ],
+  "stepKinds": [
+    "build_selector",
+    "target_selection",
+    "source_selection",
+    "source_evidence",
+    "macro_invocation",
+    "macro_definition",
+    "macro_replacement",
+    "intrinsic_call",
+    "vector_type",
+    "compiler_flag",
+    "test_asset",
+    "knowledge_match",
+    "classification",
+    "assessment"
+  ],
+  "codeStepKinds": [
+    "build_selector",
+    "target_selection",
+    "source_selection",
+    "source_evidence",
+    "macro_invocation",
+    "macro_definition",
+    "macro_replacement",
+    "intrinsic_call",
+    "vector_type",
+    "compiler_flag",
+    "test_asset"
+  ],
+  "nonCodeStepKinds": ["knowledge_match", "classification", "assessment"],
+  "edgeKinds": [
+    "selects",
+    "contains",
+    "includes",
+    "invokes_macro",
+    "defines",
+    "expands_to",
+    "calls",
+    "matches_knowledge",
+    "classified_as",
+    "impacts_assessment",
+    "alternative_to",
+    "guarded_by"
+  ],
+  "provenanceKinds": [
+    "entity",
+    "evidence",
+    "knowledge",
+    "observation",
+    "relation",
+    "proofPath",
+    "classification",
+    "assessment"
+  ],
+  "reasonCodes": [
+    "context_budget_exceeded",
+    "context_unavailable",
+    "cycle_detected",
+    "dynamic_expression",
+    "inactive_branch",
+    "missing_input",
+    "missing_reference",
+    "multiple_candidates",
+    "reference_budget_exceeded",
+    "type_conflict",
+    "configuration_conflict"
+  ],
+  "contextBudget": {
+    "defaultBeforeLines": 20,
+    "defaultAfterLines": 20,
+    "maximumLinesPerLocation": 256,
+    "maximumCharactersPerLocation": 65536,
+    "columnsAreOneBased": true,
+    "endColumnIsExclusive": true
+  },
+  "extensions": {
+    "namespacePattern": "^org\\.rvport\\.kb-scanner\\.[a-z0-9]+(?:[.-][a-z0-9]+)*$",
+    "coreObjectsAreClosed": true
+  },
+  "stableOrdering": {
+    "findings": ["id"],
+    "occurrences": ["location.file", "location.span.start.line", "location.span.start.column", "id"],
+    "steps": ["id"],
+    "edges": ["id"],
+    "breaks": ["id"],
+    "diagnostics": ["severity", "code", "stage", "id"],
+    "contextLines": ["line"],
+    "highlights": ["line", "startColumn", "endColumn"],
+    "primaryPath": "causal-order"
+  },
+  "idMaterial": [
+    "normalized-project-relative-path",
+    "semantic-identity",
+    "producer-and-version",
+    "content-fact"
+  ],
+  "forbiddenIdMaterial": [
+    "absolute-checkout-root",
+    "current-time",
+    "random-value",
+    "object-address",
+    "traversal-order"
+  ]
+}

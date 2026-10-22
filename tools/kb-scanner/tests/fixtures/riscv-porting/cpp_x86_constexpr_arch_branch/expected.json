@@ -1,0 +1,6 @@
+{
+  "ruleId": "CPP.X86.CONSTEXPR_ARCH_BRANCH",
+  "count": 1,
+  "symbols": ["avx2"]
+}
+

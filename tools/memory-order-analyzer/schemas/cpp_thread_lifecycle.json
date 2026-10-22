@@ -1,0 +1,336 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "Digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "NonEmpty": {"type": "string", "minLength": 1},
+    "Status": {"enum": ["complete", "partial", "failed"]},
+    "Dependency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "id", "digest"],
+      "properties": {
+        "kind": {"$ref": "#/$defs/NonEmpty"},
+        "id": {"$ref": "#/$defs/NonEmpty"},
+        "digest": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "Diagnostic": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "detail", "detail_en", "suggestion", "suggestion_en", "source"],
+      "properties": {
+        "code": {"$ref": "#/$defs/NonEmpty"},
+        "detail": {"$ref": "#/$defs/NonEmpty"},
+        "detail_en": {"$ref": "#/$defs/NonEmpty"},
+        "suggestion": {"type": ["string", "null"]},
+        "suggestion_en": {"type": ["string", "null"]},
+        "source": {"type": ["object", "null"]}
+      }
+    },
+    "Budgets": {
+      "type": "object", "additionalProperties": false,
+      "required": ["translation_units", "callables", "objects", "instances", "transitions", "relations", "recursive_iterations", "candidate_targets", "worker_seconds", "worker_output_bytes", "request_seconds", "request_output_bytes", "diagnostic_bytes"],
+      "properties": {
+        "translation_units": {"type": "integer", "minimum": 1, "maximum": 4096},
+        "callables": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "objects": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "instances": {"type": "integer", "minimum": 1, "maximum": 65536},
+        "transitions": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "relations": {"type": "integer", "minimum": 1, "maximum": 262144},
+        "recursive_iterations": {"type": "integer", "minimum": 1, "maximum": 64},
+        "candidate_targets": {"type": "integer", "minimum": 1, "maximum": 64},
+        "worker_seconds": {"type": "integer", "minimum": 1, "maximum": 300},
+        "worker_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 67108864},
+        "request_seconds": {"type": "integer", "minimum": 1, "maximum": 3600},
+        "request_output_bytes": {"type": "integer", "minimum": 1024, "maximum": 268435456},
+        "diagnostic_bytes": {"type": "integer", "minimum": 128, "maximum": 4096}
+      }
+    },
+    "Base": {
+      "type": "object",
+      "required": ["schema_version", "kind", "analysis_version", "policy_id"],
+      "properties": {
+        "schema_version": {"const": 1},
+        "kind": {"$ref": "#/$defs/NonEmpty"},
+        "analysis_version": {"const": "0.1.0"},
+        "policy_id": {"const": "cpp-thread-lifecycle-v1"}
+      }
+    },
+    "Member": {
+      "type": "object", "additionalProperties": false,
+      "required": ["physical_tu_id", "profile_id", "language", "standard", "source_facts", "ir_facts"],
+      "properties": {
+        "physical_tu_id": {"$ref": "#/$defs/NonEmpty"},
+        "profile_id": {"$ref": "#/$defs/Digest"},
+        "language": {"enum": ["c", "c++"]},
+        "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+        "source_facts": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]},
+        "ir_facts": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]}
+      }
+    },
+    "WrapperSignature": {
+      "type": "object", "additionalProperties": false,
+      "required": ["role", "symbol", "calling_convention", "parameter_roles", "digest"],
+      "properties": {
+        "role": {"enum": ["construct-attempt", "entry-broker", "join-attempt", "detach-attempt", "handle-transfer"]},
+        "symbol": {"$ref": "#/$defs/NonEmpty"},
+        "calling_convention": {"$ref": "#/$defs/NonEmpty"},
+        "parameter_roles": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "digest": {"$ref": "#/$defs/Digest"}
+      }
+    },
+    "Callable": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "callable_kind", "entity_id", "receiver_id", "capture_ids", "resolution", "targets", "source_nodes", "ir_nodes"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Digest"},
+        "callable_kind": {"enum": ["free-function", "lambda", "member-function", "functor", "unknown"]},
+        "entity_id": {"type": ["string", "null"]},
+        "receiver_id": {"type": ["string", "null"]},
+        "capture_ids": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "resolution": {"enum": ["exact", "candidate", "ambiguous", "unresolved"]},
+        "targets": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "source_nodes": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "ir_nodes": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}
+      }
+    },
+    "Operation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "operation", "object_id", "other_object_id", "callable_id", "outcome", "guard", "wrapper_role", "native_handle", "source_nodes", "ir_nodes", "repeated"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Digest"},
+        "operation": {"enum": ["construct", "move-construct", "move-assign", "join", "detach", "joinable", "destruct"]},
+        "object_id": {"$ref": "#/$defs/NonEmpty"},
+        "other_object_id": {"type": ["string", "null"]},
+        "callable_id": {"type": ["string", "null"]},
+        "outcome": {"enum": ["success", "failure", "throw", "unknown"]},
+        "guard": {"type": ["string", "null"]},
+        "wrapper_role": {"type": ["string", "null"]},
+        "native_handle": {"type": ["string", "null"]},
+        "source_nodes": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "ir_nodes": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "repeated": {"type": "boolean"}
+      }
+    },
+    "Gap": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "code", "physical_tu_ids", "node_ids", "object_ids", "thread_ids", "path_ids", "dependencies", "detail", "detail_en", "suggestion", "suggestion_en"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Digest"},
+        "code": {"$ref": "#/$defs/NonEmpty"},
+        "physical_tu_ids": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "node_ids": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "object_ids": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "thread_ids": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "path_ids": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+        "detail": {"$ref": "#/$defs/NonEmpty"},
+        "detail_en": {"$ref": "#/$defs/NonEmpty"},
+        "suggestion": {"$ref": "#/$defs/NonEmpty"},
+        "suggestion_en": {"$ref": "#/$defs/NonEmpty"}
+      }
+    },
+    "ObjectState": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "object_id", "state", "handle", "instance_id", "guard", "source_operation_id"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Digest"},
+        "object_id": {"$ref": "#/$defs/NonEmpty"},
+        "state": {"enum": ["empty", "construction-pending", "joinable", "joined", "detached", "moved-from", "failed", "terminated-path", "unknown"]},
+        "handle": {"type": ["string", "null"]},
+        "instance_id": {"type": ["string", "null"]},
+        "guard": {"type": ["string", "null"]},
+        "source_operation_id": {"type": ["string", "null"]}
+      }
+    },
+    "Context": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "callable_id", "arguments", "profile_id", "status"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Digest"},
+        "callable_id": {"$ref": "#/$defs/NonEmpty"},
+        "arguments": {"type": "array"},
+        "profile_id": {"$ref": "#/$defs/Digest"},
+        "status": {"$ref": "#/$defs/Status"}
+      }
+    },
+    "Instance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "context_id", "parent_id", "construct_operation_id", "object_id", "handle", "cardinality", "reason", "guard", "status"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Digest"},
+        "context_id": {"$ref": "#/$defs/Digest"},
+        "parent_id": {"type": ["string", "null"]},
+        "construct_operation_id": {"$ref": "#/$defs/Digest"},
+        "object_id": {"$ref": "#/$defs/NonEmpty"},
+        "handle": {"type": ["string", "null"]},
+        "cardinality": {"enum": ["single", "repeated", "merged", "unknown"]},
+        "reason": {"type": ["string", "null"]},
+        "guard": {"type": ["string", "null"]},
+        "status": {"$ref": "#/$defs/Status"}
+      }
+    },
+    "Transition": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "object_id", "operation_id", "from", "to", "guard", "outcome", "instance_id", "evidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Digest"},
+        "object_id": {"$ref": "#/$defs/NonEmpty"},
+        "operation_id": {"$ref": "#/$defs/Digest"},
+        "from": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "to": {"$ref": "#/$defs/NonEmpty"},
+        "guard": {"type": ["string", "null"]},
+        "outcome": {"enum": ["success", "failure", "throw", "unknown"]},
+        "instance_id": {"type": ["string", "null"]},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}
+      }
+    },
+    "Relation": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "relation", "from", "to", "guard", "evidence"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Digest"},
+        "relation": {"enum": ["thread-start", "thread-exit", "join-complete", "detach", "may-parallel", "not-parallel"]},
+        "from": {"$ref": "#/$defs/NonEmpty"},
+        "to": {"$ref": "#/$defs/NonEmpty"},
+        "guard": {"type": ["string", "null"]},
+        "evidence": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}
+      }
+    },
+    "Counts": {
+      "type": "object", "additionalProperties": {"type": "integer", "minimum": 0}
+    },
+    "CppThreadLifecycleRequest": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {
+        "type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "roots", "members", "dependencies", "library_profiles", "budgets", "semantic_digest"],
+        "properties": {
+          "schema_version": {}, "kind": {"const": "CppThreadLifecycleRequest"}, "analysis_version": {}, "policy_id": {},
+          "scope_id": {"$ref": "#/$defs/NonEmpty"},
+          "roots": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "minItems": 1, "uniqueItems": true},
+          "members": {"type": "array", "items": {"$ref": "#/$defs/Member"}, "minItems": 1},
+          "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "library_profiles": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "budgets": {"$ref": "#/$defs/Budgets"},
+          "semantic_digest": {"$ref": "#/$defs/Digest"}
+        }
+      }]
+    },
+    "CppThreadLibraryProfile": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {
+        "type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "profile_id", "vendor", "version", "cxx_standard", "cxx_abi", "target", "data_layout", "pointer_width", "exceptions", "rtti", "thread_backend", "toolchain_lineage", "header_digests", "wrapper_signatures", "model_version", "status", "provenance", "semantic_digest"],
+        "properties": {
+          "schema_version": {}, "kind": {"const": "CppThreadLibraryProfile"}, "analysis_version": {}, "policy_id": {},
+          "profile_id": {"$ref": "#/$defs/Digest"},
+          "vendor": {"enum": ["libstdc++", "libc++"]},
+          "version": {"$ref": "#/$defs/NonEmpty"},
+          "cxx_standard": {"enum": ["c++17", "c++20"]},
+          "cxx_abi": {"$ref": "#/$defs/NonEmpty"},
+          "target": {"$ref": "#/$defs/NonEmpty"},
+          "data_layout": {"$ref": "#/$defs/NonEmpty"},
+          "pointer_width": {"type": "integer", "enum": [32, 64]},
+          "exceptions": {"type": "boolean"}, "rtti": {"type": "boolean"},
+          "thread_backend": {"const": "pthread"},
+          "toolchain_lineage": {"$ref": "#/$defs/NonEmpty"},
+          "header_digests": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "wrapper_signatures": {"type": "array", "items": {"$ref": "#/$defs/WrapperSignature"}, "minItems": 1},
+          "model_version": {"const": "cpp-thread-library-v1"},
+          "status": {"enum": ["verified", "unsupported"]},
+          "provenance": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "minItems": 1, "uniqueItems": true},
+          "semantic_digest": {"$ref": "#/$defs/Digest"}
+        }
+      }]
+    },
+    "CppThreadLocalFacts": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {
+        "type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "physical_tu_id", "profile_id", "language", "standard", "status", "library_profile_id", "callables", "operations", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {
+          "schema_version": {}, "kind": {"const": "CppThreadLocalFacts"}, "analysis_version": {}, "policy_id": {},
+          "scope_id": {"$ref": "#/$defs/NonEmpty"}, "physical_tu_id": {"$ref": "#/$defs/NonEmpty"}, "profile_id": {"$ref": "#/$defs/Digest"},
+          "language": {"enum": ["c", "c++"]}, "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+          "status": {"$ref": "#/$defs/Status"}, "library_profile_id": {"type": ["string", "null"]},
+          "callables": {"type": "array", "items": {"$ref": "#/$defs/Callable"}},
+          "operations": {"type": "array", "items": {"$ref": "#/$defs/Operation"}},
+          "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "semantic_digest": {"$ref": "#/$defs/Digest"}
+        }
+      }]
+    },
+    "CppThreadLifecycleGraph": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {
+        "type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "profiles", "objects", "contexts", "instances", "transitions", "relations", "gaps", "counts", "dependencies", "diagnostics", "frontier", "semantic_digest"],
+        "properties": {
+          "schema_version": {}, "kind": {"const": "CppThreadLifecycleGraph"}, "analysis_version": {}, "policy_id": {},
+          "scope_id": {"$ref": "#/$defs/NonEmpty"}, "request_hash": {"$ref": "#/$defs/Digest"}, "status": {"$ref": "#/$defs/Status"},
+          "profiles": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "objects": {"type": "array", "items": {"$ref": "#/$defs/ObjectState"}},
+          "contexts": {"type": "array", "items": {"$ref": "#/$defs/Context"}},
+          "instances": {"type": "array", "items": {"$ref": "#/$defs/Instance"}},
+          "transitions": {"type": "array", "items": {"$ref": "#/$defs/Transition"}},
+          "relations": {"type": "array", "items": {"$ref": "#/$defs/Relation"}},
+          "gaps": {"type": "array", "items": {"$ref": "#/$defs/Gap"}},
+          "counts": {"$ref": "#/$defs/Counts"},
+          "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "semantic_digest": {"$ref": "#/$defs/Digest"}
+        }
+      }]
+    },
+    "CppThreadLifecycleReport": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {
+        "type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "scope_id", "request_hash", "status", "exit_code", "safety", "findings", "graph", "profiles", "counts", "dependencies", "diagnostics", "frontier", "cache", "semantic_digest"],
+        "properties": {
+          "schema_version": {}, "kind": {"const": "CppThreadLifecycleReport"}, "analysis_version": {}, "policy_id": {},
+          "scope_id": {"type": ["string", "null"]}, "request_hash": {"type": ["string", "null"]}, "status": {"$ref": "#/$defs/Status"},
+          "exit_code": {"enum": [0, 1, 2]}, "safety": {"const": "not_evaluated"}, "findings": {"type": "null"},
+          "graph": {"anyOf": [{"$ref": "#/$defs/Dependency"}, {"type": "null"}]},
+          "profiles": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "counts": {"$ref": "#/$defs/Counts"},
+          "dependencies": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}},
+          "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "frontier": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}},
+          "cache": {"type": "object", "additionalProperties": false, "required": ["hits", "misses"], "properties": {"hits": {"type": "integer", "minimum": 0}, "misses": {"type": "integer", "minimum": 0}}},
+          "semantic_digest": {"$ref": "#/$defs/Digest"}
+        }
+      }]
+    },
+    "ValidationCase": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "language", "standard", "vendor", "request", "expected_status"],
+      "properties": {
+        "id": {"$ref": "#/$defs/NonEmpty"}, "language": {"enum": ["c", "c++"]}, "standard": {"enum": ["compiler-default", "c89", "c99", "c11", "c17", "c23", "c++98", "c++03", "c++11", "c++14", "c++17", "c++20", "c++23"]},
+        "vendor": {"type": ["string", "null"]}, "request": {"$ref": "#/$defs/NonEmpty"}, "expected_status": {"$ref": "#/$defs/Status"}
+      }
+    },
+    "TruthCase": {
+      "type": "object", "additionalProperties": false,
+      "required": ["case_id", "callables", "instances", "relations", "unknown"],
+      "properties": {
+        "case_id": {"$ref": "#/$defs/NonEmpty"}, "callables": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "instances": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}, "relations": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true},
+        "unknown": {"type": "array", "items": {"$ref": "#/$defs/NonEmpty"}, "uniqueItems": true}
+      }
+    },
+    "CppThreadValidationSuite": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite_version", "cases", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "CppThreadValidationSuite"}, "analysis_version": {}, "policy_id": {}, "suite_version": {"$ref": "#/$defs/NonEmpty"}, "cases": {"type": "array", "items": {"$ref": "#/$defs/ValidationCase"}, "minItems": 4}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "CppThreadValidationTruth": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite_version", "cases", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "CppThreadValidationTruth"}, "analysis_version": {}, "policy_id": {}, "suite_version": {"$ref": "#/$defs/NonEmpty"}, "cases": {"type": "array", "items": {"$ref": "#/$defs/TruthCase"}, "minItems": 4}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    },
+    "CppThreadValidationReport": {
+      "allOf": [{"$ref": "#/$defs/Base"}, {"type": "object", "additionalProperties": false,
+        "required": ["schema_version", "kind", "analysis_version", "policy_id", "suite_version", "status", "profiles", "metrics", "languages", "diagnostics", "semantic_digest"],
+        "properties": {"schema_version": {}, "kind": {"const": "CppThreadValidationReport"}, "analysis_version": {}, "policy_id": {}, "suite_version": {"$ref": "#/$defs/NonEmpty"}, "status": {"$ref": "#/$defs/Status"}, "profiles": {"type": "array", "items": {"$ref": "#/$defs/Dependency"}}, "metrics": {"$ref": "#/$defs/Counts"}, "languages": {"type": "object"}, "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/Diagnostic"}}, "semantic_digest": {"$ref": "#/$defs/Digest"}}
+      }]
+    }
+  }
+}

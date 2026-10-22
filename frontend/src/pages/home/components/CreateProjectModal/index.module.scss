@@ -1,0 +1,31 @@
+@use '../../../../styles/mixins' as type;
+
+.modalTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+
+  .title {
+    @include type.panel-title;
+    color: var(--ant-color-text);
+  }
+
+  .description {
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size, 14px);
+    font-weight: 400;
+    line-height: 22px;
+  }
+}
+
+.formSectionTitle {
+  @include type.section-title;
+  margin-bottom: 12px;
+  color: var(--ant-color-text);
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

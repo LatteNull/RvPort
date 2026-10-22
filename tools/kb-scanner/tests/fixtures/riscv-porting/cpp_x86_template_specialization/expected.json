@@ -1,0 +1,6 @@
+{
+  "ruleId": "CPP.X86.TEMPLATE_SPECIALIZATION",
+  "count": 1,
+  "symbols": ["avx2_tag"]
+}
+

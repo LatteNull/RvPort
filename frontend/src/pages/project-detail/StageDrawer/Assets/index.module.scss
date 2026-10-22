@@ -1,0 +1,155 @@
+@use '../../../../styles/mixins' as type;
+.drawerTitle {
+  .drawerTitleText {
+    @include type.panel-title;
+    color: var(--ant-color-text);
+  }
+}
+
+.overview {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sourceHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+
+  h3 {
+    @include type.section-title;
+    margin: 0;
+    color: var(--ant-color-text);
+  }
+
+  p {
+    margin: 2px 0 0;
+    color: var(--ant-color-text-secondary);
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .sourceActionLink {
+    flex: 0 0 auto;
+    padding-inline: 0;
+  }
+}
+
+.sourceActions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ant-color-border-secondary);
+}
+
+.sourceActionsHeading {
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h3 {
+    @include type.section-title;
+    color: var(--ant-color-text);
+  }
+
+  p {
+    margin-top: 2px;
+    color: var(--ant-color-text-secondary);
+    font-size: 13px;
+    line-height: 20px;
+  }
+}
+
+.sourceModeControl {
+  width: 100%;
+  max-width: 420px;
+}
+
+.sourceModeLocked {
+  color: var(--ant-color-text-secondary);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.sourceForm {
+  width: 100%;
+}
+
+.gitForm {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 24px;
+}
+
+.artifactPanel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--ant-color-border-secondary);
+  border-radius: calc(var(--ant-border-radius, 4px) * 2);
+}
+
+.artifactItem {
+  display: grid;
+  grid-template-columns: 96px minmax(0, 1fr);
+  align-items: center;
+  min-width: 0;
+  min-height: 44px;
+  gap: 12px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--ant-color-border-secondary);
+
+  > span {
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size-sm, 12px);
+    line-height: 18px;
+  }
+
+  strong {
+    min-width: 0;
+    color: var(--ant-color-text);
+    font-size: var(--ant-font-size, 14px);
+    font-weight: 400;
+    line-height: 21px;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  a {
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+}
+
+.artifactItem:last-child {
+  grid-column: 1 / -1;
+  border-bottom: 0;
+}
+
+.uploadHint {
+  color: #8c8c8c;
+  font-size: var(--ant-font-size, 14px);
+}
+
+.formActions {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.submitError {
+  grid-column: 1 / -1;
+}
+
+.statePanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  gap: 16px;
+}

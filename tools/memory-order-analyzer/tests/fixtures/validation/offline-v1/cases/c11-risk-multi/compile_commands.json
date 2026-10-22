@@ -1,0 +1,5 @@
+[
+  {"directory":"/corpus/cases/c11-risk-multi","file":"producer.c","arguments":["gcc","-std=c11","-O0","-pthread","-c","producer.c"]},
+  {"directory":"/corpus/cases/c11-risk-multi","file":"consumer.c","arguments":["gcc","-std=c11","-O0","-pthread","-c","consumer.c"]},
+  {"directory":"/corpus/cases/c11-risk-multi","file":"main.c","arguments":["gcc","-std=c11","-O0","-pthread","-c","main.c"]}
+]

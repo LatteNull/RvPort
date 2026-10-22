@@ -1,0 +1,5 @@
+{
+  "ruleId": "ASM.X86.INSTRUCTION",
+  "count": 4,
+  "symbols": ["movdqa", "paddd", "vmovdqa", "rax"]
+}

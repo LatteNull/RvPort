@@ -1,0 +1,180 @@
+{
+  "schemaVersion": "1.0",
+  "fixture": {
+    "id": "avx-avx2-example-code",
+    "revision": "5029c4fa44bd01c61476189e11787511f89ddfcd",
+    "root": "backend/runtime/kb-scan-real/avx-avx2-example-code/source",
+    "audit": "Manual source review; this file is an input oracle and must not be generated from scanner output."
+  },
+  "sourceFiles": [
+    "Arithmetic_Intrinsics/src/add.c",
+    "Arithmetic_Intrinsics/src/adds.c",
+    "Arithmetic_Intrinsics/src/addsub.c",
+    "Arithmetic_Intrinsics/src/div.c",
+    "Arithmetic_Intrinsics/src/fmadd.c",
+    "Arithmetic_Intrinsics/src/fmaddsub.c",
+    "Arithmetic_Intrinsics/src/fmsub.c",
+    "Arithmetic_Intrinsics/src/fmsubadd.c",
+    "Arithmetic_Intrinsics/src/fnmadd.c",
+    "Arithmetic_Intrinsics/src/fnmsub.c",
+    "Arithmetic_Intrinsics/src/hadd.c",
+    "Arithmetic_Intrinsics/src/hadds.c",
+    "Arithmetic_Intrinsics/src/hsub.c",
+    "Arithmetic_Intrinsics/src/hsubs.c",
+    "Arithmetic_Intrinsics/src/mul.c",
+    "Arithmetic_Intrinsics/src/mulhi.c",
+    "Arithmetic_Intrinsics/src/mulhrs.c",
+    "Arithmetic_Intrinsics/src/mullo.c",
+    "Arithmetic_Intrinsics/src/sub.c",
+    "Arithmetic_Intrinsics/src/subs.c",
+    "Initialization_Intrinsics/include/gcc_support.h",
+    "Initialization_Intrinsics/src/load.c",
+    "Initialization_Intrinsics/src/loadu.c",
+    "Initialization_Intrinsics/src/maskload.c",
+    "Initialization_Intrinsics/src/set.c",
+    "Initialization_Intrinsics/src/set1.c",
+    "Initialization_Intrinsics/src/setr.c",
+    "Initialization_Intrinsics/src/setzero.c",
+    "Permuting_and_Shuffling/include/gcc_support.h",
+    "Permuting_and_Shuffling/src/permute.c",
+    "Permuting_and_Shuffling/src/permute2f128.c",
+    "Permuting_and_Shuffling/src/permute4x64.c",
+    "Permuting_and_Shuffling/src/permutevar.c",
+    "Permuting_and_Shuffling/src/permutevar8x32.c",
+    "Permuting_and_Shuffling/src/shuffle.c",
+    "Permuting_and_Shuffling/src/shufflehi.c",
+    "Permuting_and_Shuffling/src/shufflelo.c"
+  ],
+  "auditedCounts": {
+    "x86Headers": 39,
+    "x86VectorTypes": 362,
+    "directIntrinsicCalls": 360,
+    "commentHints": 45,
+    "functionLikeMacroDefinitions": 12,
+    "replacementTerminalIntrinsicReferences": 18
+  },
+  "macroDefinitions": [
+    {
+      "path": "Initialization_Intrinsics/include/gcc_support.h",
+      "name": "_mm256_set_m128",
+      "definition": {"start": [9, 9], "end": [10, 58]},
+      "replacementCalls": [
+        {"name": "_mm256_insertf128_ps", "span": {"start": [10, 9], "end": [10, 29]}},
+          {"name": "_mm256_castps128_ps256", "span": {"start": [10, 30], "end": [10, 52]}}
+      ]
+    },
+    {
+      "path": "Initialization_Intrinsics/include/gcc_support.h",
+      "name": "_mm256_set_m128d",
+      "definition": {"start": [12, 9], "end": [13, 60]},
+      "replacementCalls": [
+        {"name": "_mm256_insertf128_pd", "span": {"start": [13, 9], "end": [13, 29]}},
+          {"name": "_mm256_castpd128_pd256", "span": {"start": [13, 30], "end": [13, 52]}}
+      ]
+    },
+    {
+      "path": "Initialization_Intrinsics/include/gcc_support.h",
+      "name": "_mm256_set_m128i",
+      "definition": {"start": [15, 9], "end": [16, 64]},
+      "replacementCalls": [
+        {"name": "_mm256_insertf128_si256", "span": {"start": [16, 9], "end": [16, 32]}},
+          {"name": "_mm256_castsi128_si256", "span": {"start": [16, 33], "end": [16, 55]}}
+      ]
+    },
+    {
+      "path": "Initialization_Intrinsics/include/gcc_support.h",
+      "name": "_mm256_setr_m128",
+      "definition": {"start": [18, 9], "end": [19, 39]},
+      "replacementCalls": [
+        {"name": "_mm256_set_m128", "span": {"start": [19, 9], "end": [19, 24]}}
+      ]
+    },
+    {
+      "path": "Initialization_Intrinsics/include/gcc_support.h",
+      "name": "_mm256_setr_m128d",
+      "definition": {"start": [21, 9], "end": [22, 40]},
+      "replacementCalls": [
+        {"name": "_mm256_set_m128d", "span": {"start": [22, 9], "end": [22, 25]}}
+      ]
+    },
+    {
+      "path": "Initialization_Intrinsics/include/gcc_support.h",
+      "name": "_mm256_setr_m128i",
+      "definition": {"start": [24, 9], "end": [25, 40]},
+      "replacementCalls": [
+        {"name": "_mm256_set_m128i", "span": {"start": [25, 9], "end": [25, 25]}}
+      ]
+    },
+    {
+      "path": "Permuting_and_Shuffling/include/gcc_support.h",
+      "name": "_mm256_set_m128",
+      "definition": {"start": [9, 9], "end": [10, 58]},
+      "replacementCalls": [
+        {"name": "_mm256_insertf128_ps", "span": {"start": [10, 9], "end": [10, 29]}},
+          {"name": "_mm256_castps128_ps256", "span": {"start": [10, 30], "end": [10, 52]}}
+      ]
+    },
+    {
+      "path": "Permuting_and_Shuffling/include/gcc_support.h",
+      "name": "_mm256_set_m128d",
+      "definition": {"start": [12, 9], "end": [13, 60]},
+      "replacementCalls": [
+        {"name": "_mm256_insertf128_pd", "span": {"start": [13, 9], "end": [13, 29]}},
+          {"name": "_mm256_castpd128_pd256", "span": {"start": [13, 30], "end": [13, 52]}}
+      ]
+    },
+    {
+      "path": "Permuting_and_Shuffling/include/gcc_support.h",
+      "name": "_mm256_set_m128i",
+      "definition": {"start": [15, 9], "end": [16, 64]},
+      "replacementCalls": [
+        {"name": "_mm256_insertf128_si256", "span": {"start": [16, 9], "end": [16, 32]}},
+          {"name": "_mm256_castsi128_si256", "span": {"start": [16, 33], "end": [16, 55]}}
+      ]
+    },
+    {
+      "path": "Permuting_and_Shuffling/include/gcc_support.h",
+      "name": "_mm256_setr_m128",
+      "definition": {"start": [18, 9], "end": [19, 39]},
+      "replacementCalls": [
+        {"name": "_mm256_set_m128", "span": {"start": [19, 9], "end": [19, 24]}}
+      ]
+    },
+    {
+      "path": "Permuting_and_Shuffling/include/gcc_support.h",
+      "name": "_mm256_setr_m128d",
+      "definition": {"start": [21, 9], "end": [22, 40]},
+      "replacementCalls": [
+        {"name": "_mm256_set_m128d", "span": {"start": [22, 9], "end": [22, 25]}}
+      ]
+    },
+    {
+      "path": "Permuting_and_Shuffling/include/gcc_support.h",
+      "name": "_mm256_setr_m128i",
+      "definition": {"start": [24, 9], "end": [25, 40]},
+      "replacementCalls": [
+        {"name": "_mm256_set_m128i", "span": {"start": [25, 9], "end": [25, 25]}}
+      ]
+    }
+  ],
+  "representativeInvocations": [
+    {"path": "Initialization_Intrinsics/src/set.c", "name": "_mm256_set_m128", "span": {"start": [56, 28], "end": [56, 43]}},
+    {"path": "Initialization_Intrinsics/src/setr.c", "name": "_mm256_setr_m128", "span": {"start": [56, 28], "end": [56, 44]}},
+    {"path": "Permuting_and_Shuffling/src/permute2f128.c", "name": "_mm256_set_m128", "span": {"start": [19, 30], "end": [19, 45]}}
+  ],
+  "baselineCorrections": [
+    {
+      "kind": "manual-span-correction",
+      "reason": "Representative invocation columns were corrected to the actual token start/end positions in the audited source; scanner output was already correct.",
+      "entries": 3
+    }
+  ],
+  "buildEvidence": {
+    "status": "implemented-build-selection",
+    "makefiles": 4,
+    "x86FlagOccurrences": 24,
+    "baseline": "tests/fixtures/build-selection/avx-make-baseline.json",
+    "reason": "All manually audited flag occurrences are part of the formal build-selection regression."
+  },
+  "legacyOracle": false
+}

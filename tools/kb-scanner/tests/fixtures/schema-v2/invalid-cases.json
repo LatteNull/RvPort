@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "2.0-design-invalid-cases",
+  "base": "complete.json",
+  "cases": [
+    {
+      "name": "primary occurrence is dangling",
+      "expectedRule": "finding.primary-occurrence-resolves",
+      "operations": [
+        {"op": "set", "path": "findings.0.primaryOccurrenceId", "value": "occurrence-missing"}
+      ]
+    },
+    {
+      "name": "primary path references a missing step",
+      "expectedRule": "chain.primary-path-resolves",
+      "operations": [
+        {"op": "set", "path": "findings.0.evidenceChain.primaryPath.1", "value": "step-missing"}
+      ]
+    },
+    {
+      "name": "edge endpoint is dangling",
+      "expectedRule": "chain.edge-endpoints-resolve",
+      "operations": [
+        {"op": "set", "path": "findings.0.evidenceChain.edges.0.toStepId", "value": "step-missing"}
+      ]
+    },
+    {
+      "name": "complete chain contains a break",
+      "expectedRule": "schema.invalid",
+      "operations": [
+        {
+          "op": "append",
+          "path": "findings.0.evidenceChain.breaks",
+          "value": {
+            "id": "break-not-allowed",
+            "status": "partial",
+            "reasonCode": "missing_input",
+            "stage": "projection",
+            "candidateStepIds": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "code step has no source",
+      "expectedRule": "schema.invalid",
+      "operations": [
+        {"op": "delete", "path": "findings.0.evidenceChain.steps.0.source"}
+      ]
+    },
+    {
+      "name": "classification fabricates source",
+      "expectedRule": "schema.invalid",
+      "operations": [
+        {"op": "copy", "from": "findings.0.evidenceChain.steps.0.source", "path": "findings.0.evidenceChain.steps.2.source"}
+      ]
+    },
+    {
+      "name": "highlight line is absent from context",
+      "expectedRule": "source.highlight-resolves",
+      "operations": [
+        {"op": "set", "path": "findings.0.fact.primaryLocation.context.highlights.0.line", "value": 99}
+      ]
+    },
+    {
+      "name": "source path is absolute",
+      "expectedRule": "schema.invalid",
+      "operations": [
+        {"op": "set", "path": "findings.0.fact.primaryLocation.file", "value": "C:\\secret\\vector.c"}
+      ]
+    },
+    {
+      "name": "steps are not stably ordered",
+      "expectedRule": "result.stable-order",
+      "operations": [
+        {"op": "reverse", "path": "findings.0.evidenceChain.steps"}
+      ]
+    },
+    {
+      "name": "partial chain has no break",
+      "expectedRule": "schema.invalid",
+      "operations": [
+        {"op": "set", "path": "findings.0.evidenceChain.status", "value": "partial"},
+        {"op": "set", "path": "findings.0.evidenceChain.reasonCodes", "value": ["missing_input"]}
+      ]
+    }
+  ]
+}

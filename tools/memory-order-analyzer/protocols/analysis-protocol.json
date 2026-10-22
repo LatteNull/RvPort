@@ -1,0 +1,27 @@
+{
+  "protocol_version": 1,
+  "analysis_version": "0.1.0",
+  "llvm_version": "21.1.8",
+  "policy_id": "scoped-effects-v1",
+  "kinds": {
+    "EffectAnalysisRequest": 1,
+    "LocalAnalysisFacts": 1,
+    "LocalEvaluationRequest": 1,
+    "LocalEvaluationResult": 1,
+    "EffectSummary": 1,
+    "EffectAnalysisReport": 1
+  },
+  "budgets": {
+    "local_steps": 100000,
+    "condition_states": 32,
+    "value_candidates": 8,
+    "contexts_per_function": 32,
+    "contexts_per_request": 4096,
+    "scc_iterations": 16,
+    "effect_items": 10000,
+    "worker_seconds": 60,
+    "worker_output_bytes": 16777216,
+    "request_seconds": 300,
+    "request_output_bytes": 67108864
+  }
+}

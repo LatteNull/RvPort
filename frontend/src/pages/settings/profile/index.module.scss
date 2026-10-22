@@ -1,0 +1,63 @@
+@use '../../../styles/mixins' as type;
+
+.page {
+  .pageHeader {
+    min-height: 32px;
+
+    .backButton {
+      flex: 0 0 auto;
+      color: var(--ant-color-text);
+
+      &:hover {
+        color: var(--ant-color-primary);
+      }
+    }
+
+    h1 {
+      @include type.page-title;
+      margin: 0;
+      color: var(--ant-color-text);
+    }
+
+    p {
+      margin: 0;
+      color: var(--ant-color-text-secondary);
+      font-size: 13px;
+      line-height: 20px;
+    }
+  }
+
+  .section {
+    border-radius: var(--ant-border-radius-lg, 12px);
+  }
+
+  .displayNameRow {
+    min-height: 32px;
+    margin-top: 16px;
+
+    .fieldLabel {
+      flex: 0 0 88px;
+      color: var(--ant-color-text-secondary);
+      font-size: var(--ant-font-size, 14px);
+    }
+
+    .displayName {
+      color: var(--ant-color-text);
+    }
+  }
+
+  .securityRow {
+    .securityContent {
+      strong {
+        color: var(--ant-color-text);
+        font-size: var(--ant-font-size, 14px);
+        font-weight: 500;
+      }
+
+      .securityDescription {
+        color: var(--ant-color-text-secondary);
+        font-size: 13px;
+      }
+    }
+  }
+}

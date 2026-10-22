@@ -1,0 +1,6 @@
+machine=$(uname -m)
+case "$machine" in
+  riscv64) selected=src/rv.c ;;
+  x86_64) selected=src/x86.c ;;
+  *) selected=src/generic.c ;;
+esac

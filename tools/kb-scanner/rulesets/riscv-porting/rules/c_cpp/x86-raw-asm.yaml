@@ -1,0 +1,27 @@
+id: ASM.X86.INSTRUCTION
+language: asm
+severity: high
+confidence: high
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        pathSuffixIn:
+          - ".S"
+          - ".s"
+          - ".asm"
+          - ".inc"
+        ignoreCommentLines: true
+        symbolGroup: 1
+        regex: "(?i)(?:%?\\b(xmm[0-9]+|ymm[0-9]+|zmm[0-9]+|rax|rbx|rcx|rdx|rsp|rbp|rsi|rdi|r8|r9|r10|r11|r12|r13|r14|r15|eax|ebx|ecx|edx|esp|ebp|esi|edi)\\b|\\b(movdqa|movdqu|movaps|movups|pxor|paddd|pshufd|pslld|psrld|aesenc|aesenclast|pclmulqdq|vzeroupper|vzeroall|vmovdqa|vmovdqu|vaddps|vmulps|cpuid|rdtsc|rdtscp|xgetbv|mfence|lfence|sfence|pause)\\b)"
+message:
+  zh-CN:
+    title: "使用 x86 原生汇编"
+    reason: "汇编文件中出现 x86 寄存器或 x86 指令，RISC-V 环境无法直接汇编或运行。"
+    suggestion: "建议提供 RISC-V 汇编实现、改写为 portable C/C++，或在构建系统中为 RISC-V 排除该 x86 汇编路径。"
+  en-US:
+    title: "Uses native x86 assembly"
+    reason: "The assembly file contains x86 registers or x86 instructions, which cannot be assembled or executed directly in a RISC-V environment."
+    suggestion: "Provide a RISC-V assembly implementation, rewrite it as portable C/C++, or exclude this x86 assembly path from RISC-V builds."
+

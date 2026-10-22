@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "change": "add-degraded-source-analysis",
+  "date": "2026-09-20",
+  "status": "validated-synchronized-archived",
+  "safety": "not-established",
+  "environment": {
+    "image": "memory-order-analyzer-dev:llvm21",
+    "network": "disabled",
+    "clang_llvm": "21.1.8",
+    "gcc": "13.3.0",
+    "python": "3.12.3",
+    "cmake": "3.28.3",
+    "ninja": "1.11.1",
+    "pytest": "7.4.4"
+  },
+  "artifacts": {
+    "protocols/degraded-source-analysis-protocol.json": "30a9796f1e6f2bed16f8b85f11eeec49a9a2b3281bf4437174abcaf3d8eda516",
+    "schemas/degraded_source_analysis.json": "23878ed845225c3a3c9b7bdc5c854b804904dccc0834a40e354b5d77a8a024bf",
+    "validation-suite.json": "5a5574851a13cb8a81e475b4d0fd864f9019f89059d54c75098e1964fdc4ee3f",
+    "validation-truth.json": "a52f90747ed367eb619b88e93a201b9c2365398e3f2ad7fe3ab832afe586f2c6",
+    "validation-report.json": "546b18de5f3e0d80eec7f96e5dc630d19a26cad117d7841a47752ef94e125fe0",
+    "coverage-summary.json": "a69f5fa8dbc21ced5e23b195b2e2a6333f634aefd33ca852154cf092e5c6399f"
+  },
+  "truth": {
+    "aggregate": {
+      "planned": 8,
+      "completed": 8,
+      "exact_match": {"hit": 8, "total": 8},
+      "true_positive": 0,
+      "false_positive": 0,
+      "false_negative": 0,
+      "abstention": {"hit": 8, "total": 8},
+      "modes": {"ast-ir": 0, "ir-only": 0, "ast-only": 4, "failed": 4, "mixed": 0}
+    },
+    "profiles": {
+      "c11": {"planned": 2, "completed": 2, "exact": "2/2", "tp": 0, "fp": 0, "fn": 0, "abstention": "2/2"},
+      "c17": {"planned": 2, "completed": 2, "exact": "2/2", "tp": 0, "fp": 0, "fn": 0, "abstention": "2/2"},
+      "c++17": {"planned": 2, "completed": 2, "exact": "2/2", "tp": 0, "fp": 0, "fn": 0, "abstention": "2/2"},
+      "c++20": {"planned": 2, "completed": 2, "exact": "2/2", "tp": 0, "fp": 0, "fn": 0, "abstention": "2/2"}
+    },
+    "risk_denominator_note": "This A2 truth slice validates degraded modes only; its formal-risk denominator is zero, so precision and recall are null."
+  },
+  "performance": {
+    "cold": {"wall_seconds": 3.199845, "cpu_seconds": 1.675866, "peak_rss_kib": 98560, "artifact_bytes": 789149, "cache_hits": 0, "cache_misses": 8},
+    "warm": {"wall_seconds": 2.449976, "cpu_seconds": 1.175797, "peak_rss_kib": 50216, "artifact_bytes": 789149, "cache_hits": 8, "cache_misses": 0},
+    "semantic_equal_ignoring_cache": true,
+    "semantic_digest": "54e5714f4240bac4cb045887e813a0e55f86ddbb334b3c3aee38c29a59dca649"
+  },
+  "tests": {
+    "cpp_unit": {"passed": 87},
+    "python_unit": {"passed": 497},
+    "integration": {"passed": 55},
+    "post_manifest_focused": {"passed": 8},
+    "documentation_and_schema_focused": {"passed": 14}
+  },
+  "coverage": {
+    "threshold_percent": 90,
+    "overall": {"lines": {"hit": 9537, "total": 9685, "percent": 98.47186370676303}, "branches": {"hit": 5639, "total": 5980, "percent": 94.29765886287625}},
+    "cpp": {"lines": {"hit": 3533, "total": 3555, "percent": 99.38115330520394}, "branches": {"hit": 2837, "total": 3039, "percent": 93.35307666995722}},
+    "python": {"lines": {"hit": 6004, "total": 6130, "percent": 97.94453507340945}, "branches": {"hit": 2802, "total": 2941, "percent": 95.27371642298537}},
+    "affected_modules_passed": true
+  },
+  "mutex_regression": {
+    "archived_safe_source_sha256": "f37e516834a9511b5591deb6a2b83ea31332a6923d2d6b932d93f217b9d89eae",
+    "unknown_raii_relevant_finding": "unknown",
+    "direct_pthread_unrelated_finding": "preserved",
+    "c_same_object_mutex_gap": "not-generated"
+  },
+  "excluded_accuracy_classes": [
+    {"class": "windows-msvc", "reason": "Windows, MSVC and clang-cl are outside scope"},
+    {"class": "invalid-source", "reason": "Compiler-invalid inputs validate failure classification, not risk accuracy"},
+    {"class": "unsupported-cpp-concurrency", "reason": "std::thread, thread pools and complete RAII semantics are future changes"}
+  ],
+  "gates": {
+    "offline_quality": "passed",
+    "unit_coverage": "passed",
+    "integration": "passed",
+    "protocol_compatibility": "passed",
+    "schema_validation": "passed",
+    "openspec_strict": "passed",
+    "documentation_links": "passed",
+    "mandatory_remote_dependency": false,
+    "mandatory_sibling_dependency": false
+  }
+}

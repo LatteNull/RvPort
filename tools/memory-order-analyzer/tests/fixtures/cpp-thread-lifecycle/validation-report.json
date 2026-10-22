@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "kind": "CppThreadValidationReport",
+  "analysis_version": "0.1.0",
+  "policy_id": "cpp-thread-lifecycle-v1",
+  "suite_version": "a3-lifecycle-v1",
+  "status": "complete",
+  "profiles": [],
+  "metrics": {"expected":16,"actual":16,"exact":8,"fp":0,"fn":0,"unknown":3,"abstention":3},
+  "languages": {
+    "c11":{"planned":1,"completed":1,"failed":0,"unknown":0,"abstention":0},
+    "c17":{"planned":1,"completed":1,"failed":0,"unknown":0,"abstention":0},
+    "c++17":{"planned":3,"completed":3,"failed":0,"unknown":1,"abstention":1},
+    "c++20":{"planned":3,"completed":3,"failed":0,"unknown":2,"abstention":2}
+  },
+  "diagnostics": [],
+  "semantic_digest": "00dc67fe009f71a2984eb73bc472ce3588507baab1848c7e876f5988ccc975ab"
+}

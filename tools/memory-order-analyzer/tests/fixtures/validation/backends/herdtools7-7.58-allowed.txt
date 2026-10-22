@@ -1,0 +1,6 @@
+Test publication Allowed
+States 1
+1:r0=1; 1:r1=0;
+Sometimes 1 1
+Witnesses
+Positive: 1 Negative: 0

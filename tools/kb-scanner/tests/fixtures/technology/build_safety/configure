@@ -1,0 +1,6 @@
+#!/bin/sh
+case "$(uname -m)" in
+  x86_64) selected_sources="x86.c" ;;
+  riscv64) selected_sources="riscv.c" ;;
+  *) selected_sources="generic.c" ;;
+esac

@@ -1,0 +1,19 @@
+.detailFooter {
+  width: 100%;
+  gap: 8px;
+}
+
+.detailFooterStatus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  > span {
+    color: var(--ant-color-text-secondary);
+    font-size: 13px;
+  }
+
+  :global(.ant-tag) {
+    margin-inline-end: 0;
+  }
+}

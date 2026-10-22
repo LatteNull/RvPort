@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0",
+  "container": "kb-scanner-test",
+  "coverageThresholds": {"linePercent": 90, "branchPercent": 80},
+  "modules": {
+    "kb_scanner/detectors/demand.py": ["tests.unit.performance.test_fact_demand"],
+    "kb_scanner/graph/queries.py": ["tests.unit.performance.test_proof_queries"],
+    "kb_scanner/graph/store.py": ["tests.unit.evidence_graph.test_graph_store", "tests.unit.performance.test_proof_queries"],
+    "kb_scanner/analyzers/proof.py": ["tests.unit.evidence_graph.test_proof", "tests.unit.performance.test_proof_queries"],
+    "kb_scanner/analyzers/build_selection.py": ["tests.unit.build_selection.test_analysis", "tests.unit.performance.test_stage_budgets", "tests.unit.performance.test_build_queries"],
+    "kb_scanner/analyzers/test_selection.py": ["tests.unit.classification_assessment.test_test_analysis", "tests.unit.performance.test_stage_budgets"],
+    "kb_scanner/analyzers/evidence_graph.py": ["tests.unit.evidence_graph.test_architecture_guards", "tests.unit.evidence_graph.test_evidence_graph_analyzer", "tests.unit.evidence_graph.test_query_indexes"],
+    "kb_scanner/normalization/cpp.py": ["tests.unit.knowledge_detection.test_macro_index", "tests.unit.knowledge_detection.test_cpp_normalizer", "tests.unit.knowledge_detection.test_candidate_contract"],
+    "kb_scanner/pipeline/composite.py": ["tests.unit.knowledge_detection.test_composite_index"],
+    "tests/performance/observation.py": ["tests.unit.performance.test_support"],
+    "tests/performance/support.py": ["tests.unit.performance.test_support"],
+    "tests/performance/child.py": ["tests.unit.performance.test_entries"],
+    "tests/run_performance_tests.py": ["tests.unit.performance.test_entries"]
+  },
+  "unitBoundary": "All unit suites except historical real-parser/pipeline classes; Parser is replaced with a failing sentinel. Performance tests use fake stages, clock, process, writer and resource readers.",
+  "acceptance": "tests/run_performance_tests.py explicitly mounted full libarchive, two fresh scanner processes; not counted as unit coverage"
+}

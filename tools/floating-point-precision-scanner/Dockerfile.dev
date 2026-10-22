@@ -1,0 +1,39 @@
+ARG UBUNTU_IMAGE=ubuntu:24.04@sha256:4fbb8e6a8395de5a7550b33509421a2bafbc0aab6c06ba2cef9ebffbc7092d90
+FROM ${UBUNTU_IMAGE}
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG LLVM_DEB_VERSION=1:21.1.8~++20251221032922+2078da43e25a-1~exp1~20251221153059.70
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates curl python3 python3-pip python3-venv \
+    && curl --fail --show-error --location --max-time 60 \
+       https://apt.llvm.org/llvm-snapshot.gpg.key -o /usr/share/keyrings/llvm.asc \
+    && echo '8b2a587ffd672c4687e7581dad4b2f6c1bb2ad6b480cd9771ba2ff48e0b8c75d  /usr/share/keyrings/llvm.asc' | sha256sum -c - \
+    && echo 'deb [signed-by=/usr/share/keyrings/llvm.asc] https://apt.llvm.org/noble/ llvm-toolchain-noble-21 main' > /etc/apt/sources.list.d/llvm.list \
+    && apt-get update && apt-get install -y --no-install-recommends \
+       clang-21=${LLVM_DEB_VERSION} llvm-21-dev=${LLVM_DEB_VERSION} libclang-rt-21-dev=${LLVM_DEB_VERSION} \
+       cmake make ninja-build libgtest-dev zlib1g-dev libzstd-dev libedit-dev libcurl4-openssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV PATH=/usr/lib/llvm-21/bin:$PATH \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH=/workspace/src \
+    FP_SCANNER_CLANG=/usr/lib/llvm-21/bin/clang-21
+
+WORKDIR /workspace
+COPY requirements.lock requirements-dev.lock pyproject.toml README.md /workspace/
+RUN python3 -m venv /opt/fp-scanner-venv
+ENV PATH=/opt/fp-scanner-venv/bin:/usr/lib/llvm-21/bin:$PATH
+RUN python -m pip install --no-cache-dir -r requirements-dev.lock
+COPY . /workspace
+RUN python -m pip install --no-cache-dir --no-deps -e .
+RUN clang-21 -g -emit-llvm -c tests/fixtures/bitcode/scalar.c -o tests/fixtures/bitcode/scalar.bc \
+    && clang-21 -g -emit-llvm -c tests/fixtures/bitcode/calls.c -o tests/fixtures/bitcode/calls.bc \
+    && clang-21 -g -emit-llvm -c tests/fixtures/bitcode/vector.c -o tests/fixtures/bitcode/vector.bc \
+    && clang-21 -g -ffp-model=strict -emit-llvm -c tests/fixtures/bitcode/constrained.c -o tests/fixtures/bitcode/constrained.bc
+RUN cmake -S . -B build -G Ninja \
+      -DCMAKE_C_COMPILER=clang-21 -DCMAKE_CXX_COMPILER=clang++-21 \
+      -DLLVM_DIR=/usr/lib/llvm-21/lib/cmake/llvm \
+      -DFP_SCANNER_BUILD_TESTS=ON -DFP_SCANNER_COVERAGE=ON \
+    && cmake --build build --parallel 2
+CMD ["python3", "-m", "pytest", "tests/unit", "tests/contract"]

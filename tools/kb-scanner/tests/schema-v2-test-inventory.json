@@ -1,0 +1,29 @@
+{
+  "change": "design-kb-scanner-schema-v2",
+  "scope": "design-contract-only",
+  "productionModules": [],
+  "testOnlyHelpers": ["tests/schema_v2_contract.py"],
+  "entrypoints": {
+    "containerMode": "tests/run_container_tests.py --schema-v2-contract",
+    "suite": "tests.test_schema_v2_design_contract"
+  },
+  "contracts": [
+    {"id": "json-schema", "tests": ["test_schema_is_valid", "test_all_completion_state_examples_are_valid", "test_directed_invalid_cases"]},
+    {"id": "finding-references", "tests": ["test_all_completion_state_examples_are_valid", "test_directed_invalid_cases"]},
+    {"id": "source-context", "tests": ["test_avx_example_is_self_contained_and_matches_source"]},
+    {"id": "deterministic-ordering", "tests": ["test_canonicalization_is_deterministic"]},
+    {"id": "v1-v2-contract-differences", "tests": ["test_v2_is_projected_directly_from_staged_snapshots"]},
+    {"id": "compiler-facts-freeze", "tests": ["test_compiler_fact_files_are_frozen"]},
+    {"id": "consumer-detail", "tests": ["test_consumer_contract_uses_one_self_contained_finding"]},
+    {"id": "rollout", "tests": ["test_rollout_contract_uses_v2_default_without_fallback"]},
+    {"id": "vocabulary", "tests": ["test_vocabulary_matches_schema_and_reference_rules"]}
+  ],
+  "boundaries": [
+    "no production serializer",
+    "no v1-to-v2 mapper",
+    "no scanner CLI wiring",
+    "no backend or frontend runtime change",
+    "no compilation, linking, or test execution claims",
+    "container-only dependency and test execution"
+  ]
+}

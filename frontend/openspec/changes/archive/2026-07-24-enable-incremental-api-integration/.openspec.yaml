@@ -1,0 +1,4 @@
+schema: spec-driven
+created: 2026-07-17
+goal: Support staged frontend-backend integration from the Vite dev server
+  without blocking unfinished backend modules.

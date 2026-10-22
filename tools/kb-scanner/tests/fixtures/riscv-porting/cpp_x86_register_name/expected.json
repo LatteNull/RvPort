@@ -1,0 +1,7 @@
+{
+  "ruleId": "C_CPP.X86.REGISTER_NAME",
+  "count": 1,
+  "symbols": ["%ymm0"]
+}
+
+

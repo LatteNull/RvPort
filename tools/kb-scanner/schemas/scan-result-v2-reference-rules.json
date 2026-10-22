@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "2.0-design",
+  "rules": [
+    {"id": "result.finding-id-unique", "scope": "result", "description": "Finding IDs are unique."},
+    {"id": "finding.occurrence-id-unique", "scope": "finding", "description": "Occurrence IDs are unique within a Finding."},
+    {"id": "finding.primary-occurrence-resolves", "scope": "finding", "description": "primaryOccurrenceId resolves to one occurrence in the same Finding."},
+    {"id": "chain.step-id-unique", "scope": "evidenceChain", "description": "Step IDs are unique within the same evidenceChain."},
+    {"id": "chain.root-step-resolves", "scope": "evidenceChain", "description": "rootStepId resolves to one step in the same evidenceChain."},
+    {"id": "chain.primary-path-resolves", "scope": "evidenceChain", "description": "Every primaryPath ID resolves to a step and IDs are not repeated."},
+    {"id": "chain.primary-path-connected", "scope": "evidenceChain", "description": "Each consecutive primaryPath pair is connected by an edge in the same evidenceChain."},
+    {"id": "chain.edge-endpoints-resolve", "scope": "evidenceChain", "description": "Every edge fromStepId and toStepId resolves to a step in the same evidenceChain."},
+    {"id": "chain.impact-step-resolves", "scope": "evidenceChain", "description": "New producers emit []; every historical nonempty impactStepId resolves to a classification or assessment step."},
+    {"id": "chain.break-references-resolve", "scope": "evidenceChain", "description": "A break's fromStepId and candidateStepIds resolve to steps in the same evidenceChain."},
+    {"id": "chain.complete-has-no-break", "scope": "evidenceChain", "description": "A complete chain has no breaks and all primary steps and connecting edges are complete."},
+    {"id": "chain.incomplete-has-break", "scope": "evidenceChain", "description": "A partial, ambiguous, or unknown chain has at least one break."},
+    {"id": "source.path-project-relative", "scope": "source", "description": "A source file is normalized, project-relative, slash-separated, and cannot contain parent traversal."},
+    {"id": "source.context-lines-ordered", "scope": "source.context", "description": "Context line numbers are strictly increasing and unique."},
+    {"id": "source.context-budget", "scope": "source.context", "description": "Output text respects declared budgets, at most 256 lines and 65536 characters; the default window is 20 lines before and after the hit."},
+    {"id": "source.highlight-resolves", "scope": "source.context", "description": "Every highlight line exists in context lines and its one-based exclusive columns fit the line."},
+    {"id": "source.complete-context-has-highlight", "scope": "source.context", "description": "Complete code context has at least one line and one highlight."},
+    {"id": "step.code-kind-has-source", "scope": "evidenceChain.step", "description": "Every code step kind carries its own source span and context."},
+    {"id": "step.non-code-kind-has-no-source", "scope": "evidenceChain.step", "description": "Knowledge, classification, and assessment steps do not fabricate source context."},
+    {"id": "step.knowledge-projection-complete", "scope": "evidenceChain.step", "description": "A knowledge_match step includes the referenced entry identity, category, symbol, producer, source digest, and provenance."},
+    {"id": "result.static-scope", "scope": "scan.scope", "description": "The report states staticAnalysisOnly=true and compiled/linked/testsExecuted=false."},
+    {"id": "result.stable-order", "scope": "result", "description": "All collections follow the ordering declared by scan-result-v2-vocabulary.json."}
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "captured_on": "2026-09-20",
+  "files": {
+    "protocols/analysis-protocol.json": "df88cab09bd0226ad2718c1fb1690cd291f7754425c75f11841df5fa1ccb0090",
+    "protocols/degraded-source-analysis-protocol.json": "30a9796f1e6f2bed16f8b85f11eeec49a9a2b3281bf4437174abcaf3d8eda516",
+    "protocols/extractor-protocol.json": "8192c7820d270bf0b81a57e9330d79d5d54e3b0e12c40c24191ef198d8d1bbe9",
+    "protocols/publication-analysis-protocol.json": "cd5e93e7f1d866369133b1254bad0485124b0dcd94497436ab3b33c4765fda29",
+    "schemas/contracts.json": "4b26c8131ff62648d900c8f11bd6c5af240558fbc81c5e65c76be11b48b13630",
+    "schemas/degraded_source_analysis.json": "23878ed845225c3a3c9b7bdc5c854b804904dccc0834a40e354b5d77a8a024bf",
+    "schemas/effects.json": "11701efb74c5472894f66442ee89ecdb62024a031854c0a9fc17d916038257b5",
+    "schemas/publication.json": "e64db91770b5819aa68c08729139086bd914c51f0ea0f6db1d32420e9cb848d7",
+    "schemas/source_evidence.json": "6d16b4f00e0fe442ce093adc897b753d790f6cb6ff70606944ec664698b0e64b",
+    "schemas/threading.json": "04c1e9e2355cc895f77fa51a26a1c339e3e574b3ef16909454125820bbc18a69",
+    "protocols/source-evidence-protocol.json": "43bccf79d6566c9126072fcd2f2e3735f5e7f6f408bec6defa775609d2a8c871",
+    "tests/fixtures/validation/offline-v1/suite.json": "42a513bd8364b8b22ed1618b5599f030fcd348ca14138b817649a475fe59ad00",
+    "tests/fixtures/validation/offline-v1/truth-history.json": "063ff647e09993e5ad2699a56c0f27353f5de619bd1c0f38b992baa9cf16d64e",
+    "protocols/thread-analysis-protocol.json": "08c350f2dd73535af40756d841357bce41a1eeec6f21c280832e3b475a3fc82e"
+  },
+  "contract_versions": {
+    "ModuleFacts": 2,
+    "RunReport": 2,
+    "EffectSummary": 1,
+    "ThreadContextGraph": 1,
+    "PublicationRiskReport": 1,
+    "SourceSemanticFacts": 1,
+    "DegradedSourceAnalysisReport": 1
+  },
+  "existing_cli_operations": [
+    "analyze-degraded-source",
+    "collect",
+    "detect-publication-risks",
+    "doctor",
+    "import-bc",
+    "index",
+    "index-source-evidence",
+    "link",
+    "model-threads",
+    "summarize",
+    "validate-analysis"
+  ],
+  "existing_exit_codes": {
+    "complete_no_risk": 0,
+    "invalid_or_failed": 1,
+    "partial_or_unknown": 2,
+    "complete_risk": 3
+  }
+}

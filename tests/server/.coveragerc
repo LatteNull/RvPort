@@ -1,9 +1,0 @@
-[run]
-source = ../../server
-omit =
-    */kitvenv/*
-[report]
-# 启用跳过空文件的选项
-skip_empty = True
-# 显示行覆盖率的详细信息
-show_missing = True

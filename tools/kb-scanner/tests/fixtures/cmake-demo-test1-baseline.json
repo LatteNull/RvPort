@@ -1,0 +1,623 @@
+{
+  "scanId": "0553c2c6-e13a-49e1-9960-4d0932f673dd",
+  "sourceRevision": "824b32c0-2d38-414f-8ee8-e0a583d21871",
+  "compileDatabaseOriginalAvailable": false,
+  "fixtureNormalization": "2026-09-20 经用户授权，每个样本仅删除末尾一个空行（一个 LF）；originalSha256 保留采集原件哈希，normalizedSha256 对应入库样本。",
+  "fixtureHashes": {
+    "CMakeLists.txt": {
+      "originalSha256": "b363e7aa8bbb687be397130b113310ca824c62a61a114b594377dab2f1eeb37e",
+      "normalizedSha256": "151f1c9720820d59af2e3af48559fc95589d539812bb1cc0701b3b4856bd17cf"
+    },
+    "README.md": {
+      "originalSha256": "f2c46abfcfe20968d7cb1a09cc58fb38a2aa9bbc22cfc0a24699d69f27b4089a",
+      "normalizedSha256": "b7093780cee4f4a5170a8703cd6b525254ca2edb991a352b17457881eed6530d"
+    },
+    "app/main.cpp": {
+      "originalSha256": "4cd449bfa0400764e8a42f0a256bbf8277a90915e62fab184bb4a529cdf79cd8",
+      "normalizedSha256": "9ae13dc9d2750d4154dc570d96c8fd62cd6f18a73af1a944c383ceff4672bc73"
+    },
+    "include/vectorcalc/vectorcalc.h": {
+      "originalSha256": "6c394eb847debe4689b2bd421219e4ac440d042cef62e97e88f09538f53c1edf",
+      "normalizedSha256": "d3cb6ecc1ae2972bea2cf39ecd580f1774c4af052ffc62712dfe97e54a4a7e8b"
+    },
+    "src/vectorcalc.cpp": {
+      "originalSha256": "d2e566bf78b3d759606a1854e36452eb74be86ed48bff088c69c080bdf3ab50a",
+      "normalizedSha256": "12e27e207251338fc91c5f943a5fad6acb233dcbee9cfd5a83a3ebb71101e7ad"
+    },
+    "tests/vectorcalc_tests.cpp": {
+      "originalSha256": "467a638082bc33a4c7d11eb31527ea3948a8c8b1eea2c452d56f3f30ad4ada97",
+      "normalizedSha256": "0aad0610bd0da4d566fe26ea45a083cbe2e4eb8f6dbeab8b28339ea547fd48b6"
+    }
+  },
+  "findings": [
+    {
+      "symbol": "_mm256_setzero_ps",
+      "location": {
+        "end": {
+          "column": 45,
+          "line": 87
+        },
+        "start": {
+          "column": 26,
+          "line": 87
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_intrinsic_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Intrinsic Reference"
+      }
+    },
+    {
+      "symbol": "_mm256_store_ps",
+      "location": {
+        "end": {
+          "column": 40,
+          "line": 98
+        },
+        "start": {
+          "column": 5,
+          "line": 98
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_intrinsic_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Intrinsic Reference"
+      }
+    },
+    {
+      "symbol": "_mm256_loadu_ps",
+      "location": {
+        "end": {
+          "column": 67,
+          "line": 72
+        },
+        "start": {
+          "column": 37,
+          "line": 72
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_intrinsic_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Intrinsic Reference"
+      }
+    },
+    {
+      "symbol": "__m256",
+      "location": {
+        "end": {
+          "column": 21,
+          "line": 72
+        },
+        "start": {
+          "column": 15,
+          "line": 72
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_vector_type_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Vector Type Reference"
+      }
+    },
+    {
+      "symbol": "__m256",
+      "location": {
+        "end": {
+          "column": 21,
+          "line": 71
+        },
+        "start": {
+          "column": 15,
+          "line": 71
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_vector_type_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Vector Type Reference"
+      }
+    },
+    {
+      "symbol": "_mm256_storeu_ps",
+      "location": {
+        "end": {
+          "column": 49,
+          "line": 74
+        },
+        "start": {
+          "column": 9,
+          "line": 74
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_intrinsic_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Intrinsic Reference"
+      }
+    },
+    {
+      "symbol": "_mm256_add_ps",
+      "location": {
+        "end": {
+          "column": 71,
+          "line": 73
+        },
+        "start": {
+          "column": 31,
+          "line": 73
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_intrinsic_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Intrinsic Reference"
+      }
+    },
+    {
+      "symbol": "_mm256_add_ps",
+      "location": {
+        "end": {
+          "column": 54,
+          "line": 94
+        },
+        "start": {
+          "column": 23,
+          "line": 92
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_intrinsic_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Intrinsic Reference"
+      }
+    },
+    {
+      "symbol": "_mm256_loadu_ps",
+      "location": {
+        "end": {
+          "column": 67,
+          "line": 91
+        },
+        "start": {
+          "column": 37,
+          "line": 91
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_intrinsic_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Intrinsic Reference"
+      }
+    },
+    {
+      "symbol": "_mm256_loadu_ps",
+      "location": {
+        "end": {
+          "column": 65,
+          "line": 71
+        },
+        "start": {
+          "column": 36,
+          "line": 71
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_intrinsic_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Intrinsic Reference"
+      }
+    },
+    {
+      "symbol": "__m256",
+      "location": {
+        "end": {
+          "column": 21,
+          "line": 91
+        },
+        "start": {
+          "column": 15,
+          "line": 91
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_vector_type_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Vector Type Reference"
+      }
+    },
+    {
+      "symbol": "__asm__ volatile(\n        \"cpuid\"\n        : \"+a\"(eax), \"=b\"(ebx), \"=c\"(ecx), \"=d\"(edx))",
+      "location": {
+        "end": {
+          "column": 54,
+          "line": 56
+        },
+        "start": {
+          "column": 5,
+          "line": 54
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_assembly_instruction",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Assembly Instruction"
+      }
+    },
+    {
+      "symbol": "__m256",
+      "location": {
+        "end": {
+          "column": 21,
+          "line": 73
+        },
+        "start": {
+          "column": 15,
+          "line": 73
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_vector_type_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Vector Type Reference"
+      }
+    },
+    {
+      "symbol": "__AVX2__",
+      "location": {
+        "end": {
+          "column": 7,
+          "line": 10
+        },
+        "start": {
+          "column": 1,
+          "line": 8
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_platform_macro_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Platform Macro Reference"
+      }
+    },
+    {
+      "symbol": "__m256",
+      "location": {
+        "end": {
+          "column": 11,
+          "line": 87
+        },
+        "start": {
+          "column": 5,
+          "line": 87
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_vector_type_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Vector Type Reference"
+      }
+    },
+    {
+      "symbol": "__m256",
+      "location": {
+        "end": {
+          "column": 21,
+          "line": 90
+        },
+        "start": {
+          "column": 15,
+          "line": 90
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_vector_type_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Vector Type Reference"
+      }
+    },
+    {
+      "symbol": "_mm256_mul_ps",
+      "location": {
+        "end": {
+          "column": 53,
+          "line": 94
+        },
+        "start": {
+          "column": 13,
+          "line": 94
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_intrinsic_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Intrinsic Reference"
+      }
+    },
+    {
+      "symbol": "_mm256_loadu_ps",
+      "location": {
+        "end": {
+          "column": 65,
+          "line": 90
+        },
+        "start": {
+          "column": 36,
+          "line": 90
+        }
+      },
+      "conclusion": {
+        "actionable": true,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_intrinsic_reference",
+        "reason": "confirmed-local-x86-dependency",
+        "severity": "medium",
+        "status": "complete",
+        "suggestion": "请核查该依赖对目标配置的适用性，按需补充 RISC-V 或通用实现及选择路径；本项不代表已确认的构建阻断，真实编译和测试需在后续阶段验证。",
+        "suggestion_en": "Check this dependency's applicability to the target configuration and add a RISC-V or portable implementation and selection path where needed. This item is not a confirmed build blocker; actual compilation and tests require later validation.",
+        "title": "X86 Intrinsic Reference"
+      }
+    },
+    {
+      "symbol": "immintrin.h",
+      "location": {
+        "end": {
+          "column": 1,
+          "line": 4
+        },
+        "start": {
+          "column": 1,
+          "line": 3
+        }
+      },
+      "conclusion": {
+        "actionable": false,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_header_reference",
+        "reason": "input-or-relation-unknown",
+        "severity": "low",
+        "status": "complete",
+        "suggestion": "当前证据不足以确定该事实的目标架构适用性或迁移影响。请保留该事实，补齐缺失或有歧义的证据后，再判断是否需要替换实现。",
+        "suggestion_en": "Target-architecture applicability or migration impact cannot be determined from the current evidence. Preserve this fact and resolve missing or ambiguous evidence before deciding whether to replace an implementation.",
+        "title": "X86 Header Reference"
+      }
+    }
+  ]
+}

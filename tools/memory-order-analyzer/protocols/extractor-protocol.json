@@ -1,0 +1,14 @@
+{
+  "protocol_version": 1,
+  "extractor_version": "0.2.0",
+  "llvm_version": "21.1.8",
+  "facts_version": 2,
+  "report_version": 2,
+  "policy": {
+    "version": 1,
+    "max_nodes": 100000,
+    "max_references": 500000,
+    "max_constant_depth": 64,
+    "max_output_bytes": 16777216
+  }
+}

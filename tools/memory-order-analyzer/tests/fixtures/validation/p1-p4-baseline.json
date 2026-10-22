@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "captured_on": "2026-09-18",
+  "files": {
+    "protocols/analysis-protocol.json": "df88cab09bd0226ad2718c1fb1690cd291f7754425c75f11841df5fa1ccb0090",
+    "protocols/extractor-protocol.json": "8192c7820d270bf0b81a57e9330d79d5d54e3b0e12c40c24191ef198d8d1bbe9",
+    "protocols/publication-analysis-protocol.json": "cd5e93e7f1d866369133b1254bad0485124b0dcd94497436ab3b33c4765fda29",
+    "reports/quality-p4-20260916-final-3/coverage-summary.json": "8f4a4a45e3cf93ac70725acb7abfd0a49d7b275e043ab9a2a4b8e935ca4fb45c",
+    "schemas/contracts.json": "4b26c8131ff62648d900c8f11bd6c5af240558fbc81c5e65c76be11b48b13630",
+    "schemas/effects.json": "11701efb74c5472894f66442ee89ecdb62024a031854c0a9fc17d916038257b5",
+    "schemas/publication.json": "e64db91770b5819aa68c08729139086bd914c51f0ea0f6db1d32420e9cb848d7",
+    "schemas/threading.json": "04c1e9e2355cc895f77fa51a26a1c339e3e574b3ef16909454125820bbc18a69",
+    "protocols/thread-analysis-protocol.json": "08c350f2dd73535af40756d841357bce41a1eeec6f21c280832e3b475a3fc82e"
+  },
+  "contract_versions": {
+    "ModuleFacts": 2,
+    "RunReport": 2,
+    "EffectSummary": 1,
+    "ThreadContextGraph": 1,
+    "PublicationRiskReport": 1
+  },
+  "exit_codes": {
+    "complete_no_risk": 0,
+    "invalid_or_failed": 1,
+    "partial_or_unknown": 2,
+    "complete_risk": 3
+  }
+}

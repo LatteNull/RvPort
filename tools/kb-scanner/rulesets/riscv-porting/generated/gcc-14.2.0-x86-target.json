@@ -1,0 +1,1437 @@
+{
+  "facts": [
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "alderlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amd",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amdfam10",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amdfam10h",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amdfam15h",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amdfam17h",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amdfam19h",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "arrowlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "arrowlake-s",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "athlon",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "athlon-4",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "athlon-fx",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "athlon-mp",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "athlon-tbird",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "athlon-xp",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "athlon64",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "athlon64-sse3",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "atom",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "barcelona",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bdver1",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bdver2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bdver3",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bdver4",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bonnell",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "broadwell",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "btver1",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "btver2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "c3",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "c3-2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "c7",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cannonlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cascadelake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "clearwaterforest",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cooperlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "core-avx-i",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "core-avx2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "core2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "corei7",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "corei7-avx",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "eden-x2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "eden-x4",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "emeraldrapids",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "esther",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "generic",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "geode",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "goldmont",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "goldmont-plus",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "gracemont",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "grandridge",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "graniterapids",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "graniterapids-d",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "haswell",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "i386",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "i486",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "i586",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "i686",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "icelake-client",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "icelake-server",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "intel",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "istanbul",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ivybridge",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k6",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k6-2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k6-3",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k8",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k8-sse3",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "knl",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "knm",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lakemont",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lujiazui",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lunarlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "meteorlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "nano",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "nano-1000",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "nano-2000",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "nano-3000",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "nano-x2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "nano-x4",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "nehalem",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "nehemiah",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "nocona",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "opteron",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "opteron-sse3",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pantherlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pentium",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pentium-m",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pentium-mmx",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pentium2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pentium3",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pentium3m",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pentium4",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pentium4m",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pentiumpro",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prescott",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "raptorlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rocketlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "samuel-2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sandybridge",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sapphirerapids",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "shanghai",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sierraforest",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "silvermont",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "skylake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "skylake-avx512",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "slm",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tigerlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tremont",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "westmere",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "winchip-c6",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "winchip2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "x86-64",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "x86-64-v2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "x86-64-v3",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "x86-64-v4",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "yongfeng",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "znver1",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "znver2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "znver3",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "znver4",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "znver5",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "3dnow",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "3dnowp",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "abm",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "adx",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aes",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aeskle",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amx-bf16",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amx-complex",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amx-fp16",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amx-int8",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amx-tile",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "apxf",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx10.1",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx10.1-256",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx10.1-512",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx2",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx5124fmaps",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx5124vnniw",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512bf16",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512bitalg",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512bw",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512cd",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512dq",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512er",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512f",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512fp16",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512ifma",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512pf",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512vbmi",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512vbmi2",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512vl",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512vnni",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512vp2intersect",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512vpopcntdq",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avxifma",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avxneconvert",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avxvnni",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avxvnniint16",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avxvnniint8",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bmi",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bmi2",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cldemote",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "clflushopt",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "clwb",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "clzero",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmov",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmpccxadd",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmpxchg16b",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmpxchg8b",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "enqcmd",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "f16c",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fma",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fma4",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fsgsbase",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fxsave",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "gfni",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "hle",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "hreset",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ibt",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "kl",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lahf_lm",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lm",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lwp",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lzcnt",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mmx",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movbe",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movdir64b",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movdiri",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mwaitx",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "osxsave",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pclmul",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pconfig",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pku",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "popcnt",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefetchi",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefetchwt1",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prfchw",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ptwrite",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "raoint",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdpid",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdrnd",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdseed",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rtm",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "serialize",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sgx",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sha",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sha512",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "shstk",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sm3",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sm4",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sse",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sse2",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sse3",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sse4.1",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sse4.2",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sse4a",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ssse3",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tbm",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tsxldtrk",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "uintr",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "usermsr",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vaes",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vpclmulqdq",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "waitpkg",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "wbnoinvd",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "widekl",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "x86-64",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "x86-64-v2",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "x86-64-v3",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "x86-64-v4",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xop",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsave",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsavec",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsaveopt",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsaves",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    }
+  ],
+  "schemaVersion": "2.0",
+  "source": {
+    "collectedAt": "2026-09-07",
+    "inputPaths": [
+      "gcc/common/config/i386/i386-common.cc",
+      "gcc/common/config/i386/i386-isas.h"
+    ],
+    "inputSha256": [
+      "6502bd8a0da55ecedebc109557612ba828c966da21cb6dc8e407cd0bfe881592",
+      "b108826f1230d9650d3ad185aa84f31794170a1da7ec5d6b0536e0220ed2b6a1"
+    ],
+    "license": "GPL-3.0-or-later WITH GCC-exception-3.1",
+    "officialUrl": "https://gcc.gnu.org/git/gcc.git",
+    "release": "releases/gcc-14.2.0",
+    "revision": "04696df09633baf97cdbbdd6e9929b9d472161d3",
+    "sourceId": "gcc-14.2.0-x86-target"
+  }
+}

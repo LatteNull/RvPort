@@ -1,0 +1,208 @@
+@use '../../../../../styles/mixins' as type;
+
+.notice {
+  display: flex;
+  width: 100%;
+  min-height: 240px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.embedded {
+  min-height: 0;
+  padding: 24px 16px;
+}
+
+.statusMark {
+  --state-color: var(--ant-color-text-tertiary);
+  --state-surface: var(--ant-color-fill-quaternary);
+  --state-track: var(--ant-color-border-secondary);
+
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  width: 68px;
+  height: 68px;
+  place-items: center;
+  color: var(--state-color);
+  background: var(--state-surface);
+  border: 1px solid var(--state-track);
+  border-radius: 20px;
+  box-shadow: none;
+}
+
+.icon {
+  color: var(--state-color);
+  font-size: 28px;
+}
+
+.copy {
+  display: flex;
+  max-width: 560px;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  > strong {
+    @include type.section-title;
+    color: var(--ant-color-text);
+  }
+
+  > span,
+  .details {
+    color: var(--ant-color-text-secondary);
+    font-size: 13px;
+    line-height: 20px;
+  }
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 16px;
+  margin-top: 2px;
+}
+
+.prerequisites {
+  width: min(520px, 100%);
+  border-top: 1px solid var(--ant-color-border-secondary);
+  border-bottom: 1px solid var(--ant-color-border-secondary);
+}
+
+.prerequisite {
+  display: grid;
+  min-height: 58px;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 4px;
+  text-align: left;
+
+  + .prerequisite {
+    border-top: 1px solid var(--ant-color-border-secondary);
+  }
+
+  &[data-ready='true'] .prerequisiteIcon {
+    color: var(--ant-color-success);
+  }
+
+  &[data-ready='false'] .prerequisiteIcon {
+    color: var(--ant-color-warning);
+  }
+
+  :global(.ant-btn) {
+    padding-inline: 4px;
+  }
+}
+
+.prerequisiteIcon {
+  font-size: var(--ant-font-size-heading-5, 16px);
+}
+
+.prerequisiteCopy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1px;
+
+  > span {
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size-sm, 12px);
+    line-height: 18px;
+  }
+
+  > strong {
+    font-size: var(--ant-font-size, 14px);
+    font-weight: 500;
+    line-height: 22px;
+    overflow: hidden;
+    color: var(--ant-color-text);
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+}
+
+.actions {
+  margin-top: 2px;
+}
+
+.notice[data-tone='processing'] .statusMark {
+  --state-color: var(--ant-color-info);
+  --state-surface: var(--ant-color-info-bg);
+  --state-track: var(--ant-color-info-border);
+}
+
+.notice[data-tone='error'] .statusMark {
+  --state-color: var(--ant-color-error);
+  --state-surface: var(--ant-color-error-bg);
+  --state-track: var(--ant-color-error-border);
+}
+
+.notice[data-tone='warning'] .statusMark {
+  --state-color: var(--ant-color-warning);
+  --state-surface: var(--ant-color-warning-bg);
+  --state-track: var(--ant-color-warning-border);
+}
+
+.notice[data-tone='success'] .statusMark {
+  --state-color: var(--ant-color-success);
+  --state-surface: var(--ant-color-success-bg);
+  --state-track: var(--ant-color-success-border);
+}
+
+.notice[data-variant='empty'] .statusMark {
+  border-style: dashed;
+}
+
+.notice[data-variant='processing'] .statusMark {
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: none;
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    background: repeating-conic-gradient(
+      from -8deg,
+      var(--state-track) 0deg 10deg,
+      transparent 10deg 25deg
+    );
+    border-radius: 50%;
+    mask: radial-gradient(circle, transparent 61%, #000 62%);
+    animation: state-track 2.4s linear infinite;
+    content: '';
+  }
+
+  &::after {
+    position: absolute;
+    inset: 7px;
+    z-index: -1;
+    background: var(--state-surface);
+    border: 1px solid var(--state-track);
+    border-radius: 50%;
+    content: '';
+  }
+}
+
+@keyframes state-track {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notice[data-variant='processing'] .statusMark::before {
+    animation: none;
+  }
+}
+
+.footer {
+  width: min(720px, 100%);
+  min-width: 0;
+}

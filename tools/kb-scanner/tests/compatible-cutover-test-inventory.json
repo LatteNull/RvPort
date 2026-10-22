@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "1.0",
+  "candidateNoiseInventory": "tests/architecture-candidate-noise-test-inventory.json",
+  "coverageThresholds": {"linePercent": 90.0, "branchPercent": 80.0},
+  "layers": {
+    "unit": "in-memory snapshots, fake readers/writers and controlled failures",
+    "component": "real staged components and locked static fixtures",
+    "differential": "normalized legacy golden versus compatible staged output",
+    "contract": "schema 1.0, immutable facts, import and no-side-effect boundaries"
+  },
+  "modules": {
+    "bundle.py": {"unit": "tests/unit/compatible_cutover/test_bundle_cli.py", "higherLayers": ["tests/test_compatible_cutover_contracts.py"]},
+    "adapters/cli.py": {"unit": "tests/unit/compatible_cutover/test_bundle_cli.py", "higherLayers": ["tests/test_compatible_cutover_component.py"]},
+    "core/context.py": {"unit": "tests/unit/compatible_cutover/test_bundle_cli.py", "higherLayers": ["tests/test_compatible_cutover_component.py"]},
+    "knowledge/provider.py": {"unit": "tests/unit/knowledge_detection/test_knowledge_provider.py", "higherLayers": ["tests/test_compatible_cutover_component.py"]},
+    "projection/contract.py": {"unit": "tests/unit/compatible_cutover/test_contract_policy.py", "higherLayers": ["tests/test_compatible_cutover_contracts.py"]},
+    "projection/policy.py": {"unit": "tests/unit/compatible_cutover/test_contract_policy.py", "supportingUnits": ["tests/unit/architecture_enum/test_architecture_enum.py"], "higherLayers": ["tests/test_compatible_cutover_component.py"]},
+    "projection/mapper.py": {"unit": "tests/unit/compatible_cutover/test_mapper.py", "supportingUnits": ["tests/unit/projection_reachability/test_mapper_enrichment.py", "tests/unit/projection_reachability/test_reference.py", "tests/unit/architecture_enum/test_architecture_enum.py"], "higherLayers": ["tests/test_compatible_cutover_component.py"]},
+    "projection/renderers.py": {"unit": "tests/unit/compatible_cutover/test_renderers_projector.py", "supportingUnits": ["tests/unit/projection_reachability/test_projection_diagnostics.py"], "higherLayers": ["tests/test_compatible_cutover_contracts.py"]},
+    "projection/projector.py": {"unit": "tests/unit/compatible_cutover/test_renderers_projector.py", "higherLayers": ["tests/test_compatible_cutover_component.py"]},
+    "pipeline/default.py": {"unit": "tests/unit/compatible_cutover/test_default_pipeline.py", "higherLayers": ["tests/test_compatible_cutover_component.py"]},
+    "compatibility/differential.py": {"unit": "tests/unit/compatible_cutover/test_differential_cleanup.py", "higherLayers": ["tests/test_compatible_cutover_differential.py"]},
+    "compatibility/cleanup.py": {"unit": "tests/unit/compatible_cutover/test_differential_cleanup.py", "higherLayers": ["tests/test_compatible_cutover_contracts.py"]},
+    "cli.py": {"unit": "tests/unit/compatible_cutover/test_default_pipeline.py", "higherLayers": ["tests/test_compatible_cutover_component.py"]}
+  }
+}

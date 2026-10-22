@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "source_project": "../memory-model-ir-checker/samples (archive, never read by tests)",
+  "reviewed_on": "2026-09-22",
+  "cases": [
+    {
+      "original_relpath": "legacy/unsafe/03_pthread.cpp",
+      "sha256": "08e700e1e5ff8dc48555e6050a9e21c4de98430a54b3a2fec31c332e4992c726",
+      "fixture": "sources/c11-pthread.c;sources/c17-pthread-no-debug.c",
+      "rewrite_reason": "改写为真正 C11/C17 pthread 入口分母，移除发布风险内容"
+    },
+    {
+      "original_relpath": "legacy/unsafe/04_async.cpp",
+      "sha256": "73dcab1ac513934202fad5fd7cfbfba344ed3afdbb2c877998d3d0132351cda3",
+      "fixture": "sources/cpp17-async.cpp;sources/cpp20-async-default.cpp",
+      "rewrite_reason": "拆分显式 async/deferred 与默认/组合 launch policy"
+    },
+    {
+      "original_relpath": "legacy/unsafe/05_jthread.cpp",
+      "sha256": "38a999bf22b3e524e2503b25fe77e5ac8f111ecf41247d4b9165509771ac0bbb",
+      "fixture": "sources/cpp20-jthread.cpp",
+      "rewrite_reason": "保留 jthread 创建并增加 stop_token callable"
+    },
+    {
+      "original_relpath": "legacy/unsafe/06_using_thread.cpp",
+      "sha256": "d29351e35e49375d258bf703667bcebc2c92411c68fc86e81547acd07bb93ab0",
+      "fixture": "sources/cpp17-thread.cpp",
+      "rewrite_reason": "改为 using alias 与 lambda 的最小入口用例"
+    },
+    {
+      "original_relpath": "legacy/unsafe/07_thread_construction_variants.cpp",
+      "sha256": "3bb168a97211b3250078f1614f058031806b15413a8828ce6e527e201cc19a3c",
+      "fixture": "sources/cpp20-negative.cpp",
+      "rewrite_reason": "修复原样例缺失 boost 声明，分离 default/move/factory/unsupported 语义"
+    },
+    {
+      "original_relpath": "legacy/safe/12_non_async_submit_guard.cpp",
+      "sha256": "1c7d930fba20ad51ac054eb18460e9950627bb8f93f1d8485fdbd981d40c7411",
+      "fixture": "sources/cpp20-negative.cpp",
+      "rewrite_reason": "保留 Form.submit 强制负例，不将同名方法猜测为线程入口"
+    }
+  ],
+  "excluded": [
+    {"pattern": "Windows API samples", "reason": "Windows、MSVC 与 clang-cl 明确不在产品范围"},
+    {"pattern": "thread pools/custom executors", "reason": "没有版本化 framework descriptor，不进入精确入口分母"}
+  ]
+}

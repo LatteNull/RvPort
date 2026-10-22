@@ -1,0 +1,1 @@
+[{"name":"demo-riscv64","id":"demo@exe","filename":["build/demo"],"target_sources":[{"sources":["src/rv.c"],"parameters":["-march=rv64gc"]}],"dependencies":["portable"]}]

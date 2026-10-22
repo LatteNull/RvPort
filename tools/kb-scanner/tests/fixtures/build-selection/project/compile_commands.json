@@ -1,0 +1,1 @@
+[{"directory":".","file":"src/rv.c","arguments":["clang","--target=riscv64-linux-gnu","-march=rv64gc","-c","src/rv.c"]}]

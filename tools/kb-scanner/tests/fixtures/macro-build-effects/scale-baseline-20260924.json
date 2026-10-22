@@ -1,0 +1,603 @@
+{
+  "change": "improve-kb-scanner-macro-and-build-effect-proofs",
+  "recordedAt": "2026-09-24",
+  "说明": "完整四组八次独立容器扫描；原始阶段/预算/工件详见 verification 指定持久目录。密集场景预算截断保留候选及 unknown，不静默少报。旧相对性能门槛仅作诊断。",
+  "sourceDigest": "1971d25d6678eba13a35194a15060b3d21d94ad6c4668fdaa0fea16b53283070",
+  "limits": {
+    "cpu": 2,
+    "memoryBytes": 2147483648,
+    "swapBytes": 0,
+    "timeoutSeconds": 300
+  },
+  "results": [
+    {
+      "references": 10000,
+      "density": "sparse",
+      "passed": true,
+      "runs": [
+        {
+          "mode": "disabled",
+          "seconds": 14.790091581002343,
+          "maxRssKiB": 209620,
+          "findings": 96,
+          "excludedCount": 0,
+          "truncatedRoots": 0,
+          "statistics": {},
+          "artifactsBytes": {
+            "scan-report.html": 64588,
+            "scan-result.json": 12087194,
+            "scan.log": 10235
+          },
+          "stages": [
+            {
+              "stage": "workspace_collector",
+              "seconds": 0.044651288975728676
+            },
+            {
+              "stage": "knowledge_provider",
+              "seconds": 0.5658134630066343
+            },
+            {
+              "stage": "frontend",
+              "seconds": 5.312804176006466
+            },
+            {
+              "stage": "normalizer",
+              "seconds": 1.6644899109960534
+            },
+            {
+              "stage": "analyzer",
+              "seconds": 4.256344834022457
+            },
+            {
+              "stage": "detector",
+              "seconds": 1.1732260099961422
+            },
+            {
+              "stage": "classifier",
+              "seconds": 0.04807764201541431
+            },
+            {
+              "stage": "assessor",
+              "seconds": 0.0587406049889978
+            },
+            {
+              "stage": "V2FindingMapper",
+              "seconds": 0.3973721980000846
+            },
+            {
+              "stage": "V2ReferentialIntegrityValidator",
+              "seconds": 0.07362940200255252
+            },
+            {
+              "stage": "AtomicArtifactPublisher",
+              "seconds": 0.23066193400882185
+            },
+            {
+              "stage": "report_projector",
+              "seconds": 1.5837649570021313
+            }
+          ],
+          "exitCode": 0
+        },
+        {
+          "mode": "enabled",
+          "seconds": 20.790444680984365,
+          "maxRssKiB": 275768,
+          "findings": 0,
+          "excludedCount": 96,
+          "truncatedRoots": 0,
+          "statistics": {
+            "rootCount": 96,
+            "scopeIndexes": 4,
+            "recordCount": 644,
+            "visits": 12288,
+            "cacheHits": 0
+          },
+          "artifactsBytes": {
+            "scan-report.html": 9834354,
+            "scan-result.json": 15394281,
+            "scan.log": 318
+          },
+          "stages": [
+            {
+              "stage": "workspace_collector",
+              "seconds": 0.06566159200156108
+            },
+            {
+              "stage": "knowledge_provider",
+              "seconds": 0.8669787520193495
+            },
+            {
+              "stage": "frontend",
+              "seconds": 5.74990628901287
+            },
+            {
+              "stage": "normalizer",
+              "seconds": 2.7165145379840396
+            },
+            {
+              "stage": "candidate_usage_index_and_query",
+              "seconds": 0.4163385629944969
+            },
+            {
+              "stage": "analyzer",
+              "seconds": 6.219500240025809
+            },
+            {
+              "stage": "detector",
+              "seconds": 1.8242942390206736
+            },
+            {
+              "stage": "classifier",
+              "seconds": 0.06009779099258594
+            },
+            {
+              "stage": "assessor",
+              "seconds": 0.08651270798873156
+            },
+            {
+              "stage": "V2FindingMapper",
+              "seconds": 0.013160130998585373
+            },
+            {
+              "stage": "V2ReferentialIntegrityValidator",
+              "seconds": 0.005834654002683237
+            },
+            {
+              "stage": "AtomicArtifactPublisher",
+              "seconds": 0.36373428598744795
+            },
+            {
+              "stage": "report_projector",
+              "seconds": 2.9118479199823923
+            }
+          ],
+          "exitCode": 0
+        }
+      ]
+    },
+    {
+      "references": 10000,
+      "density": "dense",
+      "passed": true,
+      "runs": [
+        {
+          "mode": "disabled",
+          "seconds": 91.92242086702026,
+          "maxRssKiB": 602072,
+          "findings": 9600,
+          "excludedCount": 0,
+          "truncatedRoots": 0,
+          "statistics": {},
+          "artifactsBytes": {
+            "scan-report.html": 6448866,
+            "scan-result.json": 1243254174,
+            "scan.log": 998057
+          },
+          "stages": [
+            {
+              "stage": "workspace_collector",
+              "seconds": 0.08195701602380723
+            },
+            {
+              "stage": "knowledge_provider",
+              "seconds": 0.8636498150008265
+            },
+            {
+              "stage": "frontend",
+              "seconds": 5.2643746320100036
+            },
+            {
+              "stage": "normalizer",
+              "seconds": 1.603858090005815
+            },
+            {
+              "stage": "analyzer",
+              "seconds": 3.920509896997828
+            },
+            {
+              "stage": "detector",
+              "seconds": 2.1727372639870737
+            },
+            {
+              "stage": "classifier",
+              "seconds": 1.0339258530002553
+            },
+            {
+              "stage": "assessor",
+              "seconds": 0.6592044290155172
+            },
+            {
+              "stage": "V2FindingMapper",
+              "seconds": 17.595854532992234
+            },
+            {
+              "stage": "V2ReferentialIntegrityValidator",
+              "seconds": 7.562225498986663
+            },
+            {
+              "stage": "AtomicArtifactPublisher",
+              "seconds": 49.733757188980235
+            },
+            {
+              "stage": "report_projector",
+              "seconds": 76.02246285101864
+            }
+          ],
+          "exitCode": 0
+        },
+        {
+          "mode": "enabled",
+          "seconds": 76.99296350701479,
+          "maxRssKiB": 808952,
+          "findings": 1788,
+          "excludedCount": 7812,
+          "truncatedRoots": 1788,
+          "statistics": {
+            "rootCount": 9600,
+            "scopeIndexes": 400,
+            "recordCount": 64400,
+            "visits": 1000000,
+            "cacheHits": 0
+          },
+          "artifactsBytes": {
+            "scan-report.html": 15822775,
+            "scan-result.json": 255053128,
+            "scan.log": 186236
+          },
+          "stages": [
+            {
+              "stage": "workspace_collector",
+              "seconds": 0.10241154098184779
+            },
+            {
+              "stage": "knowledge_provider",
+              "seconds": 0.7869678749993909
+            },
+            {
+              "stage": "frontend",
+              "seconds": 9.22467751801014
+            },
+            {
+              "stage": "normalizer",
+              "seconds": 2.161567438975908
+            },
+            {
+              "stage": "candidate_usage_index_and_query",
+              "seconds": 22.77046669399715
+            },
+            {
+              "stage": "analyzer",
+              "seconds": 27.587061289988924
+            },
+            {
+              "stage": "detector",
+              "seconds": 5.041949061997002
+            },
+            {
+              "stage": "classifier",
+              "seconds": 2.2083984090131707
+            },
+            {
+              "stage": "assessor",
+              "seconds": 0.6840290029940661
+            },
+            {
+              "stage": "V2FindingMapper",
+              "seconds": 10.844346099998802
+            },
+            {
+              "stage": "V2ReferentialIntegrityValidator",
+              "seconds": 2.0999074530263897
+            },
+            {
+              "stage": "AtomicArtifactPublisher",
+              "seconds": 9.558954081003321
+            },
+            {
+              "stage": "report_projector",
+              "seconds": 28.494586215005256
+            }
+          ],
+          "exitCode": 0
+        }
+      ]
+    },
+    {
+      "references": 20000,
+      "density": "sparse",
+      "passed": true,
+      "runs": [
+        {
+          "mode": "disabled",
+          "seconds": 24.465154025005177,
+          "maxRssKiB": 319812,
+          "findings": 192,
+          "excludedCount": 0,
+          "truncatedRoots": 0,
+          "statistics": {},
+          "artifactsBytes": {
+            "scan-report.html": 129485,
+            "scan-result.json": 24805436,
+            "scan.log": 20316
+          },
+          "stages": [
+            {
+              "stage": "workspace_collector",
+              "seconds": 0.04222874599508941
+            },
+            {
+              "stage": "knowledge_provider",
+              "seconds": 0.5071754429955035
+            },
+            {
+              "stage": "frontend",
+              "seconds": 7.643910601007519
+            },
+            {
+              "stage": "normalizer",
+              "seconds": 2.9274957939924207
+            },
+            {
+              "stage": "analyzer",
+              "seconds": 7.879309649986681
+            },
+            {
+              "stage": "detector",
+              "seconds": 2.9758774350048043
+            },
+            {
+              "stage": "classifier",
+              "seconds": 0.0933575889794156
+            },
+            {
+              "stage": "assessor",
+              "seconds": 0.11104808701202273
+            },
+            {
+              "stage": "V2FindingMapper",
+              "seconds": 0.2645932349842042
+            },
+            {
+              "stage": "V2ReferentialIntegrityValidator",
+              "seconds": 0.119884165993426
+            },
+            {
+              "stage": "AtomicArtifactPublisher",
+              "seconds": 0.19725043399375863
+            },
+            {
+              "stage": "report_projector",
+              "seconds": 2.2041414369887207
+            }
+          ],
+          "exitCode": 0
+        },
+        {
+          "mode": "enabled",
+          "seconds": 28.831373177992646,
+          "maxRssKiB": 363724,
+          "findings": 0,
+          "excludedCount": 192,
+          "truncatedRoots": 0,
+          "statistics": {
+            "rootCount": 192,
+            "scopeIndexes": 8,
+            "recordCount": 1288,
+            "visits": 24576,
+            "cacheHits": 0
+          },
+          "artifactsBytes": {
+            "scan-report.html": 10774808,
+            "scan-result.json": 16697929,
+            "scan.log": 318
+          },
+          "stages": [
+            {
+              "stage": "workspace_collector",
+              "seconds": 0.06289396600914188
+            },
+            {
+              "stage": "knowledge_provider",
+              "seconds": 0.6222544659976847
+            },
+            {
+              "stage": "frontend",
+              "seconds": 7.9015181309951
+            },
+            {
+              "stage": "normalizer",
+              "seconds": 3.0108900270133745
+            },
+            {
+              "stage": "candidate_usage_index_and_query",
+              "seconds": 1.387283927993849
+            },
+            {
+              "stage": "analyzer",
+              "seconds": 11.341372621012852
+            },
+            {
+              "stage": "detector",
+              "seconds": 2.378172488999553
+            },
+            {
+              "stage": "classifier",
+              "seconds": 0.16384707801626064
+            },
+            {
+              "stage": "assessor",
+              "seconds": 0.18802813900401816
+            },
+            {
+              "stage": "V2FindingMapper",
+              "seconds": 0.003590014996007085
+            },
+            {
+              "stage": "V2ReferentialIntegrityValidator",
+              "seconds": 0.0035261859884485602
+            },
+            {
+              "stage": "AtomicArtifactPublisher",
+              "seconds": 0.2179516420001164
+            },
+            {
+              "stage": "report_projector",
+              "seconds": 2.817834690999007
+            }
+          ],
+          "exitCode": 0
+        }
+      ]
+    },
+    {
+      "references": 20000,
+      "density": "dense",
+      "passed": true,
+      "runs": [
+        {
+          "mode": "disabled",
+          "seconds": 169.967839740013,
+          "maxRssKiB": 1139764,
+          "findings": 19200,
+          "excludedCount": 0,
+          "truncatedRoots": 0,
+          "statistics": {},
+          "artifactsBytes": {
+            "scan-report.html": 12938467,
+            "scan-result.json": 2505471776,
+            "scan.log": 2006058
+          },
+          "stages": [
+            {
+              "stage": "workspace_collector",
+              "seconds": 0.05066291702678427
+            },
+            {
+              "stage": "knowledge_provider",
+              "seconds": 0.5154888590041082
+            },
+            {
+              "stage": "frontend",
+              "seconds": 9.866667124995729
+            },
+            {
+              "stage": "normalizer",
+              "seconds": 2.6975133060186636
+            },
+            {
+              "stage": "analyzer",
+              "seconds": 7.701127781998366
+            },
+            {
+              "stage": "detector",
+              "seconds": 4.663546783995116
+            },
+            {
+              "stage": "classifier",
+              "seconds": 2.5325979519984685
+            },
+            {
+              "stage": "assessor",
+              "seconds": 1.6102476399973966
+            },
+            {
+              "stage": "V2FindingMapper",
+              "seconds": 35.59933054802241
+            },
+            {
+              "stage": "V2ReferentialIntegrityValidator",
+              "seconds": 15.2019613670127
+            },
+            {
+              "stage": "AtomicArtifactPublisher",
+              "seconds": 87.74125798395835
+            },
+            {
+              "stage": "report_projector",
+              "seconds": 140.16819692702848
+            }
+          ],
+          "exitCode": 0
+        },
+        {
+          "mode": "enabled",
+          "seconds": 177.36306682997383,
+          "maxRssKiB": 1332416,
+          "findings": 19200,
+          "excludedCount": 0,
+          "truncatedRoots": 14928,
+          "statistics": {
+            "rootCount": 19200,
+            "scopeIndexes": 0,
+            "recordCount": 0,
+            "visits": 0,
+            "cacheHits": 0
+          },
+          "artifactsBytes": {
+            "scan-report.html": 53228159,
+            "scan-result.json": 2576262790,
+            "scan.log": 2006058
+          },
+          "stages": [
+            {
+              "stage": "workspace_collector",
+              "seconds": 0.039653713000006974
+            },
+            {
+              "stage": "knowledge_provider",
+              "seconds": 0.5367180280154571
+            },
+            {
+              "stage": "frontend",
+              "seconds": 11.849101807980333
+            },
+            {
+              "stage": "normalizer",
+              "seconds": 7.058557004958857
+            },
+            {
+              "stage": "candidate_usage_index_and_query",
+              "seconds": 1.7261905429768376
+            },
+            {
+              "stage": "analyzer",
+              "seconds": 10.13933158799773
+            },
+            {
+              "stage": "detector",
+              "seconds": 4.9540150630054995
+            },
+            {
+              "stage": "classifier",
+              "seconds": 1.4820066070533358
+            },
+            {
+              "stage": "assessor",
+              "seconds": 1.2063081680098549
+            },
+            {
+              "stage": "V2FindingMapper",
+              "seconds": 39.59926946397172
+            },
+            {
+              "stage": "V2ReferentialIntegrityValidator",
+              "seconds": 15.65952915197704
+            },
+            {
+              "stage": "AtomicArtifactPublisher",
+              "seconds": 81.95918508595787
+            },
+            {
+              "stage": "report_projector",
+              "seconds": 139.68857859598938
+            }
+          ],
+          "exitCode": 0
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

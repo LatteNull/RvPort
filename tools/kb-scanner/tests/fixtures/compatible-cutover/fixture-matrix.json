@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "1.0",
+  "fixtures": [
+    {"id": "generated-and-curated-facts", "path": "tests/fixtures/formal-cpp-frontend", "covers": ["generated", "curated", "local-detection"]},
+    {"id": "avx-x86-only", "path": "/fixtures/avx-avx2-example-code", "covers": ["avx", "x86-only", "compiler-flags", "macro-proof"]},
+    {"id": "build-selection", "path": "tests/fixtures/build-selection/project", "covers": ["build-selection", "rpm", "ctest", "portable-alternative"]},
+    {"id": "classification-assessment", "path": "tests/fixtures/classification-assessment", "covers": ["guarded", "inactive", "riscv-alternative", "test-selection", "unknown", "conflict", "zero-hit"]},
+    {"id": "malicious-static-input", "path": "tests/fixtures/classification-assessment/malicious", "covers": ["recipe", "shell", "rpm-check", "plugin", "response-file", "no-side-effect"]},
+    {"id": "workspace-escape", "path": "tests/fixtures/build-selection/project", "covers": ["workspace-escape", "path-normalization"]}
+  ]
+}

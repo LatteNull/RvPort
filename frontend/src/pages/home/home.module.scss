@@ -1,0 +1,214 @@
+@use '../../styles/mixins' as type;
+
+.page {
+  width: 100%;
+
+  .header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 16px;
+  }
+
+  .heading {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .title {
+    @include type.page-title;
+  }
+
+  .description {
+    @include type.body-text;
+    color: var(--ant-color-text-secondary);
+  }
+
+  .createButton {
+    width: 80px;
+  }
+
+  .filterBar {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0 16px;
+    border-bottom: 1px solid var(--ant-color-border-secondary);
+  }
+
+  .keywordSearch {
+    width: min(360px, 36%);
+    min-width: 0;
+  }
+
+  .quickFilters {
+    display: flex;
+    min-width: 0;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .filterLabel {
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size-sm, 12px);
+    white-space: nowrap;
+  }
+
+  .statusFilter {
+    flex: 0 0 auto;
+  }
+
+  .stageFilter {
+    width: 176px;
+  }
+
+  .clearFilters {
+    height: 32px;
+    padding-inline: 2px;
+    font-size: var(--ant-font-size-sm, 12px);
+    white-space: nowrap;
+  }
+
+  .listSummary {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    min-height: 24px;
+    margin: 8px 0 12px;
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size-sm, 12px);
+
+    span + span::before {
+      margin-right: 8px;
+      color: var(--ant-color-border);
+      content: '/';
+    }
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+  }
+
+  .loadMore {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 88px;
+    margin-top: 8px;
+    gap: 8px;
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size, 14px);
+  }
+
+  .loadMoreError {
+    display: flex;
+    width: min(100%, 560px);
+    gap: 24px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    color: var(--ant-color-text);
+    background: rgba(217, 54, 62, 0.05);
+    border: 1px solid rgba(217, 54, 62, 0.18);
+    border-radius: var(--ant-border-radius);
+
+    > div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    strong {
+      color: #d9363e;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 20px;
+    }
+
+    span {
+      color: var(--ant-color-text-secondary);
+      font-size: var(--ant-font-size-sm, 12px);
+      line-height: 18px;
+    }
+  }
+
+  .loadMoreRail {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .loadMoreButton {
+    appearance: none;
+    height: auto;
+    padding: 4px 8px;
+    color: var(--ant-color-primary);
+    font: inherit;
+    font-weight: 500;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    cursor: pointer;
+    transition: color var(--ant-motion-duration-mid, 0.2s) ease;
+
+    &:hover:not(:disabled),
+    &:focus-visible {
+      color: var(--ant-color-primary-hover) !important;
+      background: transparent !important;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--ant-color-primary);
+      outline-offset: 2px;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    &:disabled {
+      cursor: wait;
+      opacity: 0.62;
+    }
+  }
+
+  .loadComplete {
+    display: inline-flex;
+    align-items: center;
+    color: var(--ant-color-text-secondary);
+    font-size: var(--ant-font-size-sm, 12px);
+  }
+
+  .statePanel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 280px;
+    gap: 16px;
+    background: var(--ant-color-bg-container);
+    border-radius: var(--ant-border-radius-lg, 12px);
+    background: var(--ant-color-fill-quaternary);
+  }
+}
+
+@media (max-width: 1199px) {
+  .page {
+    .filterBar {
+      align-items: stretch;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .keywordSearch {
+      width: min(100%, 420px);
+    }
+
+    .quickFilters {
+      justify-content: flex-start;
+    }
+  }
+}

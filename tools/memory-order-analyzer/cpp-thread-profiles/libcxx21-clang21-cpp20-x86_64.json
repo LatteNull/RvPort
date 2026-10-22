@@ -1,0 +1,19 @@
+{
+  "schema_version": 1, "kind": "CppThreadLibraryProfile", "analysis_version": "0.1.0", "policy_id": "cpp-thread-lifecycle-v1",
+  "profile_id": "dc17dd0b8ad620d91cc63528344785e691123562df31c3b989d914c75d40b500",
+  "vendor": "libc++", "version": "210108", "cxx_standard": "c++20", "cxx_abi": "itanium",
+  "target": "x86_64-pc-linux-gnu", "data_layout": "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128",
+  "pointer_width": 64, "exceptions": true, "rtti": true, "thread_backend": "pthread",
+  "toolchain_lineage": "clang-21.1.8+libc++-21.1.8",
+  "header_digests": [{"kind": "Header", "id": "/usr/lib/llvm-21/include/c++/v1/thread", "digest": "6f34c51f960688fd3362e9a682855635a53ff4c94e5dc77ed81460bdecc6e744"}],
+  "wrapper_signatures": [
+    {"role": "construct-attempt", "symbol": "_ZNSt3__122__libcpp_thread_createB8ne210108EPmPFPvS1_ES1_", "calling_convention": "ccc", "parameter_roles": ["argument", "entry", "handle"], "digest": "c56a029c64d704679b7c9d3593a15570ef37604bcb84be97bee98c9b401d0560"},
+    {"role": "detach-attempt", "symbol": "_ZNSt3__16thread6detachEv", "calling_convention": "ccc", "parameter_roles": ["this"], "digest": "24ee00393d636ee0ed1086def40a711361d7e1bd1d2751384158a0d34393e1d7"},
+    {"role": "entry-broker", "symbol": "_ZNSt3__114__thread_proxyB8ne210108INS_5tupleIJNS_10unique_ptrINS_15__thread_structENS_14default_deleteIS3_EEEE7functorEEEEEPvS9_", "calling_convention": "ccc", "parameter_roles": ["callable"], "digest": "76207ca130d36919f806ec17d3c2ed1f0763977e0f95c5dcdbf09ef7b2574560"},
+    {"role": "handle-transfer", "symbol": "inline:std::__1::thread(thread&&)", "calling_convention": "ccc", "parameter_roles": ["other", "this"], "digest": "3a19343813c20dee7aa379bff7d0a3ee1c3adaf067b7ffbaff67394433f830ae"},
+    {"role": "join-attempt", "symbol": "_ZNSt3__16thread4joinEv", "calling_convention": "ccc", "parameter_roles": ["this"], "digest": "e967f810d07942d317e614e07f302983cf03c44fdebb860a5d449c90e908420b"}
+  ],
+  "model_version": "cpp-thread-library-v1", "status": "verified",
+  "provenance": ["compile-only", "llvm-ir", "profile-probe.cpp"],
+  "semantic_digest": "e2ab01d254c5e1bfb84b3386ceafb9063fe786a3f8b4e76810152953f4e93e53"
+}

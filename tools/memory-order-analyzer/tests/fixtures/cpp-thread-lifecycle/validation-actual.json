@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "suite_version": "a3-lifecycle-v1",
+  "provenance": "offline-captured-logical-projection",
+  "cases": {
+    "c11-pthread-single": {"status":"complete","contexts":[],"instances":[],"relations":[],"gaps":[],"frontier":[]},
+    "c17-pthread-cross-tu": {"status":"complete","contexts":[],"instances":[],"relations":[],"gaps":[],"frontier":[]},
+    "cpp17-gnu-abi-mismatch": {"status":"partial","contexts":[],"instances":[],"relations":[],"gaps":[{"code":"abi-wrapper-mismatch"}],"frontier":[]},
+    "cpp17-gnu-free-join": {
+      "status":"complete","contexts":[{"callable_id":"callable:worker"}],"instances":[{"id":"instance:worker@main"}],
+      "relations":[{"relation":"thread-start","from":"construct","to":"instance:worker@main"},{"relation":"join-complete","from":"instance:worker@main","to":"join"}],"gaps":[],"frontier":[]
+    },
+    "cpp17-gnu-lambda-detach": {
+      "status":"complete","contexts":[{"callable_id":"callable:lambda@launch"}],"instances":[{"id":"instance:lambda@launch"}],
+      "relations":[{"relation":"thread-start","from":"construct","to":"instance:lambda@launch"},{"relation":"detach","from":"detach","to":"instance:lambda@launch"},{"relation":"may-parallel","from":"root","to":"instance:lambda@launch"}],"gaps":[],"frontier":[]
+    },
+    "cpp20-libcxx-functor-unknown": {"status":"partial","contexts":[],"instances":[],"relations":[],"gaps":[{"code":"callable-ambiguous"}],"frontier":[]},
+    "cpp20-libcxx-member-move": {
+      "status":"complete","contexts":[{"callable_id":"callable:owner::run"}],"instances":[{"id":"instance:owner::run@main"}],
+      "relations":[{"relation":"thread-start","from":"construct","to":"instance:owner::run@main"},{"relation":"join-complete","from":"instance:owner::run@main","to":"join"}],"gaps":[],"frontier":[]
+    },
+    "cpp20-libcxx-open-scope": {"status":"partial","contexts":[],"instances":[],"relations":[],"gaps":[{"code":"scope-definition-missing"}],"frontier":[]}
+  }
+}

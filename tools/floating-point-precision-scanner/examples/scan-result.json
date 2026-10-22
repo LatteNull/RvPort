@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "2.0",
+  "scan": {
+    "id": "example-request",
+    "tool": {"name": "floating-point-precision-scanner", "version": "0.5.0"},
+    "analysisVersion": "0.5.0",
+    "requestSchemaVersion": "1.4",
+    "analysisScope": "factsOnly",
+    "status": "complete",
+    "semanticDigest": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "project": {
+    "sourceRevision": null,
+    "status": "complete",
+    "filesAnalyzed": 1,
+    "translationUnits": {"planned": 1, "completed": 1, "failed": 0, "unknown": 0},
+    "reasonCodes": []
+  },
+  "summary": {
+    "findings": 0,
+    "suppressed": 0,
+    "diagnostics": 0,
+    "assessments": {"planned": 0, "completed": 0, "matched": 0, "notMatched": 0, "unknown": 0, "skipped": 0, "failed": 0},
+    "layers": {
+      "artifact": {"planned": 0, "completed": 0, "failed": 0, "unknown": 0},
+      "source": {"planned": 1, "completed": 1, "failed": 0, "unknown": 0},
+      "ir": {"planned": 0, "completed": 0, "failed": 0, "unknown": 0},
+      "evidence": {"planned": 0, "completed": 0, "failed": 0, "unknown": 0},
+      "rules": {"planned": 0, "completed": 0, "failed": 0, "unknown": 0}
+    }
+  },
+  "findings": [],
+  "diagnostics": [],
+  "extensions": {
+    "org.rvport.floating-point-scanner.analysis": {
+      "schemaVersion": "1.0",
+      "analysisScope": "factsOnly",
+      "enabledRules": [],
+      "ruleVersions": {},
+      "ruleDependencies": [],
+      "ruleRegistryDigest": "350ca4eefc4b092f20c184a11ee4a7f356f02eba457007dcdc6b542818eeb2de",
+      "assessments": [],
+      "layers": {
+        "artifact": {"planned": 0, "completed": 0, "failed": 0, "unknown": 0},
+        "source": {"planned": 1, "completed": 1, "failed": 0, "unknown": 0},
+        "ir": {"planned": 0, "completed": 0, "failed": 0, "unknown": 0},
+        "evidence": {"planned": 0, "completed": 0, "failed": 0, "unknown": 0},
+        "rules": {"planned": 0, "completed": 0, "failed": 0, "unknown": 0}
+      },
+      "objects": [],
+      "bundleDigests": {"source": [], "ir": [], "evidence": []}
+    },
+    "org.rvport.floating-point-scanner.profiles": {
+      "schemaVersion": "1.0",
+      "source": {"profile": "x86_64-linux-gnu-clang21@1.0"},
+      "target": {"profile": "riscv64-linux-gnu-lp64d-clang21@1.0"},
+      "sourceBuildContext": null,
+      "targetBuildContext": null
+    },
+    "org.rvport.floating-point-scanner.artifacts": {
+      "schemaVersion": "1.0",
+      "artifactSet": null,
+      "bitcodeProfiles": {"requested": [], "completed": []},
+      "bitcodeCapabilities": [],
+      "irAnalysis": {"status": "notRequested", "llvmVersion": "21.1.8", "readerVersion": "1.0", "extractorVersion": "1.1"},
+      "sourceMapping": {"mode": "notRequested", "status": "notRequested"}
+    },
+    "org.rvport.floating-point-scanner.suppressions": {
+      "schemaVersion": "1.0",
+      "policyAsOf": null,
+      "records": []
+    },
+    "org.rvport.floating-point-scanner.runtime": {
+      "schemaVersion": "1.0",
+      "budgets": {"limits": {}, "logicalUsed": {}, "frontiers": []},
+      "cache": {"schemaVersion": "1.0", "mode": "off", "hit": 0, "miss": 0, "corrupt": 0, "write": 0}
+    }
+  }
+}

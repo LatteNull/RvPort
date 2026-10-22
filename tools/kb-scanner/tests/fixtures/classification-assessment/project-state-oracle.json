@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "1.0",
+  "states": {
+    "architecture_independent": {"requires":["complete-input","explicit-architecture-independent"],"veto":["blocker","unknown"]},
+    "x86_only": {"requires":["complete-input","selected-x86","no-riscv-or-generic-alternative"],"veto":["unknown"]},
+    "multiarch_without_riscv": {"requires":["complete-input","two-non-riscv-architecture-roles"],"veto":["riscv-or-generic-path","unknown"]},
+    "partial_riscv": {"requires":["riscv-or-generic-path","blocker-or-test-gap"],"veto":[]},
+    "riscv_ready": {"requires":["complete-input","riscv-or-generic-path","test-covered-or-not-applicable","static-scope-metadata"],"veto":["blocker","unknown","configuration-conflict"]},
+    "provisional": {"requires":["some-static-input","incomplete-or-conflicting-input"],"veto":[]},
+    "unknown": {"requires":["no-usable-static-input"],"veto":[]}
+  }
+}

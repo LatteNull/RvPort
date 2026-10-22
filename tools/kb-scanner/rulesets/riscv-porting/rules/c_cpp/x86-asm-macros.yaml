@@ -1,0 +1,23 @@
+id: C_CPP.X86.ASM_MACRO
+language: c_cpp
+severity: high
+confidence: high
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        symbolGroup: 1
+        regex: "^\\s*#\\s*define\\s+([A-Za-z_]\\w*)\\b.*\\b(?:__asm__|__asm|asm)\\s*(?:volatile\\s*)?\\(\\s*\\\"[^\\\"]*\\b(v?mov[a-z0-9]*|v?add[a-z0-9]*|v?sub[a-z0-9]*|v?mul[a-z0-9]*|v?div[a-z0-9]*|v?rsqrt[a-z0-9]*|v?sqrt[a-z0-9]*|vzeroall|vzeroupper|vperm2f128|vextractf128|vshufps|vfmadd[0-9a-z]*|vfnmadd[0-9a-z]*|prefetcht0|pextrw|rdtsc)\\b"
+message:
+  zh-CN:
+    title: "宏定义中封装 x86 汇编指令"
+    reason: "宏定义内部直接封装 SSE/AVX 或 x86 汇编指令。即使调用处没有显式 intrinsic，展开后仍绑定 x86 指令集。"
+    suggestion: "建议先建立宏定义到调用点的映射，再将该宏替换为 portable C、RISC-V Vector 实现或按架构分派的后端接口。"
+  en-US:
+    title: "Macro definition wraps x86 assembly instructions"
+    reason: "The macro definition directly wraps SSE/AVX or x86 assembly instructions. Even if the call site has no explicit intrinsic, the expansion is still bound to the x86 instruction set."
+    suggestion: "First map macro definitions to call sites, then replace the macro with portable C, RISC-V Vector code, or an architecture-dispatched backend interface."
+
+
+

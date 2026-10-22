@@ -1,0 +1,19 @@
+{
+  "id": "fb5ae5b3-43ae-47b5-a922-5452ec31f475",
+  "projectId": "9915a12c-9338-419e-b589-9a3984d56c62",
+  "type": "FLOATING_POINT_ANALYSIS",
+  "status": "PENDING",
+  "progress": 0,
+  "message": "浮点精度分析任务已创建",
+  "createdAt": "2026-10-12T05:27:32.719704Z",
+  "queuedAt": null,
+  "startedAt": null,
+  "finishedAt": null,
+  "errorCode": null,
+  "errorMessage": null,
+  "resource": {
+    "type": "SPECIALIZED_ANALYSIS",
+    "id": "73181be9-97cf-47b5-9fc3-b2de266a7dd8",
+    "mode": "FLOATING_POINT"
+  }
+}

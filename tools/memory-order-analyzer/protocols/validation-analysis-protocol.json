@@ -1,0 +1,22 @@
+{
+  "protocol_version": 1,
+  "analysis_version": "0.1.0",
+  "policy_id": "analysis-validation-v1",
+  "runner_version": "0.1.0",
+  "kinds": {
+    "ValidationSuiteManifest": 1,
+    "TruthAnnotation": 1,
+    "AnalysisValidationRequest": 1,
+    "AnalysisValidationReport": 1,
+    "AnalysisExtensionDecision": 1,
+    "BackendEvidenceBundle": 1
+  },
+  "budgets": {
+    "max_cases": 1000,
+    "case_seconds": 600,
+    "request_seconds": 7200,
+    "output_bytes": 1073741824,
+    "memory_bytes": 8589934592,
+    "sample_per_stratum": 100
+  }
+}

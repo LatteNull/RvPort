@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-precision-scanner/build-context/v1/build-context.schema.json",
+  "title": "FloatingPointBuildContext",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "schema_version", "context_id", "base_profile_fingerprint", "target_triple", "abi", "toolchain", "libm", "environment", "target_features", "sources"],
+  "$defs": {
+    "valueOrUnknown": {
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["status", "value", "source"],
+          "properties": {
+            "status": {"const": "known"},
+            "value": {"type": "object"},
+            "source": {"type": "string", "minLength": 1}
+          }
+        },
+        {
+          "type": "object", "additionalProperties": false,
+          "required": ["status", "reason", "source"],
+          "properties": {
+            "status": {"const": "unknown"},
+            "reason": {"type": "string", "minLength": 1},
+            "source": {"type": "string", "minLength": 1}
+          }
+        }
+      ]
+    }
+  },
+  "properties": {
+    "kind": {"const": "FloatingPointBuildContext"},
+    "schema_version": {"const": "1.0"},
+    "context_id": {"type": "string", "minLength": 1},
+    "base_profile_fingerprint": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "target_triple": {"type": "string", "minLength": 1},
+    "abi": {"type": "string", "minLength": 1},
+    "toolchain": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "version": {"type": "string", "minLength": 1}
+      }
+    },
+    "libm": {"$ref": "#/$defs/valueOrUnknown"},
+    "environment": {"$ref": "#/$defs/valueOrUnknown"},
+    "target_features": {"$ref": "#/$defs/valueOrUnknown"},
+    "sources": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "string", "minLength": 1}},
+    "materialization_root": {"type": "string", "minLength": 1}
+  }
+}

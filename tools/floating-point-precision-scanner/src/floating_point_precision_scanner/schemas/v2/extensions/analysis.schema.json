@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-scanner/extensions/analysis/1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "analysisScope", "enabledRules", "ruleVersions", "ruleDependencies", "ruleRegistryDigest", "assessments", "layers", "objects", "bundleDigests"],
+  "properties": {
+    "schemaVersion": {"const": "1.0"},
+    "analysisScope": {"enum": ["factsOnly", "coreMigrationRisks", "migrationRisks"]},
+    "enabledRules": {"type": "array", "uniqueItems": true, "maxItems": 64, "items": {"type": "string", "minLength": 1}},
+    "ruleVersions": {"type": "object", "maxProperties": 64, "additionalProperties": {"type": "string", "minLength": 1}},
+    "ruleDependencies": {"type": "array", "maxItems": 64, "items": {"type": "object"}},
+    "ruleRegistryDigest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "assessments": {"type": "array", "maxItems": 100000, "items": {"$ref": "#/$defs/assessment"}},
+    "layers": {"type": "object", "maxProperties": 32, "additionalProperties": {"type": "object"}},
+    "objects": {"type": "array", "maxItems": 500000, "items": {"$ref": "#/$defs/reference"}},
+    "bundleDigests": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "ir", "evidence"],
+      "properties": {
+        "source": {"$ref": "#/$defs/digests"},
+        "ir": {"$ref": "#/$defs/digests"},
+        "evidence": {"$ref": "#/$defs/digests"}
+      }
+    }
+  },
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "digests": {"type": "array", "uniqueItems": true, "maxItems": 100000, "items": {"$ref": "#/$defs/digest"}},
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id", "producer", "schemaVersion", "digest"],
+      "properties": {
+        "kind": {"enum": ["sourceFact", "irFact", "binding", "profile", "buildContext", "compileOption", "assessment"]},
+        "id": {"type": "string", "minLength": 1},
+        "producer": {"type": "string", "minLength": 1},
+        "schemaVersion": {"type": "string", "minLength": 1},
+        "digest": {"$ref": "#/$defs/digest"}
+      }
+    },
+    "assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "ruleCode", "ruleVersion", "scope", "status", "reasonCode", "evidence", "frontier"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "ruleCode": {"type": "string", "minLength": 1},
+        "ruleVersion": {"type": "string", "minLength": 1},
+        "scope": {"type": "string", "minLength": 1},
+        "status": {"enum": ["matched", "notMatched", "unknown", "skipped", "failed"]},
+        "reasonCode": {"type": "string", "minLength": 1},
+        "evidence": {"type": "array", "maxItems": 128, "items": {"$ref": "#/$defs/reference"}},
+        "frontier": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

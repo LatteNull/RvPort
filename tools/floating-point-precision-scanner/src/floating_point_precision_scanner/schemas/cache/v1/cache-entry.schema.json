@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rvport.dev/schemas/floating-point-precision-scanner/cache/v1/cache-entry.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "schema_version", "cache_kind", "cache_key", "payload_sha256", "payload_bytes", "dependencies", "payload"],
+  "properties": {
+    "kind": {"const": "FloatingPointAnalysisCacheEntry"},
+    "schema_version": {"const": "1.0"},
+    "cache_kind": {"enum": ["source-facts", "ir-facts", "evidence"]},
+    "cache_key": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "payload_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "payload_bytes": {"type": "integer", "minimum": 2},
+    "dependencies": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}},
+    "payload": {"type": "object"}
+  }
+}

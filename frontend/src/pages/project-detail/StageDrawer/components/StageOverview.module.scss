@@ -1,0 +1,45 @@
+.task {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.metadata {
+  display: flex;
+  max-width: 100%;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  color: var(--ant-color-text-secondary);
+  font-size: var(--ant-font-size-sm);
+  line-height: 1.6;
+  text-align: left;
+
+  > div {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  dt {
+    white-space: nowrap;
+  }
+
+  dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+
+    > span {
+      font-size: inherit;
+    }
+  }
+}
+
+.logs {
+  width: 100%;
+  min-width: 0;
+  text-align: left;
+}

@@ -1,0 +1,1320 @@
+{
+  "diagnostics": [
+    {
+      "code": "assessor.provisional",
+      "count": 1,
+      "findingIds": [],
+      "id": "diagnostic:3744f793f9408aa3f8885620a334205327f385dae0bb48ba404eccc111a956d0",
+      "reasonCodes": [
+        "missing_input"
+      ],
+      "refs": [],
+      "severity": "medium",
+      "stage": "assessor",
+      "status": "partial"
+    },
+    {
+      "code": "build-selection.partial",
+      "count": 1,
+      "findingIds": [],
+      "id": "diagnostic:21e935ebc0e6ea27de9a2324385ccd2083a27e65eac0d49d44e6c17a6a1eda40",
+      "reasonCodes": [
+        "missing_input"
+      ],
+      "refs": [],
+      "severity": "medium",
+      "stage": "analyzer.build-selection",
+      "status": "partial"
+    },
+    {
+      "code": "classifier.unknown-results",
+      "count": 1,
+      "findingIds": [],
+      "id": "diagnostic:aecdea4d13931b14f8214b29f7c972c7bcdc034f16d178a1da83dd2e24e12cfa",
+      "reasonCodes": [
+        "missing_input"
+      ],
+      "refs": [],
+      "severity": "medium",
+      "stage": "classifier",
+      "status": "partial"
+    }
+  ],
+  "findings": [
+    {
+      "conclusion": {
+        "actionable": false,
+        "archReachability": "unknown",
+        "blocking": false,
+        "confidence": 1,
+        "extensions": {
+          "org.rvport.kb-scanner.classification": {
+            "portabilityGap": false
+          }
+        },
+        "findingType": "x86_intrinsic_reference",
+        "reason": "input-or-relation-unknown",
+        "severity": "low",
+        "status": "complete",
+        "suggestion": "Provide a RISC-V or portable implementation and verify the selected static path.",
+        "title": "X86 Intrinsic Reference"
+      },
+      "evidenceChain": {
+        "breaks": [],
+        "budget": {
+          "maxDepth": 16,
+          "maxPaths": 32,
+          "maxVisited": 256,
+          "paths": 11,
+          "truncated": false,
+          "visited": 12
+        },
+        "edges": [
+          {
+            "fromStepId": "step:d0a277e79e363438f50be5af672b8aa275d8b4eecbef3df7653a00061f0f69d5",
+            "id": "edge:0fd076e1abf37c20b32ddc0a0a37cf7c8ee861ef2d88885ade5b96bda25c5092",
+            "kind": "expands_to",
+            "provenance": [
+              {
+                "id": "d30319e2e60bf66ed66d0ef9b0a8755b12b99aebbf35e62522ef46698019eeb0",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:9054b40acb0e69a6f773de674505459187be72d084d0405a08be1c6005c67a0f"
+          },
+          {
+            "fromStepId": "step:9054b40acb0e69a6f773de674505459187be72d084d0405a08be1c6005c67a0f",
+            "id": "edge:150a08ffb72679f58509901acc729f65aaabf25f4a9aa84b94c32caf27b6a1b3",
+            "kind": "matches_knowledge",
+            "provenance": [
+              {
+                "id": "dbb8df6e0174f51b09e9942336cf5239f44bf8f50c196c10c5a95e62a36565dd",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              },
+              {
+                "id": "5670d24908f40c73db1e6ccfc2efcf5bfa9c06c2cf34708256970884e3b8c56a",
+                "kind": "knowledge",
+                "producer": "clang-x86-entries"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:daaf99c4a6badf1512edae1c2ae5ae0f81ead1d76b75c77d7a05f03a050c4e1c"
+          },
+          {
+            "fromStepId": "step:55cac3629de4303ab8e0acff37b15b8f1661cfce4f2da79b3fea3e3a5ec9ec7a",
+            "id": "edge:1a3c6e7d0f30b0fa266b3c344b06df669237258b8bb343e06c7a561a18f46d1d",
+            "kind": "selects",
+            "provenance": [
+              {
+                "id": "dd320f3584594186c992fcff92c7856c59727593ee9fbb3b88cc43782e521c8a",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:4bee6a6685695a5d8c39e22428f502922ef23e8e7b888d801e3ee5e2e66a044c"
+          },
+          {
+            "fromStepId": "step:bf928a2cf72f01c3d6528a53c8891496dc1f1dfcd887256fea9a2ff71f35b4f7",
+            "id": "edge:35a77ae97298da252678ebddd50f20a1401dbc59cd826fe5ec6b08bb5facd2f2",
+            "kind": "expands_to",
+            "provenance": [
+              {
+                "id": "92f1dcf5bf32d899a35329f5936d97bc856c1bdbc035cbb673c40f8467b0352c",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:d0a277e79e363438f50be5af672b8aa275d8b4eecbef3df7653a00061f0f69d5"
+          },
+          {
+            "fromStepId": "step:d0a277e79e363438f50be5af672b8aa275d8b4eecbef3df7653a00061f0f69d5",
+            "id": "edge:379f3d8b257f29f5bb79428619e789c33de0104fe9d66149eadb7d50c81214a5",
+            "kind": "calls",
+            "provenance": [
+              {
+                "id": "39a34a213e79a5b1e4239bf170ab98a2211c36c2cbad966d1e54a463cb8d0c00",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:9054b40acb0e69a6f773de674505459187be72d084d0405a08be1c6005c67a0f"
+          },
+          {
+            "fromStepId": "step:0dea66aa0987821857753374eccd7708b82b65ddb13390e891f93c3a29742f1f",
+            "id": "edge:4985c5c4850566a119e76c17a37ca6c30d5e0d31f3c7c5532632429712d54f89",
+            "kind": "expands_to",
+            "provenance": [
+              {
+                "id": "92f1dcf5bf32d899a35329f5936d97bc856c1bdbc035cbb673c40f8467b0352c",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:bf928a2cf72f01c3d6528a53c8891496dc1f1dfcd887256fea9a2ff71f35b4f7"
+          },
+          {
+            "fromStepId": "step:55cac3629de4303ab8e0acff37b15b8f1661cfce4f2da79b3fea3e3a5ec9ec7a",
+            "id": "edge:4d1dcffb9e3b10a5fb772116610469624ab2290870529685abc5e567ffe151fa",
+            "kind": "selects",
+            "provenance": [
+              {
+                "id": "7c815ba45239cbd9a00cad42045358b19e46fc9349e2cfd5e9c2040f31fcc0f3",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:4bee6a6685695a5d8c39e22428f502922ef23e8e7b888d801e3ee5e2e66a044c"
+          },
+          {
+            "fromStepId": "step:2765a114ca484b51478cb0ee73cc5167c7d7a1ab1fa69c38fc8c206c78b6d9f8",
+            "id": "edge:b5971915679b99c9ba80bf84b40535278de5a6cc603477516adb987d81da5816",
+            "kind": "selects",
+            "provenance": [
+              {
+                "id": "9b69cc481828cf9f62fca5549a24f7ff21228d7e59fc155b992d3239edf2a8c0",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:55cac3629de4303ab8e0acff37b15b8f1661cfce4f2da79b3fea3e3a5ec9ec7a"
+          },
+          {
+            "fromStepId": "step:dc379c1a6e53a9d43d8bf21f2ea00547fccdd0fe402f184d958b9480b21a8410",
+            "id": "edge:cccdb9c69c86d791a05fc312a168bb8d65fabdb5a0fc004122b00cf2a50092c4",
+            "kind": "selects",
+            "provenance": [
+              {
+                "id": "c4470b2a48e58d023c0384f97717e097d8f72bee46454ae90bd8f4e31858ed2a",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:2765a114ca484b51478cb0ee73cc5167c7d7a1ab1fa69c38fc8c206c78b6d9f8"
+          },
+          {
+            "fromStepId": "step:a043efb2598ad05528846f51696daf1dcd394cfe1f15f3a60bcf292cf7306fd0",
+            "id": "edge:d108d34c04ed75a3ffbff9f4eee0528a621b4561bb63450c5f8888623abe0c1b",
+            "kind": "includes",
+            "provenance": [
+              {
+                "id": "e7580f7891b4b77ceac457819b67db5412fea9f1398836b619b977c469e18769",
+                "kind": "relation",
+                "producer": "analysis"
+              },
+              {
+                "id": "e68da0b758744415c3fff27b15c8b84c090fddd0942324a01adb1f4e5f7fae8d",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:d0a277e79e363438f50be5af672b8aa275d8b4eecbef3df7653a00061f0f69d5"
+          },
+          {
+            "fromStepId": "step:4bee6a6685695a5d8c39e22428f502922ef23e8e7b888d801e3ee5e2e66a044c",
+            "id": "edge:e2c937d7253193b9618088409d282b91e7d615399bbfc64b14a1af96daba1d8d",
+            "kind": "invokes_macro",
+            "provenance": [
+              {
+                "id": "6bd3fee1c41c00f5f42c30e840c21f730f057fe4d20cecb57589526bb91bdf45",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:0dea66aa0987821857753374eccd7708b82b65ddb13390e891f93c3a29742f1f"
+          },
+          {
+            "fromStepId": "step:a043efb2598ad05528846f51696daf1dcd394cfe1f15f3a60bcf292cf7306fd0",
+            "id": "edge:e411904f54f82df25a8d62678564082cc89a8c672bab9fec44d0d052d1bdcb73",
+            "kind": "includes",
+            "provenance": [
+              {
+                "id": "e7580f7891b4b77ceac457819b67db5412fea9f1398836b619b977c469e18769",
+                "kind": "relation",
+                "producer": "analysis"
+              },
+              {
+                "id": "6da00f10325b81d712c5671fffc0fe00b6898c3d3503f741e645182596b74366",
+                "kind": "relation",
+                "producer": "analysis"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete",
+            "toStepId": "step:0dea66aa0987821857753374eccd7708b82b65ddb13390e891f93c3a29742f1f"
+          }
+        ],
+        "impactStepIds": [],
+        "primaryPath": [
+          "step:dc379c1a6e53a9d43d8bf21f2ea00547fccdd0fe402f184d958b9480b21a8410",
+          "step:2765a114ca484b51478cb0ee73cc5167c7d7a1ab1fa69c38fc8c206c78b6d9f8",
+          "step:55cac3629de4303ab8e0acff37b15b8f1661cfce4f2da79b3fea3e3a5ec9ec7a",
+          "step:4bee6a6685695a5d8c39e22428f502922ef23e8e7b888d801e3ee5e2e66a044c",
+          "step:0dea66aa0987821857753374eccd7708b82b65ddb13390e891f93c3a29742f1f",
+          "step:bf928a2cf72f01c3d6528a53c8891496dc1f1dfcd887256fea9a2ff71f35b4f7",
+          "step:d0a277e79e363438f50be5af672b8aa275d8b4eecbef3df7653a00061f0f69d5",
+          "step:9054b40acb0e69a6f773de674505459187be72d084d0405a08be1c6005c67a0f"
+        ],
+        "reasonCodes": [],
+        "rootStepId": "step:dc379c1a6e53a9d43d8bf21f2ea00547fccdd0fe402f184d958b9480b21a8410",
+        "status": "complete",
+        "steps": [
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.source-chain": {
+                "incoming": [
+                  {
+                    "fromEvidenceId": "49fbc98a8e394681aa6fc0dfb92022d74e66fd06bedb45b6f4173f492e8bab14",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "6bd3fee1c41c00f5f42c30e840c21f730f057fe4d20cecb57589526bb91bdf45",
+                        "kind": "invokes_macro",
+                        "sourceEntityId": "07c569bc3e2010f0b546082673556340c2eb96ead166baaf692f3362e918a03b",
+                        "targetEntityId": "df6dd28efca4a7e6d7be510ccfc238826bd24495cd6c3b9b74eeecbf6d12e1cd"
+                      }
+                    ]
+                  },
+                  {
+                    "fromEvidenceId": "d9445a72e64d9045d6f3ba94021ddf8d79e302dd0f5b6a6e5a53c5f13ad056a9",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "e7580f7891b4b77ceac457819b67db5412fea9f1398836b619b977c469e18769",
+                        "kind": "includes",
+                        "sourceEntityId": "18ab989677016b2d7c6aa8e883f5392f744fb569795eafc4456168ee878ecc3c",
+                        "targetEntityId": "ef065bb2ee45e4874db3adadf759daeac957f897c3ceabb2cc4d6fb7cc332707"
+                      },
+                      {
+                        "direction": "forward",
+                        "id": "6da00f10325b81d712c5671fffc0fe00b6898c3d3503f741e645182596b74366",
+                        "kind": "defines",
+                        "sourceEntityId": "ef065bb2ee45e4874db3adadf759daeac957f897c3ceabb2cc4d6fb7cc332707",
+                        "targetEntityId": "df6dd28efca4a7e6d7be510ccfc238826bd24495cd6c3b9b74eeecbf6d12e1cd"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "id": "step:0dea66aa0987821857753374eccd7708b82b65ddb13390e891f93c3a29742f1f",
+            "kind": "macro_definition",
+            "provenance": [
+              {
+                "id": "1e62fe68280afbfd82eede69fe0aa20cf2c7c5dc324b8e08e7e31b193887b8e6",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              }
+            ],
+            "reason": "Observed by tree-sitter-cpp@0.23.4.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 34,
+                    "line": 2,
+                    "startColumn": 1
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "#define WRAP_INNER() _mm256_setzero_si256()"
+                  },
+                  {
+                    "line": 2,
+                    "text": "#define WRAP_OUTER() WRAP_INNER()"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "wrapper.h",
+              "span": {
+                "end": {
+                  "column": 1,
+                  "line": 3
+                },
+                "start": {
+                  "column": 1,
+                  "line": 2
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "WRAP_OUTER",
+            "title": "Macro Definition: WRAP_OUTER"
+          },
+          {
+            "configuration": "Makefile:main.o:6",
+            "extensions": {
+              "org.rvport.kb-scanner.source-chain": {
+                "incoming": [
+                  {
+                    "fromEvidenceId": "6173dd654b19a39413a70eadf1d2a33fa495a2765c47488b5e33d06124a047b4",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "c4470b2a48e58d023c0384f97717e097d8f72bee46454ae90bd8f4e31858ed2a",
+                        "kind": "selects",
+                        "sourceEntityId": "714edb794f17d7fa252fc173a0eeddcd6585426e53b4fe45cfdd520672768603",
+                        "targetEntityId": "4de3ffdb7ac426381350f2e47996d74a5b67a1f35c71c7c65bd183c80fe838a1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "id": "step:2765a114ca484b51478cb0ee73cc5167c7d7a1ab1fa69c38fc8c206c78b6d9f8",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "5b81d6144c4aad129b2c134ffe3e5ea228552814b43abcbe2f5d2b8b834be66a",
+                "kind": "evidence",
+                "producer": "tree-sitter-make+bounded-evaluator"
+              }
+            ],
+            "reason": "Observed by tree-sitter-make+bounded-evaluator.",
+            "reasonCodes": [],
+            "selectionStatus": "selected",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 42,
+                    "line": 6,
+                    "startColumn": 2
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "BASE_FLAGS = -DUSE_AVX2=1"
+                  },
+                  {
+                    "line": 2,
+                    "text": "CPPFLAGS = $(BASE_FLAGS)"
+                  },
+                  {
+                    "line": 3,
+                    "text": "CPPFLAGS += -D UNUSED=0"
+                  },
+                  {
+                    "line": 4,
+                    "text": ""
+                  },
+                  {
+                    "line": 5,
+                    "text": "main.o: main.cpp wrapper.h"
+                  },
+                  {
+                    "line": 6,
+                    "text": "\t$(CXX) $(CPPFLAGS) -c main.cpp -o main.o"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "Makefile",
+              "span": {
+                "end": {
+                  "column": 42,
+                  "line": 6
+                },
+                "start": {
+                  "column": 2,
+                  "line": 6
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "$(CXX) $(CPPFLAGS) -c main.cpp -o main.o",
+            "title": "Source Evidence: $(CXX) $(CPPFLAGS) -c main.cpp -o main.o"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.source-chain": {
+                "incoming": [
+                  {
+                    "fromEvidenceId": "42bb0eaca051f337019e6019e8b3b820aa20c5ba670c8487d47350489e0894db",
+                    "relations": [
+                      {
+                        "direction": "reversed",
+                        "id": "7c815ba45239cbd9a00cad42045358b19e46fc9349e2cfd5e9c2040f31fcc0f3",
+                        "kind": "guarded_by",
+                        "sourceEntityId": "0253780ad8b224001fb08df7e0d45044e7e27e2ee652867ed635222e57837d55",
+                        "targetEntityId": "3f18efd2beb29b438d1c9e9453d2cc5e096cb4febf62210f23d1dbbd48960c4c"
+                      }
+                    ]
+                  },
+                  {
+                    "fromEvidenceId": "42bb0eaca051f337019e6019e8b3b820aa20c5ba670c8487d47350489e0894db",
+                    "relations": [
+                      {
+                        "direction": "reversed",
+                        "id": "dd320f3584594186c992fcff92c7856c59727593ee9fbb3b88cc43782e521c8a",
+                        "kind": "guarded_by",
+                        "sourceEntityId": "07c569bc3e2010f0b546082673556340c2eb96ead166baaf692f3362e918a03b",
+                        "targetEntityId": "3f18efd2beb29b438d1c9e9453d2cc5e096cb4febf62210f23d1dbbd48960c4c"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "id": "step:4bee6a6685695a5d8c39e22428f502922ef23e8e7b888d801e3ee5e2e66a044c",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "49fbc98a8e394681aa6fc0dfb92022d74e66fd06bedb45b6f4173f492e8bab14",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              }
+            ],
+            "reason": "Observed by tree-sitter-cpp@0.23.4.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 17,
+                    "line": 5,
+                    "startColumn": 5
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "#include \"wrapper.h\""
+                  },
+                  {
+                    "line": 2,
+                    "text": ""
+                  },
+                  {
+                    "line": 3,
+                    "text": "int main() {"
+                  },
+                  {
+                    "line": 4,
+                    "text": "#if defined(USE_AVX2)"
+                  },
+                  {
+                    "line": 5,
+                    "text": "    WRAP_OUTER();"
+                  },
+                  {
+                    "line": 6,
+                    "text": "#endif"
+                  },
+                  {
+                    "line": 7,
+                    "text": "}"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "main.cpp",
+              "span": {
+                "end": {
+                  "column": 17,
+                  "line": 5
+                },
+                "start": {
+                  "column": 5,
+                  "line": 5
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "WRAP_OUTER",
+            "title": "Source Evidence: WRAP_OUTER"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.source-chain": {
+                "incoming": [
+                  {
+                    "fromEvidenceId": "5b81d6144c4aad129b2c134ffe3e5ea228552814b43abcbe2f5d2b8b834be66a",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "9b69cc481828cf9f62fca5549a24f7ff21228d7e59fc155b992d3239edf2a8c0",
+                        "kind": "selects",
+                        "sourceEntityId": "4de3ffdb7ac426381350f2e47996d74a5b67a1f35c71c7c65bd183c80fe838a1",
+                        "targetEntityId": "00773bffe5de3f276321e9e542fd642e5deb935c8f55df73531a3e201582ad34"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "id": "step:55cac3629de4303ab8e0acff37b15b8f1661cfce4f2da79b3fea3e3a5ec9ec7a",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "42bb0eaca051f337019e6019e8b3b820aa20c5ba670c8487d47350489e0894db",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              }
+            ],
+            "reason": "Observed by tree-sitter-cpp@0.23.4.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 22,
+                    "line": 4,
+                    "startColumn": 1
+                  },
+                  {
+                    "endColumn": 18,
+                    "line": 5,
+                    "startColumn": 1
+                  },
+                  {
+                    "endColumn": 7,
+                    "line": 6,
+                    "startColumn": 1
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "#include \"wrapper.h\""
+                  },
+                  {
+                    "line": 2,
+                    "text": ""
+                  },
+                  {
+                    "line": 3,
+                    "text": "int main() {"
+                  },
+                  {
+                    "line": 4,
+                    "text": "#if defined(USE_AVX2)"
+                  },
+                  {
+                    "line": 5,
+                    "text": "    WRAP_OUTER();"
+                  },
+                  {
+                    "line": 6,
+                    "text": "#endif"
+                  },
+                  {
+                    "line": 7,
+                    "text": "}"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "main.cpp",
+              "span": {
+                "end": {
+                  "column": 7,
+                  "line": 6
+                },
+                "start": {
+                  "column": 1,
+                  "line": 4
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "defined(USE_AVX2)",
+            "title": "Source Evidence: defined(USE_AVX2)"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.source-chain": {
+                "incoming": [
+                  {
+                    "fromEvidenceId": "d446e22db6ef0869834ea6bf32e3b3a8cfd04166f2f1a0ffe4b789ca67eb3b05",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "39a34a213e79a5b1e4239bf170ab98a2211c36c2cbad966d1e54a463cb8d0c00",
+                        "kind": "calls",
+                        "sourceEntityId": "fe1ac154407691d62767fa935df623ae8bc7e59304752e7613dd2fca5c5583a1",
+                        "targetEntityId": "906a0f850ef752060617dc7614c4be59287aa37b7909669b136cb97e1a3785b4"
+                      }
+                    ]
+                  },
+                  {
+                    "fromEvidenceId": "d446e22db6ef0869834ea6bf32e3b3a8cfd04166f2f1a0ffe4b789ca67eb3b05",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "d30319e2e60bf66ed66d0ef9b0a8755b12b99aebbf35e62522ef46698019eeb0",
+                        "kind": "expands_to",
+                        "sourceEntityId": "fe1ac154407691d62767fa935df623ae8bc7e59304752e7613dd2fca5c5583a1",
+                        "targetEntityId": "906a0f850ef752060617dc7614c4be59287aa37b7909669b136cb97e1a3785b4"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "id": "step:9054b40acb0e69a6f773de674505459187be72d084d0405a08be1c6005c67a0f",
+            "kind": "macro_replacement",
+            "provenance": [
+              {
+                "id": "dbb8df6e0174f51b09e9942336cf5239f44bf8f50c196c10c5a95e62a36565dd",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              }
+            ],
+            "reason": "Observed by tree-sitter-cpp@0.23.4.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 42,
+                    "line": 1,
+                    "startColumn": 22
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "#define WRAP_INNER() _mm256_setzero_si256()"
+                  },
+                  {
+                    "line": 2,
+                    "text": "#define WRAP_OUTER() WRAP_INNER()"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "wrapper.h",
+              "span": {
+                "end": {
+                  "column": 42,
+                  "line": 1
+                },
+                "start": {
+                  "column": 22,
+                  "line": 1
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "_mm256_setzero_si256",
+            "title": "Macro Replacement: _mm256_setzero_si256"
+          },
+          {
+            "id": "step:a043efb2598ad05528846f51696daf1dcd394cfe1f15f3a60bcf292cf7306fd0",
+            "kind": "source_evidence",
+            "provenance": [
+              {
+                "id": "d9445a72e64d9045d6f3ba94021ddf8d79e302dd0f5b6a6e5a53c5f13ad056a9",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              }
+            ],
+            "reason": "Observed by tree-sitter-cpp@0.23.4.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 21,
+                    "line": 1,
+                    "startColumn": 1
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "#include \"wrapper.h\""
+                  },
+                  {
+                    "line": 2,
+                    "text": ""
+                  },
+                  {
+                    "line": 3,
+                    "text": "int main() {"
+                  },
+                  {
+                    "line": 4,
+                    "text": "#if defined(USE_AVX2)"
+                  },
+                  {
+                    "line": 5,
+                    "text": "    WRAP_OUTER();"
+                  },
+                  {
+                    "line": 6,
+                    "text": "#endif"
+                  },
+                  {
+                    "line": 7,
+                    "text": "}"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "main.cpp",
+              "span": {
+                "end": {
+                  "column": 1,
+                  "line": 2
+                },
+                "start": {
+                  "column": 1,
+                  "line": 1
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "wrapper.h",
+            "title": "Source Evidence: wrapper.h"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.source-chain": {
+                "incoming": [
+                  {
+                    "fromEvidenceId": "1e62fe68280afbfd82eede69fe0aa20cf2c7c5dc324b8e08e7e31b193887b8e6",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "92f1dcf5bf32d899a35329f5936d97bc856c1bdbc035cbb673c40f8467b0352c",
+                        "kind": "expands_to",
+                        "sourceEntityId": "df6dd28efca4a7e6d7be510ccfc238826bd24495cd6c3b9b74eeecbf6d12e1cd",
+                        "targetEntityId": "fe1ac154407691d62767fa935df623ae8bc7e59304752e7613dd2fca5c5583a1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "id": "step:bf928a2cf72f01c3d6528a53c8891496dc1f1dfcd887256fea9a2ff71f35b4f7",
+            "kind": "macro_replacement",
+            "provenance": [
+              {
+                "id": "cc2beac4b78433ae1b0ffc8a30990134f816153beed4abd0067ef5fb8f0a814b",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              }
+            ],
+            "reason": "Observed by tree-sitter-cpp@0.23.4.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 32,
+                    "line": 2,
+                    "startColumn": 22
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "#define WRAP_INNER() _mm256_setzero_si256()"
+                  },
+                  {
+                    "line": 2,
+                    "text": "#define WRAP_OUTER() WRAP_INNER()"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "wrapper.h",
+              "span": {
+                "end": {
+                  "column": 32,
+                  "line": 2
+                },
+                "start": {
+                  "column": 22,
+                  "line": 2
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "WRAP_INNER",
+            "title": "Macro Replacement: WRAP_INNER"
+          },
+          {
+            "extensions": {
+              "org.rvport.kb-scanner.source-chain": {
+                "incoming": [
+                  {
+                    "fromEvidenceId": "cc2beac4b78433ae1b0ffc8a30990134f816153beed4abd0067ef5fb8f0a814b",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "92f1dcf5bf32d899a35329f5936d97bc856c1bdbc035cbb673c40f8467b0352c",
+                        "kind": "expands_to",
+                        "sourceEntityId": "df6dd28efca4a7e6d7be510ccfc238826bd24495cd6c3b9b74eeecbf6d12e1cd",
+                        "targetEntityId": "fe1ac154407691d62767fa935df623ae8bc7e59304752e7613dd2fca5c5583a1"
+                      }
+                    ]
+                  },
+                  {
+                    "fromEvidenceId": "d9445a72e64d9045d6f3ba94021ddf8d79e302dd0f5b6a6e5a53c5f13ad056a9",
+                    "relations": [
+                      {
+                        "direction": "forward",
+                        "id": "e7580f7891b4b77ceac457819b67db5412fea9f1398836b619b977c469e18769",
+                        "kind": "includes",
+                        "sourceEntityId": "18ab989677016b2d7c6aa8e883f5392f744fb569795eafc4456168ee878ecc3c",
+                        "targetEntityId": "ef065bb2ee45e4874db3adadf759daeac957f897c3ceabb2cc4d6fb7cc332707"
+                      },
+                      {
+                        "direction": "forward",
+                        "id": "e68da0b758744415c3fff27b15c8b84c090fddd0942324a01adb1f4e5f7fae8d",
+                        "kind": "defines",
+                        "sourceEntityId": "ef065bb2ee45e4874db3adadf759daeac957f897c3ceabb2cc4d6fb7cc332707",
+                        "targetEntityId": "fe1ac154407691d62767fa935df623ae8bc7e59304752e7613dd2fca5c5583a1"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "id": "step:d0a277e79e363438f50be5af672b8aa275d8b4eecbef3df7653a00061f0f69d5",
+            "kind": "macro_definition",
+            "provenance": [
+              {
+                "id": "d446e22db6ef0869834ea6bf32e3b3a8cfd04166f2f1a0ffe4b789ca67eb3b05",
+                "kind": "evidence",
+                "producer": "tree-sitter-cpp@0.23.4"
+              }
+            ],
+            "reason": "Observed by tree-sitter-cpp@0.23.4.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 44,
+                    "line": 1,
+                    "startColumn": 1
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "#define WRAP_INNER() _mm256_setzero_si256()"
+                  },
+                  {
+                    "line": 2,
+                    "text": "#define WRAP_OUTER() WRAP_INNER()"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "wrapper.h",
+              "span": {
+                "end": {
+                  "column": 1,
+                  "line": 2
+                },
+                "start": {
+                  "column": 1,
+                  "line": 1
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "WRAP_INNER",
+            "title": "Macro Definition: WRAP_INNER"
+          },
+          {
+            "id": "step:daaf99c4a6badf1512edae1c2ae5ae0f81ead1d76b75c77d7a05f03a050c4e1c",
+            "kind": "knowledge_match",
+            "knowledge": {
+              "category": "intrinsics",
+              "entryId": "5670d24908f40c73db1e6ccfc2efcf5bfa9c06c2cf34708256970884e3b8c56a",
+              "producer": "clang-x86-entries",
+              "provenance": [
+                {
+                  "id": "5670d24908f40c73db1e6ccfc2efcf5bfa9c06c2cf34708256970884e3b8c56a",
+                  "kind": "knowledge",
+                  "producer": "clang-x86-entries"
+                }
+              ],
+              "sourceId": "clang-x86-entries",
+              "sourceSha256": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7",
+              "symbol": "_mm256_setzero_si256"
+            },
+            "provenance": [
+              {
+                "id": "5670d24908f40c73db1e6ccfc2efcf5bfa9c06c2cf34708256970884e3b8c56a",
+                "kind": "knowledge",
+                "producer": "clang-x86-entries"
+              }
+            ],
+            "reason": "The normalized value matches the loaded knowledge snapshot.",
+            "reasonCodes": [],
+            "status": "complete",
+            "symbol": "_mm256_setzero_si256",
+            "title": "Knowledge matches _mm256_setzero_si256"
+          },
+          {
+            "id": "step:dc379c1a6e53a9d43d8bf21f2ea00547fccdd0fe402f184d958b9480b21a8410",
+            "kind": "compiler_flag",
+            "provenance": [
+              {
+                "id": "6173dd654b19a39413a70eadf1d2a33fa495a2765c47488b5e33d06124a047b4",
+                "kind": "evidence",
+                "producer": "tree-sitter-make+bounded-evaluator"
+              }
+            ],
+            "reason": "Observed by tree-sitter-make+bounded-evaluator.",
+            "reasonCodes": [],
+            "selectionStatus": "unknown",
+            "source": {
+              "context": {
+                "budget": {
+                  "afterLines": 20,
+                  "beforeLines": 20,
+                  "maxCharacters": 65536,
+                  "maxLines": 256,
+                  "truncated": false
+                },
+                "highlights": [
+                  {
+                    "endColumn": 26,
+                    "line": 1,
+                    "startColumn": 14
+                  }
+                ],
+                "lines": [
+                  {
+                    "line": 1,
+                    "text": "BASE_FLAGS = -DUSE_AVX2=1"
+                  },
+                  {
+                    "line": 2,
+                    "text": "CPPFLAGS = $(BASE_FLAGS)"
+                  },
+                  {
+                    "line": 3,
+                    "text": "CPPFLAGS += -D UNUSED=0"
+                  },
+                  {
+                    "line": 4,
+                    "text": ""
+                  },
+                  {
+                    "line": 5,
+                    "text": "main.o: main.cpp wrapper.h"
+                  },
+                  {
+                    "line": 6,
+                    "text": "\t$(CXX) $(CPPFLAGS) -c main.cpp -o main.o"
+                  }
+                ],
+                "reasonCodes": [],
+                "status": "complete"
+              },
+              "file": "Makefile",
+              "span": {
+                "end": {
+                  "column": 26,
+                  "line": 1
+                },
+                "start": {
+                  "column": 14,
+                  "line": 1
+                }
+              }
+            },
+            "status": "complete",
+            "symbol": "-DUSE_AVX2=1",
+            "title": "Compiler Flag: -DUSE_AVX2=1"
+          }
+        ]
+      },
+      "fact": {
+        "kind": "macro_replacement",
+        "matchedText": "_mm256_setzero_si256",
+        "primaryLocation": {
+          "context": {
+            "budget": {
+              "afterLines": 20,
+              "beforeLines": 20,
+              "maxCharacters": 65536,
+              "maxLines": 256,
+              "truncated": false
+            },
+            "highlights": [
+              {
+                "endColumn": 42,
+                "line": 1,
+                "startColumn": 22
+              }
+            ],
+            "lines": [
+              {
+                "line": 1,
+                "text": "#define WRAP_INNER() _mm256_setzero_si256()"
+              },
+              {
+                "line": 2,
+                "text": "#define WRAP_OUTER() WRAP_INNER()"
+              }
+            ],
+            "reasonCodes": [],
+            "status": "complete"
+          },
+          "file": "wrapper.h",
+          "span": {
+            "end": {
+              "column": 42,
+              "line": 1
+            },
+            "start": {
+              "column": 22,
+              "line": 1
+            }
+          }
+        },
+        "provenance": [
+          {
+            "id": "dbb8df6e0174f51b09e9942336cf5239f44bf8f50c196c10c5a95e62a36565dd",
+            "kind": "evidence",
+            "producer": "tree-sitter-cpp@0.23.4"
+          }
+        ],
+        "symbol": "_mm256_setzero_si256"
+      },
+      "id": "finding:22e90be462511383ffa407cf1bf897034ea3146510e1fa9c5251e50ffa6469ef",
+      "occurrences": [
+        {
+          "configuration": "default",
+          "id": "occurrence:a11752b620cf74978a4295103526979a04a5093628b5b5550feee2b8033ae992",
+          "kind": "macro_replacement_token",
+          "location": {
+            "context": {
+              "budget": {
+                "afterLines": 20,
+                "beforeLines": 20,
+                "maxCharacters": 65536,
+                "maxLines": 256,
+                "truncated": false
+              },
+              "highlights": [
+                {
+                  "endColumn": 42,
+                  "line": 1,
+                  "startColumn": 22
+                }
+              ],
+              "lines": [
+                {
+                  "line": 1,
+                  "text": "#define WRAP_INNER() _mm256_setzero_si256()"
+                },
+                {
+                  "line": 2,
+                  "text": "#define WRAP_OUTER() WRAP_INNER()"
+                }
+              ],
+              "reasonCodes": [],
+              "status": "complete"
+            },
+            "file": "wrapper.h",
+            "span": {
+              "end": {
+                "column": 42,
+                "line": 1
+              },
+              "start": {
+                "column": 22,
+                "line": 1
+              }
+            }
+          },
+          "provenance": [
+            {
+              "id": "dbb8df6e0174f51b09e9942336cf5239f44bf8f50c196c10c5a95e62a36565dd",
+              "kind": "evidence",
+              "producer": "tree-sitter-cpp@0.23.4"
+            }
+          ],
+          "reasonCodes": [],
+          "selectionStatus": "unknown",
+          "status": "complete"
+        }
+      ],
+      "primaryOccurrenceId": "occurrence:a11752b620cf74978a4295103526979a04a5093628b5b5550feee2b8033ae992"
+    }
+  ],
+  "project": {
+    "filesAnalyzed": 3,
+    "id": "project:889dc6b0b702257698e2e342315cde190979fe00a3bbbd29dc68f44dd8ec1252",
+    "name": "fixture",
+    "reasonCodes": [],
+    "status": "complete"
+  },
+  "scan": {
+    "artifactNames": [
+      "scan-result.json",
+      "scan-report.html",
+      "scan.log"
+    ],
+    "id": "scan:6783496235d51e06161cb45d4cb6b11b7bbd5015d16d1316ea18f65ee27792a8",
+    "knowledgeSources": [
+      {
+        "id": "binutils-2.42-x86",
+        "kind": "compiler-derived",
+        "sha256": "e3ff7d8acccd50fd7e8a2f8c64d4a303e147b7540702a362c1b00f9bbdf29345"
+      },
+      {
+        "id": "clang-x86-entries",
+        "kind": "compiler-derived",
+        "sha256": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7"
+      },
+      {
+        "id": "curated-x86-migration-semantics",
+        "kind": "curated",
+        "sha256": "21b7ccc36186a21994c4e39965ece16da429da916a9272112f38817d3bcccc6b"
+      },
+      {
+        "id": "gcc-14.2.0-x86-target",
+        "kind": "compiler-derived",
+        "sha256": "aa04d904fb8dd76c20898ec3b11355e3ed30c742865cdbe6bdfea9c084dea26c"
+      },
+      {
+        "id": "gcc-x86-entries",
+        "kind": "compiler-derived",
+        "sha256": "89775341ee880b13ac4f10a30558ff5d52875b25a3233114a5765601f0a9dad9"
+      },
+      {
+        "id": "llvm-18.1.8-x86",
+        "kind": "compiler-derived",
+        "sha256": "021708c5e89a9565c36d83f98e8175cd058b1afb9c39c660e0d7e1425ad64722"
+      }
+    ],
+    "scope": {
+      "compiled": false,
+      "domain": "c-cpp-x86-to-riscv",
+      "linked": false,
+      "staticAnalysisOnly": true,
+      "targetArchitecture": "riscv64",
+      "testsExecuted": false
+    },
+    "tool": {
+      "name": "kb-scanner",
+      "version": "0.1.0"
+    }
+  },
+  "schemaVersion": "2.0",
+  "summary": {
+    "blocking": 0,
+    "countUnit": "finding",
+    "files": 3,
+    "findings": 1,
+    "hints": 0,
+    "inactiveOrGuarded": 0,
+    "issues": 1,
+    "portabilityGaps": 0,
+    "readiness": "provisional",
+    "reasonCodes": [],
+    "referenceSources": 0,
+    "references": 0,
+    "status": "complete"
+  }
+}

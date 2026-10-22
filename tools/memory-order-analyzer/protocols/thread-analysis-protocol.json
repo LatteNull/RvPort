@@ -1,0 +1,26 @@
+{
+  "protocol_version": 1,
+  "analysis_version": "0.1.0",
+  "llvm_version": "21.1.8",
+  "policy_id": "thread-sync-contexts-v1",
+  "model_id": "posix-pthread-v1",
+  "kinds": {
+    "ThreadAnalysisRequest": 1,
+    "ThreadLocalFacts": 1,
+    "ExecutionOrderFacts": 1,
+    "ThreadContextGraph": 1,
+    "ThreadAnalysisReport": 1
+  },
+  "budgets": {
+    "local_steps": 100000,
+    "value_candidates": 8,
+    "thread_contexts": 4096,
+    "thread_instances": 16384,
+    "graph_items": 100000,
+    "scc_iterations": 16,
+    "worker_seconds": 60,
+    "worker_output_bytes": 16777216,
+    "request_seconds": 300,
+    "request_output_bytes": 67108864
+  }
+}

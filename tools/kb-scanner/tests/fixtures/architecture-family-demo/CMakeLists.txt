@@ -1,0 +1,5 @@
+if(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64")
+  add_library(sample sample_x86.cpp)
+else()
+  add_library(sample sample_generic.cpp)
+endif()

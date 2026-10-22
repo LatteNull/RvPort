@@ -1,0 +1,37 @@
+{
+  "protocol_version": 1,
+  "analysis_version": "0.1.0",
+  "llvm_version": "21.1.8",
+  "policy_id": "demand-driven-function-analysis-v1",
+  "cache_namespace": "demand-driven-function-analysis-v1",
+  "kinds": {
+    "DemandDrivenAnalysisRequest": 1,
+    "LLVMModuleIndexFacts": 1,
+    "FunctionSemanticFacts": 1,
+    "FunctionEffectFacts": 1,
+    "FunctionThreadFacts": 1,
+    "AnalysisDemandGraph": 1,
+    "WorkerExecutionManifest": 1,
+    "DemandDrivenAnalysisReport": 1
+  },
+  "budgets": {
+    "translation_units": 4096,
+    "roots": 65536,
+    "demands": 1048576,
+    "contexts": 262144,
+    "functions_per_batch": 256,
+    "workers": 32,
+    "materialized_instructions": 4000000,
+    "analysis_queries": 8000000,
+    "scc_iterations": 64,
+    "recursion_depth": 64,
+    "frontier_items": 262144,
+    "diagnostic_bytes": 4096,
+    "worker_seconds": 600,
+    "request_seconds": 3600,
+    "cpu_seconds": 3600,
+    "rss_bytes": 8589934592,
+    "worker_output_bytes": 268435456,
+    "request_output_bytes": 536870912
+  }
+}

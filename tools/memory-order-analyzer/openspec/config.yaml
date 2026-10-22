@@ -1,0 +1,33 @@
+schema: spec-driven
+
+context: |
+  Scope: tools/memory-order-analyzer, an independent C/C++ memory-order analyzer project.
+  Planning home: this directory's openspec/; do not write changes or specs into the RvPort root or sibling tools.
+  Current stage: foundation, P1 enrich-ir-semantic-facts, P2 add-scoped-effect-summaries, P3 model-thread-and-sync-contexts, P4 detect-single-publication-risks, P5 validate-and-scale-analysis, A1 integrate-ast-cross-tu-evidence, A2 add-degraded-source-analysis and A3 model-cpp-thread-lifecycle are implemented, quality-verified, synchronized and archived. A4 model-cpp-raii-synchronization is implemented and undergoing its final required gate; it is not yet synchronized or archived. ModuleFacts and RunReport remain v2; P2 EffectSummary, P3 ThreadContextGraph, P4 SinglePublicationProtocolGraph, A1 source-evidence, A2 degraded-source and A3 lifecycle protocols remain independently versioned and unchanged by A4. A4 adds verified libstdc++/libc++ mutex profiles, independent source/IR local facts, owner/held-region state and bounded same-mutex proofs; it does not implement a general happens-before solver or whole-program safety proof.
+  Supported input scope: GCC/Clang user-space C/C++; exclude MSVC and clang-cl.
+  Dockerfile.dev has been created, built and validated. Consolidation with the production Dockerfile is a separate future change.
+  The sibling memory-model-ir-checker and memory-model-checker-legacy directories are archived references, not implementation dependencies.
+  Existing technical documentation and experiment evidence live in doc/.
+  The recorded 2026-09-10 local Clang 18.1.3 experiment produced 27 BC modules and passed 74 expression checks; this is not defect-detection accuracy.
+  Preserve the 2026-09-10 SSH failure as history. On 2026-09-11 ARM DevKit 25.3.0 with LLVM 16.0.4 produced 47 successful-status reports; the imported evidence subset is under doc/experiments/results/devkit-25.3.0-20260911/.
+  DevKit exit zero, scan success and zero suggestions do not prove artifact completeness or C/C++ concurrency safety. Offline tests must not require SSH.
+  Compilation databases describe per-translation-unit commands, not a complete target/link graph or a semantic call graph.
+  BC generation requires preprocessing, semantic analysis and IR generation, but does not require linking or running the final application.
+  Keep observed results, official documentation, design proposals and unknowns distinct.
+  Preserve unrelated user changes elsewhere in the repository.
+
+rules:
+  proposal:
+    - Write explanatory prose in Chinese and retain the schema's required headings.
+    - State whether this is a documentation-only or runtime implementation change.
+    - Scope new capabilities to this project's own specs; do not claim to modify unowned sibling specs.
+  design:
+    - For documentation changes, map each topic to its destination document and define observable acceptance criteria.
+    - Explain build configuration identity, cross-module resolution boundaries and evidence completeness where relevant.
+    - Do not present a successful BC compile or zero findings as a proof of concurrency safety.
+  specs:
+    - Use testable SHALL/MUST requirements with WHEN/THEN scenarios.
+    - For documentation-only changes, requirements govern documentation content rather than claiming runtime functionality.
+  tasks:
+    - Keep documentation-only changes free of analyzer implementation or mandatory remote-execution tasks.
+    - Include document link, consistency and evidence-provenance checks appropriate to the change.

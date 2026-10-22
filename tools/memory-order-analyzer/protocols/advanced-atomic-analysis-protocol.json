@@ -1,0 +1,32 @@
+{
+  "protocol_version": 1,
+  "analysis_version": "0.1.0",
+  "llvm_version": "21.1.8",
+  "policy_id": "fence-rmw-publication-v1",
+  "model_id": "bounded-advanced-atomic-publication-v1",
+  "cache_namespace": "fence-rmw-publication-v1",
+  "kinds": {
+    "FenceRmwPublicationRequest": 1,
+    "AtomicSourceConstructFacts": 1,
+    "AdvancedAtomicFunctionFacts": 1,
+    "AdvancedAtomicLocalFacts": 1,
+    "BoundedAtomicCommunicationGraph": 1,
+    "AdvancedPublicationProtocolOverlay": 1,
+    "FenceRmwPublicationReport": 1
+  },
+  "budgets": {
+    "atomic_events": 100000,
+    "objects": 10000,
+    "rf_edges": 200000,
+    "mo_nodes": 100000,
+    "mo_branches": 200000,
+    "assignments": 100000,
+    "guards": 100000,
+    "frontier_items": 100000,
+    "scc_iterations": 32,
+    "worker_seconds": 120,
+    "worker_output_bytes": 67108864,
+    "request_seconds": 600,
+    "request_output_bytes": 134217728
+  }
+}

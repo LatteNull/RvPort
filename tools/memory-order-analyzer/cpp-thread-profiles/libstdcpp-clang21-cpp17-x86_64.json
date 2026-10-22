@@ -1,0 +1,19 @@
+{
+  "schema_version": 1, "kind": "CppThreadLibraryProfile", "analysis_version": "0.1.0", "policy_id": "cpp-thread-lifecycle-v1",
+  "profile_id": "1ba2f7fe86443903c8748f3e48464bc475e9b6330cbe1d8f7212827950ec448a",
+  "vendor": "libstdc++", "version": "20240904", "cxx_standard": "c++17", "cxx_abi": "itanium",
+  "target": "x86_64-pc-linux-gnu", "data_layout": "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-i128:128-f80:128-n8:16:32:64-S128",
+  "pointer_width": 64, "exceptions": true, "rtti": true, "thread_backend": "pthread",
+  "toolchain_lineage": "clang-21.1.8+libstdc++-13-dev-13.3.0",
+  "header_digests": [{"kind": "Header", "id": "/usr/include/c++/13/thread", "digest": "fea05267771743b440228a690bcb9bc12bc306589050f36c40119cc1f3315552"}],
+  "wrapper_signatures": [
+    {"role": "construct-attempt", "symbol": "_ZNSt6thread15_M_start_threadESt10unique_ptrINS_6_StateESt14default_deleteIS1_EEPFvvE", "calling_convention": "ccc", "parameter_roles": ["dependency", "state"], "digest": "cda05147805fb1a4800e503bb289f0e1d1ca8d5e8f750127056d66785bc4a987"},
+    {"role": "detach-attempt", "symbol": "_ZNSt6thread6detachEv", "calling_convention": "ccc", "parameter_roles": ["this"], "digest": "04a7d4df73caedb8a8363912904fb5d77eb36764c3a2d928030d8619de5f1bc6"},
+    {"role": "entry-broker", "symbol": "_ZNSt6thread11_State_implINS_8_InvokerISt5tupleIJ7functorEEEEE6_M_runEv", "calling_convention": "ccc", "parameter_roles": ["callable"], "digest": "febb38ec10b2c10e4dd6ca4fb5099738e1e305f9daa6f1ec63a2b0c1c5bb50fc"},
+    {"role": "handle-transfer", "symbol": "_ZNSt6thread4swapERS_", "calling_convention": "ccc", "parameter_roles": ["other", "this"], "digest": "7889c4cd8cbef5579acf5612ca47829333b377544b5ace6e476cb4c90fa135d3"},
+    {"role": "join-attempt", "symbol": "_ZNSt6thread4joinEv", "calling_convention": "ccc", "parameter_roles": ["this"], "digest": "b401ff57515362c8a5e7371330e0a6ff0894cbb0756ae482276311d6926c2b9f"}
+  ],
+  "model_version": "cpp-thread-library-v1", "status": "verified",
+  "provenance": ["compile-only", "llvm-ir", "profile-probe.cpp"],
+  "semantic_digest": "a5800ea737c2cc8cd1263f0e8a354003234ef1aaa58faafb4e5e6a2bba6c4701"
+}

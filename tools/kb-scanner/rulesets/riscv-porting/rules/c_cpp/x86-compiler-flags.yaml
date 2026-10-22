@@ -1,0 +1,23 @@
+id: C_CPP.X86.COMPILER_FLAG
+language: any
+severity: high
+confidence: high
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        generatedSet: "compilerFlags"
+        ignoreCommentLines: true
+        regex: "(^|[=\\s\"'(;])(-mavx512[a-z0-9_+-]*|-mavx2|-mavx|-msse4\\.2|-msse4\\.1|-mssse3|-msse3|-msse2|-msse|-mfma|-mbmi2|-mbmi|-maes|-mpclmul|-march=x86-64|-mtune=intel|/arch:SSE2|/arch:AVX2|/arch:AVX)(?=$|[\\s\"');])"
+message:
+  zh-CN:
+    title: "使用 x86 专属编译参数"
+    reason: "构建文件或源码中出现 x86 专属编译参数，例如 SSE、AVX、FMA、BMI、AES 或 x86-64 架构选项。"
+    suggestion: "建议为 RISC-V 构建移除该参数，或按架构拆分编译选项。"
+  en-US:
+    title: "Uses x86-specific compiler flags"
+    reason: "A build file or source file contains x86-specific compiler flags, such as SSE, AVX, FMA, BMI, AES, or x86-64 architecture options."
+    suggestion: "Remove this flag for RISC-V builds, or split compiler options by target architecture."
+
+

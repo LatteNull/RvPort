@@ -1,126 +1,39 @@
 # RvPort
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+English | [简体中文](README.zh-CN.md)
 
-RvPort migrates x86 / ARM projects to RISC-V: it scans source code, makefiles, and dependencies for architecture-specific migration points, generates fix suggestions from a built-in rule base, and optionally applies intelligent rewrites powered by LLMs.
+RvPort supports assessment and implementation of migrations from x86 to RISC-V, including project and source management, execution environment registration, dependency and code risk analysis, build validation, and migration result management.
 
-## Features
+The backend uses Java 25, Spring Boot 4.1, PostgreSQL, Redis, and RabbitMQ. API nodes receive requests, while worker nodes execute asynchronous tasks. Object storage holds analysis artifacts. KB Scanner, the floating-point scanner, and the memory-order analyzer provide complementary analysis capabilities. The frontend uses React, TypeScript, and Vite.
 
-- **Migration-point scanning**: C/C++ (makefile rules, intrinsics, builtins, architecture macros, inline assembly), Java (JNI, architecture-specific dependencies), Python (C extensions, ctypes/cffi), Go (cgo, unsafe/syscall), Rust (inline assembly, architecture-specific crates)
-- **Fix suggestions**: per-point remediation guidance from the built-in rule base (x86 / AArch64 source architecture → RISC-V target architecture)
-- **AI-powered rewriting**: once a self-hosted LLM gateway is configured, generate smarter rewrite suggestions for individual findings or entire files; Agent mode applies code changes automatically inside a container and produces patches
-- **Dependency assessment**: architecture-compatibility scanning for Python / Go packages
+## Getting started
 
-## Requirements
+See the [installation guide](docs/installation.md) for setup and operation, and the [development guide](docs/development.md) for development, builds, and tests. All compilation, code generation, and testing run in Docker. The host does not need Java, Maven, Python, or LLVM installed.
 
-| Item | Requirement |
-| --- | --- |
-| OS | CentOS/RHEL/openEuler / Ubuntu/Debian |
-| Python | 3.13 |
-| Node.js | >= 20 |
-| Docker | >= 18.09 |
+See [testing and coverage scope](docs/testing-and-coverage.md) for coverage requirements and the [frontend guide](frontend/README.md) for frontend development.
 
-## Deployment Guide
+## Repository layout
 
-```bash
-# 1. Install system dependencies (example for Ubuntu/Debian)
-sudo apt install -y gcc make patchelf zlib1g-dev libffi-dev libssl-dev libbz2-dev \
-    libgdbm-dev uuid-dev libsqlite3-dev sqlcipher libsqlcipher-dev git
+| Directory or file | Purpose |
+|---|---|
+| `backend/` | API, workers, database migrations, generated jOOQ types, and unit tests |
+| `tools/kb-scanner/` | Migration analysis based on rules, build context, and source evidence |
+| `frontend/` | Web interface, build configuration, unit tests, and frontend OpenSpec |
+| `tools/floating-point-precision-scanner/` | Floating-point migration risks and source evidence |
+| `tools/memory-order-analyzer/` | Memory ordering, threads, and publication-pattern analysis |
+| `docs/` | Installation, development, testing, and third-party provenance |
+| `openspec/` and each subproject's `openspec/` | Specifications, active changes, and historical records |
+| `docker-compose.yml` | Frontend, backend, and infrastructure orchestration |
+| `.env.example` | Configuration template; contains no master key suitable for a real deployment |
 
-# CentOS/openEuler equivalent:
-# yum install -y gcc make patchelf zlib-devel libffi-devel \
-#   openssl-devel bzip2-devel gdbm-devel libuuid-devel sqlite-devel sqlcipher-devel
+Tool documentation: [KB Scanner](tools/kb-scanner/README.md), [floating-point scanner](tools/floating-point-precision-scanner/README.md), and [memory-order analyzer](tools/memory-order-analyzer/README.md). Backend reference: [API design](backend/docs/API_DESIGN.md) and [database design](backend/docs/DATABASE_DESIGN.md).
 
-# 2. Install Python packages
-pip install -r requirements-dev.txt
+## Capability boundaries
 
-# 3. Initialize the database
-python scripts/install_db.py
-# For MySQL: set DB_TYPE to "mysql" in server/config.json, add the connection
-# entries (MYSQL_HOST / MYSQL_PORT / MYSQL_USER / MYSQL_DATABASE), then initialize
-# with the password:
-echo -n '<password>' | python scripts/install_db.py db_type=mysql \
-    mysql_host=127.0.0.1 mysql_port=3306 mysql_user=root mysql_database=codemig
+Analysis depends on the language, compiler options, and availability of source code and bitcode. Interpret unknown, incomplete-evidence, and degraded results according to the relevant tool's protocol. An absence of reported risks does not prove program correctness or whole-program safety.
 
-# 4. Build the frontend
-cd frontend
-npm install --legacy-peer-deps
-npm run build
-mkdir -p ../server/static && cp -rf dist/frontend/browser/* ../server/static/
-```
+The complete tool environment uses Linux containers and pinned Clang/LLVM versions. Production images use an x86_64 toolchain. Prepare RISC-V target environments separately as described by the tools. The first build downloads toolchains and dependencies; its duration depends on network conditions.
 
-## Getting Started
+## License and source
 
-The backend entry point is `server/main.py` (run it from the `server` directory so that `config.json` can be located):
-
-```bash
-cd server
-python main.py
-```
-
-- `DEBUG: true` in `config.json` starts the Flask development server (for debugging); `false` starts gunicorn (1 worker, multi-threaded, for production)
-- Session secret (the `key` field in `config.json`): auto-generated on first launch in development mode; production mode requires an explicit value (startup fails with specific instructions if unset), or inject one via the `CODEMIG_SECRET_KEY` environment variable
-- Visit `http://<server_ip>:8080/` in a browser (for production, set `server_ip` in `config.json` to `0.0.0.0`)
-- On first launch an administrator account **Admin** is created automatically (initial password `Codemig@123`); a forced password change on first login immediately invalidates the initial password
-
-## AI Configuration
-
-AI features require an API key configured by the administrator. Log in as admin → "API Key Management":
-
-| Field | Example |
-| --- | --- |
-| Base URL | `https://your-llm-gateway.example.com/v1` |
-| API Key | `sk-xxxxx...` |
-| Model name | `Qwen3-235B-A22B` / `DeepSeek-V3` / `Kimi-K2-Instruct`, etc. |
-
-If not configured, inference requests fail with an error that directs you to the configuration page.
-
-### Agent Mode
-
-Agent mode executes code-migration skills (migrate / uttest / asmrepair) inside Docker containers. Prepare the image first:
-
-```bash
-cd server/assets/ai-agent
-./build_docker.sh x86        # or arm; produces codemig-agent-base_1.0.0_x86.tar
-docker load -i codemig-agent-base_1.0.0_x86.tar
-```
-
-The account running the backend needs Docker access (`sudo usermod -aG docker $USER`, then re-login).
-
-## Testing
-
-```bash
-cd tests/server
-python -m pytest -q
-```
-
-## FAQ
-
-**A migration task fails and the backend log shows `permission denied ... /var/run/docker.sock`**
-
-The backend process lacks docker group membership (required by Agent mode). To fix:
-
-1. `sudo usermod -aG docker $USER` (skip if already in the docker group; verify with `id | grep docker`)
-2. **Log out and reconnect** — group membership only takes effect for new sessions
-3. Restart the backend from the new session (the old process inherited group membership from the old session and must be restarted to pick it up)
-
-Verify with: `docker ps` should succeed.
-
-## Project Layout
-
-```
-├── server/               # Backend (Flask)
-│   ├── framework/        #   Framework: users, config, logging, plugin management
-│   ├── common/           #   Common: crypto, database, logging
-│   ├── plugin/codemig/   #   Migration plugin (scanning, suggestions, AI, task management)
-│   ├── assets/ai-agent/  #   Agent container image build scripts and skill assets
-│   └── static/           #   Frontend build output (generated at build time)
-├── frontend/             # Frontend (Angular)
-├── scripts/              # Installation and utility scripts
-├── data/                 # Runtime data (gitignored): databases, key files
-└── tests/                # pytest test suite
-```
-
-## License
-
-This project is open-sourced under the [Apache License 2.0](LICENSE).
+RvPort is licensed under [Apache License 2.0](LICENSE). The repository is [RvPort/RvPort](https://github.com/RvPort/RvPort). Third-party materials retain their own licenses; see [third-party notices](docs/third-party-notices.md).

@@ -1,0 +1,5 @@
+{
+  "ruleId": "RPM_SPEC.ARCH.CONSTRAINT",
+  "count": 1,
+  "symbols": ["ExclusiveArch: x86_64 %{ix86}"]
+}

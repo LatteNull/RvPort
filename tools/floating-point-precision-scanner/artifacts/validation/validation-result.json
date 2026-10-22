@@ -1,0 +1,1079 @@
+{
+  "case_results": [
+    {
+      "case_id": "architecture-specific-fp-api-boundary-01",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-budget-01",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-negative-01",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-negative-02",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-negative-03",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-negative-04",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-negative-05",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-negative-06",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-positive-01",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-positive-02",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-positive-03",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-positive-04",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-positive-05",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-positive-06",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-suppression-01",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-unknown-01",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-unknown-02",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-unknown-03",
+      "exact": true,
+      "rule_code": "architecture-specific-fp-api"
+    },
+    {
+      "case_id": "floating-environment-boundary-01",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-budget-01",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-negative-01",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-negative-02",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-negative-03",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-negative-04",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-negative-05",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-negative-06",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-positive-01",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-positive-02",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-positive-03",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-positive-04",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-positive-05",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-positive-06",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-suppression-01",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-unknown-01",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-unknown-02",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "floating-environment-unknown-03",
+      "exact": true,
+      "rule_code": "floating-environment"
+    },
+    {
+      "case_id": "fma-contraction-boundary-01",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-budget-01",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-negative-01",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-negative-02",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-negative-03",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-negative-04",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-negative-05",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-negative-06",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-positive-01",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-positive-02",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-positive-03",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-positive-04",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-positive-05",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-positive-06",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-suppression-01",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-unknown-01",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-unknown-02",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fma-contraction-unknown-03",
+      "exact": true,
+      "rule_code": "fma-contraction"
+    },
+    {
+      "case_id": "fragile-fp-comparison-boundary-01",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-budget-01",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-negative-01",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-negative-02",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-negative-03",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-negative-04",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-negative-05",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-negative-06",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-positive-01",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-positive-02",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-positive-03",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-positive-04",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-positive-05",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-positive-06",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-suppression-01",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-unknown-01",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-unknown-02",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "fragile-fp-comparison-unknown-03",
+      "exact": true,
+      "rule_code": "fragile-fp-comparison"
+    },
+    {
+      "case_id": "long-double-abi-boundary-01",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-budget-01",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-negative-01",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-negative-02",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-negative-03",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-negative-04",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-negative-05",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-negative-06",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-positive-01",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-positive-02",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-positive-03",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-positive-04",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-positive-05",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-positive-06",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-suppression-01",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-system-declaration-flood-01",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-unknown-01",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-unknown-02",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "long-double-abi-unknown-03",
+      "exact": true,
+      "rule_code": "long-double-abi"
+    },
+    {
+      "case_id": "math-library-variance-boundary-01",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-budget-01",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-negative-01",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-negative-02",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-negative-03",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-negative-04",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-negative-05",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-negative-06",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-positive-01",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-positive-02",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-positive-03",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-positive-04",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-positive-05",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-positive-06",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-suppression-01",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-unknown-01",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-unknown-02",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "math-library-variance-unknown-03",
+      "exact": true,
+      "rule_code": "math-library-variance"
+    },
+    {
+      "case_id": "mixed-precision-conversion-boundary-01",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-budget-01",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-missing-type-01",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-negative-01",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-negative-02",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-negative-03",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-negative-04",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-negative-05",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-negative-06",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-nonscalar-01",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-positive-01",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-positive-02",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-positive-03",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-positive-04",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-positive-05",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-positive-06",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-suppression-01",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-unknown-01",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-unknown-02",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "mixed-precision-conversion-unknown-03",
+      "exact": true,
+      "rule_code": "mixed-precision-conversion"
+    },
+    {
+      "case_id": "reduction-reassociation-boundary-01",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-budget-01",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-negative-01",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-negative-02",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-negative-03",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-negative-04",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-negative-05",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-negative-06",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-positive-01",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-positive-02",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-positive-03",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-positive-04",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-positive-05",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-positive-06",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-suppression-01",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-unknown-01",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-unknown-02",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "reduction-reassociation-unknown-03",
+      "exact": true,
+      "rule_code": "reduction-reassociation"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-boundary-01",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-budget-01",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-negative-01",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-negative-02",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-negative-03",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-negative-04",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-negative-05",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-negative-06",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-positive-01",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-positive-02",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-positive-03",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-positive-04",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-positive-05",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-positive-06",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-suppression-01",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-unknown-01",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-unknown-02",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-unknown-03",
+      "exact": true,
+      "rule_code": "unsafe-fp-optimization"
+    },
+    {
+      "case_id": "x87-excess-precision-boundary-01",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-budget-01",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-negative-01",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-negative-02",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-negative-03",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-negative-04",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-negative-05",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-negative-06",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-positive-01",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-positive-02",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-positive-03",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-positive-04",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-positive-05",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-positive-06",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-suppression-01",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-unknown-01",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-unknown-02",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    },
+    {
+      "case_id": "x87-excess-precision-unknown-03",
+      "exact": true,
+      "rule_code": "x87-excess-precision"
+    }
+  ],
+  "corpus_digest": "ef2a98ff4fa3e6cbfbafb2c87a01d62327b785eb47d0d8b000fe564bf704e48d",
+  "gates": {
+    "corpus_complete": true,
+    "exact_match": true,
+    "lifecycle_exact": true,
+    "passed": true,
+    "rule_quality": true
+  },
+  "kind": "FloatingPointScannerValidationResult",
+  "oracle_digest": "0179bf48c95a3a94c7775175fc85f3343aa5c198150e09ec2b66ba2013be260d",
+  "overall": {
+    "abstention": 0,
+    "exact": 183,
+    "exact_match": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "strict_precision": 1.0,
+    "strict_recall": 1.0,
+    "supported_precision": 1.0,
+    "supported_recall": 1.0,
+    "total": 183,
+    "tp": 60
+  },
+  "per_rule": {
+    "architecture-specific-fp-api": {
+      "abstention": 0,
+      "exact": 18,
+      "exact_match": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "strict_precision": 1.0,
+      "strict_recall": 1.0,
+      "supported_precision": 1.0,
+      "supported_recall": 1.0,
+      "total": 18,
+      "tp": 6
+    },
+    "floating-environment": {
+      "abstention": 0,
+      "exact": 18,
+      "exact_match": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "strict_precision": 1.0,
+      "strict_recall": 1.0,
+      "supported_precision": 1.0,
+      "supported_recall": 1.0,
+      "total": 18,
+      "tp": 6
+    },
+    "fma-contraction": {
+      "abstention": 0,
+      "exact": 18,
+      "exact_match": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "strict_precision": 1.0,
+      "strict_recall": 1.0,
+      "supported_precision": 1.0,
+      "supported_recall": 1.0,
+      "total": 18,
+      "tp": 6
+    },
+    "fragile-fp-comparison": {
+      "abstention": 0,
+      "exact": 18,
+      "exact_match": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "strict_precision": 1.0,
+      "strict_recall": 1.0,
+      "supported_precision": 1.0,
+      "supported_recall": 1.0,
+      "total": 18,
+      "tp": 6
+    },
+    "long-double-abi": {
+      "abstention": 0,
+      "exact": 19,
+      "exact_match": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "strict_precision": 1.0,
+      "strict_recall": 1.0,
+      "supported_precision": 1.0,
+      "supported_recall": 1.0,
+      "total": 19,
+      "tp": 6
+    },
+    "math-library-variance": {
+      "abstention": 0,
+      "exact": 18,
+      "exact_match": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "strict_precision": 1.0,
+      "strict_recall": 1.0,
+      "supported_precision": 1.0,
+      "supported_recall": 1.0,
+      "total": 18,
+      "tp": 6
+    },
+    "mixed-precision-conversion": {
+      "abstention": 0,
+      "exact": 20,
+      "exact_match": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "strict_precision": 1.0,
+      "strict_recall": 1.0,
+      "supported_precision": 1.0,
+      "supported_recall": 1.0,
+      "total": 20,
+      "tp": 6
+    },
+    "reduction-reassociation": {
+      "abstention": 0,
+      "exact": 18,
+      "exact_match": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "strict_precision": 1.0,
+      "strict_recall": 1.0,
+      "supported_precision": 1.0,
+      "supported_recall": 1.0,
+      "total": 18,
+      "tp": 6
+    },
+    "unsafe-fp-optimization": {
+      "abstention": 0,
+      "exact": 18,
+      "exact_match": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "strict_precision": 1.0,
+      "strict_recall": 1.0,
+      "supported_precision": 1.0,
+      "supported_recall": 1.0,
+      "total": 18,
+      "tp": 6
+    },
+    "x87-excess-precision": {
+      "abstention": 0,
+      "exact": 18,
+      "exact_match": 1.0,
+      "fn": 0,
+      "fp": 0,
+      "strict_precision": 1.0,
+      "strict_recall": 1.0,
+      "supported_precision": 1.0,
+      "supported_recall": 1.0,
+      "total": 18,
+      "tp": 6
+    }
+  },
+  "request_schema_version": "1.4",
+  "result_schema_version": "2.0",
+  "schema_version": "1.0",
+  "semantic_digest": "be17d3616275b077c051b3feb6c7a50bd7b09bd1b2c1b8d12e72cebe9d4e0d1c",
+  "tool_version": "0.5.1"
+}

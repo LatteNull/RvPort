@@ -1,0 +1,9 @@
+{
+  "source": "tools/memory-order-analyzer/schemas/external_bitcode.json",
+  "schema_version": 1,
+  "ingestion_version": "0.1.0",
+  "policy_id": "external-bitcode-ingestion-v1",
+  "bundle_required": ["schema_version", "kind", "ingestion_version", "policy_id", "bundle_id", "producer", "records", "scopes", "budgets", "semantic_digest"],
+  "record_required": ["schema_version", "kind", "ingestion_version", "policy_id", "record_id", "physical_tu_id", "status", "diagnostic", "bitcode", "producer", "target", "language", "standard", "optimization", "debug", "module_kind", "source", "compile_record_digest", "input_digests", "semantic_digest"],
+  "scope_required": ["target_id", "record_ids", "evidence", "closed", "external_boundaries", "target_triple"]
+}

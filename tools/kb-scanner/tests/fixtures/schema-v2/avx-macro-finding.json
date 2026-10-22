@@ -1,0 +1,323 @@
+{
+  "schemaVersion": "2.0",
+  "scan": {
+    "id": "scan-avx-audit",
+    "tool": {"name": "kb-scanner", "version": "design-contract"},
+    "scope": {
+      "domain": "c-cpp-x86-to-riscv",
+      "targetArchitecture": "riscv64",
+      "staticAnalysisOnly": true,
+      "compiled": false,
+      "linked": false,
+      "testsExecuted": false
+    },
+    "artifactNames": ["scan-result.json", "scan-report.html", "scan.log"],
+    "knowledgeSources": [
+      {
+        "id": "clang-x86-entries",
+        "kind": "compiler-derived",
+        "sha256": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7"
+      }
+    ]
+  },
+  "project": {
+    "id": "avx-avx2-example-code",
+    "name": "avx-avx2-example-code",
+    "filesAnalyzed": 3,
+    "status": "complete",
+    "reasonCodes": []
+  },
+  "summary": {
+    "files": 3,
+    "findings": 1,
+    "issues": 1,
+    "hints": 0,
+    "blocking": 1,
+    "portabilityGaps": 1,
+    "inactiveOrGuarded": 0,
+    "referenceSources": 0,
+    "references": 0,
+    "countUnit": "finding",
+    "readiness": "x86_only",
+    "status": "complete",
+    "reasonCodes": []
+  },
+  "findings": [
+    {
+      "id": "finding-mm256-set-m128",
+      "fact": {
+        "kind": "macro_invocation",
+        "symbol": "_mm256_set_m128",
+        "matchedText": "_mm256_set_m128",
+        "primaryLocation": {
+          "file": "Initialization_Intrinsics/src/set.c",
+          "span": {
+            "start": {"line": 56, "column": 28},
+            "end": {"line": 56, "column": 43}
+          },
+          "context": {
+            "status": "complete",
+            "reasonCodes": [],
+            "lines": [
+              {"line": 54, "text": "    __m128 float_vec_128_1 = _mm_set_ps(5.0, 6.0, 7.0, 8.0);"},
+              {"line": 55, "text": ""},
+              {"line": 56, "text": "    __m256 float_vec_256 = _mm256_set_m128(float_vec_128_1, float_vec_128_0);"},
+              {"line": 57, "text": "    float* flo_256 = (float*) &float_vec_256;"},
+              {"line": 58, "text": "    printf(\"float:\\t\\t%f, %f, %f, %f, %f, %f, %f, %f\\n\", flo_256[0], flo_256[1], flo_256[2], flo_256[3], flo_256[4], flo_256[5], flo_256[6], flo_256[7]);"}
+            ],
+            "highlights": [{"line": 56, "startColumn": 28, "endColumn": 43}],
+            "budget": {"beforeLines": 2, "afterLines": 2, "maxLines": 16, "maxCharacters": 4096, "truncated": false}
+          }
+        },
+        "provenance": [{"kind": "evidence", "id": "evidence-mm256-set-call", "producer": "cpp-frontend"}]
+      },
+      "conclusion": {
+        "title": "Selected source expands an x86 AVX helper macro",
+        "severity": "high",
+        "confidence": 1.0,
+        "findingType": "x86_macro_intrinsic_chain",
+        "actionable": true,
+        "blocking": true,
+        "archReachability": "selected",
+        "status": "complete",
+        "reason": "The selected build enables AVX, the source invokes a local helper macro, and its replacement calls a compiler-confirmed x86 intrinsic.",
+        "suggestion": "Replace the helper and its AVX replacement with a portable or RISC-V implementation."
+      },
+      "occurrences": [
+        {
+          "id": "occurrence-mm256-set-call",
+          "kind": "source-call",
+          "location": {
+            "file": "Initialization_Intrinsics/src/set.c",
+            "span": {
+              "start": {"line": 56, "column": 28},
+              "end": {"line": 56, "column": 43}
+            },
+            "context": {
+              "status": "complete",
+              "reasonCodes": [],
+              "lines": [
+                {"line": 54, "text": "    __m128 float_vec_128_1 = _mm_set_ps(5.0, 6.0, 7.0, 8.0);"},
+                {"line": 55, "text": ""},
+                {"line": 56, "text": "    __m256 float_vec_256 = _mm256_set_m128(float_vec_128_1, float_vec_128_0);"},
+                {"line": 57, "text": "    float* flo_256 = (float*) &float_vec_256;"},
+                {"line": 58, "text": "    printf(\"float:\\t\\t%f, %f, %f, %f, %f, %f, %f, %f\\n\", flo_256[0], flo_256[1], flo_256[2], flo_256[3], flo_256[4], flo_256[5], flo_256[6], flo_256[7]);"}
+              ],
+              "highlights": [{"line": 56, "startColumn": 28, "endColumn": 43}],
+              "budget": {"beforeLines": 2, "afterLines": 2, "maxLines": 16, "maxCharacters": 4096, "truncated": false}
+            }
+          },
+          "configuration": "make-default-riscv64",
+          "selectionStatus": "selected",
+          "status": "complete",
+          "reasonCodes": [],
+          "provenance": [{"kind": "evidence", "id": "evidence-mm256-set-call", "producer": "cpp-frontend"}]
+        }
+      ],
+      "primaryOccurrenceId": "occurrence-mm256-set-call",
+      "evidenceChain": {
+        "status": "complete",
+        "reasonCodes": [],
+        "rootStepId": "step-01-build",
+        "primaryPath": [
+          "step-01-build",
+          "step-02-call",
+          "step-03-definition",
+          "step-04-replacement-insert",
+          "step-06-knowledge",
+          "step-07-classification",
+          "step-08-assessment"
+        ],
+        "steps": [
+          {
+            "id": "step-01-build",
+            "kind": "compiler_flag",
+            "title": "Selected Makefile enables AVX",
+            "status": "complete",
+            "reason": "The selected build configuration contains -mavx.",
+            "reasonCodes": [],
+            "symbol": "-mavx",
+            "configuration": "make-default-riscv64",
+            "selectionStatus": "selected",
+            "source": {
+              "file": "Initialization_Intrinsics/src/Makefile",
+              "span": {"start": {"line": 5, "column": 22}, "end": {"line": 5, "column": 27}},
+              "context": {
+                "status": "complete",
+                "reasonCodes": [],
+                "lines": [
+                  {"line": 4, "text": "CC = gcc"},
+                  {"line": 5, "text": "CFLAGS = -I$(INCDIR) -mavx -mavx2 -mfma -msse -msse2 -msse3 -Wall"},
+                  {"line": 6, "text": ""}
+                ],
+                "highlights": [{"line": 5, "startColumn": 22, "endColumn": 27}],
+                "budget": {"beforeLines": 1, "afterLines": 1, "maxLines": 16, "maxCharacters": 4096, "truncated": false}
+              }
+            },
+            "provenance": [{"kind": "evidence", "id": "evidence-build-mavx", "producer": "build-selection-analyzer"}]
+          },
+          {
+            "id": "step-02-call",
+            "kind": "macro_invocation",
+            "title": "Selected source invokes _mm256_set_m128",
+            "status": "complete",
+            "reason": "The frontend resolves the invocation in a selected translation unit.",
+            "reasonCodes": [],
+            "symbol": "_mm256_set_m128",
+            "configuration": "make-default-riscv64",
+            "selectionStatus": "selected",
+            "source": {
+              "file": "Initialization_Intrinsics/src/set.c",
+              "span": {"start": {"line": 56, "column": 28}, "end": {"line": 56, "column": 43}},
+              "context": {
+                "status": "complete",
+                "reasonCodes": [],
+                "lines": [
+                  {"line": 54, "text": "    __m128 float_vec_128_1 = _mm_set_ps(5.0, 6.0, 7.0, 8.0);"},
+                  {"line": 55, "text": ""},
+                  {"line": 56, "text": "    __m256 float_vec_256 = _mm256_set_m128(float_vec_128_1, float_vec_128_0);"},
+                  {"line": 57, "text": "    float* flo_256 = (float*) &float_vec_256;"},
+                  {"line": 58, "text": "    printf(\"float:\\t\\t%f, %f, %f, %f, %f, %f, %f, %f\\n\", flo_256[0], flo_256[1], flo_256[2], flo_256[3], flo_256[4], flo_256[5], flo_256[6], flo_256[7]);"}
+                ],
+                "highlights": [{"line": 56, "startColumn": 28, "endColumn": 43}],
+                "budget": {"beforeLines": 2, "afterLines": 2, "maxLines": 16, "maxCharacters": 4096, "truncated": false}
+              }
+            },
+            "provenance": [{"kind": "evidence", "id": "evidence-mm256-set-call", "producer": "cpp-frontend"}]
+          },
+          {
+            "id": "step-03-definition",
+            "kind": "macro_definition",
+            "title": "Local header defines _mm256_set_m128",
+            "status": "complete",
+            "reason": "The preprocessor definition is present in the included compatibility header.",
+            "reasonCodes": [],
+            "symbol": "_mm256_set_m128",
+            "configuration": "make-default-riscv64",
+            "selectionStatus": "selected",
+            "source": {
+              "file": "Initialization_Intrinsics/include/gcc_support.h",
+              "span": {"start": {"line": 9, "column": 9}, "end": {"line": 9, "column": 24}},
+              "context": {
+                "status": "complete",
+                "reasonCodes": [],
+                "lines": [
+                  {"line": 8, "text": ""},
+                  {"line": 9, "text": "#define _mm256_set_m128(vh, vl) \\"},
+                  {"line": 10, "text": "        _mm256_insertf128_ps(_mm256_castps128_ps256(vl), vh, 1)"}
+                ],
+                "highlights": [{"line": 9, "startColumn": 9, "endColumn": 24}],
+                "budget": {"beforeLines": 1, "afterLines": 1, "maxLines": 16, "maxCharacters": 4096, "truncated": false}
+              }
+            },
+            "provenance": [{"kind": "evidence", "id": "evidence-mm256-set-definition", "producer": "cpp-frontend"}]
+          },
+          {
+            "id": "step-04-replacement-insert",
+            "kind": "macro_replacement",
+            "title": "Macro replacement calls _mm256_insertf128_ps",
+            "status": "complete",
+            "reason": "The first function-like token in the replacement is an AVX insertion intrinsic.",
+            "reasonCodes": [],
+            "symbol": "_mm256_insertf128_ps",
+            "configuration": "make-default-riscv64",
+            "selectionStatus": "selected",
+            "source": {
+              "file": "Initialization_Intrinsics/include/gcc_support.h",
+              "span": {"start": {"line": 10, "column": 9}, "end": {"line": 10, "column": 29}},
+              "context": {
+                "status": "complete",
+                "reasonCodes": [],
+                "lines": [
+                  {"line": 9, "text": "#define _mm256_set_m128(vh, vl) \\"},
+                  {"line": 10, "text": "        _mm256_insertf128_ps(_mm256_castps128_ps256(vl), vh, 1)"},
+                  {"line": 11, "text": ""}
+                ],
+                "highlights": [{"line": 10, "startColumn": 9, "endColumn": 29}],
+                "budget": {"beforeLines": 1, "afterLines": 1, "maxLines": 16, "maxCharacters": 4096, "truncated": false}
+              }
+            },
+            "provenance": [{"kind": "evidence", "id": "evidence-mm256-insert-replacement", "producer": "cpp-frontend"}]
+          },
+          {
+            "id": "step-05-replacement-cast",
+            "kind": "macro_replacement",
+            "title": "Macro replacement also calls _mm256_castps128_ps256",
+            "status": "complete",
+            "reason": "The nested cast intrinsic is a supporting branch of the same replacement.",
+            "reasonCodes": [],
+            "symbol": "_mm256_castps128_ps256",
+            "configuration": "make-default-riscv64",
+            "selectionStatus": "selected",
+            "source": {
+              "file": "Initialization_Intrinsics/include/gcc_support.h",
+              "span": {"start": {"line": 10, "column": 30}, "end": {"line": 10, "column": 52}},
+              "context": {
+                "status": "complete",
+                "reasonCodes": [],
+                "lines": [
+                  {"line": 9, "text": "#define _mm256_set_m128(vh, vl) \\"},
+                  {"line": 10, "text": "        _mm256_insertf128_ps(_mm256_castps128_ps256(vl), vh, 1)"},
+                  {"line": 11, "text": ""}
+                ],
+                "highlights": [{"line": 10, "startColumn": 30, "endColumn": 52}],
+                "budget": {"beforeLines": 1, "afterLines": 1, "maxLines": 16, "maxCharacters": 4096, "truncated": false}
+              }
+            },
+            "provenance": [{"kind": "evidence", "id": "evidence-mm256-cast-replacement", "producer": "cpp-frontend"}]
+          },
+          {
+            "id": "step-06-knowledge",
+            "kind": "knowledge_match",
+            "title": "Compiler facts identify _mm256_insertf128_ps as x86 AVX",
+            "status": "complete",
+            "reason": "The replacement symbol exactly matches the existing compiler-derived intrinsic facts.",
+            "reasonCodes": [],
+            "symbol": "_mm256_insertf128_ps",
+            "knowledge": {
+              "entryId": "clang-intrinsic-mm256-insertf128-ps",
+              "category": "intrinsics",
+              "symbol": "_mm256_insertf128_ps",
+              "producer": "compiler-facts",
+              "sourceId": "clang-x86-entries",
+              "sourceSha256": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7",
+              "provenance": [{"kind": "knowledge", "id": "clang-intrinsic-mm256-insertf128-ps", "producer": "compiler-facts"}]
+            },
+            "provenance": [{"kind": "knowledge", "id": "clang-intrinsic-mm256-insertf128-ps", "producer": "compiler-facts"}]
+          },
+          {
+            "id": "step-07-classification",
+            "kind": "classification",
+            "title": "Selected x86 macro chain is actionable and blocking",
+            "status": "complete",
+            "reason": "Selected build and source evidence connect to compiler-derived x86 knowledge.",
+            "reasonCodes": [],
+            "provenance": [{"kind": "classification", "id": "classification-avx-macro-chain", "producer": "migration-classifier"}]
+          },
+          {
+            "id": "step-08-assessment",
+            "kind": "assessment",
+            "title": "Finding contributes to x86-only readiness",
+            "status": "complete",
+            "reason": "The selected static path has a confirmed x86-only implementation and no portable alternative in the analyzed scope.",
+            "reasonCodes": [],
+            "provenance": [{"kind": "assessment", "id": "assessment-avx-x86-only", "producer": "migration-assessor"}]
+          }
+        ],
+        "edges": [
+          {"id": "edge-01-build-call", "fromStepId": "step-01-build", "toStepId": "step-02-call", "kind": "selects", "status": "complete", "reasonCodes": [], "provenance": [{"kind": "relation", "id": "relation-build-call", "producer": "build-selection-analyzer"}]},
+          {"id": "edge-02-call-definition", "fromStepId": "step-02-call", "toStepId": "step-03-definition", "kind": "invokes_macro", "status": "complete", "reasonCodes": [], "provenance": [{"kind": "relation", "id": "relation-call-definition", "producer": "cpp-frontend"}]},
+          {"id": "edge-03-definition-insert", "fromStepId": "step-03-definition", "toStepId": "step-04-replacement-insert", "kind": "expands_to", "status": "complete", "reasonCodes": [], "provenance": [{"kind": "relation", "id": "relation-definition-insert", "producer": "cpp-frontend"}]},
+          {"id": "edge-04-definition-cast", "fromStepId": "step-03-definition", "toStepId": "step-05-replacement-cast", "kind": "expands_to", "status": "complete", "reasonCodes": [], "provenance": [{"kind": "relation", "id": "relation-definition-cast", "producer": "cpp-frontend"}]},
+          {"id": "edge-05-insert-knowledge", "fromStepId": "step-04-replacement-insert", "toStepId": "step-06-knowledge", "kind": "matches_knowledge", "status": "complete", "reasonCodes": [], "provenance": [{"kind": "relation", "id": "relation-insert-knowledge", "producer": "local-detector"}]},
+          {"id": "edge-06-knowledge-classification", "fromStepId": "step-06-knowledge", "toStepId": "step-07-classification", "kind": "classified_as", "status": "complete", "reasonCodes": [], "provenance": [{"kind": "proofPath", "id": "proof-avx-macro-chain", "producer": "migration-classifier"}]},
+          {"id": "edge-07-classification-assessment", "fromStepId": "step-07-classification", "toStepId": "step-08-assessment", "kind": "impacts_assessment", "status": "complete", "reasonCodes": [], "provenance": [{"kind": "assessment", "id": "assessment-avx-x86-only", "producer": "migration-assessor"}]}
+        ],
+        "breaks": [],
+        "impactStepIds": ["step-07-classification", "step-08-assessment"],
+        "budget": {"maxDepth": 16, "maxVisited": 256, "maxPaths": 32, "visited": 8, "paths": 2, "truncated": false}
+      }
+    }
+  ],
+  "diagnostics": []
+}

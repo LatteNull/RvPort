@@ -1,0 +1,1126 @@
+{
+  "change": "implement-kb-scanner-candidate-usage-proofs",
+  "reviewStatus": "已审校：round33 候选驱动采集后，64 项核心字段不变；26 项数据用途仍保留 unknown，旧 8 项采集预算阻断已消除",
+  "historicalCount": 55,
+  "baselineCount": 64,
+  "currentCount": 64,
+  "unmatchedHistoricalIds": [],
+  "historicalDeduplications": [
+    {
+      "historicalId": "finding:0d23324b0f09ab8b6718befb02034d217336339515cee4249b8cebb9b2c44a8f",
+      "status": "历史已去重，本轮未新增排除",
+      "confirmedFindingIds": [
+        "finding:a33ac28ce7ff787e5f811387bd306bce51939bbf9d3bf255144a828159ea8067"
+      ]
+    }
+  ],
+  "differencesOutsideUsageNamespace": [],
+  "usage": {
+    "excludedCandidates": [],
+    "excludedCount": 0,
+    "explanation": "排除仅针对已证明的局部非执行用途，不证明替代实现或项目已可迁移。",
+    "explanation_en": "Exclusions concern proven local non-execution usage only, not alternative implementations or project readiness.",
+    "omittedExcludedCandidates": 0,
+    "statistics": {
+      "cacheHits": 0,
+      "recordCount": 7133,
+      "rootCount": 30,
+      "scopeIndexes": 11,
+      "visits": 22578
+    },
+    "version": 1
+  },
+  "findings": [
+    {
+      "findingId": "finding:0183c3b156a2bfffb70d3daef3627a5aecc5e28f483d34c638c55de783320fd8",
+      "historicalId": "finding:0183c3b156a2bfffb70d3daef3627a5aecc5e28f483d34c638c55de783320fd8",
+      "historicalGroup": "preserve",
+      "symbol": "/*\r\n * Brought from LZMA SDK.\r\n *\r\n * Bcj2.c -- Converter for x86 code (BCJ2)\r\n * 2008-10-04 : Igor Pavlov : Public domain\r\n *\r\n */",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 4456,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:038da6246c702e79ef23d7a4b331911e90b8aabb6f3d5c2c235ee2738770d84d",
+      "historicalId": "finding:5c18c9f708c461988763232f0c521b7142aed30bd92d40f796881b94a5263306",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "BOOT_PLATFORM_X86",
+      "file": "libarchive/archive_write_set_format_iso9660.c",
+      "line": 819,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-proof-incomplete",
+        "usage-root-unresolved",
+        "usage-roots-incomplete"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:0477f764f2a55a578a6a3a7e518b566a59e8561f15b08e68531524605e1873ae",
+      "historicalId": "finding:0477f764f2a55a578a6a3a7e518b566a59e8561f15b08e68531524605e1873ae",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "sumalg::CKSUM_SHA512",
+      "file": "libarchive/archive_write_set_format_xar.c",
+      "line": 2705,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-external-write",
+        "usage-query-incomplete",
+        "usage-scope-incomplete",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-owner",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:047e49d39503283141ab4b7e830896475c4ef48936889a065ab54a4cba07d752",
+      "historicalId": "finding:51b70098604bed9dbd4797b03fff98aac04d717a3e57b5d855a1ac5c34f87924",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 1689,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:106d95453bc0492492024f2cfaea19726f399478345057770010fbdad5909fdd",
+      "historicalId": "finding:bed0a9900ff840353b1ecb3f2368beb590fc4cc871f13e20eb871e27595e6b75",
+      "historicalGroup": "preserve",
+      "symbol": "cat/test/list.h",
+      "file": "Makefile.am",
+      "line": 1694,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:19379e4cdfc45d4811031cd3b0778a97fd97d9283d47f9e67f1e7c57757c015b",
+      "historicalId": "finding:19379e4cdfc45d4811031cd3b0778a97fd97d9283d47f9e67f1e7c57757c015b",
+      "historicalGroup": "preserve",
+      "symbol": "/*\r\n\t * Translation reversal of x86 processor CALL byte sequence(E8).\r\n\t */",
+      "file": "libarchive/archive_read_support_format_cab.c",
+      "line": 1868,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:1aaa8abba1c7643a243bc01eb6a5abeeb798a4217142d6a9aecc35aa464a6372",
+      "historicalId": "finding:4b30d7c5d7dfad400bee4a8abf002adf0ea956a6c987a739fcf42aa4a1d2f725",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86_BCJ2",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 1639,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:1f151b45182d6a0955bdfcd6e6268e067388f9de58869cb91e6e6a49dfabdbb1",
+      "historicalId": "finding:1f151b45182d6a0955bdfcd6e6268e067388f9de58869cb91e6e6a49dfabdbb1",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "sumalg::CKSUM_SHA512",
+      "file": "libarchive/archive_write_set_format_xar.c",
+      "line": 3369,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-scope-incomplete",
+        "usage-unresolved-binding",
+        "usage-unsupported-owner",
+        "usage-unsupported-syntax"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:240dd4ca11c94f2335df56bf6ab4cf9f7aeb489ad1aa7b12203903215d16e235",
+      "historicalId": null,
+      "historicalGroup": null,
+      "symbol": "%{name}%{?_isa} = %{version}-%{release}",
+      "file": "contrib/libarchive.spec",
+      "line": 35,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:2f610a1b9d66d82aeb2f9fb657532a8c86c5a2330658da5d40ef9e112547293e",
+      "historicalId": "finding:2f610a1b9d66d82aeb2f9fb657532a8c86c5a2330658da5d40ef9e112547293e",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "sumalg::CKSUM_SHA512",
+      "file": "libarchive/archive_write_set_format_xar.c",
+      "line": 2735,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-external-write",
+        "usage-query-incomplete",
+        "usage-scope-incomplete",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-owner",
+        "usage-unsupported-syntax"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:31daa5236e00c82b4f43bf24dffd39fdc5312861ad62f8b2924d043ceeab3238",
+      "historicalId": "finding:974199ef9180f32846c7efba8a46ad77fd0696ceafc2ad59a37d2f369122ff09",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 1346,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:398eb8359a2a7b7ab1fd8590d80e6afe15ba35520403854bcbcecacafa6e46c5",
+      "historicalId": "finding:1b92ea5eeb943f98b0383e8b24c9b9f40b7eba791dbe73216dc09dd27c710542",
+      "historicalGroup": "preserve",
+      "symbol": "_rotl",
+      "file": "libarchive/xxhash.c",
+      "line": 168,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:3cc89d27788ac0e4c76c6cfbcf583018c292755514ccfbba050e79e10c981fd7",
+      "historicalId": "finding:3cc89d27788ac0e4c76c6cfbcf583018c292755514ccfbba050e79e10c981fd7",
+      "historicalGroup": "preserve",
+      "symbol": "/*\r\n * Brought from LZMA SDK.\r\n *\r\n * Bra86.c -- Converter for x86 code (BCJ)\r\n * 2008-10-04 : Igor Pavlov : Public domain\r\n *\r\n */",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 4153,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:3dcc2ed07561dbde80be0e97df5d0e95b13467d18c28a3a91cff7ab576a7c399",
+      "historicalId": null,
+      "historicalGroup": null,
+      "symbol": "libarchive/test/${libarchive_test_SOURCES}",
+      "file": "libarchive/test/CMakeLists.txt",
+      "line": 382,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:3f45d7167fde60812a4bc94041dc448a51859330db366c68b721d81f9c99cf84",
+      "historicalId": "finding:a6927f38548a71a99900a5a61095ff004758b88b99140c7ff5a8b8612ef33e7e",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86_BCJ2",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 1715,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:471e1dabfa7df4ff55d6e2bece77798dfe31bb231ca2bca0aabbc31e08bf0efd",
+      "historicalId": "finding:656b3e7d267281d61123180ef93cfb330b02f7b853cc605ae1d5daaa00e18561",
+      "historicalGroup": "preserve",
+      "symbol": "unzip/test/list.h",
+      "file": "Makefile.am",
+      "line": 13,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:5bbd754354506f3ee4eb8189fd20a6212c098e08315bd77e05694d86fb0e5a78",
+      "historicalId": "finding:75574f4d8cad09f8ab1c41b3bffb723349b5318ed4f87f9cfcbbd536711057e3",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 1361,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:5d9141ac85f3174672d5fdcb8f340a9355e59888c35413589594ca93dd7e21aa",
+      "historicalId": null,
+      "historicalGroup": null,
+      "symbol": "tar/test/${bsdtar_test_SOURCES}",
+      "file": "tar/test/CMakeLists.txt",
+      "line": 94,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:609616e6e8828c2bc93567e08b416f041da47c863b90849ab3ec2dcd24e7ee83",
+      "historicalId": "finding:609616e6e8828c2bc93567e08b416f041da47c863b90849ab3ec2dcd24e7ee83",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "sumalg::CKSUM_SHA512",
+      "file": "libarchive/archive_write_set_format_xar.c",
+      "line": 2679,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-external-write",
+        "usage-query-incomplete",
+        "usage-scope-incomplete",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-owner",
+        "usage-unsupported-syntax"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:61c1c70e4937463c8ac24f86e660b544f728eed4cf7c7fd4e0dbc071c33cdcd6",
+      "historicalId": "finding:7f642c85d8a5258cbb895784fec22f87f35124ff1969371219b14f4c57306154",
+      "historicalGroup": "preserve",
+      "symbol": "cpio/test/list.h",
+      "file": "Makefile.am",
+      "line": 1571,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:6371c6a6275dd87a94613ce5d93bc5012be248c8f88d325b6b03e7a949123011",
+      "historicalId": "finding:56ecd1727aea37ac82c433b4e5b6785cdc9d169816ff60850e253355b868e64d",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86_BCJ2",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 1426,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:6419c2822b18c65bfafa0ad7078643c274352909753280b6e87f2a8e89a87efb",
+      "historicalId": "finding:c574da3ed75fce134068a77afdec334eda8aae901570d760656bba2b73c3eb35",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 1959,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:6489ff633cf0060c4a0a3c120fa09ca95b39e8734d16d7d06bcd420823bcf8dc",
+      "historicalId": "finding:57aa37c1b156a29e4418b93290f8f6d19ae69d3251daf013cf7913c1ae571453",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 105,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-proof-incomplete",
+        "usage-root-unresolved",
+        "usage-roots-incomplete"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:6da161d1a3f3278dc2e42aeee581f5fe0dbccd5b467af909ea44d9275db76b42",
+      "historicalId": "finding:6da161d1a3f3278dc2e42aeee581f5fe0dbccd5b467af909ea44d9275db76b42",
+      "historicalGroup": "preserve",
+      "symbol": "/* Intel x86 code. */",
+      "file": "libarchive/archive_read_support_format_rar5.c",
+      "line": 168,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:6f3854a2819057955da0f51b9c375644c715a6715bdd25eb82d498918380a2bc",
+      "historicalId": "finding:e287fe02afa36d8b8c33e12469b7e2809d67d046764e143ef95a1eb67ca19656",
+      "historicalGroup": "preserve",
+      "symbol": "cpio/test/list.h",
+      "file": "Makefile.am",
+      "line": 13,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:79ee24da53b09a9c8f9ee628d51e8cc16982fd6b262cef16e2af1822c47ae687",
+      "historicalId": null,
+      "historicalGroup": null,
+      "symbol": "unzip/test/${bsdunzip_test_SOURCES}",
+      "file": "unzip/test/CMakeLists.txt",
+      "line": 42,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:7af82ed8604848e0c03f9d5ad927fa6a86f0c455e273fda8fd24d837cb64f9d2",
+      "historicalId": "finding:9fc511f84ec447667c9507a923470aa75be27a8515de965399bf943954dbe6b0",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 1638,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:7c5b981e620d7277998f95fce0893471838bd09cd5c89f79c260a29fc18baf0d",
+      "historicalId": "finding:fd878835477cfcf55fe38233f81482cc7e0f8b391e2c3c6eb80f6d85ae03b28a",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86_BCJ2",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 106,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-proof-incomplete",
+        "usage-root-unresolved",
+        "usage-roots-incomplete"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:7f5d99d34c2332743c229b7bb2e4ee7d35d4cc9136dc557d640f44195b536fb7",
+      "historicalId": "finding:7f5d99d34c2332743c229b7bb2e4ee7d35d4cc9136dc557d640f44195b536fb7",
+      "historicalGroup": "preserve",
+      "symbol": "/* Unaligned memory access is automatically enabled for \"common\" CPU, such as x86.\r\n** For others CPU, the compiler will be more cautious, and insert extra code to ensure aligned access is respected.\r\n** If you know your target CPU supports unaligned memory access, you want to force this option manually to improve performance.\r\n** You can also enable this parameter if you know your input data will always be aligned (boundaries of 4, for U32).\r\n*/",
+      "file": "libarchive/xxhash.c",
+      "line": 44,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:80d80805b12300a19a00e7e95a0876211fb83a9e222aa467db335ea9d452259c",
+      "historicalId": "finding:80d80805b12300a19a00e7e95a0876211fb83a9e222aa467db335ea9d452259c",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "sumalg::CKSUM_SHA512",
+      "file": "libarchive/archive_write_set_format_xar.c",
+      "line": 3387,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-scope-incomplete",
+        "usage-unresolved-binding",
+        "usage-unsupported-owner",
+        "usage-unsupported-syntax"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:81380988737d69888fcac1401c2aa5ff2d752ec2c272c0e9170d76a47f7d8ac2",
+      "historicalId": "finding:185d3c9828b55e221e3d10df8ad5ca244d991a86d55a336a814e068627433df2",
+      "historicalGroup": "preserve",
+      "symbol": "tar/test/list.h",
+      "file": "Makefile.am",
+      "line": 13,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:8bff8b166d90b47d8110755f96a602e22c93b06289a765a2d40340ea494ce7a6",
+      "historicalId": "finding:8bff8b166d90b47d8110755f96a602e22c93b06289a765a2d40340ea494ce7a6",
+      "historicalGroup": "preserve",
+      "symbol": "/*\r\n * x86 processor family can read misaligned data without an access error.\r\n */",
+      "file": "libarchive/archive_read_support_format_cab.c",
+      "line": 2405,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:8d37ae9a6ed829e5fd16cc199d74feb5c87626d0637e055a08aca9e4c782f440",
+      "historicalId": "finding:98d7370650686fa336b0b088a36c671c1724c7ba56fb8c7ad1ca839bb7ad8e0a",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86_BCJ2",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 1347,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:9954faaf48a7ca05ac953d9a463e6507a425ae04ce01052d73c13f984b3f017c",
+      "historicalId": "finding:9954faaf48a7ca05ac953d9a463e6507a425ae04ce01052d73c13f984b3f017c",
+      "historicalGroup": "preserve",
+      "symbol": "/* Translation reversal for x86 processor CALL byte sequence(E8).\r\n\t * This is used for LZX only. */",
+      "file": "libarchive/archive_read_support_format_cab.c",
+      "line": 197,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:9ed4ef37bfd65d2dde6b496352eec035b8aafb782a9f94c5b6645cf286c99a8a",
+      "historicalId": "finding:d1a56466b8e515436ec039145fc83373fe54150389da9358a7f179e1f469461b",
+      "historicalGroup": "preserve",
+      "symbol": "defined(__ARM_FEATURE_UNALIGNED) || defined(__i386) || defined(_M_IX86) || defined(__x86_64__) || defined(_M_X64)",
+      "file": "libarchive/xxhash.c",
+      "line": 49,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:a33ac28ce7ff787e5f811387bd306bce51939bbf9d3bf255144a828159ea8067",
+      "historicalId": "finding:ce1842839a136ae67134f91ad53c95b124248c4725eec58200fe417dd080765e",
+      "historicalGroup": "preserve",
+      "symbol": "defined(_M_IX86) || defined(__i386__)",
+      "file": "libarchive/archive_ppmd_private.h",
+      "line": 75,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:a5a829e62f7ab0af40d811a5ce82135ad529737f7530affd303b688490cd58dc",
+      "historicalId": "finding:a5a829e62f7ab0af40d811a5ce82135ad529737f7530affd303b688490cd58dc",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "FILE_FLAGS::CRC32",
+      "file": "libarchive/archive_read_support_format_rar5.c",
+      "line": 1850,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:a7237cdeb6235c1c6085ec91f4899a158b6178372f1564428f12d99ad8bf094a",
+      "historicalId": "finding:3bfd8b9737af44d6710376c3e3b0f5f17f5998194cc4f4102eb68bc371b0a69a",
+      "historicalGroup": "preserve",
+      "symbol": "tar/test/list.h",
+      "file": "Makefile.am",
+      "line": 1412,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:a8d25dd0a7f736bce56498e647769319a964d9b95f79ad5db61a3e13320ab6aa",
+      "historicalId": null,
+      "historicalGroup": null,
+      "symbol": "%{name}%{?_isa} = %{version}-%{release}",
+      "file": "contrib/libarchive.spec",
+      "line": 44,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:b9adc19fb5ff052c8effbb69c23120daadf3bd648efa3531a17b6ebf41e7e5f6",
+      "historicalId": "finding:0f792b0783591366b91e002fbe37f6383f4b9b85dae524076f6bb95eee712faf",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "BOOT_PLATFORM_X86",
+      "file": "libarchive/archive_write_set_format_iso9660.c",
+      "line": 1117,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:ba47fa88483ca4dcb4730976eb1803a2b8247b1d891b38998e8d4d89b5d938d0",
+      "historicalId": null,
+      "historicalGroup": null,
+      "symbol": "%{name}%{?_isa} = %{version}-%{release}",
+      "file": "contrib/libarchive.spec",
+      "line": 62,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:c1075f32cfbb9103f513fe5469ba747322a77a0779ea4cff8035654c990fdd1d",
+      "historicalId": "finding:4aedd98c6565815bbd2d1b6c681d9a0db98c19975159bf54392d114847d14af2",
+      "historicalGroup": "overlap_to_verify",
+      "symbol": "defined(__ARM_FEATURE_UNALIGNED) || defined(__i386) || defined(_M_IX86) || defined(__x86_64__) || defined(_M_X64)",
+      "file": "libarchive/xxhash.c",
+      "line": 49,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-proof-incomplete",
+        "usage-root-unresolved",
+        "usage-roots-incomplete"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:c5360114afe839ad026c7ac3b46926fa65941f19c421a08cb352ab553ef297a5",
+      "historicalId": "finding:54d55525d9db1ef68badf628f2851c1a8cd6161d146ea63bf81571bd0538944e",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86_BCJ2",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 3876,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:c5a67450740db98745488ba230dae32317380aa7f9e863fcb39785465d1fe084",
+      "historicalId": "finding:8db3bedfe1e0da4dd5efa8cd200b191d8926b0d14a47413929c5a09a4c581793",
+      "historicalGroup": "preserve",
+      "symbol": "cat/test/list.h",
+      "file": "Makefile.am",
+      "line": 13,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:cbe3668ddc19088de69dba3c5cd870e228275d42f4e6f31ecbfd7d0d0d8b6607",
+      "historicalId": "finding:bdf64e63d1f3ec6e43f5523f71ba3b3afc5109b51d9d94384efcffbc363181b8",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86_BCJ2",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 3928,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:cc385c1f310b0aa3d50bf2aa1392b47bc44dd47f15227a74f9f66ec777f7ef28",
+      "historicalId": "finding:cc385c1f310b0aa3d50bf2aa1392b47bc44dd47f15227a74f9f66ec777f7ef28",
+      "historicalGroup": "preserve",
+      "symbol": "/*\r\n\t\t * 0xE8 = x86's call <relative_addr_uint32> (function call)\r\n\t\t * 0xE9 = x86's jmp <relative_addr_uint32> (unconditional jump)\r\n\t\t */",
+      "file": "libarchive/archive_read_support_format_rar5.c",
+      "line": 613,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:ce58146a96c1fd8243ebe48ae081894781cd0e5421e0c1355249aead3f1d4dc9",
+      "historicalId": "finding:3ab8cdb3c6175a407205b7dd383860bfd0c35ccd15b8a9c7d17bc90154ea5d57",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 3663,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:d6489d16712a70438cdc0c88fb8f7dde1b395a0591e631eaebf763b416606019",
+      "historicalId": "finding:1995719230d55be903337f802436b16e69cbe7528863cd58666595bf260c7811",
+      "historicalGroup": "preserve",
+      "symbol": "MY_CPU_X86",
+      "file": "libarchive/archive_ppmd_private.h",
+      "line": 79,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-open-scope",
+        "usage-proof-incomplete",
+        "usage-roots-incomplete"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:d8f2ed58ea7853fec34ff6873c09f4b44d459bcae3e2c9d52d83fdbf4656286d",
+      "historicalId": "finding:d8f2ed58ea7853fec34ff6873c09f4b44d459bcae3e2c9d52d83fdbf4656286d",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "FILE_FLAGS::CRC32",
+      "file": "libarchive/archive_read_support_format_rar5.c",
+      "line": 2056,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:db95207dbad22ba34509971d2556368347efefd7565c2399451b20e6969c0092",
+      "historicalId": "finding:d9b0d9468d5453193db455917a358fc89d2686d19a1025ae0ecd9d643a9cb747",
+      "historicalGroup": "preserve",
+      "symbol": "libarchive/test/list.h",
+      "file": "Makefile.am",
+      "line": 762,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:ddefb997f5097452a77eadbdd28f09319a02940ce51c9bd81c9ce0a12479e227",
+      "historicalId": "finding:5562304e0f7c5d88e320b90fe2fdef448b1de20ce634f18ce76a8805d2246af8",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86_BCJ2",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 3978,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:dfd2ddf5205ff3571204e31c6886b446c8058fd33d56e4dead29974c5c0380fd",
+      "historicalId": "finding:64266fbb7c8aa24d19d2f067c6678e8e9e92cf2a5aeffe0867270b7e59836f43",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86_BCJ2",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 1985,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:e020f834838604677f5efb8d319b419702df01abb5ed10ccafceaf171244a0d2",
+      "historicalId": null,
+      "historicalGroup": null,
+      "symbol": "AC_CANONICAL_HOST",
+      "file": "configure.ac",
+      "line": 92,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:e074ddb7e8558a71d4de161d258b355a4d3e69218f8d3084d4fdfc283e6bdd49",
+      "historicalId": "finding:b23ff52926c8c75828c5481687b7ad88a68fc10b47ef937133fb21bb5fdcc32c",
+      "historicalGroup": "preserve",
+      "symbol": "defined(MY_CPU_X86) || defined(_M_ARM)",
+      "file": "libarchive/archive_ppmd_private.h",
+      "line": 79,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-proof-incomplete",
+        "usage-root-unresolved",
+        "usage-roots-incomplete"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:e77c1afe9061b2d3c2cff9cf603b78c5b45f8d26830f3b243655a539f29ec937",
+      "historicalId": "finding:b85f5c1b1684ffa94bb84cc3f80134a60dada3cefa1bb7c3dcc39103ab968371",
+      "historicalGroup": "candidate_to_review",
+      "symbol": "_7Z_X86",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 1418,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-address-escape",
+        "usage-array-binding-unknown",
+        "usage-external-write",
+        "usage-noninteger-value",
+        "usage-query-incomplete",
+        "usage-return-escape",
+        "usage-unknown-call",
+        "usage-unresolved-binding",
+        "usage-unsupported-operator",
+        "usage-unsupported-syntax",
+        "usage-unsupported-type"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:eac9086f60902ecd829341c27393afe17806cf9f00aa8f5372d9dceb0d0db7f5",
+      "historicalId": "finding:eac9086f60902ecd829341c27393afe17806cf9f00aa8f5372d9dceb0d0db7f5",
+      "historicalGroup": "preserve",
+      "symbol": "/* Intel x86 code. */",
+      "file": "libarchive/archive_read_support_format_rar5.c",
+      "line": 167,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:ed8f496a2839ca2f1774fce82dab13e79958a6aaff4e42249312c65b7f3355c1",
+      "historicalId": "finding:ef6487366f414c9bd5cc086e55490712be1ad755657dfcb7079aca7180aca5b4",
+      "historicalGroup": "preserve",
+      "symbol": "MY_CPU_X86",
+      "file": "libarchive/archive_ppmd_private.h",
+      "line": 76,
+      "usageStatus": [
+        "unknown"
+      ],
+      "usageReasons": [
+        "candidate-semantic-proof-unavailable",
+        "usage-proof-incomplete",
+        "usage-root-unresolved",
+        "usage-roots-incomplete"
+      ],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:eeb63ae1a9787f7ddd6a95c13a08227c419cc0398f0cda8027b1fbb0b0cb06f3",
+      "historicalId": null,
+      "historicalGroup": null,
+      "symbol": "cat/test/${bsdcat_test_SOURCES}",
+      "file": "cat/test/CMakeLists.txt",
+      "line": 37,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:efc8ce6289a71aa4672991e76a9ea18de73ffb9b0bac0bc71d618eabfbdb3234",
+      "historicalId": null,
+      "historicalGroup": null,
+      "symbol": "%{name}%{?_isa} = %{version}-%{release}",
+      "file": "contrib/libarchive.spec",
+      "line": 53,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:f1583fc8778465fe5b28424c31a34a5d4bc7bfaf9bddff01520b2090350a2940",
+      "historicalId": "finding:b18e92dabeb01c007f2afb3f7d22d316d19167845804aeb786dc6f4b233a0f73",
+      "historicalGroup": "preserve",
+      "symbol": "libarchive/test/list.h",
+      "file": "Makefile.am",
+      "line": 13,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:f5eafe6f4f52ae48e5c9c4d1d2fecd61681fc3eb7db93927bd9639cc2b68965e",
+      "historicalId": "finding:f5eafe6f4f52ae48e5c9c4d1d2fecd61681fc3eb7db93927bd9639cc2b68965e",
+      "historicalGroup": "preserve",
+      "symbol": "/*\r\n\t\t * NOTE: liblzma incompletely handle the BCJ+LZMA compressed\r\n\t\t * data made by 7-Zip because 7-Zip does not add End-Of-\r\n\t\t * Payload Marker(EOPM) at the end of LZMA compressed data,\r\n\t\t * and so liblzma cannot know the end of the compressed data\r\n\t\t * without EOPM. So consequently liblzma will not return last\r\n\t\t * three or four bytes of uncompressed data because\r\n\t\t * LZMA_FILTER_X86 filter does not handle input data if its\r\n\t\t * data size is less than five bytes. If liblzma detect EOPM\r\n\t\t * or kn",
+      "file": "libarchive/archive_read_support_format_7zip.c",
+      "line": 1394,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:f90dae75afa295d6ec10ddd5b27e0f0163cf5288f0057855f679df12bdff003e",
+      "historicalId": "finding:f34d9f4749db7f05b228cd9ec0ca2f932537c610f2c8427237dd7ca4f2671b8e",
+      "historicalGroup": "preserve",
+      "symbol": "unzip/test/list.h",
+      "file": "Makefile.am",
+      "line": 1826,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:fd1ae5a5261b0f6f95384c1dfb219bc91babadda706c7afae7a39d3149153c8a",
+      "historicalId": "finding:fd1ae5a5261b0f6f95384c1dfb219bc91babadda706c7afae7a39d3149153c8a",
+      "historicalGroup": "preserve",
+      "symbol": "/* This test unpacks a file that uses an ARM filter. The DELTA\r\n\t * and X86 filters are tested implicitly in the \"multiarchive_skip\"\r\n\t * test. */",
+      "file": "libarchive/test/test_read_format_rar5.c",
+      "line": 406,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    },
+    {
+      "findingId": "finding:ffc91a3c8f69c915dbf5f898e63647f1d544428d5b5e88cab10ea768253b8163",
+      "historicalId": null,
+      "historicalGroup": null,
+      "symbol": "cpio/test/${bsdcpio_test_SOURCES}",
+      "file": "cpio/test/CMakeLists.txt",
+      "line": 70,
+      "usageStatus": [],
+      "usageReasons": [],
+      "currentBaselineConclusionEqual": true
+    }
+  ],
+  "reviewedAt": "2026-09-23",
+  "previousLedger": "review.json",
+  "verificationRound": "round33-libarchive",
+  "reviewNotes": [
+    "旧 810 文件、55 项人工账本及本目录 review.json 的 round9/round16 记录原样保留；本文件为候选驱动采集后的追加审校。",
+    "64 项按 ID、occurrence、源码位置对齐，移除且仅移除用途 namespace 后全部字段与 822 文件基线一致；54 项历史 Finding 保留，1 项沿用既有 confirmed macro 去重，10 项新增在修改前基线已存在。",
+    "历史 26 项数据用途候选仍全部 unknown，没有人工白名单或 codec/算法名称直接排除；30 个用途根中 0 个 excluded。此结论不表示历史风险判断已全部正确。",
+    "_7Z_X86/_7Z_X86_BCJ2 的 2 个宏定义为开放根；其余 15 项使用闭包含字段/指针、调用、复杂控制、返回等，不能证明纯局部非执行用途。1361 行比较后调用 x86_Init，不能因为函数名就假定其中使用 x86 指令，也不能假定只是无害标签。",
+    "BOOT_PLATFORM_X86：819 行宏定义仍 root-unresolved；1117 行对 iso9660->el_torito.platform_id 的写入已采到实际闭包，external-write/call/return 等原因阻止排除，不再由 usage-scan-record-budget 阻断。",
+    "CKSUM_SHA512 5 项：2679/2705/2735 行 switch 分支调用 archive_sha512_* 并访问字段；3369/3387 行返回枚举常量。已采到实际闭包，unknown 原因包括调用、返回、开放绑定及预处理 owner；不再是预算截断或无局部绑定记录。",
+    "FILE_FLAGS::CRC32 两项：1850 行位与条件后 read_u32 调用/返回，2056 行涉及字段解析；实际闭包含 operator、call、external-write、return 等断点，保留 unknown；两项均不再由采集预算阻断。",
+    "原 round16 的 8 个预算根均已消除预算原因及 analysisTruncated；本轮 rootCount=30、scopeIndexes=11、recordCount=7133、visits=22578、cacheHits=0。cacheHits 仅指完全相同根的查询缓存，不表示共享作用域索引或物化缓存未命中。",
+    "固定 822 输入，2 CPU/2 GiB/无额外 swap，两轮 142.338391/136.147315 秒，峰值 655164/658680 KiB；JSON/HTML/log 两轮哈希一致。原始工件在 .codex-tmp/kbscanner-candidate-usage-20260923/round33-libarchive。",
+    "没有因真实项目通过而宣称 10000/20000 稀疏/密集相对性能门槛已通过；该门槛另行验证。"
+  ]
+}

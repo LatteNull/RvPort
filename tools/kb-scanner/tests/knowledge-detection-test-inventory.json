@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "1.0",
+  "candidateNoiseInventory": "tests/architecture-candidate-noise-test-inventory.json",
+  "baseline": {
+    "frontendUnitTests": 41,
+    "fullRegressionTests": 126
+  },
+  "coverageThresholds": {
+    "linePercent": 90.0,
+    "branchPercent": 80.0
+  },
+  "layers": {
+    "unit": "tests/unit/knowledge_detection; filesystem, external schema payloads and pipeline boundaries are isolated",
+    "component": "real JSON manifest/generated facts and real Tree-sitter grammar",
+    "integration": "real Workspace through Local Detection staged qualification",
+    "contract": "behavior matrix, legacy freeze, output, fact hash and import boundaries"
+  },
+  "modules": {
+    "core/knowledge.py": {"unit": "tests/unit/knowledge_detection/test_core_knowledge.py", "higherLayers": ["tests/test_knowledge_detection_contracts.py"]},
+    "core/facts.py": {"unit": "tests/unit/knowledge_detection/test_core_facts.py", "higherLayers": ["tests/test_knowledge_detection_staged_integration.py"]},
+    "core/results.py": {"unit": "tests/unit/knowledge_detection/test_core_snapshot_extensions.py", "higherLayers": ["tests/test_knowledge_detection_staged_integration.py"]},
+    "core/observations.py": {"unit": "tests/unit/knowledge_detection/test_core_snapshot_extensions.py", "higherLayers": ["tests/test_knowledge_detection_staged_integration.py"]},
+    "core/protocols.py": {"unit": "tests/unit/knowledge_detection/test_core_snapshot_extensions.py", "higherLayers": ["tests/test_knowledge_detection_contracts.py"]},
+    "knowledge/schema.py": {"unit": "tests/unit/knowledge_detection/test_knowledge_schema.py", "higherLayers": ["tests/test_knowledge_detection_contracts.py"]},
+    "knowledge/identity.py": {"unit": "tests/unit/knowledge_detection/test_knowledge_identity.py", "higherLayers": ["tests/test_knowledge_detection_contracts.py"]},
+    "knowledge/provider.py": {"unit": "tests/unit/knowledge_detection/test_knowledge_provider.py", "higherLayers": ["tests/test_knowledge_detection_contracts.py", "tests/test_knowledge_detection_staged_integration.py"]},
+    "normalization/cpp.py": {"unit": "tests/unit/knowledge_detection/test_cpp_normalizer.py", "higherLayers": ["tests/test_knowledge_detection_staged_integration.py"]},
+    "detectors/definitions.py": {"unit": "tests/unit/knowledge_detection/test_detector_definitions.py", "higherLayers": ["tests/test_knowledge_detection_contracts.py"]},
+    "detectors/matchers.py": {"unit": "tests/unit/knowledge_detection/test_local_matchers.py", "higherLayers": ["tests/test_knowledge_detection_staged_integration.py"]},
+    "detectors/local.py": {"unit": "tests/unit/knowledge_detection/test_local_detector.py", "higherLayers": ["tests/test_knowledge_detection_staged_integration.py"], "supportingUnits": ["tests/unit/candidate_semantics/test_coverage.py"]},
+    "pipeline/qualification.py": {"unit": "tests/unit/knowledge_detection/test_qualification_profile.py", "higherLayers": ["tests/test_knowledge_detection_staged_integration.py"]}
+  }
+}

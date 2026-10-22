@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "kind": "ConcurrentAccessFixtureProvenance",
+  "fixtures": [
+    {"case_id": "c11-ast-only-source", "path": "c11/ast-only-union.c", "sha256": "606f5deba225ae5deaf099be1d0ca824eae1cecca257a2728983d95508b5c19a", "imported_from": null, "rewrite_reason": null},
+    {"case_id": "c11-compile-failed-source", "path": "c11/compile-failed.c", "sha256": "41627397fc0162bc92b3029d1ddaa88b463fa59cf5ad71e6d79f38ee6b151d97", "imported_from": null, "rewrite_reason": null},
+    {"case_id": "c11-pthread-source", "path": "c11/pthread-struct.c", "sha256": "b362147454cb683cb679e6c4c529213dd9e31e5013151aa007a8805ff3034630", "imported_from": null, "rewrite_reason": null},
+    {"case_id": "c17-cross-main-source", "path": "c17/cross/main.c", "sha256": "de7e4cc7b5974409aac357f198031dbc5566974653f28b942123fd6c6d056c80", "imported_from": null, "rewrite_reason": null},
+    {"case_id": "c17-cross-header", "path": "c17/cross/shared.h", "sha256": "5ce05e62127e54ae3295d5ceae5daa3bc11ad5022bca6b553d9d7e6a0bec39a6", "imported_from": null, "rewrite_reason": null},
+    {"case_id": "c17-cross-worker-source", "path": "c17/cross/worker.c", "sha256": "16c0f8b747af3527b88659c4a483c211d1a3edc17c8ccba4dece53b1e48a960a", "imported_from": null, "rewrite_reason": null},
+    {"case_id": "c17-ir-only-source", "path": "c17/ir-only.c", "sha256": "ddf1ede4451a52e4cda6470cc70317cfb1854c16aae0e6bce373834757d62de2", "imported_from": null, "rewrite_reason": null},
+    {"case_id": "c17-thrd-source", "path": "c17/thrd-pointer.c", "sha256": "c9c0ee32ea21cf6992a3a2110e72000c38eef2e3e31c089a66c867f12a1e0dc2", "imported_from": null, "rewrite_reason": null},
+    {"case_id": "cpp17-move-detach-source", "path": "cpp17/move-detach.cpp", "sha256": "2567628135edbdcbf50223dadd12f0e5e168b32edce1c4bc803d3493712cbc2b", "imported_from": null, "rewrite_reason": null},
+    {"case_id": "cpp17-no-debug-source", "path": "cpp17/no-debug.cpp", "sha256": "5e973786bf8a75e03c0e72ae1ea986190ac21fecae70329c0a987df5388ed6b9", "imported_from": null, "rewrite_reason": null},
+    {"case_id": "cpp17-thread-mutex-source", "path": "cpp17/thread-mutex.cpp", "sha256": "b3283058107bcc16af60bf5cee84cfb9d33739f4067c79780c5231146ec6205c", "imported_from": null, "rewrite_reason": null},
+    {"case_id": "cpp20-async-source", "path": "cpp20/async-policy.cpp", "sha256": "ca78be3fcb0ea5ce5d02be0b6d3071c70cf9a19ac0b3104ae8630e7111527dfd", "imported_from": null, "rewrite_reason": null},
+    {"case_id": "cpp20-deferred-source", "path": "cpp20/deferred.cpp", "sha256": "fbd9a709dd4b752c4368abaa24ee4fb2cd2f14ce440eb4e02e42ff6f6c8b16d2", "imported_from": null, "rewrite_reason": null},
+    {"case_id": "cpp20-jthread-source", "path": "cpp20/jthread-fields.cpp", "sha256": "3e69b25c0d8f7209100a8534a429b797a67b3ca951de01a0eb733b4978433751", "imported_from": null, "rewrite_reason": null},
+    {"case_id": "archived-pthread-mutex-source", "path": "imported/pthread-mutex-minimal.cpp", "sha256": "ff06eaa502595b4e937ccf5ca7a7e6c5d1e77582f4387a03298d99d8df8bbaad", "imported_from": "memory-model-ir-checker/samples/legacy/safe/03_pthread_mutex.cpp", "imported_sha256": "f37e516834a9511b5591deb6a2b83ea31332a6923d2d6b932d93f217b9d89eae", "license": "上游未声明；仅作为本仓库离线回归参考", "rewrite_reason": "去除 printf/ready 发布逻辑，保留两个 pthread 对同一对象且由同一 mutex 保护的最小候选场景；旧 safe 标签不作为 oracle"}
+  ]
+}

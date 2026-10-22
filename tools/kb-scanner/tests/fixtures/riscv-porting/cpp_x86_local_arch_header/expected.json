@@ -1,0 +1,7 @@
+{
+  "ruleId": "C_CPP.X86.LOCAL_ARCH_HEADER",
+  "count": 1,
+  "symbols": ["avx.h"]
+}
+
+

@@ -1,0 +1,23 @@
+# 任务清单
+
+- [x] 梳理现有 Redis、RabbitMQ 连接配置和 Spring Boot starter。
+- [x] 新增 Redis 业务缓存配置属性。
+- [x] 新增 Redis key namespace / key builder 约定。
+- [x] 配置 Redis key/hash key 使用字符串序列化，避免 key 出现 JDK 序列化前缀。
+- [x] 新增 Redis 缓存客户端封装，写入短期业务数据时要求显式 TTL。
+- [x] 确认 Redis 业务缓存 namespace 与 Spring Session namespace 分离。
+- [x] 新增 RabbitMQ 任务队列配置属性。
+- [x] 新增任务队列消息模型，保持 `taskId` 和必要路由信息的最小载荷。
+- [x] 声明 RabbitMQ 任务队列为 durable quorum queue。
+- [x] 新增 RabbitMQ 任务投递客户端封装。
+- [x] 配置 RabbitMQ JSON 消息序列化。
+- [x] 配置 RabbitMQ 任务消息持久化投递。
+- [x] 配置 RabbitMQ listener ack mode 为 manual，为后续 worker 消费预留手动确认。
+- [x] 更新 `application.yml`，补充任务队列和业务缓存默认配置。
+- [x] 更新中文后端开发计划，记录 Redis/RabbitMQ 客户端边界。
+- [x] 增加配置绑定测试。
+- [x] 增加 Redis key / TTL 行为测试。
+- [x] 增加 Redis key 序列化测试，确认原生命令可见 key 不带二进制前缀。
+- [x] 增加 RabbitMQ 消息序列化、quorum queue 声明和 publisher 调用测试。
+- [x] 执行 `mvn test`。
+- [x] 执行 `openspec validate add-cache-and-queue-client`。

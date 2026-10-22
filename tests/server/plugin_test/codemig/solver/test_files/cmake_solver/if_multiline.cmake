@@ -1,6 +1,0 @@
-if (A AND
-    CMAKE_SYSTEM_PROCESSOR MATCH A)
-  print('1')
-elseif (ACRH_riscv)
-  print(2)
-endif()

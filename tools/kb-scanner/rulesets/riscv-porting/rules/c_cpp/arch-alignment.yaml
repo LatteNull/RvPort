@@ -1,0 +1,23 @@
+id: C_CPP.ARCH.ALIGNMENT_ASSUMPTION
+language: c_cpp
+severity: medium
+confidence: medium
+capability:
+  - text.scan
+match:
+  any:
+    - text:
+        symbolGroup: 0
+        regex: "\\b(?:ALIGN(?:32|64|128|256)|__attribute__\\s*\\(\\(\\s*aligned\\s*\\(\\s*(?:32|64|128|256)\\s*\\)|posix_memalign\\s*\\([^\\n]*,\\s*(?:32|64|128|256)\\s*,)"
+message:
+  zh-CN:
+    title: "存在架构相关对齐或数据布局假设"
+    reason: "代码显式使用 32/64/128/256 字节对齐或 posix_memalign 对齐分配，可能与 SIMD 访存宽度、缓存行或特定后端数据布局绑定。"
+    suggestion: "建议在迁移时复核数据结构布局和对齐要求，区分正确性要求与 x86 性能优化要求，并为 RISC-V 重新评估对齐策略。"
+  en-US:
+    title: "Architecture-related alignment or data-layout assumption"
+    reason: "The code explicitly uses 32/64/128/256-byte alignment or posix_memalign allocation. This may be tied to SIMD memory width, cache-line behavior, or backend-specific data layout."
+    suggestion: "Review the data layout and alignment requirements during migration. Separate correctness requirements from x86 performance tuning, and re-evaluate the alignment strategy for RISC-V."
+
+
+

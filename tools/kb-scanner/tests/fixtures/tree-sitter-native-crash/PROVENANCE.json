@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "1.0",
+  "fixtureKind": "synthetic-reduction",
+  "networkRequired": false,
+  "projectExecutionAllowed": false,
+  "projects": [
+    {
+      "id": "cjson",
+      "upstreamUrl": "https://github.com/DinghaoJoe/cJSON",
+      "commit": "fb16e5cf358798aabb049655975cde8427101056",
+      "license": "MIT",
+      "sourcePath": "cJSON.c",
+      "fixturePath": "cjson/cJSON.c",
+      "sha256": "c0e679bdbcaca7110e2cdfafa03ad80d504e2c9758ea7d3a95aa964e48d1b6ac",
+      "trigger": "character case such as case '0'",
+      "maxDurationSeconds": 20,
+      "maxFrontendEvidence": 16
+    },
+    {
+      "id": "zlib",
+      "upstreamUrl": "https://github.com/DinghaoJoe/zlib",
+      "commit": "e3dc0a85b7032e98380dec011bc8f2c2ee0d8fca",
+      "license": "Zlib",
+      "sourcePath": "contrib/infback9/infback9.c",
+      "fixturePath": "zlib/contrib/infback9/infback9.c",
+      "sha256": "e8b89e9831d3823be88ffe3838a7d3e8b9bb5f730986bdd0bbed0d152b2ba46a",
+      "trigger": "unbound state cases such as case TYPE",
+      "maxDurationSeconds": 20,
+      "maxFrontendEvidence": 32
+    },
+    {
+      "id": "libarchive",
+      "upstreamUrl": "https://github.com/DinghaoJoe/libarchive",
+      "commit": "c4cfba676d2b86d6a2a7c508cd90a75c4dfaa1d9",
+      "license": "BSD-2-Clause",
+      "sourcePath": "contrib/oss-fuzz/libarchive_write_disk_fuzzer.cc",
+      "fixturePath": "libarchive/contrib/oss-fuzz/libarchive_write_disk_fuzzer.cc",
+      "sha256": "71d9b46f8bb504d76c8781be21e862c97d36817b5ac0691eaa76a56c4a5d3ad1",
+      "trigger": "numeric cases such as case 0, case 1 and case 2",
+      "maxDurationSeconds": 20,
+      "maxFrontendEvidence": 16
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+@layer app {
+  * {
+    scrollbar-color: rgba(28, 31, 35, 0.18) transparent;
+    scrollbar-width: thin;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: rgba(28, 31, 35, 0.16);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(28, 31, 35, 0.28);
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "suite_version": "r3-demand-v1",
+  "cases": [
+    {"case_id": "c11-single-ast-ir", "status": "complete", "indexed_min": 4, "demanded": 1, "materialized": 1, "unreachable_materialized": false, "frontier": []},
+    {"case_id": "c11-ast-only", "status": "partial", "indexed_min": 0, "demanded": 1, "materialized": 0, "unreachable_materialized": false, "frontier": ["ast-only-no-runtime-facts"]},
+    {"case_id": "c17-cross-ir", "status": "complete", "indexed_min": 4, "demanded": 2, "materialized": 2, "unreachable_materialized": false, "frontier": []},
+    {"case_id": "c17-open", "status": "partial", "indexed_min": 4, "demanded": 2, "materialized": 2, "unreachable_materialized": false, "frontier": ["open-scope-frontier"]},
+    {"case_id": "cpp17-single-no-debug", "status": "complete", "indexed_min": 4, "demanded": 1, "materialized": 1, "unreachable_materialized": false, "frontier": []},
+    {"case_id": "cpp17-worker-timeout", "status": "failed", "indexed_min": 0, "demanded": 1, "materialized": 0, "unreachable_materialized": false, "frontier": ["timed_out"]},
+    {"case_id": "cpp20-cross", "status": "complete", "indexed_min": 4, "demanded": 2, "materialized": 2, "unreachable_materialized": false, "frontier": []},
+    {"case_id": "cpp20-budget", "status": "partial", "indexed_min": 4, "demanded": 2, "materialized": 1, "unreachable_materialized": false, "frontier": ["materialized-instruction-budget"]}
+  ]
+}

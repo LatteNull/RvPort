@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0",
+  "authority": "candidate-discovery-only",
+  "scope": "c-cpp-x86-to-riscv-static-analysis",
+  "excludedDomains": ["board", "driver", "kernel", "operating-system", "system-call"],
+  "categories": [
+    {"id": "assembly-instruction", "candidateSources": ["rvpt-comparison", "legacy-yaml", "representative-fixtures"], "productionRoute": "generated"},
+    {"id": "register", "candidateSources": ["rvpt-comparison", "legacy-yaml", "representative-fixtures"], "productionRoute": "generated"},
+    {"id": "cpu-platform-api", "candidateSources": ["legacy-yaml", "representative-fixtures"], "productionRoute": "curated"},
+    {"id": "target-feature", "candidateSources": ["rvpt-comparison", "legacy-yaml"], "productionRoute": "generated"},
+    {"id": "architecture-alias", "candidateSources": ["rvpt-comparison", "legacy-yaml", "representative-fixtures"], "productionRoute": "generated-and-deferred"},
+    {"id": "vector-width", "candidateSources": ["rvpt-comparison", "legacy-yaml", "representative-fixtures"], "productionRoute": "curated-candidate"}
+  ]
+}

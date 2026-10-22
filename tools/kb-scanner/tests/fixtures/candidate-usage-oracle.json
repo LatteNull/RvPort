@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "purpose": "人工指定用途边界，不由 scanner 输出生成，不供生产规则读取",
+  "scope": "仅静态局部用途；excluded 指候选 Classification，不指删除 fact 或项目就绪",
+  "cases": [
+    {
+      "name": "closed-local-data",
+      "source": "void f(void) { enum Format { FORMAT_X86 = 1 }; int kind = FORMAT_X86; char label[1]; if (kind == FORMAT_X86) { label[0] = 'x'; } }",
+      "expected": "excluded",
+      "reason": "局部声明、标量比较、固定数组写入及全部使用闭合，无逃逸；保留原始事实"
+    },
+    {
+      "name": "unknown-call-escape",
+      "source": "void f(void) { enum Format { FORMAT_X86 = 1 }; int kind = FORMAT_X86; char label[1]; if (kind == FORMAT_X86) { label[0] = 'x'; } consume(label); }",
+      "expected": "unknown",
+      "reason": "候选控制写入的对象流入未知调用，不能在赋值位置提前停止查询"
+    },
+    {
+      "name": "return-escape",
+      "source": "int f(void) { enum Format { FORMAT_X86 = 1 }; int kind = FORMAT_X86; return kind; }",
+      "expected": "unknown",
+      "reason": "返回值跨函数逃逸"
+    },
+    {
+      "name": "execution-branch",
+      "source": "void f(void) { enum Format { FORMAT_X86 = 1 }; int kind = FORMAT_X86; if (kind == FORMAT_X86) { _mm256_setzero_ps(); } }",
+      "expected": "execution-conflict",
+      "reason": "数据 ID 控制已确认 x86 调用，保留原 high/目标已选中时的 blocker"
+    },
+    {
+      "name": "generic-name-not-proof",
+      "source": "void f(void) { enum Format { FORMAT_X86 = 1 }; int kind = FORMAT_X86; if (kind == FORMAT_X86) { portable_decode(); } }",
+      "expected": "unknown",
+      "reason": "普通调用即使名称含 portable 也不能证明实现可移植"
+    },
+    {
+      "name": "field-write-escape",
+      "source": "struct Out { int platform_id; }; void f(struct Out *out) { enum Format { FORMAT_X86 = 1 }; out->platform_id = FORMAT_X86; }",
+      "expected": "unknown",
+      "reason": "对象字段名不是角色证明，指针写入超出局部闭包"
+    },
+    {
+      "name": "open-enum-definition",
+      "source": "enum Format { FORMAT_X86 = 1 }; void f(void) { int kind = FORMAT_X86; char label[1]; if (kind == FORMAT_X86) { label[0] = 'x'; } }",
+      "expected": "definition-unknown",
+      "reason": "全局声明的开放使用范围不可由一处局部使用闭合，使用 occurrence 需单独审计"
+    },
+    {
+      "name": "shadowed-binding",
+      "source": "void f(void) { enum Format { FORMAT_X86 = 1 }; { int FORMAT_X86 = external(); if (FORMAT_X86) { portable_decode(); } } }",
+      "expected": "unknown",
+      "reason": "不得按同名将被遮蔽变量的使用绑定到枚举声明"
+    },
+    {
+      "name": "mixed-use",
+      "source": "void f(void) { enum Format { FORMAT_X86 = 1 }; int kind = FORMAT_X86; char label[1]; if (kind == FORMAT_X86) { label[0] = 'x'; } consume(kind); }",
+      "expected": "unknown",
+      "reason": "一处数据用途不能覆盖另一处未知用途"
+    },
+    {
+      "name": "macro-redefinition",
+      "source": "#define FORMAT_X86 1\nvoid f(void) { int kind = FORMAT_X86; }\n#undef FORMAT_X86\n#define FORMAT_X86 unknown()\nvoid g(void) { int kind = FORMAT_X86; }\n",
+      "expected": "definition-unknown",
+      "reason": "不能从一个宏版本的局部字面值外推全部定义和使用"
+    },
+    {
+      "name": "loop-unsupported",
+      "source": "void f(void) { enum Format { FORMAT_X86 = 1 }; int kind = FORMAT_X86; while (kind) { kind = 0; } }",
+      "expected": "unknown",
+      "reason": "首版不证明循环使用闭包"
+    },
+    {
+      "name": "comment-only",
+      "source": "/* x86 format */ void f(void) {}",
+      "expected": "unchanged",
+      "reason": "注释线索不属于候选用途排除，既有 hint 保留"
+    }
+  ],
+  "requiredMutations": [
+    "同一正例将成员改名为 FORMAT_I386 后不改变用途结论",
+    "同一成员在不同配置中分别数据用途和执行用途，不可跨配置借用证明",
+    "UTF-8 注释和 CRLF 不改变源码命中范围",
+    "任一 matched Evidence 缺失、预算截断或记录数不符均不能排除",
+    "原始事实 ID/值/位置和 confirmed knowledge provenance 不因新增用途而改变"
+  ],
+  "libarchiveReview": {
+    "commit": "c4cfba676d2b86d6a2a7c508cd90a75c4dfaa1d9",
+    "historicalLedger": "candidate-semantic-admission/libarchive-review.json",
+    "candidateCount": 26,
+    "policy": "逐项审校实际 proof；不要求全量排除，不加载人工标签到运行时",
+    "representatives": ["_7Z_X86", "_7Z_X86_BCJ2", "BOOT_PLATFORM_X86", "CKSUM_SHA512", "CRC32"]
+  }
+}

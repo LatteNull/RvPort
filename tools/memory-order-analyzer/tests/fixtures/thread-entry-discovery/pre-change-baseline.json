@@ -1,0 +1,35 @@
+{
+  "recorded_at": "2026-09-22",
+  "environment": "memory-order-analyzer-dev:llvm21",
+  "python_unit": {
+    "command": "python3 -m pytest -q -p no:cacheprovider tests/unit",
+    "passed": 604,
+    "failed": 0
+  },
+  "cpp_unit": {
+    "command": "cmake -S /workspace -B /tmp/moa-baseline -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DMOA_COVERAGE=OFF && cmake --build /tmp/moa-baseline -j 4 && ctest --test-dir /tmp/moa-baseline --output-on-failure",
+    "passed": 1,
+    "failed": 0
+  },
+  "protocols": [
+    {
+      "path": "protocols/thread-analysis-protocol.json",
+      "sha256": "08c350f2dd73535af40756d841357bce41a1eec6f21c280832e3b475a3fc82e"
+    },
+    {
+      "path": "protocols/cpp-thread-lifecycle-protocol.json",
+      "sha256": "1415faf1871d8ba35e02a924aaafa99b36b7f3b85c3d5331e28506567fcd2a82"
+    },
+    {
+      "path": "protocols/execution-root-analysis-protocol.json",
+      "sha256": "dffc62a9a6a21107b988198f78bb267b38828ff16682e35e3e76c4bdc639b435"
+    }
+  ],
+  "invariants": {
+    "thread_context_graph_schema": 1,
+    "cpp_thread_lifecycle_schema": 1,
+    "execution_root_schema": 1,
+    "risk_exit_code_reserved": 3,
+    "root_analysis_safety": "not_evaluated"
+  }
+}

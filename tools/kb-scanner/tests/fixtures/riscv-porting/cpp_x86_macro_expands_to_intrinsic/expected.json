@@ -1,0 +1,7 @@
+{
+  "ruleId": "C_CPP.X86.MACRO_EXPANDS_TO_INTRINSIC",
+  "count": 1,
+  "symbols": ["_mm256_add_ps"]
+}
+
+

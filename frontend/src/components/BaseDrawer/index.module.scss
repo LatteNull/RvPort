@@ -1,0 +1,23 @@
+@use '../../styles/mixins' as type;
+
+.baseDrawer {
+  --base-drawer-header-padding: 12px 24px;
+  --base-drawer-body-padding: 16px 24px;
+  --base-drawer-footer-padding: 16px 24px;
+}
+
+.drawerTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+
+  .drawerTitleText {
+    @include type.panel-title;
+    color: var(--ant-color-text);
+  }
+
+  .drawerSubTitle {
+    @include type.helper-text;
+    color: var(--ant-color-text-secondary);
+  }
+}

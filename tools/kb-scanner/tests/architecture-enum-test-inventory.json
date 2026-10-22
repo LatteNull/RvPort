@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "1.0",
+  "change": "implement-kb-scanner-architecture-enum-analysis",
+  "coverageThresholds": {
+    "linePercent": 90,
+    "branchPercent": 80
+  },
+  "container": "kb-scanner-test",
+  "boundaries": "in-memory/fake cursors, temporary C/C++ sources and synthetic snapshots only; no project command is executed",
+  "higherLayers": [
+    "tests/test_architecture_enum_analysis.py",
+    "tests/test_schema_v2_projection_component.py",
+    "tests/test_compatible_cutover_differential.py"
+  ],
+  "modules": {
+    "frontends/cpp/vocabulary.py": {
+      "unit": "tests/unit/architecture_enum/test_architecture_enum.py",
+      "supportingUnits": [
+        "tests/unit/frontends/cpp/test_vocabulary.py"
+      ]
+    },
+    "frontends/cpp/tree_sitter_adapter.py": {
+      "unit": "tests/unit/architecture_enum/test_architecture_enum.py",
+      "supportingUnits": [
+        "tests/unit/frontends/cpp/test_tree_sitter_adapter.py"
+      ]
+    },
+    "frontends/cpp/clang_adapter.py": {
+      "unit": "tests/unit/architecture_enum/test_architecture_enum.py",
+      "supportingUnits": [
+        "tests/unit/frontends/cpp/test_clang_adapter.py"
+      ]
+    },
+    "normalization/cpp.py": {
+      "unit": "tests/unit/architecture_enum/test_architecture_enum.py",
+      "supportingUnits": [
+        "tests/unit/knowledge_detection/test_cpp_normalizer.py"
+      ]
+    },
+    "detectors/definitions.py": {
+      "unit": "tests/unit/architecture_enum/test_architecture_enum.py",
+      "supportingUnits": [
+        "tests/unit/knowledge_detection/test_detector_definitions.py"
+      ]
+    },
+    "detectors/matchers.py": {
+      "unit": "tests/unit/architecture_enum/test_architecture_enum.py",
+      "supportingUnits": [
+        "tests/unit/knowledge_detection/test_local_matchers.py"
+      ]
+    },
+    "detectors/local.py": {
+      "unit": "tests/unit/architecture_enum/test_architecture_enum.py",
+      "supportingUnits": [
+        "tests/unit/knowledge_detection/test_local_detector.py",
+        "tests/unit/candidate_semantics/test_coverage.py"
+      ]
+    },
+    "analyzers/evidence_graph.py": {
+      "unit": "tests/unit/architecture_enum/test_architecture_enum.py",
+      "supportingUnits": [
+        "tests/unit/evidence_graph/test_evidence_graph_analyzer.py"
+      ]
+    },
+    "classifiers/policy.py": {
+      "unit": "tests/unit/architecture_enum/test_architecture_enum.py",
+      "supportingUnits": [
+        "tests/unit/classification_assessment/test_classifier.py"
+      ]
+    },
+    "classifiers/migration.py": {
+      "unit": "tests/unit/architecture_enum/test_architecture_enum.py",
+      "supportingUnits": [
+        "tests/unit/classification_assessment/test_classifier.py",
+        "tests/unit/candidate_semantics/test_admission.py"
+      ]
+    },
+    "projection/policy.py": {
+      "unit": "tests/unit/architecture_enum/test_architecture_enum.py",
+      "supportingUnits": [
+        "tests/unit/compatible_cutover/test_contract_policy.py"
+      ]
+    },
+    "projection/mapper.py": {
+      "unit": "tests/unit/architecture_enum/test_architecture_enum.py",
+      "supportingUnits": [
+        "tests/unit/compatible_cutover/test_mapper.py",
+        "tests/unit/projection_reachability/test_mapper_enrichment.py",
+        "tests/unit/projection_reachability/test_reference.py"
+      ]
+    },
+    "projection/v2/mapper.py": {
+      "unit": "tests/unit/architecture_enum/test_architecture_enum.py",
+      "supportingUnits": [
+        "tests/unit/schema_v2_projection/test_finding_mapper.py",
+        "tests/unit/candidate_semantics/test_projection.py",
+        "tests/unit/test_source_evidence_chain.py",
+        "tests/unit/test_source_chain_quality_edges.py"
+      ]
+    },
+    "projection/v2/chain.py": {
+      "unit": "tests/unit/architecture_enum/test_architecture_enum.py",
+      "supportingUnits": [
+        "tests/unit/schema_v2_projection/test_evidence_chain_builder.py",
+        "tests/unit/candidate_semantics/test_projection.py",
+        "tests/unit/test_source_evidence_chain.py",
+        "tests/unit/test_source_chain_quality_edges.py"
+      ]
+    }
+  }
+}

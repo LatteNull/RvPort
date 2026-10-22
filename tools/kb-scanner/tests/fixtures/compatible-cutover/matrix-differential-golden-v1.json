@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "1.0",
+  "generator": "reviewed staged projection/reachability regression 2026-09-08; semantic-admission duplicate Observation trace audited 2026-09-10; legacy side preserved",
+  "entries": [
+    {
+      "id": "generated-and-curated-facts",
+      "path": "tests/fixtures/formal-cpp-frontend",
+      "legacy": {
+        "exitCode": 0,
+        "artifacts": ["scan-result.json", "scan-report.html", "scan.log"],
+        "summary": {"files": 7, "findings": 2, "issues": 1, "hints": 1, "blocking": 1, "portabilityGaps": 0, "inactiveOrGuarded": 0, "referenceSources": 1, "references": 0},
+        "ruleCounts": {"COMMENT.ARCH.HINT": 1, "C_CPP.X86.INLINE_ASM": 1},
+        "findingTypeCounts": {"hint": 1, "issue": 1},
+        "severityCounts": {"high": 1, "info": 1},
+        "blocking": 1,
+        "actionable": 1,
+        "semanticFindingsSha256": "4838405ac092acd4309483dee7589b049a9256f10f3374916b7e4a47228061b2",
+        "diagnosticsSha256": "19514d53c5a6b7823e2fe8968ef7301aab7d048e3b943d2f732f706ede217130"
+      },
+      "staged": {
+        "exitCode": 0,
+        "artifacts": [
+          "scan-result.json",
+          "scan-report.html",
+          "scan.log"
+        ],
+        "summary": {
+          "files": 7,
+          "findings": 3,
+          "issues": 2,
+          "hints": 1,
+          "blocking": 0,
+          "portabilityGaps": 0,
+          "inactiveOrGuarded": 1,
+          "referenceSources": 2,
+          "references": 0,
+          "readiness": {
+            "state": "provisional",
+            "confidence": "unknown",
+            "staticScopeOnly": true,
+            "compiled": false,
+            "testsExecuted": false
+          }
+        },
+        "ruleCounts": {
+          "ASM.X86.INSTRUCTION": 1,
+          "COMMENT.ARCH.HINT": 1,
+          "C_CPP.X86.PLATFORM_MACRO": 1
+        },
+        "findingTypeCounts": {
+          "guarded": 1,
+          "hint": 1,
+          "issue": 1
+        },
+        "severityCounts": {
+          "info": 2,
+          "medium": 1
+        },
+        "blocking": 0,
+        "actionable": 1,
+        "semanticFindingsSha256": "35142cd424599157613d36a628d9f629f1f55b2bc0b74a0d7bb63043d8c47605",
+        "diagnosticsSha256": "184495fcdebb6eee438945a0ee0c7927e1b975e58916e01679be9267a73c8ab8"
+      }
+    },
+    {
+      "id": "avx-x86-only",
+      "path": "/fixtures/avx-avx2-example-code",
+      "legacy": {
+        "exitCode": 0,
+        "artifacts": ["scan-result.json", "scan-report.html", "scan.log"],
+        "summary": {"files": 41, "findings": 838, "issues": 793, "hints": 45, "blocking": 793, "portabilityGaps": 30, "inactiveOrGuarded": 0, "referenceSources": 793, "references": 0},
+        "ruleCounts": {"COMMENT.ARCH.HINT": 45, "C_CPP.X86.COMPILER_FLAG": 4, "C_CPP.X86.HEADER": 39, "C_CPP.X86.INTRINSIC_CALL": 390, "C_CPP.X86.VECTOR_TYPE": 360},
+        "findingTypeCounts": {"hint": 45, "issue": 763, "portability_gap": 30},
+        "severityCounts": {"critical": 759, "high": 30, "info": 45, "medium": 4},
+        "blocking": 793,
+        "actionable": 793,
+        "semanticFindingsSha256": "688b35a96559f5154dfa71b3803b07f2526031a7742770e3bd299274c577605d",
+        "diagnosticsSha256": "19514d53c5a6b7823e2fe8968ef7301aab7d048e3b943d2f732f706ede217130"
+      },
+      "staged": {
+        "exitCode": 0,
+        "artifacts": ["scan-result.json", "scan-report.html", "scan.log"],
+        "summary": {"files": 41, "findings": 828, "issues": 783, "hints": 45, "blocking": 783, "portabilityGaps": 779, "inactiveOrGuarded": 0, "referenceSources": 783, "references": 0, "readiness": {"state": "x86_only", "confidence": "high", "staticScopeOnly": true, "compiled": false, "testsExecuted": false}},
+        "ruleCounts": {"COMMENT.ARCH.HINT": 45, "C_CPP.X86.COMPILER_FLAG": 4, "C_CPP.X86.HEADER": 39, "C_CPP.X86.INTRINSIC_CALL": 360, "C_CPP.X86.MACRO_EXPANDS_TO_INTRINSIC": 18, "C_CPP.X86.VECTOR_TYPE": 362},
+        "findingTypeCounts": {"hint": 45, "issue": 4, "portability_gap": 779},
+        "severityCounts": {"high": 783, "info": 45},
+        "blocking": 783,
+        "actionable": 783,
+        "semanticFindingsSha256": "3767d02121fe0c21b1c27720f8964d8e866f389b4193399dceda9bf9e3738a9a",
+        "diagnosticsSha256": "f5c68a6502debcc1b8ae98bc34ce224339363e7d19a4de392fb425be4129f832"
+      }
+    },
+    {
+      "id": "build-selection",
+      "path": "tests/fixtures/build-selection/project",
+      "legacy": {
+        "exitCode": 0,
+        "artifacts": ["scan-result.json", "scan-report.html", "scan.log"],
+        "summary": {"files": 8, "findings": 1, "issues": 1, "hints": 0, "blocking": 1, "portabilityGaps": 0, "inactiveOrGuarded": 0, "referenceSources": 1, "references": 0},
+        "ruleCounts": {"C_CPP.X86.COMPILER_FLAG": 1},
+        "findingTypeCounts": {"issue": 1},
+        "severityCounts": {"medium": 1},
+        "blocking": 1,
+        "actionable": 1,
+        "semanticFindingsSha256": "4546be8d09a83afda362bb7edc0f59046905fbd1d8ccaf990aead3f0e6a6742b",
+        "diagnosticsSha256": "aa9f1fa61793080a6779c99d3273c1b85ae52c5ebaf82cd68f9ed47b7388e854"
+      },
+      "staged": {
+        "exitCode": 0,
+        "artifacts": ["scan-result.json", "scan-report.html", "scan.log"],
+        "summary": {"files": 13, "findings": 7, "issues": 7, "hints": 0, "blocking": 4, "portabilityGaps": 0, "inactiveOrGuarded": 0, "referenceSources": 7, "references": 0, "readiness": {"state": "partial_riscv", "confidence": "high", "staticScopeOnly": true, "compiled": false, "testsExecuted": false}},
+        "ruleCounts": {"BUILD.X86.SELECTION": 1, "C_CPP.X86.COMPILER_FLAG": 5, "TEST.X86.SELECTION": 1},
+        "findingTypeCounts": {"issue": 7},
+        "severityCounts": {"high": 4, "low": 3},
+        "blocking": 4,
+        "actionable": 4,
+        "semanticFindingsSha256": "7b2a8c008ba90793457599d7e8c99d3cacb80355ab46182821037c2575b1b63e",
+        "diagnosticsSha256": "012633bb7173438fa10c3e71069194d3c7a6891ba16be4a1cea65d04c859875f"
+      }
+    },
+    {
+      "id": "classification-assessment",
+      "path": "tests/fixtures/classification-assessment",
+      "legacy": {
+        "exitCode": 0,
+        "artifacts": ["scan-result.json", "scan-report.html", "scan.log"],
+        "summary": {"files": 3, "findings": 0, "issues": 0, "hints": 0, "blocking": 0, "portabilityGaps": 0, "inactiveOrGuarded": 0, "referenceSources": 0, "references": 0},
+        "ruleCounts": {}, "findingTypeCounts": {}, "severityCounts": {}, "blocking": 0, "actionable": 0,
+        "semanticFindingsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "diagnosticsSha256": "19514d53c5a6b7823e2fe8968ef7301aab7d048e3b943d2f732f706ede217130"
+      },
+      "staged": {
+        "exitCode": 0,
+        "artifacts": ["scan-result.json", "scan-report.html", "scan.log"],
+        "summary": {"files": 3, "findings": 0, "issues": 0, "hints": 0, "blocking": 0, "portabilityGaps": 0, "inactiveOrGuarded": 0, "referenceSources": 0, "references": 0, "readiness": {"state": "provisional", "confidence": "unknown", "staticScopeOnly": true, "compiled": false, "testsExecuted": false}},
+        "ruleCounts": {}, "findingTypeCounts": {}, "severityCounts": {}, "blocking": 0, "actionable": 0,
+        "semanticFindingsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "diagnosticsSha256": "a6e62ca858b48a32a01d50356fb8de52007a81b588f69cae394da721cb0d9fa1"
+      }
+    },
+    {
+      "id": "malicious-static-input",
+      "path": "tests/fixtures/classification-assessment/malicious",
+      "legacy": {
+        "exitCode": 0,
+        "artifacts": ["scan-result.json", "scan-report.html", "scan.log"],
+        "summary": {"files": 3, "findings": 0, "issues": 0, "hints": 0, "blocking": 0, "portabilityGaps": 0, "inactiveOrGuarded": 0, "referenceSources": 0, "references": 0},
+        "ruleCounts": {}, "findingTypeCounts": {}, "severityCounts": {}, "blocking": 0, "actionable": 0,
+        "semanticFindingsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "diagnosticsSha256": "19514d53c5a6b7823e2fe8968ef7301aab7d048e3b943d2f732f706ede217130"
+      },
+      "staged": {
+        "exitCode": 0,
+        "artifacts": ["scan-result.json", "scan-report.html", "scan.log"],
+        "summary": {"files": 3, "findings": 0, "issues": 0, "hints": 0, "blocking": 0, "portabilityGaps": 0, "inactiveOrGuarded": 0, "referenceSources": 0, "references": 0, "readiness": {"state": "provisional", "confidence": "unknown", "staticScopeOnly": true, "compiled": false, "testsExecuted": false}},
+        "ruleCounts": {}, "findingTypeCounts": {}, "severityCounts": {}, "blocking": 0, "actionable": 0,
+        "semanticFindingsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "diagnosticsSha256": "6bec5a5f00dd7928b68927207510698cf1c4c198bb196be99e651fb74a7f9a2e"
+      }
+    },
+    {
+      "id": "workspace-escape",
+      "path": "tests/fixtures/build-selection/project",
+      "legacy": {
+        "exitCode": 0,
+        "artifacts": ["scan-result.json", "scan-report.html", "scan.log"],
+        "summary": {"files": 8, "findings": 1, "issues": 1, "hints": 0, "blocking": 1, "portabilityGaps": 0, "inactiveOrGuarded": 0, "referenceSources": 1, "references": 0},
+        "ruleCounts": {"C_CPP.X86.COMPILER_FLAG": 1}, "findingTypeCounts": {"issue": 1}, "severityCounts": {"medium": 1}, "blocking": 1, "actionable": 1,
+        "semanticFindingsSha256": "4546be8d09a83afda362bb7edc0f59046905fbd1d8ccaf990aead3f0e6a6742b",
+        "diagnosticsSha256": "aa9f1fa61793080a6779c99d3273c1b85ae52c5ebaf82cd68f9ed47b7388e854"
+      },
+      "staged": {
+        "exitCode": 0,
+        "artifacts": ["scan-result.json", "scan-report.html", "scan.log"],
+        "summary": {"files": 13, "findings": 7, "issues": 7, "hints": 0, "blocking": 4, "portabilityGaps": 0, "inactiveOrGuarded": 0, "referenceSources": 7, "references": 0, "readiness": {"state": "partial_riscv", "confidence": "high", "staticScopeOnly": true, "compiled": false, "testsExecuted": false}},
+        "ruleCounts": {"BUILD.X86.SELECTION": 1, "C_CPP.X86.COMPILER_FLAG": 5, "TEST.X86.SELECTION": 1}, "findingTypeCounts": {"issue": 7}, "severityCounts": {"high": 4, "low": 3}, "blocking": 4, "actionable": 4,
+        "semanticFindingsSha256": "7b2a8c008ba90793457599d7e8c99d3cacb80355ab46182821037c2575b1b63e",
+        "diagnosticsSha256": "012633bb7173438fa10c3e71069194d3c7a6891ba16be4a1cea65d04c859875f"
+      }
+    }
+  ]
+}

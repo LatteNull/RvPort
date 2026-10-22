@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "seed": 20260918,
+  "method": "deterministic-stratified-v1",
+  "planned_cases": 8,
+  "selected_cases": 5,
+  "adjudicated_cases": 5,
+  "unadjudicated_cases": 0,
+  "inconclusive_cases": 2,
+  "strata": [
+    {"name":"finding","planned":1,"selected":["cpp17-risk-single"],"adjudicated":1},
+    {"name":"discharged","planned":3,"selected":["c11-correct-single"],"adjudicated":1},
+    {"name":"unknown","planned":1,"selected":["cpp17-unknown-multi"],"adjudicated":1},
+    {"name":"unsupported","planned":1,"selected":["c17-unknown-single"],"adjudicated":1},
+    {"name":"no-candidate","planned":2,"selected":["c11-risk-multi"],"adjudicated":1}
+  ],
+  "selection_bias": "按观察结果分层后每层等额抽样会过采样稀有层；样本指标只描述这 5 个已裁决样本，不外推到完整语料或真实工程。",
+  "selection_bias_en": "Equal allocation after outcome stratification oversamples rare strata; sample metrics describe only these five adjudicated samples and are not extrapolated to the full corpus or real project.",
+  "safety": "not_established"
+}

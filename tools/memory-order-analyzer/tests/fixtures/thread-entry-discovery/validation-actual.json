@@ -1,0 +1,13 @@
+{
+  "suite_version": "thread-entry-discovery-v1",
+  "cases": [
+    {"case_id": "c11-pthread-dual", "sites": [{"api": "pthread", "evidence": "dual-exact", "disposition": "adopted"}]},
+    {"case_id": "c11-thrd-dual", "sites": [{"api": "c11-thread", "evidence": "dual-exact", "disposition": "adopted"}]},
+    {"case_id": "c17-pthread-ir-only", "sites": [{"api": "pthread", "evidence": "ir-exact", "disposition": "adopted"}]},
+    {"case_id": "c17-thrd-ast-only", "sites": [{"api": "c11-thread", "evidence": "source-candidate", "disposition": "frontier"}]},
+    {"case_id": "cpp17-thread-dual", "sites": [{"api": "std-thread", "evidence": "dual-exact", "disposition": "adopted"}, {"api": "std-thread", "evidence": "dual-exact", "disposition": "adopted"}]},
+    {"case_id": "cpp17-async-policy", "sites": [{"api": "std-async", "evidence": "dual-exact", "disposition": "adopted"}, {"api": "std-async", "evidence": "dual-exact", "disposition": "excluded"}]},
+    {"case_id": "cpp20-jthread-dual", "sites": [{"api": "std-jthread", "evidence": "dual-exact", "disposition": "adopted"}, {"api": "std-jthread", "evidence": "dual-exact", "disposition": "adopted"}]},
+    {"case_id": "cpp20-async-conditional", "sites": [{"api": "std-async", "evidence": "dual-exact", "disposition": "conditional-frontier"}, {"api": "std-async", "evidence": "dual-exact", "disposition": "conditional-frontier"}]}
+  ]
+}

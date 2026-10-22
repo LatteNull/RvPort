@@ -1,0 +1,5753 @@
+{
+  "facts": [
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "alderlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "arrowlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "atom_sse4_2_movbe",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bdver1",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bdver2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bdver3",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bdver4",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "btver1",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "btver2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "c3",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "c3-2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cannonlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cascadelake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "clearwaterforest",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cooperlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "emeraldrapids",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "generic",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "geode",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "goldmont",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "gracemont",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "graniterapids",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "i386",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "i486",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "i586",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "i686",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k6",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k6-2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k6-3",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "knm",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lakemont",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "meteorlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "nocona",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pantherlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pentium",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "raptorlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rocketlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sapphirerapids",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "skylake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tigerlake",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tremont",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "winchip-c6",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "winchip2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "x86-64",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "x86-64-v2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "x86-64-v3",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "x86-64-v4",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "yonah",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "znver1",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "znver2",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "znver3",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "znver4",
+      "factKind": "architectureAliases",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aad",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aam",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "adc",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "add",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aesdec128kl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aesdec256kl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aesdecwide128kl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aesdecwide256kl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aesenc128kl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aesenc256kl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aesencwide128kl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aesencwide256kl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aesimc",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aeskeygenassist",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "and",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "arpl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "blendvpd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "blendvps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bound",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bsf",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bsr",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bswap",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bt",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "btc",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "btr",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bts",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "call",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "calll",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "callw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cldemote",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "clflush",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "clflushopt",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "clr",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "clrssbsy",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "clwb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "clzero",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmov",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmppd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmpps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmpsb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmpsd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmpsq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmpss",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmpsw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmpxchg",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmpxchg16b",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmpxchg8b",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtdq2pd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtdq2ps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtpd2dq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtpd2pi",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtpd2ps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtpi2pd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtpi2ps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtps2dq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtps2pd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtps2pi",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtsd2si",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtsd2ss",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtsi2sd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtsi2ss",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtss2sd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvtss2si",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvttpd2dq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvttpd2pi",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvttps2dq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvttps2pi",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvttsd2si",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cvttss2si",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dec",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "div",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "encodekey128",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "encodekey256",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "enqcmd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "enqcmds",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "enter",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "extrq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fadd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "faddp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fbld",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fbstp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fcmovb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fcmovbe",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fcmove",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fcmovnb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fcmovnbe",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fcmovne",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fcmovnu",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fcmovu",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fcom",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fcomi",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fcomp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fcompi",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fdiv",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fdivr",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ffree",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ffreep",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ficom",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ficomp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fild",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fist",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fistp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fisttp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fld",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fldcw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fldenv",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fmul",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fmulp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fnsave",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fnstcw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fnstenv",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fnstsw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "frstor",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fst",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fstp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fsub",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fsubr",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fucom",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fucomi",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fucomp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fucompi",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fxch",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fxrstor",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fxrstor64",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fxsave",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fxsave64",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "hreset",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "idiv",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "imul",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "in",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "inb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "inc",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "incsspd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "incsspq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "inl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ins",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "insb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "insertq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "insw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "int",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "invept",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "invlpg",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "invlpga",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "invlpgb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "invpcid",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "invvpid",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "inw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ja",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jae",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jbe",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jcxz",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "je",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jecxz",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jg",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jge",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jle",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jmp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jmpabs",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jmpl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jmpw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jne",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jno",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jnp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jns",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jo",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "jrcxz",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "js",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lar",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lcall",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lddqu",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ldmxcsr",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lds",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ldtilecfg",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lea",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "les",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lfs",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lgdt",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lgdtw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lgs",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lidt",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lidtw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ljmp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lldt",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "llwpcb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lmsw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "loadiwkey",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lods",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lodsb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lodsq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lodsw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "loop",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "loope",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "loopne",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lsl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lss",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ltr",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lwpins",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lwpval",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lzcnt",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "maskmovdqu",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "maskmovq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "monitor",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "monitorx",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mov",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mov.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movabs",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movapd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movapd.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movaps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movaps.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movbe",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movdir64b",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movdiri",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movdq2q",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movdqa",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movdqa.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movdqu",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movdqu.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movhlps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movhpd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movhps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movlhps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movlpd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movlps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movntdq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movntdqa",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movnti",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movntpd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movntps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movntq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movntsd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movntss",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movq.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movq2dq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movs",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movsb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movsq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movsw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movsx",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movupd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movupd.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movups",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movups.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movz",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movzx",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mwait",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mwaitx",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "nop",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "or",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "out",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "outb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "outl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "outs",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "outsb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "outsw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "outw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pblendvb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pclmulqdq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pextrw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pinsrw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pmovmskb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pop",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pop2",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pop2p",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "popcnt",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "popp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefetch",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefetchit0",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefetchit1",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefetchnta",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefetcht0",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefetcht1",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefetcht2",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefetchw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefetchwt1",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pshufw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "psmash",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ptest",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ptwrite",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "push",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "push2",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "push2p",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pushp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pvalidate",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdfsbase",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdgsbase",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdpid",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdrand",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdseed",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdsspd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdsspq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ret",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rex64",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rmpadjust",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rmpquery",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rmpupdate",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rstorssp",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sbb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "scas",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "scasb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "scasq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "scasw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "senduipi",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sgdt",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sgdtw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sha1rnds4",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sha256rnds2",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "shld",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "shrd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "shufpd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "shufps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sidt",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sidtw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "skinit",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sldt",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "slwpcb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "smsw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ss",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "stmxcsr",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "stos",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "stosb",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "stosq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "stosw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "str",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sttilecfg",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sub",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tcmmimfp16ps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tcmmrlfp16ps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tdpbf16ps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tdpbssd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tdpbsud",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tdpbusd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tdpbuud",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tdpfp16ps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "test",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tileloadd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tileloaddt1",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tilestored",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tilezero",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tpause",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tzcnt",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ud1",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "umonitor",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "umwait",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "unpckhpd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "unpckhps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "unpcklpd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "unpcklps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "urdmsr",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "uwrmsr",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vaesimc",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vaeskeygenassist",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vbroadcastf128",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vbroadcasti128",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtdq2pd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtdq2ps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtneps2bf16",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtneps2bf16x",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtneps2bf16y",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtpd2dq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtpd2dqx",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtpd2dqy",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtpd2psx",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtpd2psy",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtph2ps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtps2pd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtps2ph",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtsd2si",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtsd2ss",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtsi2sd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtsi2sh",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtsi2ss",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtss2sd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtss2si",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvttpd2dqx",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvttpd2dqy",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvttsd2si",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvttss2si",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtusi2sd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtusi2sh",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vcvtusi2ss",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "verr",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "verw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vextractf128",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vextracti128",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vextractps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vinsertf128",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vinserti128",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vinsertps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vlddqu",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmclear",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmload",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovapd.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovaps.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovdqa.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovdqu",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovdqu.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovhlps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovhpd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovhps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovlhps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovlpd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovlps",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovntdqa",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovq.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovsd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovsd.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovsh",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovsh.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovss",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovss.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovupd.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovups.s",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmovw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmptrld",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmptrst",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmread",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmrun",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmsave",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmwrite",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vmxon",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vpclmulqdq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vperm2f128",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vperm2i128",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vpextrw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vpinsrw",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vptest",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vsha512msg1",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vsha512msg2",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vsha512rnds2",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vsm3rnds2",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "wrfsbase",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "wrgsbase",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "wrssd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "wrssq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "wrussd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "wrussq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xabort",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xadd",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xbegin",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xchg",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xor",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xorl",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xorq",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xrstor",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xrstor64",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xrstors",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xrstors64",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsave",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsave64",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsavec",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsavec64",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsaveopt",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsaveopt64",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsaves",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsaves64",
+      "factKind": "assemblyInstructions",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ah",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "al",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ax",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bh",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bl",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bp",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bpl",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bx",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ch",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cl",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr0",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr1",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr10",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr11",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr12",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr13",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr14",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr15",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr2",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr3",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr4",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr5",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr6",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr7",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr8",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cr9",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cs",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cx",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dh",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "di",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dil",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dirflag",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dl",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr0",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr1",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr10",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr11",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr12",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr13",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr14",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr15",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr2",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr3",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr4",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr5",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr6",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr7",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr8",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dr9",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ds",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "dx",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "eax",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ebp",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ebx",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ecx",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "edi",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "edx",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "eflags",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "eip",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "eiz",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "es",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "esi",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "esp",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "flags",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fp0",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fp1",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fp2",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fp3",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fp4",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fp5",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fp6",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fp7",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fpcr",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fpsr",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fs",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fs.base",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "gs",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "gs.base",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ip",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k0",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k1",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k2",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k3",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k4",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k5",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k6",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "k7",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mm0",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mm1",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mm2",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mm3",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mm4",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mm5",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mm6",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mm7",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mxcsr",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r10",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r10b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r10d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r10w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r11",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r11b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r11d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r11w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r12",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r12b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r12d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r12w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r13",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r13b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r13d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r13w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r14",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r14b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r14d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r14w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r15",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r15b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r15d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r15w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r16",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r16b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r16d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r16w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r17",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r17b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r17d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r17w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r18",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r18b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r18d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r18w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r19",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r19b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r19d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r19w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r20",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r20b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r20d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r20w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r21",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r21b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r21d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r21w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r22",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r22b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r22d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r22w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r23",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r23b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r23d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r23w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r24",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r24b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r24d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r24w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r25",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r25b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r25d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r25w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r26",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r26b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r26d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r26w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r27",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r27b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r27d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r27w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r28",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r28b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r28d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r28w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r29",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r29b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r29d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r29w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r30",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r30b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r30d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r30w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r31",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r31b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r31d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r31w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r8",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r8b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r8d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r8w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r9",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r9b",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r9d",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "r9w",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rax",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rbp",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rbx",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rcx",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdi",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdx",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rflags",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rip",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "riz",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rsi",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rsp",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "si",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sil",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sp",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "spl",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ss",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ssp",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "st",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "st(1)",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "st(2)",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "st(3)",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "st(4)",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "st(5)",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "st(6)",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "st(7)",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tmm0",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tmm1",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tmm2",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tmm3",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tmm4",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tmm5",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tmm6",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tmm7",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tmmcfg",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm0",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm1",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm10",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm11",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm12",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm13",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm14",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm15",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm16",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm17",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm18",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm19",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm2",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm20",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm21",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm22",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm23",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm24",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm25",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm26",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm27",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm28",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm29",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm3",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm30",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm31",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm4",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm5",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm6",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm7",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm8",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xmm9",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ymm",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "zmm",
+      "factKind": "registerNames",
+      "semanticScope": "x86-only"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "16bit-mode",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "32bit-mode",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "3dnow",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "3dnowa",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "64bit",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "64bit-mode",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "adx",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "aes",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "allow-light-256-bit",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amx-bf16",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amx-complex",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amx-fp16",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amx-int8",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "amx-tile",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx10.1-256",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx10.1-512",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx2",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512bf16",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512bitalg",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512bw",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512cd",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512dq",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512er",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512f",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512fp16",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512ifma",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512pf",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512vbmi",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512vbmi2",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512vl",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512vnni",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512vp2intersect",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avx512vpopcntdq",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avxifma",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avxneconvert",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avxvnni",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avxvnniint16",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "avxvnniint8",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bmi",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "bmi2",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "branchfusion",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ccmp",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cf",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cldemote",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "clflushopt",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "clwb",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "clzero",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmov",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cmpccxadd",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "crc32",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cx16",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "cx8",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "egpr",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "enqcmd",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "evex512",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "f16c",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "false-deps-getmant",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "false-deps-lzcnt-tzcnt",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "false-deps-mulc",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "false-deps-mullq",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "false-deps-perm",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "false-deps-popcnt",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "false-deps-range",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fast-bextr",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fast-gather",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fast-movbe",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fast-scalar-fsqrt",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fast-variable-crosslane-shuffle",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fast-variable-perlane-shuffle",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fast-vector-fsqrt",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "faster-shift-than-shuffle",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fma",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fma4",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fsgsbase",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "fxsr",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "gfni",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "hreset",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "idivl-to-divb",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "idivq-to-divl",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "invpcid",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "kl",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lea-sp",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lea-uses-ag",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lwp",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "lzcnt",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "macrofusion",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mmx",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movbe",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movdir64b",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "movdiri",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "mwaitx",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ndd",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "no-bypass-delay",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "no-bypass-delay-blend",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "no-bypass-delay-mov",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "no-bypass-delay-shuffle",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "nopl",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pad-short-functions",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pclmul",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pconfig",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "pku",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "popcnt",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ppx",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefer-128-bit",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefer-256-bit",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefer-mask-registers",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefer-movmsk-over-vtest",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefer-no-gather",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefer-no-scatter",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefetchi",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prefetchwt1",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "prfchw",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ptwrite",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "push2pop2",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "raoint",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdpid",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdpru",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdrnd",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rdseed",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "retpoline",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "rtm",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sahf",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sbb-dep-breaking",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "serialize",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sgx",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sha",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sha512",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "shstk",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "slow-3ops-lea",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "slow-incdec",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "slow-lea",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "slow-pmaddwd",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "slow-pmulld",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "slow-shld",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "slow-two-mem-ops",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "slow-unaligned-mem-16",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "slow-unaligned-mem-32",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sm3",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sm4",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "soft-float",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sse",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sse-unaligned-mem",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sse2",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sse3",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sse4.1",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sse4.2",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "sse4a",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "ssse3",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tbm",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tsxldtrk",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "tuning-fast-imm-vector-shift",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "uintr",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "use-glm-div-sqrt-costs",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "use-slm-arith-costs",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "usermsr",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vaes",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vpclmulqdq",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "vzeroupper",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "waitpkg",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "wbnoinvd",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "widekl",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "x87",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xop",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsave",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsavec",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsaveopt",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    },
+    {
+      "architectureFamily": "x86",
+      "canonicalValue": "xsaves",
+      "factKind": "targetFeatures",
+      "semanticScope": "x86-toolchain"
+    }
+  ],
+  "schemaVersion": "2.0",
+  "source": {
+    "collectedAt": "2026-09-07",
+    "inputPaths": [
+      "llvm/lib/Target/X86/X86RegisterInfo.td",
+      "llvm/lib/Target/X86/X86.td",
+      "llvm/lib/Target/X86/X86Instr3DNow.td",
+      "llvm/lib/Target/X86/X86InstrAMX.td",
+      "llvm/lib/Target/X86/X86InstrAVX512.td",
+      "llvm/lib/Target/X86/X86InstrArithmetic.td",
+      "llvm/lib/Target/X86/X86InstrAsmAlias.td",
+      "llvm/lib/Target/X86/X86InstrCMovSetCC.td",
+      "llvm/lib/Target/X86/X86InstrCompiler.td",
+      "llvm/lib/Target/X86/X86InstrControl.td",
+      "llvm/lib/Target/X86/X86InstrExtension.td",
+      "llvm/lib/Target/X86/X86InstrFMA.td",
+      "llvm/lib/Target/X86/X86InstrFPStack.td",
+      "llvm/lib/Target/X86/X86InstrFormats.td",
+      "llvm/lib/Target/X86/X86InstrFragments.td",
+      "llvm/lib/Target/X86/X86InstrFragmentsSIMD.td",
+      "llvm/lib/Target/X86/X86InstrInfo.td",
+      "llvm/lib/Target/X86/X86InstrKL.td",
+      "llvm/lib/Target/X86/X86InstrMMX.td",
+      "llvm/lib/Target/X86/X86InstrMisc.td",
+      "llvm/lib/Target/X86/X86InstrOperands.td",
+      "llvm/lib/Target/X86/X86InstrPredicates.td",
+      "llvm/lib/Target/X86/X86InstrRAOINT.td",
+      "llvm/lib/Target/X86/X86InstrSGX.td",
+      "llvm/lib/Target/X86/X86InstrSNP.td",
+      "llvm/lib/Target/X86/X86InstrSSE.td",
+      "llvm/lib/Target/X86/X86InstrSVM.td",
+      "llvm/lib/Target/X86/X86InstrShiftRotate.td",
+      "llvm/lib/Target/X86/X86InstrSystem.td",
+      "llvm/lib/Target/X86/X86InstrTBM.td",
+      "llvm/lib/Target/X86/X86InstrTDX.td",
+      "llvm/lib/Target/X86/X86InstrTSX.td",
+      "llvm/lib/Target/X86/X86InstrUtils.td",
+      "llvm/lib/Target/X86/X86InstrVMX.td",
+      "llvm/lib/Target/X86/X86InstrVecCompiler.td",
+      "llvm/lib/Target/X86/X86InstrXOP.td"
+    ],
+    "inputSha256": [
+      "2c273088c17f0b983a79a9971adcdb4b35be5bfc3ed944bb1fc2d21e155fd909",
+      "911abb810051e1a910f1ce9e87366744f5ea720eb991b134e86fb3dcc8867cc2",
+      "6e550095143c00148a1fb970ea5d0e75722fddea41c7ff628447c62f83199bc9",
+      "7273d544f11f39bd3dffa3807038e536e382a8052d58d0c12c5d88fda2d8d9cb",
+      "b043f7cbbbbe9726c79b104b7795d327bb011a2cae317716570b5df611c47289",
+      "07b758061d5e499712dd34afb82fdc631d5c13d5ff22748a2f1bec33c4e5d88a",
+      "7f7b2011bb91659d6f73dfe448282789513babf0ac78afe0033d73a539153793",
+      "cf2bc72e407d971efdedb5958522b819980849e6b1be7a176bd19fb3c5b31620",
+      "1cd54c85aaea6baa03160c1c9f1f7de74ded76800ec1be1e2fdc9f6e4ac73aaf",
+      "85e8fde2ea9ee0e7c228e68aa1c6d09661a7c14215d4f7544f94dd27a11f247a",
+      "cf74c56c9c5a32098f098d3db966eb14478f272d9d4e8a1fc9031fdcd0d20ec1",
+      "a0b993330b7be3a5b7e6b9fb378a8f012081380da8c82d15a9ce4e72f6af85c8",
+      "6dc21b94853bac39395acf72f914262f8ef9b8fcefe8375221fa77fb174f6197",
+      "ad21f9ae497d93ad6eb9c89d24eae5d24608c6f818c082519a264a96a03429fa",
+      "00942b2d5be2421a58ebbf4efca5f5a1c271eae6a5cca80f77c60c914d8c09a8",
+      "21a7042ba995ebc6926ca51aafd833fd8a5f5f7575f288ae94c8722ceba54177",
+      "a58b9b4f3bfb0eed1d4bdde0bb9c229b6fedb6e96d19c3222fe7721e9d5777e1",
+      "1ef77e29dec46e10bce733103153f8ec559e4477f730dd699573e96ac1beb2ae",
+      "292fa409c4008dae3f4cf47cec11903f76d246f5b85a836e56adca717439aa3e",
+      "140959cb303c61e192fdddba42167b100facd4bac5d71f9a7caeb1946926de01",
+      "0218cb52a0681e4c638ad1097f94d1eb43f982291f10020928c0d2946eb5c70d",
+      "b2c6d5f63a886958671ba4c4265a4a2b785506e44d959f7853d0ddee1c84b0ee",
+      "e13953e5ac3bc6ab6dd4070e0da4b5635dcf1b7fa0cbd69da924a6a1681c12e2",
+      "34484fa0ffbd0d197b4c9d8aa3c9b81c08f17973647f9e7bf7200e0c17fcf474",
+      "1af870b91b1f12f40dd79dd34903895a2154274a73c2bc0e526d9a89282713b5",
+      "1fc7580f1cd132e123bab2ce45c9a0dc7663bf5f17d37185d616f7a4bd07a5d4",
+      "3b35b580bd668ed1ff23962570ea38260ad4c8c77514cafcb58dba87aa8f433c",
+      "0a06e1fdc370bfd4f2abc20a657bf38a279f7f716c0f19dc2bd89cd08a9ea20b",
+      "cfbfaf17e1b26b645a67789df5ccecceb18b5d803a586adb4296e247850fdeba",
+      "fbaa1b1f407e7032b41628088614f5e1aebc88aaec5658f278237e769f486a82",
+      "b594fba44ad2f16c2098bd21f77a95dc49ec57c34c8ba774729eb2f0a97f6ff5",
+      "e7b43f3fc69ca9c9d5cad355e16cda5e05a5a6292c77372e52cef2ad268581fd",
+      "5b6c4377dc381b79dfebfe7a42c5931deaecf6f8b4142daa86bd5a422d72b1c0",
+      "34a9286badb774179011b8f8c90b41073265dbb0ec8b238c8242c5f66d722609",
+      "af2c25dd7da3236f198e2872e5d4b76b66f1056030d07e11aecc08833e38f608",
+      "3927b3f852b84f2b0e2401b73b10f1a2b8d8b5b0460e9f01b8a64a1b97acd5e3"
+    ],
+    "license": "Apache-2.0 WITH LLVM-exception",
+    "officialUrl": "https://github.com/llvm/llvm-project",
+    "release": "llvmorg-18.1.8",
+    "revision": "3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff",
+    "sourceId": "llvm-18.1.8-x86"
+  }
+}
