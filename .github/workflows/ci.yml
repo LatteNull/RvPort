@@ -1,0 +1,218 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  # ============================================================
+  # 1. 后端 Java — Maven clean verify + JaCoCo 90% 行/分支门槛
+  # ============================================================
+  backend-java:
+    name: Backend Java
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup JDK 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '25'
+          cache: 'maven'
+
+      - name: Maven clean verify (with JaCoCo coverage gate)
+        working-directory: backend
+        run: mvn -B clean verify -T 1C
+
+      - name: Upload surefire reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-surefire-reports
+          path: backend/target/surefire-reports/
+          if-no-files-found: ignore
+
+      - name: Upload JaCoCo reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-jacoco-reports
+          path: backend/target/site/jacoco/
+          if-no-files-found: ignore
+
+  # ============================================================
+  # 2. 后端 Python 资源脚本 — coverage.py 整体与每脚本 90% 行/分支
+  # ============================================================
+  backend-python:
+    name: Backend Python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build backend unit-test image
+        run: docker build --target unit-test -t rvport-backend-unit:local -f backend/Dockerfile .
+
+      - name: Run backend Python coverage tests
+        run: |
+          docker run --name rvport-backend-python --memory=2g --cpus=2 \
+            -e PYTHONPATH=/workspace/tools/memory-order-analyzer/python \
+            rvport-backend-unit:local sh -c \
+            'python3 -m coverage run --branch --source=src/main/resources/analysis,src/main/resources/bitcode -m pytest src/test/python; test_status=$?; python3 -m coverage json -o /tmp/backend-python-coverage.json; python3 -m coverage report --fail-under=90; coverage_status=$?; if [ "$test_status" -ne 0 ]; then exit "$test_status"; fi; exit "$coverage_status"'
+
+      - name: Verify per-script 90% line/branch gate
+        run: |
+          docker cp rvport-backend-python:/tmp/backend-python-coverage.json ./backend-python-coverage.json
+          docker run --rm --memory=1g --cpus=1 \
+            --mount "type=bind,source=$PWD/backend-python-coverage.json,target=/tmp/coverage.json,readonly" \
+            rvport-backend-unit:local python3 -c \
+            'import json; r=json.load(open("/tmp/coverage.json")); rows=[r["totals"],*[f["summary"] for f in r["files"].values()]]; assert all(s["covered_lines"]*100 >= s["num_statements"]*90 and s["covered_branches"]*100 >= s["num_branches"]*90 for s in rows), "行或分支覆盖率未达到 90%"; print("整体和每个脚本的行、分支覆盖率均达到 90%")'
+
+      - name: Upload backend python coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-python-coverage
+          path: backend-python-coverage.json
+          if-no-files-found: ignore
+
+  # ============================================================
+  # 3. 前端 — lint / typecheck / 单元测试 / 生产构建（暂不验收覆盖率）
+  # ============================================================
+  frontend:
+    name: Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: '10'
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        working-directory: frontend
+        run: pnpm lint
+
+      - name: Typecheck
+        working-directory: frontend
+        run: pnpm typecheck
+
+      - name: Unit tests
+        working-directory: frontend
+        run: pnpm test
+
+      - name: Production build
+        working-directory: frontend
+        run: pnpm build
+
+      - name: Upload frontend dist
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist/
+          if-no-files-found: ignore
+
+  # ============================================================
+  # 4. KB Scanner — Docker 内全量单元测试 + 覆盖率门槛
+  # ============================================================
+  kb-scanner:
+    name: KB Scanner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build kb-scanner test image
+        run: docker build -f tools/kb-scanner/Dockerfile.test -t rvport-kb-scanner-test:local .
+
+      - name: Run kb-scanner full unit tests + coverage gates
+        run: docker run --name rvport-kb-unit --memory=4g --cpus=2 --network=none rvport-kb-scanner-test:local
+
+      - name: Cleanup container
+        if: always()
+        run: docker rm -f rvport-kb-unit >/dev/null 2>&1 || true
+
+  # ============================================================
+  # 5. 浮点精度扫描器 — Python coverage + C++ llvm-cov 双门槛
+  # ============================================================
+  floating-point-scanner:
+    name: Floating-Point Scanner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build fp-scanner dev image
+        run: docker build -t rvport-fp-dev:local tools/floating-point-precision-scanner -f tools/floating-point-precision-scanner/Dockerfile.dev
+
+      - name: Run Python + C++ coverage
+        run: |
+          docker run --name rvport-fp-unit --memory=8g --cpus=2 \
+            -e CMAKE_BUILD_PARALLEL_LEVEL=2 \
+            rvport-fp-dev:local make coverage cpp-coverage
+
+      - name: Upload fp-scanner coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fp-scanner-coverage
+          path: tools/floating-point-precision-scanner/artifacts/coverage/
+          if-no-files-found: ignore
+
+      - name: Cleanup container
+        if: always()
+        run: docker rm -f rvport-fp-unit >/dev/null 2>&1 || true
+
+  # ============================================================
+  # 6. 内存序分析器 — quality 入口（Python/C++/模块 90% 行/分支）
+  # ============================================================
+  memory-order-analyzer:
+    name: Memory-Order Analyzer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build moa dev image
+        run: docker build -t memory-order-analyzer-dev:llvm21 -f tools/memory-order-analyzer/Dockerfile.dev tools/memory-order-analyzer
+
+      - name: Run moa quality gate
+        run: |
+          docker run --name rvport-moa-unit --memory=8g --cpus=2 --network none \
+            --mount "type=bind,source=$PWD/tools/memory-order-analyzer,target=/workspace,readonly" \
+            --mount "type=volume,source=moa-dev-output,target=/output" \
+            memory-order-analyzer-dev:llvm21 \
+            python3 -m memory_order_analyzer.quality --output /output/quality-ci
+
+      - name: Upload moa coverage summary
+        if: always()
+        run: |
+          CID=$(docker ps -aq --filter name=rvport-moa-unit 2>/dev/null | head -1)
+          if [ -n "$CID" ]; then
+            mkdir -p moa-coverage
+            docker cp "$CID:/output/quality-ci" ./moa-coverage/ 2>/dev/null || true
+          fi
+        shell: bash
+
+      - name: Upload moa artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: moa-quality-report
+          path: moa-coverage/
+          if-no-files-found: ignore
+
+      - name: Cleanup container and volume
+        if: always()
+        run: |
+          docker rm -f rvport-moa-unit >/dev/null 2>&1 || true
+          docker volume rm moa-dev-output >/dev/null 2>&1 || true
