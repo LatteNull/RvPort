@@ -31,6 +31,7 @@ COPY --from=build /workspace/backend /workspace/backend
 COPY tools/kb-scanner /workspace/tools/kb-scanner
 COPY tools/memory-order-analyzer/python /workspace/tools/memory-order-analyzer/python
 COPY tools/memory-order-analyzer/schemas /workspace/tools/memory-order-analyzer/schemas
+COPY tools/memory-order-analyzer/protocols /workspace/tools/memory-order-analyzer/protocols
 COPY tools/memory-order-analyzer/*.json /workspace/tools/memory-order-analyzer/
 RUN --mount=type=cache,target=/root/.m2 cp -a /root/.m2 /opt/maven-cache
 CMD ["mvn", "-B", "-s", "/opt/maven-cache/settings.xml", "-Dmaven.repo.local=/opt/maven-cache/repository", "clean", "verify"]
