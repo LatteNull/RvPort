@@ -32,45 +32,5 @@ class BuildSelectionComponentTests(unittest.TestCase):
         self.assertTrue(any(item.detector_id == "BUILD.SELECTION" for item in detections.observations))
         self.assertFalse((scan_context.output_dir / "scan-result.json").exists())
 
-    def test_real_avx_makefiles_match_all_24_manual_flag_oracles(self) -> None:
-        source = Path("/fixtures/avx-avx2-example-code/source")
-        self.assertTrue(source.is_dir(), "compose.test.yml must mount the real AVX fixture read-only")
-        baseline = json.loads((ROOT / "tests/fixtures/build-selection/avx-make-baseline.json").read_text(encoding="utf-8"))
-        expected = sorted(
-            (
-                item["path"], item["line"], item["startColumn"], item["endColumn"],
-                item["flag"], item["variable"], item["target"], item["expectedStatus"],
-            )
-            for item in baseline["entries"]
-        )
-        scan_context = context(source)
-        workspace = ProjectWorkspaceCollector().collect(scan_context)
-        self.assertEqual(workspace.status, CompletionStatus.COMPLETE)
-        frontend = BuildFrontend().analyze(scan_context, workspace.value)
-        actual_evidence = [
-            item for item in frontend.value.evidence
-            if item.kind == "build_argument" and item.value in {"-mavx", "-mavx2", "-mfma", "-msse", "-msse2", "-msse3"}
-        ]
-        actual = sorted(
-            (
-                item.location.start.path, item.location.start.line, item.location.start.column,
-                item.location.end.column, item.value, item.metadata["variable"],
-                item.metadata["target"], item.metadata["selectionStatus"],
-            )
-            for item in actual_evidence
-        )
-        self.assertEqual(actual, expected)
-
-        normalized = BuildEvidenceNormalizer().normalize(scan_context, frontend.value)
-        analysis = BuildSelectionAnalyzer().analyze(scan_context, normalized.value, flag_knowledge("-mavx", "-mavx2", "-mfma", "-msse", "-msse2", "-msse3"))
-        selected = [
-            item for item in analysis.value.relations
-            if item.kind == "adds_argument" and item.status == "selected" and item.metadata.get("value") in {"-mavx", "-mavx2", "-mfma", "-msse", "-msse2", "-msse3"}
-        ]
-        self.assertEqual(len(selected), 24)
-        observations = BuildSelectionDetector().detect(scan_context, normalized.value, analysis.value, flag_knowledge("-mavx", "-mavx2", "-mfma", "-msse", "-msse2", "-msse3"))
-        self.assertEqual(sum(item.kind == "build_selected_x86_dependency" for item in observations.value.observations), 24)
-
-
 if __name__ == "__main__":
     unittest.main()

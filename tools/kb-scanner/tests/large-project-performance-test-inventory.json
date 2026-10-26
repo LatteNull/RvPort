@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "container": "kb-scanner-test",
-  "coverageThresholds": {"linePercent": 90, "branchPercent": 80},
+  "coverageThresholds": {"linePercent": 90, "branchPercent": 90.0},
   "modules": {
     "kb_scanner/detectors/demand.py": ["tests.unit.performance.test_fact_demand"],
     "kb_scanner/graph/queries.py": ["tests.unit.performance.test_proof_queries"],

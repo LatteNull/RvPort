@@ -20,7 +20,7 @@ class ClassificationAssessmentContractTests(unittest.TestCase):
             "pipeline/composite.py", "pipeline/qualification.py",
         }
         self.assertEqual(set(payload["modules"]), expected)
-        self.assertEqual(payload["coverageThresholds"], {"linePercent": 90.0, "branchPercent": 80.0})
+        self.assertEqual(payload["coverageThresholds"], {"linePercent": 90.0, "branchPercent": 90.0})
         for module, mapping in payload["modules"].items():
             self.assertTrue((ROOT / "kb_scanner" / module).is_file(), module)
             self.assertTrue((ROOT / mapping["unit"]).is_file(), mapping["unit"])

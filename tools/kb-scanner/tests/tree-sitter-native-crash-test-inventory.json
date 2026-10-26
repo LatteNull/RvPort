@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "change": "fix-kb-scanner-tree-sitter-native-crashes",
   "container": "kb-scanner-test",
-  "coverageThresholds": {"linePercent": 90.0, "branchPercent": 80.0},
+  "coverageThresholds": {"linePercent": 90.0, "branchPercent": 90.0},
   "boundaries": "fake parser/process boundaries for units; offline read-only source fixtures for process regressions; no project command execution",
   "modules": {
     "kb_scanner/frontends/cpp/source_positions.py": {"unit": "tests/unit/frontends/cpp/test_source_positions.py", "coverageGate": "--frontend-unit"},

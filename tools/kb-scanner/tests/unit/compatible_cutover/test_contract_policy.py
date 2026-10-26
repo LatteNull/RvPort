@@ -40,6 +40,21 @@ class ContractPolicyTests(unittest.TestCase):
             with self.subTest(value=value), self.assertRaises(ProjectionContractError):
                 validate_payload(value)
 
+    def test_contract_rejects_invalid_trace_context_and_readiness_types(self) -> None:
+        finding = dict.fromkeys(FINDING_FIELDS)
+        finding.update(file="a.c", line=1, column=2, snippet="x", trace={},
+                       location={"file": "a.c", "line": 1, "column": 2}, context={"snippet": "x"})
+        for field, bad, message in (("trace", [], "finding.trace"),
+                                    ("context", {}, "finding.context")):
+            value = payload()
+            value["findings"] = [{**finding, field: bad}]
+            with self.subTest(field=field), self.assertRaisesRegex(ProjectionContractError, message):
+                validate_payload(value)
+        value = payload()
+        value["summary"]["readiness"] = []
+        with self.assertRaisesRegex(ProjectionContractError, "readiness must be an object"):
+            validate_payload(value)
+
     def test_policy_maps_all_detectors_and_impacts(self) -> None:
         policy = ProjectionPolicy()
         self.assertEqual((), policy.validate_completeness())

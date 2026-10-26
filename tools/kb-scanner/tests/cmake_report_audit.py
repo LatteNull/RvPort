@@ -40,10 +40,10 @@ def run(output):
 def matrix(output):
     from tests.test_compatible_cutover_differential import run as scan, semantic_signature
     from kb_scanner.pipeline.default import create_default_application
-    matrix=json.loads((ROOT/'tests/fixtures/compatible-cutover/matrix-differential-golden-v1.json').read_text())
+    matrix=json.loads((ROOT/'tests/fixtures/compatible-cutover/fixture-matrix.json').read_text())
     signatures={}
     output.mkdir(parents=True,exist_ok=True)
-    for entry in matrix['entries']:
+    for entry in matrix['fixtures']:
         fixture=Path(entry['path'])
         if not fixture.is_absolute(): fixture=ROOT/fixture
         result,payload=scan(create_default_application(),fixture)

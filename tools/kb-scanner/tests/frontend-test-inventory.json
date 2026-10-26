@@ -13,7 +13,7 @@
   },
   "coverageThresholds": {
     "linePercent": 90.0,
-    "branchPercent": 80.0
+    "branchPercent": 90.0
   },
   "layers": {
     "unit": "tests/unit/frontends/cpp; third-party parser and downstream boundaries are fake or mocked",

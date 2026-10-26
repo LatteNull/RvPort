@@ -56,7 +56,7 @@ class ArchitectureEnumAnalysisTests(unittest.TestCase):
     def test_inventory_docs_and_frozen_compiler_facts_are_present(self) -> None:
         inventory = json.loads((ROOT / "tests/architecture-enum-test-inventory.json").read_text(encoding="utf-8"))
         self.assertEqual("kb-scanner-test", inventory["container"])
-        self.assertEqual({90.0, 80.0}, set(inventory["coverageThresholds"].values()))
+        self.assertEqual({"linePercent": 90.0, "branchPercent": 90.0}, inventory["coverageThresholds"])
         for module, mapping in inventory["modules"].items():
             self.assertTrue((ROOT / "kb_scanner" / module).is_file(), module)
             self.assertTrue((ROOT / mapping["unit"]).is_file(), module)

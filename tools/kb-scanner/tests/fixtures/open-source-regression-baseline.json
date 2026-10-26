@@ -1,0 +1,314 @@
+{
+  "schemaVersion": "1.0",
+  "change": "fix-unit-suite-mappings",
+  "reviewedAt": "2026-10-26",
+  "baselineCommit": "dc6a276",
+  "knowledgeDataCommit": "eb73f68",
+  "purpose": "当前开源快照的独立回归基线；旧账本保留，业务实现和知识事实未修改。",
+  "reviewNotes": [
+    "知识文件字节与现有事实合同和 knowledge-manifest 一致，六类计数及来源元数据均单独核对。",
+    "旧报告仅保存摘要，不能据此证明历史产物与当前产物语义等同；当前语义由独立组件 oracle 继续验证。",
+    "用户授权移除退役外部 AVX 夹具；矩阵仅包含五个已跟踪本地样例。"
+  ],
+  "compilerFactFiles": [
+    {
+      "path": "rulesets/riscv-porting/generated/clang-x86-entries.json",
+      "bytes": 303286,
+      "sha256": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7",
+      "counts": {
+        "headers": 125,
+        "intrinsics": 7563,
+        "builtins": 1993,
+        "vectorTypes": 10,
+        "platformMacros": 5,
+        "compilerFlags": 216
+      },
+      "source": {
+        "name": "LLVM Clang builtin headers",
+        "api": "https://api.github.com/repos/llvm/llvm-project/contents/clang/lib/Headers?ref=main",
+        "rawBase": "https://raw.githubusercontent.com/llvm/llvm-project/main/clang/lib/Headers",
+        "options": "https://github.com/llvm/llvm-project/blob/main/clang/include/clang/Options/Options.td"
+      }
+    },
+    {
+      "path": "rulesets/riscv-porting/generated/gcc-x86-entries.json",
+      "bytes": 350593,
+      "sha256": "22d68c2ab3c8c40c8606451af2e5f493877661d031b6b2f379eff7886c23d191",
+      "counts": {
+        "headers": 120,
+        "intrinsics": 7602,
+        "builtins": 3438,
+        "vectorTypes": 10,
+        "platformMacros": 47,
+        "compilerFlags": 225
+      },
+      "source": {
+        "name": "GCC i386 backend and intrinsic headers",
+        "path": "vendor/gcc/gcc/config/i386"
+      }
+    }
+  ],
+  "compilerFacts": {
+    "clang-x86-entries.json": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7",
+    "gcc-x86-entries.json": "22d68c2ab3c8c40c8606451af2e5f493877661d031b6b2f379eff7886c23d191"
+  },
+  "fixtures": {
+    "architecture-candidate-noise": {
+      "1.0": {
+        "after": "065a4d7ba6b7cbbbf58280a6783dafd82e1689fcb1ace1e3709ea32e3b9645a0",
+        "logSha256": "1475613aeaae7a6485d732102a7cee4adb8b5fdb1feac9ac73880995e021a0e0"
+      },
+      "2.0": {
+        "after": "c68377731521da36f2ce3ba0a9fab7aad6eb448d93e93ad4af29dda8771d117e",
+        "logSha256": "f2a38d51226f656b70ab67b4ba0492d9f295eb61db23334bd50067297e949989",
+        "strippedSha256": "36a4ddf6da8e01c65ef58ae03918fb6c086e2635e18c0f03240bf8565be1bec2",
+        "withoutCandidateUsageSha256": "c68377731521da36f2ce3ba0a9fab7aad6eb448d93e93ad4af29dda8771d117e"
+      }
+    },
+    "source-evidence-chain": {
+      "1.0": {
+        "after": "a9453a6bc19b642a99e44ac19b148510afeb6fb76881355ea195e515a30301a6",
+        "logSha256": "e1e74781c2aebbf985b4ad8631018f799ce07c44b2131c988f40a5489dc076a2"
+      },
+      "2.0": {
+        "after": "8d931e1921fb75c1de491d10936b933c5ece104765967222383c40da5cccd483",
+        "logSha256": "21aa1e7d9052004110785daa165f5f0dc9139b1fb42a77342c184af91a86c241",
+        "strippedSha256": "ab3cde084a504bf3ed410c0d256ff04fa7ef117a973b750c8b31053145f3e316",
+        "withoutCandidateUsageSha256": "bf6dbe5574e2df9f6db713535685846dceb9f652d04f31c4bd8cee23f9428f39"
+      }
+    },
+    "architecture-enum": {
+      "1.0": {
+        "after": "175e69a421087368d7131adbcb1deb9a5129d5e4f63350b7ec1f3db02366f779",
+        "logSha256": "c141abbf107ce4ab52b8f87dfffb5022f4205e6e7e2815b057cf379948d5dfd8"
+      },
+      "2.0": {
+        "after": "eb19fa9fbbe02ce5e09dc184543245e0cd102792c96f35ed86613388e2d611b6",
+        "logSha256": "4433105ad9c5da67a1332506bc0dcdc96f23145a92e805e464f250a49063b11a",
+        "strippedSha256": "f563b9a3b20f7b32c104ad26359aea60fd88140210878657bede1694b61c8631",
+        "withoutCandidateUsageSha256": "6aaded9941b2806d43cae070d18da126de6c6228a91abe9b1d3355249126ae59"
+      }
+    },
+    "rpm-architecture": {
+      "1.0": {
+        "after": "7a1831adf516b49fff5bf38102b87832ee119908ee670fea00cfabfdb5022f14",
+        "logSha256": "fc0f956bc873aaf0e85b476b6dbf300273cf772b1274d1e3b6e07e3bd19eeef3"
+      },
+      "2.0": {
+        "after": "d6543beed4809170bceefd8e0713fdbfe66a3bce86a0b59eb76280a0ee4c9b9d",
+        "logSha256": "e58345a8562e594f0be64dfb12ee0ffca55c455ec4954ae8b6d4ef4e9c8c0f3f",
+        "strippedSha256": "45bb2bcc156ca8d8e731d84a60007c9e4d4ff7bb61b29956e62b0abecd24168e",
+        "withoutCandidateUsageSha256": "d6543beed4809170bceefd8e0713fdbfe66a3bce86a0b59eb76280a0ee4c9b9d"
+      }
+    }
+  },
+  "after": {
+    "1.0": "065a4d7ba6b7cbbbf58280a6783dafd82e1689fcb1ace1e3709ea32e3b9645a0",
+    "2.0": "c68377731521da36f2ce3ba0a9fab7aad6eb448d93e93ad4af29dda8771d117e"
+  },
+  "matrix": {
+    "generated-and-curated-facts": {
+      "exitCode": 0,
+      "artifacts": [
+        "scan-result.json",
+        "scan-report.html",
+        "scan.log"
+      ],
+      "summary": {
+        "files": 7,
+        "findings": 3,
+        "issues": 2,
+        "hints": 1,
+        "blocking": 0,
+        "portabilityGaps": 0,
+        "inactiveOrGuarded": 1,
+        "referenceSources": 2,
+        "references": 0,
+        "readiness": {
+          "state": "provisional",
+          "confidence": "unknown",
+          "staticScopeOnly": true,
+          "compiled": false,
+          "testsExecuted": false
+        }
+      },
+      "ruleCounts": {
+        "ASM.X86.INSTRUCTION": 1,
+        "COMMENT.ARCH.HINT": 1,
+        "C_CPP.X86.PLATFORM_MACRO": 1
+      },
+      "findingTypeCounts": {
+        "guarded": 1,
+        "hint": 1,
+        "issue": 1
+      },
+      "severityCounts": {
+        "high": 1,
+        "info": 1,
+        "low": 1
+      },
+      "blocking": 0,
+      "actionable": 1,
+      "semanticFindingsSha256": "2ca9eaae6c4737cd4d98bdc22ee184694fc547c12f6876656f799b2f613672e4",
+      "diagnosticsSha256": "a82be40c6889429f689b40b1f9a87140600080a7aa121b85f96f905e327f81ee"
+    },
+    "build-selection": {
+      "exitCode": 0,
+      "artifacts": [
+        "scan-result.json",
+        "scan-report.html",
+        "scan.log"
+      ],
+      "summary": {
+        "files": 13,
+        "findings": 8,
+        "issues": 8,
+        "hints": 0,
+        "blocking": 1,
+        "portabilityGaps": 0,
+        "inactiveOrGuarded": 0,
+        "referenceSources": 8,
+        "references": 0,
+        "readiness": {
+          "state": "partial_riscv",
+          "confidence": "high",
+          "staticScopeOnly": true,
+          "compiled": false,
+          "testsExecuted": false
+        }
+      },
+      "ruleCounts": {
+        "BUILD.X86.SELECTION": 1,
+        "C_CPP.X86.COMPILER_FLAG": 6,
+        "TEST.X86.SELECTION": 1
+      },
+      "findingTypeCounts": {
+        "issue": 8
+      },
+      "severityCounts": {
+        "high": 1,
+        "medium": 7
+      },
+      "blocking": 1,
+      "actionable": 1,
+      "semanticFindingsSha256": "d7039a2165ed101e2fcc8911dbae9268c8d4214fa7be811f6c0441f303b6b7a0",
+      "diagnosticsSha256": "012633bb7173438fa10c3e71069194d3c7a6891ba16be4a1cea65d04c859875f"
+    },
+    "classification-assessment": {
+      "exitCode": 0,
+      "artifacts": [
+        "scan-result.json",
+        "scan-report.html",
+        "scan.log"
+      ],
+      "summary": {
+        "files": 3,
+        "findings": 0,
+        "issues": 0,
+        "hints": 0,
+        "blocking": 0,
+        "portabilityGaps": 0,
+        "inactiveOrGuarded": 0,
+        "referenceSources": 0,
+        "references": 0,
+        "readiness": {
+          "state": "provisional",
+          "confidence": "unknown",
+          "staticScopeOnly": true,
+          "compiled": false,
+          "testsExecuted": false
+        }
+      },
+      "ruleCounts": {},
+      "findingTypeCounts": {},
+      "severityCounts": {},
+      "blocking": 0,
+      "actionable": 0,
+      "semanticFindingsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "diagnosticsSha256": "a6e62ca858b48a32a01d50356fb8de52007a81b588f69cae394da721cb0d9fa1"
+    },
+    "malicious-static-input": {
+      "exitCode": 0,
+      "artifacts": [
+        "scan-result.json",
+        "scan-report.html",
+        "scan.log"
+      ],
+      "summary": {
+        "files": 3,
+        "findings": 0,
+        "issues": 0,
+        "hints": 0,
+        "blocking": 0,
+        "portabilityGaps": 0,
+        "inactiveOrGuarded": 0,
+        "referenceSources": 0,
+        "references": 0,
+        "readiness": {
+          "state": "provisional",
+          "confidence": "unknown",
+          "staticScopeOnly": true,
+          "compiled": false,
+          "testsExecuted": false
+        }
+      },
+      "ruleCounts": {},
+      "findingTypeCounts": {},
+      "severityCounts": {},
+      "blocking": 0,
+      "actionable": 0,
+      "semanticFindingsSha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "diagnosticsSha256": "6bec5a5f00dd7928b68927207510698cf1c4c198bb196be99e651fb74a7f9a2e"
+    },
+    "workspace-escape": {
+      "exitCode": 0,
+      "artifacts": [
+        "scan-result.json",
+        "scan-report.html",
+        "scan.log"
+      ],
+      "summary": {
+        "files": 13,
+        "findings": 8,
+        "issues": 8,
+        "hints": 0,
+        "blocking": 1,
+        "portabilityGaps": 0,
+        "inactiveOrGuarded": 0,
+        "referenceSources": 8,
+        "references": 0,
+        "readiness": {
+          "state": "partial_riscv",
+          "confidence": "high",
+          "staticScopeOnly": true,
+          "compiled": false,
+          "testsExecuted": false
+        }
+      },
+      "ruleCounts": {
+        "BUILD.X86.SELECTION": 1,
+        "C_CPP.X86.COMPILER_FLAG": 6,
+        "TEST.X86.SELECTION": 1
+      },
+      "findingTypeCounts": {
+        "issue": 8
+      },
+      "severityCounts": {
+        "high": 1,
+        "medium": 7
+      },
+      "blocking": 1,
+      "actionable": 1,
+      "semanticFindingsSha256": "d7039a2165ed101e2fcc8911dbae9268c8d4214fa7be811f6c0441f303b6b7a0",
+      "diagnosticsSha256": "012633bb7173438fa10c3e71069194d3c7a6891ba16be4a1cea65d04c859875f"
+    }
+  },
+  "fixtureOverrides": {
+    "README.md": {
+      "sha256": "1d2e0dbf4616b8e89677f26e0fb54c0343a9d9f464e50973edfadc1c82f187e6",
+      "historicalSha256": "b7093780cee4f4a5170a8703cd6b525254ca2edb991a352b17457881eed6530d",
+      "reason": "开源迁移后的说明文档；源码文件仍使用原人工 oracle 和原摘要。",
+      "reverseBrandRenameMatches": true
+    }
+  }
+}

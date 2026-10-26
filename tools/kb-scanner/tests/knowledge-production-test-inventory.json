@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "coverageThresholds": {"linePercent": 90.0, "branchPercent": 80.0},
+  "coverageThresholds": {"linePercent": 90.0, "branchPercent": 90.0},
   "layers": {
     "unit": "tests/unit/knowledge_production; upstream files and filesystem failures use temporary fixed fixtures",
     "component": "tests/test_knowledge_production_contracts.py; committed generated, curated and audit data",

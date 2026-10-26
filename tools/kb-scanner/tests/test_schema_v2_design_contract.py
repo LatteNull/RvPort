@@ -42,7 +42,7 @@ class SchemaV2DesignContractTest(unittest.TestCase):
                 document = apply_operations(base, case["operations"])
                 self.assertIn(case["expectedRule"], validate_document(document))
 
-    def test_historical_avx_example_is_still_readable_and_matches_source(self) -> None:
+    def test_historical_example_is_readable_with_self_contained_source_context(self) -> None:
         document = load_json(FIXTURE_ROOT / "avx-macro-finding.json")
         self.assertEqual([], validate_document(document))
         finding = document["findings"][0]
@@ -65,24 +65,19 @@ class SchemaV2DesignContractTest(unittest.TestCase):
         self.assertEqual(8, len(chain["steps"]))
         self.assertEqual(2, chain["budget"]["paths"])
 
-        source_root = Path("/fixtures/avx-avx2-example-code/source")
-        if not source_root.exists():
-            source_root = ROOT.parents[1] / "backend" / "runtime" / "kb-scan-real" / "avx-avx2-example-code" / "source"
         sources = [finding["fact"]["primaryLocation"]]
         sources.extend(occurrence["location"] for occurrence in finding["occurrences"])
         sources.extend(step["source"] for step in chain["steps"] if "source" in step)
         for source in sources:
-            file_lines = (source_root / source["file"]).read_text(encoding="utf-8").splitlines()
-            for context_line in source["context"]["lines"]:
-                self.assertEqual(file_lines[context_line["line"] - 1], context_line["text"])
+            file_lines = {line["line"]: line["text"] for line in source["context"]["lines"]}
             for highlight in source["context"]["highlights"]:
-                actual_line = file_lines[highlight["line"] - 1]
+                actual_line = file_lines[highlight["line"]]
                 token = actual_line[highlight["startColumn"] - 1 : highlight["endColumn"] - 1]
                 self.assertTrue(token.startswith(("-mavx", "_mm256_")), token)
 
     def test_compiler_fact_files_are_frozen(self) -> None:
-        baseline = load_json(FIXTURE_ROOT / "fact-data-baseline.json")
-        for expected in baseline["files"]:
+        baseline = load_json(ROOT / "tests/fixtures/open-source-regression-baseline.json")
+        for expected in baseline["compilerFactFiles"]:
             with self.subTest(path=expected["path"]):
                 path = ROOT / expected["path"]
                 raw = path.read_bytes()
@@ -90,8 +85,7 @@ class SchemaV2DesignContractTest(unittest.TestCase):
                 self.assertEqual(expected["bytes"], len(raw))
                 self.assertEqual(expected["sha256"], hashlib.sha256(raw).hexdigest())
                 self.assertEqual(expected["counts"], {key: len(data[key]) for key in expected["counts"]})
-                self.assertIsInstance(data["source"], dict)
-                self.assertTrue(data["source"])
+                self.assertEqual(expected["source"], data["source"])
 
     def test_v2_is_projected_directly_from_staged_snapshots(self) -> None:
         contract = load_json(FIXTURE_ROOT / "contract-differences.json")

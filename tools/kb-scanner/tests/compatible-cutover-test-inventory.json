@@ -1,7 +1,10 @@
 {
   "schemaVersion": "1.0",
   "candidateNoiseInventory": "tests/architecture-candidate-noise-test-inventory.json",
-  "coverageThresholds": {"linePercent": 90.0, "branchPercent": 80.0},
+  "coverageThresholds": {
+    "linePercent": 90.0,
+    "branchPercent": 90.0
+  },
   "layers": {
     "unit": "in-memory snapshots, fake readers/writers and controlled failures",
     "component": "real staged components and locked static fixtures",
@@ -11,7 +14,15 @@
   "modules": {
     "bundle.py": {"unit": "tests/unit/compatible_cutover/test_bundle_cli.py", "higherLayers": ["tests/test_compatible_cutover_contracts.py"]},
     "adapters/cli.py": {"unit": "tests/unit/compatible_cutover/test_bundle_cli.py", "higherLayers": ["tests/test_compatible_cutover_component.py"]},
-    "core/context.py": {"unit": "tests/unit/compatible_cutover/test_bundle_cli.py", "higherLayers": ["tests/test_compatible_cutover_component.py"]},
+    "core/context.py": {
+      "unit": "tests/unit/compatible_cutover/test_bundle_cli.py",
+      "higherLayers": [
+        "tests/test_compatible_cutover_component.py"
+      ],
+      "supportingUnits": [
+        "tests/unit/schema_v2_projection/test_cli_schema_version.py"
+      ]
+    },
     "knowledge/provider.py": {"unit": "tests/unit/knowledge_detection/test_knowledge_provider.py", "higherLayers": ["tests/test_compatible_cutover_component.py"]},
     "projection/contract.py": {"unit": "tests/unit/compatible_cutover/test_contract_policy.py", "higherLayers": ["tests/test_compatible_cutover_contracts.py"]},
     "projection/policy.py": {"unit": "tests/unit/compatible_cutover/test_contract_policy.py", "supportingUnits": ["tests/unit/architecture_enum/test_architecture_enum.py"], "higherLayers": ["tests/test_compatible_cutover_component.py"]},
