@@ -13,8 +13,8 @@ jobs:
       contents: read
       packages: write
     env:
-      BACKEND_IMAGE: ghcr.io/RvPort/rvport-backend
-      FRONTEND_IMAGE: ghcr.io/RvPort/rvport-frontend
+      BACKEND_IMAGE: ghcr.io/rvport/rvport-backend
+      FRONTEND_IMAGE: ghcr.io/rvport/rvport-frontend
     steps:
       - uses: actions/checkout@v4
         with:

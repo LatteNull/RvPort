@@ -18,8 +18,8 @@ jobs:
       DEPLOY_BASE: /opt/ryport/deploy
       DEPLOY_DIR: /opt/ryport/deploy/ryport-dev
       PROJECT: ryport-dev
-      BACKEND_IMAGE: ghcr.io/RvPort/rvport-backend
-      FRONTEND_IMAGE: ghcr.io/RvPort/rvport-frontend
+      BACKEND_IMAGE: ghcr.io/rvport/rvport-backend
+      FRONTEND_IMAGE: ghcr.io/rvport/rvport-frontend
     steps:
       - uses: actions/checkout@v4
 
