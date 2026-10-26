@@ -15,7 +15,7 @@ class EvidenceGraphTestQualityTests(unittest.TestCase):
     def test_inventory_maps_graph_business_modules_and_higher_layers(self) -> None:
         expected = {"core/paths.py", "graph/store.py", "analyzers/proof.py", "analyzers/evidence_graph.py"}
         self.assertEqual(set(self.inventory["modules"]), expected)
-        self.assertEqual(self.inventory["coverageThresholds"], {"linePercent": 90.0, "branchPercent": 80.0})
+        self.assertEqual(self.inventory["coverageThresholds"], {"linePercent": 90.0, "branchPercent": 90.0})
         for module, details in self.inventory["modules"].items():
             self.assertTrue((ROOT / "kb_scanner" / module).is_file(), module)
             self.assertTrue((ROOT / details["unit"]).is_file(), details["unit"])

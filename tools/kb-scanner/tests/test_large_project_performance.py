@@ -24,11 +24,9 @@ class PerformanceCompatibilityTests(unittest.TestCase):
         self.assertNotIn("docker build", launcher.lower())
 
     def test_v1_v2_match_reviewed_bilingual_suggestion_baseline(self):
-        audit = json.loads((ROOT / "tests/fixtures/function-multiversion-report-differential.json").read_text())
+        audit = json.loads((ROOT / "tests/fixtures/open-source-regression-baseline.json").read_text())
         expected = audit["after"]
-        # Original whole-report hashes stay in the separate historical ledger.
-        # Function source-chain additions have a separate reviewed ledger;
-        # earlier risk and bilingual baselines remain unchanged.
+        # 当前快照独立冻结，早期风险与双语建议账本仍保留。
         for version in expected:
             with tempfile.TemporaryDirectory() as raw:
                 out = Path(raw)

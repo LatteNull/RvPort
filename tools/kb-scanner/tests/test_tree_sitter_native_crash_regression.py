@@ -29,7 +29,7 @@ class TreeSitterNativeCrashRegressionTests(unittest.TestCase):
             (ROOT / "tests" / "tree-sitter-native-crash-test-inventory.json").read_text(encoding="utf-8")
         )
         self.assertEqual("kb-scanner-test", inventory["container"])
-        self.assertEqual({90.0, 80.0}, set(inventory["coverageThresholds"].values()))
+        self.assertEqual({"linePercent": 90.0, "branchPercent": 90.0}, inventory["coverageThresholds"])
         for module, mapping in inventory["modules"].items():
             self.assertTrue((ROOT / module).is_file(), module)
             self.assertTrue((ROOT / mapping["unit"]).is_file(), module)

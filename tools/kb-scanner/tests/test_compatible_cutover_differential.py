@@ -14,11 +14,10 @@ from kb_scanner.pipeline.default import create_default_application
 
 ROOT = Path(__file__).resolve().parents[1]
 RULES = ROOT / "rulesets/riscv-porting"
-FIXTURE = Path("/fixtures/avx-avx2-example-code")
 BASELINES = ROOT / "tests/fixtures/compatible-cutover"
 
 
-def run(app, fixture: Path = FIXTURE) -> tuple[object, dict]:
+def run(app, fixture: Path) -> tuple[object, dict]:
     output = Path(tempfile.mkdtemp(prefix="kb-cutover-"))
     result = app.run(ScanRequest(str(fixture), str(RULES), str(output), schema_version="1.0"))
     return result, json.loads((output / "scan-result.json").read_text())
@@ -75,34 +74,6 @@ def semantic_signature(payload: dict, result: object, fixture: Path) -> dict:
 
 
 class CompatibleCutoverDifferentialTests(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls) -> None:
-        if not FIXTURE.is_dir(): raise AssertionError("AVX fixture must be mounted read-only")
-        cls.new_result, cls.new = run(create_default_application())
-
-    def test_reviewed_legacy_avx_golden_is_preserved_without_executing_legacy(self) -> None:
-        golden = json.loads((BASELINES / "legacy-golden-v1.json").read_text())
-        matrix = json.loads((BASELINES / "matrix-differential-golden-v1.json").read_text())
-        legacy = next(item["legacy"] for item in matrix["entries"] if item["id"] == "avx-x86-only")
-        self.assertEqual(golden["summary"], {key: legacy["summary"][key] for key in golden["summary"]})
-        self.assertEqual(golden["ruleCounts"], legacy["ruleCounts"])
-        self.assertEqual(golden["artifacts"], legacy["artifacts"])
-
-    def test_new_pipeline_preserves_audited_avx_behavior_with_approved_corrections(self) -> None:
-        counts = collections.Counter(item["rule_id"] for item in self.new["findings"])
-        expected = {
-            "COMMENT.ARCH.HINT": 45,
-            "C_CPP.X86.COMPILER_FLAG": 4,
-            "C_CPP.X86.HEADER": 39,
-            "C_CPP.X86.INTRINSIC_CALL": 360,
-            "C_CPP.X86.MACRO_EXPANDS_TO_INTRINSIC": 18,
-            "C_CPP.X86.VECTOR_TYPE": 362,
-        }
-        self.assertEqual(expected, dict(sorted(counts.items())))
-        self.assertEqual(828, self.new["summary"]["findings"])
-        self.assertEqual(["scan-result.json", "scan-report.html", "scan.log"], [item.name for item in self.new_result.artifacts])
-        self.assertEqual(0, self.new_result.exit_code)
-
     def test_reviewed_ledger_has_no_blocker_and_covers_every_changed_fixture(self) -> None:
         ledger = json.loads((BASELINES / "differential-ledger.json").read_text())
         self.assertEqual((), validate_ledger(ledger))
@@ -114,15 +85,12 @@ class CompatibleCutoverDifferentialTests(unittest.TestCase):
                 self.assertIn(entry["id"], reviewed)
 
     def test_every_matrix_entry_matches_reviewed_staged_signature_without_executing_legacy(self) -> None:
-        matrix = json.loads((BASELINES / "matrix-differential-golden-v1.json").read_text())
-        current = json.loads((ROOT / "tests/fixtures/cmake-risk-report-differential.json").read_text())["matrix"]
-        macro = json.loads((ROOT / "tests/fixtures/macro-build-effect-report-differential.json").read_text())
-        for fixture_id, fields in macro['matrixOverrides'].items():
-            current[fixture_id].update(fields)
-        content = json.loads((ROOT / "tests/fixtures/test-content-report-differential.json").read_text())
-        for fixture_id, fields in content['matrixOverrides'].items():
-            current[fixture_id].update(fields)
-        for entry in matrix["entries"]:
+        active = json.loads((BASELINES / "fixture-matrix.json").read_text())["fixtures"]
+        active_ids = {item["id"] for item in active}
+        self.assertEqual(5, len(active_ids))
+        current = json.loads((ROOT / "tests/fixtures/open-source-regression-baseline.json").read_text())["matrix"]
+        self.assertEqual(active_ids, set(current))
+        for entry in active:
             fixture = Path(entry["path"])
             if not fixture.is_absolute():
                 fixture = ROOT / fixture

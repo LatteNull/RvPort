@@ -31,6 +31,8 @@ tools/**/build-*
 !tools/kb-scanner/tests/fixtures/build-selection/**
 !tools/floating-point-precision-scanner/tests/fixtures/build-context/
 !tools/floating-point-precision-scanner/tests/fixtures/build-context/**
+!tools/kb-scanner/tests/build-selection-test-inventory.json
+!tools/kb-scanner/docs/build-support*.md
 tools/**/reports
 tools/**/runtime
 tools/**/*.bc

@@ -28,7 +28,7 @@ class KnowledgeDetectionTestQualityTests(unittest.TestCase):
 
     def test_inventory_and_runner_preserve_layering_and_tmp_outputs(self) -> None:
         self.assertEqual(self.inventory["baseline"], {"frontendUnitTests": 41, "fullRegressionTests": 126})
-        self.assertEqual(self.inventory["coverageThresholds"], {"linePercent": 90.0, "branchPercent": 80.0})
+        self.assertEqual(self.inventory["coverageThresholds"], {"linePercent": 90.0, "branchPercent": 90.0})
         runner = (ROOT / "tests" / "run_container_tests.py").read_text(encoding="utf-8")
         self.assertLess(runner.index("_knowledge_detection_unit_gate()"), runner.index("_unit_gate()", runner.index("def main")))
         self.assertIn('Path("/tmp/kb-scanner-knowledge-detection-unit.coverage")', runner)

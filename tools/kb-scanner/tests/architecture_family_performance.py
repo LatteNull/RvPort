@@ -29,7 +29,7 @@ def measure(output):
         assert catalog["familyCount"] == size//2
         records.append({"paths":size, "seconds":seconds, "peakBytes":peak, "bucketOperations":catalog["bucketOperations"]})
     project_records = []
-    projects = {"demo": ROOT/"tests/fixtures/cmake-demo-test1", "avx":Path("/fixtures/avx-avx2-example-code/source"),
+    projects = {"demo": ROOT/"tests/fixtures/cmake-demo-test1",
                 "family-demo": ROOT/"tests/fixtures/architecture-family-demo"}
     for name, path in projects.items():
         assert path.is_dir(), path

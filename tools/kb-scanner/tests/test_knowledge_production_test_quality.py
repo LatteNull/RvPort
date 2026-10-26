@@ -12,7 +12,7 @@ class KnowledgeProductionTestQualityTests(unittest.TestCase):
     def test_inventory_maps_each_new_business_module_to_isolated_and_higher_tests(self) -> None:
         inventory = json.loads((ROOT / "tests" / "knowledge-production-test-inventory.json").read_text(encoding="utf-8"))
         self.assertEqual(set(inventory["modules"]), {"knowledge/production.py", "knowledge/extractors.py"})
-        self.assertEqual(inventory["coverageThresholds"], {"linePercent": 90.0, "branchPercent": 80.0})
+        self.assertEqual(inventory["coverageThresholds"], {"linePercent": 90.0, "branchPercent": 90.0})
         for module, details in inventory["modules"].items():
             self.assertTrue((ROOT / "kb_scanner" / module).is_file())
             self.assertTrue((ROOT / details["unit"]).is_file())

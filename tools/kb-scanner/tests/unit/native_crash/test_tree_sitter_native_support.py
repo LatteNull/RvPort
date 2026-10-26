@@ -52,6 +52,26 @@ class TreeSitterNativeSupportTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 load_project_fixtures(root)
 
+    def test_fixture_loader_rejects_unsafe_missing_and_corrupt_inputs(self) -> None:
+        fixture_root = Path(__file__).resolve().parents[2] / "fixtures" / "tree-sitter-native-crash"
+        original = json.loads((fixture_root / "PROVENANCE.json").read_text())
+        mutations = (
+            (lambda p: p.update(networkRequired=True), "offline"),
+            (lambda p: p.update(projects=[]), "cover cjson"),
+            (lambda p: p["projects"][0].update(fixturePath="../escape.c"), "escapes"),
+            (lambda p: p["projects"][0].update(fixturePath="missing.c"), "does not exist"),
+            (lambda p: p["projects"][0].update(fixturePath="bad.c"), "digest mismatch"),
+        )
+        for mutate, message in mutations:
+            with self.subTest(message=message), tempfile.TemporaryDirectory() as raw:
+                root = Path(raw)
+                payload = json.loads(json.dumps(original))
+                mutate(payload)
+                (root / "bad.c").write_text("corrupt")
+                (root / "PROVENANCE.json").write_text(json.dumps(payload))
+                with self.assertRaisesRegex(ValueError, message):
+                    load_project_fixtures(root)
+
     def test_process_runner_builds_scanner_command_and_captures_result(self) -> None:
         completed = subprocess.CompletedProcess(["python"], 0, "out", "err")
         with patch("tests.tree_sitter_native_support.subprocess.run", return_value=completed) as run:

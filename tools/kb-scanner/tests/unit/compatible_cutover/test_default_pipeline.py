@@ -100,6 +100,13 @@ assert 'yaml' not in sys.modules
             self.assertEqual(1, cli.validate_rules(Path("bad")))
         with redirect_stdout(output): self.assertEqual(0, cli.main(["version"]))
 
+    def test_list_rules_stops_when_validation_fails(self) -> None:
+        output = io.StringIO()
+        with patch.object(cli, "validate_rules", return_value=1) as validate, redirect_stdout(output):
+            self.assertEqual(1, cli.list_rules(Path("broken")))
+        validate.assert_called_once_with(Path("broken"))
+        self.assertEqual("", output.getvalue())
+
     def test_main_dispatches_each_command(self) -> None:
         with patch.object(cli, "run_scan", return_value=4) as scan:
             self.assertEqual(4, cli.main(["scan", "--input", "i", "--rules", "r", "--output", "o"]))

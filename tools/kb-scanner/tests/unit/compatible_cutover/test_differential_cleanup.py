@@ -20,6 +20,8 @@ class DifferentialCleanupTests(unittest.TestCase):
         self.assertTrue(any("missing" in item for item in differences))
         self.assertTrue(any("unexpected" in item for item in differences))
         self.assertEqual((), compare_payloads({"x": 1}, {"x": 1}))
+        self.assertEqual(("$.x: 1 != 2",), compare_payloads({"x": 1}, {"x": 2}))
+        self.assertEqual(["a", "z"], normalize_payload({"findings": ["z", "a"]})["findings"])
 
     def test_ledger_requires_auditable_approved_corrections(self) -> None:
         base = {"schemaVersion": "1.0", "allowedStatuses": ["parity-required", "approved-correction", "deferred-blocking"], "decisions": []}
@@ -31,6 +33,12 @@ class DifferentialCleanupTests(unittest.TestCase):
         self.assertTrue(any("duplicated" in item for item in failures))
         self.assertTrue(validate_ledger([]))
         self.assertTrue(validate_ledger({**base, "allowedStatuses": []}))
+        self.assertEqual(("ledger decisions must be an array",), validate_ledger({**base, "decisions": {}}))
+        self.assertEqual(("decision[0] fields are invalid",), validate_ledger({**base, "decisions": [None]}))
+        for change, message in (({"status": "invalid"}, "status is invalid"),
+                                ({"reason": ""}, "audit fields are incomplete")):
+            self.assertTrue(any(message in item for item in validate_ledger({**base, "decisions": [{**decision, **change}]})))
+        self.assertEqual((), validate_ledger({**base, "decisions": [{**decision, "evidenceIds": ["e1"]}]}))
 
     def test_cleanup_inventory_validation(self) -> None:
         entry = {"path": "kb_scanner/legacy.py", "replacement": "new", "fixtures": ["f"], "disposition": "retained-deferred", "exitCondition": "golden"}

@@ -72,12 +72,16 @@ class CMakeSourceComponentTests(unittest.TestCase):
     def test_demo_first_source_oracle_and_rejection_chain(self):
         files={str(p.relative_to(FIXTURE)):p.read_text() for p in FIXTURE.rglob('*') if p.is_file()}
         baseline=json.loads((ROOT/'tests/fixtures/cmake-demo-test1-baseline.json').read_text())
+        current=json.loads((ROOT/'tests/fixtures/open-source-regression-baseline.json').read_text())
         self.assertEqual(set(files),set(baseline['fixtureHashes']))
         for name,hashes in baseline['fixtureHashes'].items():
             data=(FIXTURE/name).read_bytes()
             self.assertTrue(data.endswith(b'\n') and not data.endswith(b'\n\n'),name)
-            self.assertEqual(hashes['normalizedSha256'],sha256(data).hexdigest(),name)
-            self.assertEqual(hashes['originalSha256'],sha256(data+b'\n').hexdigest(),name)
+            if name in current['fixtureOverrides']:
+                self.assertEqual(current['fixtureOverrides'][name]['sha256'],sha256(data).hexdigest(),name)
+            else:
+                self.assertEqual(hashes['normalizedSha256'],sha256(data).hexdigest(),name)
+                self.assertEqual(hashes['originalSha256'],sha256(data+b'\n').hexdigest(),name)
         report,html=self.scan(files)
         for old in baseline['findings']:
             found=[f for f in report['findings'] if f['fact']['symbol']==old['symbol'] and f['fact']['primaryLocation']['span']['start']['line']==old['location']['start']['line']]

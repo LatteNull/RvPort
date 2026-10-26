@@ -7,7 +7,7 @@
   },
   "coverageThresholds": {
     "linePercent": 90.0,
-    "branchPercent": 80.0
+    "branchPercent": 90.0
   },
   "layers": {
     "unit": "tests/unit/knowledge_detection; filesystem, external schema payloads and pipeline boundaries are isolated",
@@ -24,10 +24,31 @@
     "knowledge/schema.py": {"unit": "tests/unit/knowledge_detection/test_knowledge_schema.py", "higherLayers": ["tests/test_knowledge_detection_contracts.py"]},
     "knowledge/identity.py": {"unit": "tests/unit/knowledge_detection/test_knowledge_identity.py", "higherLayers": ["tests/test_knowledge_detection_contracts.py"]},
     "knowledge/provider.py": {"unit": "tests/unit/knowledge_detection/test_knowledge_provider.py", "higherLayers": ["tests/test_knowledge_detection_contracts.py", "tests/test_knowledge_detection_staged_integration.py"]},
-    "normalization/cpp.py": {"unit": "tests/unit/knowledge_detection/test_cpp_normalizer.py", "higherLayers": ["tests/test_knowledge_detection_staged_integration.py"]},
+    "normalization/cpp.py": {
+      "unit": "tests/unit/knowledge_detection/test_cpp_normalizer.py",
+      "higherLayers": [
+        "tests/test_knowledge_detection_staged_integration.py"
+      ],
+      "supportingUnits": [
+        "tests/unit/frontends/cpp/test_fake_enum_graph.py",
+        "tests/unit/test_function_normalization.py",
+        "tests/unit/test_usage_normalization.py"
+      ]
+    },
     "detectors/definitions.py": {"unit": "tests/unit/knowledge_detection/test_detector_definitions.py", "higherLayers": ["tests/test_knowledge_detection_contracts.py"]},
     "detectors/matchers.py": {"unit": "tests/unit/knowledge_detection/test_local_matchers.py", "higherLayers": ["tests/test_knowledge_detection_staged_integration.py"]},
-    "detectors/local.py": {"unit": "tests/unit/knowledge_detection/test_local_detector.py", "higherLayers": ["tests/test_knowledge_detection_staged_integration.py"], "supportingUnits": ["tests/unit/candidate_semantics/test_coverage.py"]},
+    "detectors/local.py": {
+      "unit": "tests/unit/knowledge_detection/test_local_detector.py",
+      "higherLayers": [
+        "tests/test_knowledge_detection_staged_integration.py"
+      ],
+      "supportingUnits": [
+        "tests/unit/candidate_semantics/test_coverage.py",
+        "tests/unit/frontends/cpp/test_fake_enum_graph.py",
+        "tests/unit/test_macro_effect_detection.py",
+        "tests/unit/test_usage_demand.py"
+      ]
+    },
     "pipeline/qualification.py": {"unit": "tests/unit/knowledge_detection/test_qualification_profile.py", "higherLayers": ["tests/test_knowledge_detection_staged_integration.py"]}
   }
 }

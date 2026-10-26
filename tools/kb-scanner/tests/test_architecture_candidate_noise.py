@@ -27,7 +27,7 @@ class ArchitectureCandidateNoiseTests(unittest.TestCase):
         inventory = json.loads((ROOT / 'tests/architecture-candidate-noise-test-inventory.json').read_text())
         expected = {'frontends/cpp/tree_sitter_adapter.py', 'analyzers/evidence_graph.py', 'analyzers/architecture_guards.py', 'normalization/cpp.py', 'detectors/local.py', 'core/candidate_contract.py', 'classifiers/migration.py', 'classifiers/policy.py', 'projection/projector.py', 'projection/v2/projector.py'}
         self.assertEqual(expected, set(inventory['modules']))
-        self.assertEqual({'linePercent': 90, 'branchPercent': 80}, inventory['coverageThresholds'])
+        self.assertEqual({'linePercent': 90, 'branchPercent': 90}, inventory['coverageThresholds'])
         for name, mapping in inventory['modules'].items():
             self.assertTrue((ROOT / 'kb_scanner' / name).is_file())
             self.assertTrue((ROOT / mapping['unit']).is_file())

@@ -2,18 +2,49 @@
   "schemaVersion": "1.0",
   "change": "refine-kb-scanner-candidate-semantic-admission",
   "container": "kb-scanner-test",
-  "coverageThresholds": {"linePercent": 90, "branchPercent": 80},
+  "coverageThresholds": {
+    "linePercent": 90,
+    "branchPercent": 90.0
+  },
   "boundaries": "Synthetic facts/observations/role proofs and temporary unit source contexts. Existing isolated suites reused; real parser and pipeline classes excluded and Parser replaced by a failing sentinel. Semantic-role proof production is not implemented by this change.",
   "modules": {
     "classifiers/semantic_admission.py": {"unit": "tests/unit/candidate_semantics/test_admission.py"},
-    "classifiers/migration.py": {"unit": "tests/unit/candidate_semantics/test_admission.py", "supportingUnits": ["tests/unit/classification_assessment/test_classifier.py"]},
+    "classifiers/migration.py": {
+      "unit": "tests/unit/candidate_semantics/test_admission.py",
+      "supportingUnits": [
+        "tests/unit/classification_assessment/test_classifier.py",
+        "tests/unit/cmake/test_risk.py"
+      ]
+    },
     "detectors/candidate_coverage.py": {"unit": "tests/unit/candidate_semantics/test_coverage.py"},
-    "detectors/local.py": {"unit": "tests/unit/candidate_semantics/test_coverage.py", "supportingUnits": ["tests/unit/knowledge_detection/test_local_detector.py", "tests/unit/knowledge_detection/test_candidate_contract.py"]},
+    "detectors/local.py": {
+      "unit": "tests/unit/candidate_semantics/test_coverage.py",
+      "supportingUnits": [
+        "tests/unit/candidate_semantics/test_coverage.py",
+        "tests/unit/frontends/cpp/test_fake_enum_graph.py",
+        "tests/unit/knowledge_detection/test_candidate_contract.py",
+        "tests/unit/knowledge_detection/test_local_detector.py",
+        "tests/unit/test_macro_effect_detection.py",
+        "tests/unit/test_usage_demand.py"
+      ]
+    },
     "projection/v2/evidence_kinds.py": {"unit": "tests/unit/candidate_semantics/test_projection.py"},
     "projection/v2/index.py": {"unit": "tests/unit/candidate_semantics/test_projection.py", "supportingUnits": ["tests/unit/schema_v2_projection/test_evidence_chain_builder.py"]},
     "projection/v2/chain.py": {"unit": "tests/unit/candidate_semantics/test_projection.py", "supportingUnits": ["tests/unit/schema_v2_projection/test_evidence_chain_builder.py"]},
-    "projection/v2/mapper.py": {"unit": "tests/unit/candidate_semantics/test_projection.py", "supportingUnits": ["tests/unit/schema_v2_projection/test_finding_mapper.py"]}
+    "projection/v2/mapper.py": {
+      "unit": "tests/unit/candidate_semantics/test_projection.py",
+      "supportingUnits": [
+        "tests/unit/schema_v2_projection/test_finding_mapper.py",
+        "tests/unit/test_function_multiversion_pipeline.py",
+        "tests/unit/test_macro_effect_projection.py",
+        "tests/unit/test_usage_projection.py"
+      ]
+    }
   },
-  "higherLayers": ["tests/test_candidate_semantic_admission.py", "tests/test_architecture_enum_analysis.py", "tests/test_tree_sitter_native_crash_regression.py"],
+  "higherLayers": [
+    "tests/test_candidate_semantic_admission.py",
+    "tests/test_architecture_enum_analysis.py",
+    "tests/test_tree_sitter_native_crash_regression.py"
+  ],
   "acceptance": "Fixed 810-file libarchive, two 2-CPU/2-GiB runs within 300s each; every baseline finding audited. Unknown codec/algorithm roles are allowed, not asserted as proven exclusions."
 }

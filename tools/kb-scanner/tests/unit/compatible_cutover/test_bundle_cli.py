@@ -53,6 +53,8 @@ class BundleCliTests(unittest.TestCase):
                 lambda v: v.update(schemaVersion="2.0"),
                 lambda v: v["knowledgeManifest"].update(path="../knowledge.json"),
                 lambda v: v["knowledgeManifest"].update(sha256="f" * 64),
+                lambda v: v["knowledgeManifest"].update(sha256="INVALID"),
+                lambda v: v["knowledgeManifest"].update(path="absent.json"),
                 lambda v: v["projectionPolicy"].update(version=0),
                 lambda v: v["rulePack"].update(id=""),
             )
@@ -62,6 +64,8 @@ class BundleCliTests(unittest.TestCase):
                     load_bundle_descriptor(root)
             root = base / "bad-json"; root.mkdir(); (root / "scanner-manifest.json").write_text("{")
             with self.assertRaises(BundleError): load_bundle_descriptor(root)
+            with self.assertRaisesRegex(BundleError, "escapes the bundle root"):
+                load_bundle_descriptor(base, "../scanner-manifest.json")
 
     def test_namespace_adapter_preserves_scan_options(self) -> None:
         ns = argparse.Namespace(
@@ -114,6 +118,8 @@ class BundleCliTests(unittest.TestCase):
             self.assertEqual((root / "compile_commands.json").resolve(), scan_context.compile_commands_path)
             with self.assertRaises(ValueError):
                 ScanRequest("i", "r", "o", context_infer="invalid")
+            with self.assertRaisesRegex(ValueError, "schema_version"):
+                __import__("dataclasses").replace(scan_context, schema_version="future")
 
 
 if __name__ == "__main__":

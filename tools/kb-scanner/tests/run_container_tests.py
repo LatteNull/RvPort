@@ -9,6 +9,7 @@ from pathlib import Path
 from coverage import Coverage
 
 from tests.frontend_coverage import evaluate_frontend_coverage
+from tests.unit_mapping import mapped_suite
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -74,15 +75,8 @@ def _unit_gate() -> bool:
     )
     coverage.erase()
     coverage.start()
-    suite = unittest.defaultTestLoader.discover(
-        str(UNIT_ROOT),
-        pattern="test_*.py",
-        top_level_dir=str(ROOT),
-    )
-    for unit in sorted({item['unit'] for item in inventory['modules'].values()}):
-        if not (ROOT / unit).is_relative_to(UNIT_ROOT):
-            suite.addTests(unittest.defaultTestLoader.loadTestsFromName(unit.removesuffix('.py').replace('/', '.')))
-    suite.addTests(unittest.defaultTestLoader.loadTestsFromName('tests.unit.test_function_clang_contract'))
+    suite = mapped_suite(ROOT, inventory, discover=UNIT_ROOT,
+                         extra_units=("tests/unit/test_function_clang_contract.py",))
     result = _run(suite, "frontend-unit")
     coverage.stop()
     coverage.save()
@@ -139,11 +133,7 @@ def _knowledge_detection_unit_gate() -> bool:
     )
     coverage.erase()
     coverage.start()
-    suite = unittest.defaultTestLoader.discover(
-        str(KNOWLEDGE_UNIT_ROOT),
-        pattern="test_*.py",
-        top_level_dir=str(ROOT),
-    )
+    suite = mapped_suite(ROOT, inventory, discover=KNOWLEDGE_UNIT_ROOT)
     result = _run(suite, "knowledge-detection-unit")
     coverage.stop()
     coverage.save()
@@ -185,9 +175,7 @@ def _knowledge_production_unit_gate() -> bool:
     )
     coverage.erase()
     coverage.start()
-    suite = unittest.defaultTestLoader.discover(
-        str(PRODUCTION_UNIT_ROOT), pattern="test_*.py", top_level_dir=str(ROOT),
-    )
+    suite = mapped_suite(ROOT, inventory, discover=PRODUCTION_UNIT_ROOT)
     result = _run(suite, "knowledge-production-unit")
     coverage.stop()
     coverage.save()
@@ -225,9 +213,7 @@ def _evidence_graph_unit_gate() -> bool:
     )
     coverage.erase()
     coverage.start()
-    suite = unittest.defaultTestLoader.discover(
-        str(GRAPH_UNIT_ROOT), pattern="test_*.py", top_level_dir=str(ROOT),
-    )
+    suite = mapped_suite(ROOT, inventory, discover=GRAPH_UNIT_ROOT)
     result = _run(suite, "evidence-graph-unit")
     coverage.stop()
     coverage.save()
@@ -265,18 +251,7 @@ def _build_selection_unit_gate() -> bool:
     )
     coverage.erase()
     coverage.start()
-    suite = unittest.defaultTestLoader.discover(
-        str(BUILD_UNIT_ROOT), pattern="test_*.py", top_level_dir=str(ROOT),
-    )
-    supporting_modules = sorted(
-        {
-            path.removesuffix(".py").replace("/", ".")
-            for mapping in inventory["modules"].values()
-            for path in mapping.get("supportingUnits", ())
-        }
-    )
-    for module in supporting_modules:
-        suite.addTests(unittest.defaultTestLoader.loadTestsFromName(module))
+    suite = mapped_suite(ROOT, inventory, discover=BUILD_UNIT_ROOT)
     result = _run(suite, "build-selection-unit")
     coverage.stop()
     coverage.save()
@@ -314,16 +289,7 @@ def _classification_assessment_unit_gate() -> bool:
     )
     coverage.erase()
     coverage.start()
-    suite = unittest.TestSuite()
-    unit_modules = sorted(
-        {
-            path.removesuffix(".py").replace("/", ".")
-            for mapping in inventory["modules"].values()
-            for path in (mapping["unit"], *mapping.get("supportingUnits", ()))
-        }
-    )
-    for module in unit_modules:
-        suite.addTests(unittest.defaultTestLoader.loadTestsFromName(module))
+    suite = mapped_suite(ROOT, inventory)
     result = _run(suite, "classification-assessment-unit")
     coverage.stop()
     coverage.save()
@@ -361,16 +327,7 @@ def _compatible_cutover_unit_gate() -> bool:
     )
     coverage.erase()
     coverage.start()
-    suite = unittest.TestSuite()
-    unit_modules = sorted(
-        {
-            path.removesuffix(".py").replace("/", ".")
-            for mapping in inventory["modules"].values()
-            for path in (mapping["unit"], *mapping.get("supportingUnits", ()))
-        }
-    )
-    for module in unit_modules:
-        suite.addTests(unittest.defaultTestLoader.loadTestsFromName(module))
+    suite = mapped_suite(ROOT, inventory)
     result = _run(suite, "compatible-cutover-unit")
     coverage.stop()
     coverage.save()
@@ -411,20 +368,7 @@ def _projection_reachability_unit_gate() -> bool:
     )
     coverage.erase()
     coverage.start()
-    suite = unittest.defaultTestLoader.discover(
-        str(TEST_ROOT / "unit" / "projection_reachability"),
-        pattern="test_*.py",
-        top_level_dir=str(ROOT),
-    )
-    supporting_modules = sorted(
-        {
-            path.removesuffix(".py").replace("/", ".")
-            for mapping in inventory["modules"].values()
-            for path in mapping.get("supportingUnits", ())
-        }
-    )
-    for module in supporting_modules:
-        suite.addTests(unittest.defaultTestLoader.loadTestsFromName(module))
+    suite = mapped_suite(ROOT, inventory, discover=TEST_ROOT / "unit" / "projection_reachability")
     result = _run(suite, "projection-reachability-unit")
     coverage.stop()
     coverage.save()
@@ -469,11 +413,6 @@ def _schema_v2_projection_unit_gate() -> bool:
     thresholds = inventory["coverageThresholds"]
     mapping = inventory["modules"]
     modules = tuple(f"kb_scanner/{name}" for name in sorted(mapping))
-    unit_modules = sorted({
-        path.removesuffix(".py").replace("/", ".")
-        for item in mapping.values()
-        for path in (item["unit"], *item.get("supportingUnits", ()))
-    })
     missing = [name for name, item in mapping.items() if not (ROOT / item["unit"]).is_file()]
     if missing:
         print(f"schema-v2-projection inventory has missing isolated units: {missing}", file=sys.stderr)
@@ -485,9 +424,7 @@ def _schema_v2_projection_unit_gate() -> bool:
     )
     coverage.erase()
     coverage.start()
-    suite = unittest.TestSuite()
-    for module in unit_modules:
-        suite.addTests(unittest.defaultTestLoader.loadTestsFromName(module))
+    suite = mapped_suite(ROOT, inventory)
     result = _run(suite, "schema-v2-projection-unit")
     coverage.stop()
     coverage.save()
@@ -515,11 +452,6 @@ def _architecture_enum_unit_gate() -> bool:
         print(f"architecture-enum inventory has missing isolated units: {missing}", file=sys.stderr)
         return False
     modules = tuple(f"kb_scanner/{name}" for name in sorted(mapping))
-    unit_modules = sorted({
-        path.removesuffix(".py").replace("/", ".")
-        for item in mapping.values()
-        for path in (item["unit"], *item.get("supportingUnits", ()))
-    })
     coverage = Coverage(
         data_file=str(ARCH_ENUM_COVERAGE_DATA), branch=True,
         source=[f"kb_scanner.{name.removesuffix('.py').replace('/', '.')}" for name in mapping],
@@ -527,9 +459,7 @@ def _architecture_enum_unit_gate() -> bool:
     )
     coverage.erase()
     coverage.start()
-    suite = unittest.TestSuite()
-    for module in unit_modules:
-        suite.addTests(unittest.defaultTestLoader.loadTestsFromName(module))
+    suite = mapped_suite(ROOT, inventory)
     result = _run(suite, "architecture-enum-unit")
     coverage.stop()
     coverage.save()
@@ -609,7 +539,7 @@ def _architecture_candidate_noise_unit_gate(inventory_name='architecture-candida
     coverage = Coverage(data_file=f'/tmp/kb-{label}.coverage', branch=True, source=[name.removesuffix('.py').replace('/', '.') for name in modules])
     coverage.erase()
     coverage.start()
-    discovered = unittest.defaultTestLoader.discover(str(TEST_ROOT / 'unit'), top_level_dir=str(ROOT))
+    discovered = mapped_suite(ROOT, inventory, discover=TEST_ROOT / 'unit')
     selected = {}
     def collect(suite):
         for item in suite:
@@ -636,7 +566,7 @@ def _architecture_candidate_noise_unit_gate(inventory_name='architecture-candida
     path = f'/tmp/kb-{label}-coverage.json'
     coverage.json_report(outfile=path)
     payload = json.loads(Path(path).read_text())
-    gate = evaluate_frontend_coverage(payload, modules, line_threshold=90.0, branch_threshold=80.0, enforce_module_thresholds=True)
+    gate = evaluate_frontend_coverage(payload, modules, line_threshold=90.0, branch_threshold=90.0, enforce_module_thresholds=True)
     for name in modules:
         details = payload['files'][name]
         print(name, json.dumps(details['summary']), 'missing lines:', details['missing_lines'], flush=True)
@@ -680,7 +610,7 @@ def _performance_unit_gate() -> bool:
     coverage.stop()
     coverage.json_report(outfile="/tmp/kb-performance-coverage.json")
     payload = json.loads(Path("/tmp/kb-performance-coverage.json").read_text())
-    gate = evaluate_frontend_coverage(payload, modules, line_threshold=90, branch_threshold=80, enforce_module_thresholds=True)
+    gate = evaluate_frontend_coverage(payload, modules, line_threshold=90, branch_threshold=90, enforce_module_thresholds=True)
     for name in modules:
         details = payload["files"][name]
         print(name, json.dumps(details["summary"]), "missing:", details["missing_lines"], details["missing_branches"], flush=True)
@@ -689,7 +619,31 @@ def _performance_unit_gate() -> bool:
     return result.wasSuccessful() and gate.passed
 
 
+def _runner_unit_gate() -> bool:
+    coverage = Coverage(data_file="/tmp/kb-runner.coverage", branch=True,
+                        source=["tests.unit_mapping", "tests.run_container_tests",
+                                "tests.architecture_family_performance", "tests.cmake_report_audit"], config_file=False)
+    coverage.start()
+    suite = unittest.defaultTestLoader.discover(str(TEST_ROOT / "unit" / "runner"),
+                                              top_level_dir=str(ROOT))
+    result = _run(suite, "runner-unit")
+    coverage.stop()
+    coverage.save()
+    path = "/tmp/kb-runner-coverage.json"
+    coverage.json_report(outfile=path)
+    payload = json.loads(Path(path).read_text())
+    gate = evaluate_frontend_coverage(payload, ("tests/unit_mapping.py", "tests/run_container_tests.py",
+                                              "tests/architecture_family_performance.py", "tests/cmake_report_audit.py"),
+                                      line_threshold=90, branch_threshold=90, enforce_module_thresholds=True)
+    print(f"runner-unit coverage: lines={gate.line_percent:.2f}% branches={gate.branch_percent:.2f}%", flush=True)
+    for failure in gate.failures:
+        print(f"coverage gate failed: {failure}", file=sys.stderr, flush=True)
+    return result.wasSuccessful() and gate.passed
+
+
 def main() -> int:
+    if len(sys.argv) == 2 and sys.argv[1] == "--runner-unit":
+        return 0 if _runner_unit_gate() else 1
     if len(sys.argv) == 2 and sys.argv[1] == '--regression-only':
         return 0 if _full_regression() else 1
     if len(sys.argv) == 2 and sys.argv[1] == '--source-evidence-chain-unit':
@@ -727,7 +681,7 @@ def main() -> int:
         return 0 if _architecture_enum_unit_gate() else 1
     if len(sys.argv) == 2 and sys.argv[1] == "--tree-sitter-native-crash-unit":
         return 0 if _tree_sitter_native_crash_unit_gate() else 1
-    for mode in ("--source-evidence-chain-unit", "--rpm-architecture-unit", "--candidate-semantic-admission-unit", "--performance-unit", "--architecture-candidate-noise-unit", "--knowledge-production-unit", "--knowledge-unit", "--frontend-unit", "--tree-sitter-native-crash-unit", "--graph-unit", "--build-selection-unit", "--classification-assessment-unit", "--compatible-cutover-unit", "--projection-reachability-unit", "--schema-v2-contract", "--schema-v2-projection-unit", "--architecture-enum-unit"):
+    for mode in ("--runner-unit", "--source-evidence-chain-unit", "--rpm-architecture-unit", "--candidate-semantic-admission-unit", "--performance-unit", "--architecture-candidate-noise-unit", "--knowledge-production-unit", "--knowledge-unit", "--frontend-unit", "--tree-sitter-native-crash-unit", "--graph-unit", "--build-selection-unit", "--classification-assessment-unit", "--compatible-cutover-unit", "--projection-reachability-unit", "--schema-v2-contract", "--schema-v2-projection-unit", "--architecture-enum-unit"):
         completed = subprocess.run((sys.executable, str(Path(__file__).resolve()), mode), check=False)
         if completed.returncode != 0:
             return completed.returncode

@@ -4,13 +4,18 @@
   "change": "implement-kb-scanner-schema-v2-projection",
   "coverageThresholds": {
     "linePercent": 90,
-    "branchPercent": 80
+    "branchPercent": 90.0
   },
   "container": "kb-scanner-test",
   "boundaries": "synthetic snapshots, fake readers/projectors/replacers, and temporary project/output roots only",
   "modules": {
     "projection/v2/suggestions.py": {
-      "unit": "tests/unit/schema_v2_projection/test_suggestions.py"
+      "unit": "tests/unit/schema_v2_projection/test_suggestions.py",
+      "supportingUnits": [
+        "tests/unit/cmake/test_risk.py",
+        "tests/unit/test_function_multiversion_pipeline.py",
+        "tests/unit/test_usage_projection.py"
+      ]
     },
     "projection/versioned.py": {
       "unit": "tests/unit/schema_v2_projection/test_version_selector.py"
@@ -45,7 +50,10 @@
       "supportingUnits": [
         "tests/unit/architecture_enum/test_architecture_enum.py",
         "tests/unit/candidate_semantics/test_projection.py",
-        "tests/unit/schema_v2_projection/test_rpm_projection.py"
+        "tests/unit/schema_v2_projection/test_rpm_projection.py",
+        "tests/unit/test_function_multiversion_pipeline.py",
+        "tests/unit/test_macro_effect_projection.py",
+        "tests/unit/test_usage_projection.py"
       ]
     },
     "projection/v2/diagnostics.py": {

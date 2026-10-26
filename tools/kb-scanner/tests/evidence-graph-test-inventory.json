@@ -3,7 +3,7 @@
   "candidateNoiseInventory": "tests/architecture-candidate-noise-test-inventory.json",
   "coverageThresholds": {
     "linePercent": 90.0,
-    "branchPercent": 80.0
+    "branchPercent": 90.0
   },
   "layers": {
     "unit": "tests/unit/evidence_graph; GraphStore, parser, filesystem, knowledge and pipeline boundaries are fake or in-memory",
@@ -14,19 +14,36 @@
   "modules": {
     "core/paths.py": {
       "unit": "tests/unit/evidence_graph/test_core_paths.py",
-      "higherLayers": ["tests/test_evidence_graph_contracts.py"]
+      "higherLayers": [
+        "tests/test_evidence_graph_contracts.py"
+      ]
     },
     "graph/store.py": {
       "unit": "tests/unit/evidence_graph/test_graph_store.py",
-      "higherLayers": ["tests/test_evidence_graph_benchmark.py"]
+      "higherLayers": [
+        "tests/test_evidence_graph_benchmark.py"
+      ]
     },
     "analyzers/proof.py": {
       "unit": "tests/unit/evidence_graph/test_proof.py",
-      "higherLayers": ["tests/test_evidence_graph_component.py"]
+      "higherLayers": [
+        "tests/test_evidence_graph_component.py"
+      ],
+      "supportingUnits": [
+        "tests/unit/performance/test_proof_queries.py"
+      ]
     },
     "analyzers/evidence_graph.py": {
       "unit": "tests/unit/evidence_graph/test_evidence_graph_analyzer.py",
-      "higherLayers": ["tests/test_evidence_graph_component.py", "tests/test_avx_evidence_graph.py"]
+      "higherLayers": [
+        "tests/test_evidence_graph_component.py"
+      ],
+      "supportingUnits": [
+        "tests/unit/evidence_graph/test_architecture_guards.py",
+        "tests/unit/frontends/cpp/test_fake_enum_graph.py",
+        "tests/unit/performance/test_proof_queries.py",
+        "tests/unit/test_source_chain_relations.py"
+      ]
     }
   }
 }

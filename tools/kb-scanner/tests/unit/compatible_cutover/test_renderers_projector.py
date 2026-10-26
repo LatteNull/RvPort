@@ -59,6 +59,15 @@ class RenderProjectorTests(unittest.TestCase):
             self.assertEqual(CompletionStatus.FAILED, failure.status)
             self.assertTrue(failure.diagnostics[0].affects_exit_code)
 
+    def test_json_only_does_not_publish_html(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            args = list(graph(Path(tmp)))
+            args[0] = __import__("dataclasses").replace(args[0], formats=("json",))
+            result = CompatibleReportProjector().project(*args)
+            self.assertEqual(CompletionStatus.COMPLETE, result.status)
+            self.assertEqual(("scan-result.json", "scan.log"), tuple(item.name for item in result.value))
+            self.assertFalse((args[0].output_dir / "scan-report.html").exists())
+
     def test_publish_failure_restores_existing_outputs(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp); args = list(graph(root)); output = args[0].output_dir; output.mkdir()

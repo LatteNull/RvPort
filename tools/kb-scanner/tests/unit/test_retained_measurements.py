@@ -1,5 +1,6 @@
 """Maintenance orchestration with fake extraction, pipeline and IO boundaries."""
 import json
+import runpy
 import unittest
 from contextlib import ExitStack
 from pathlib import Path
@@ -27,10 +28,30 @@ class RetainedMeasurementTests(unittest.TestCase):
         self.assertEqual(1, measured['evidence'])
         self.assertEqual(1, measured['relations'])
         self.assertEqual([], measured['diagnostics'])
-        with patch.object(m, 'measure', return_value={'files': 7}) as measure, patch('builtins.print') as output, patch.dict('os.environ', {'KB_SCANNER_AVX_FIXTURE': '/fake'}):
+        self.assertEqual(m.ROOT / 'tests/fixtures/source-evidence-chain', m.DEFAULT_FIXTURE)
+        with patch.object(m, 'measure', return_value={'files': 7}) as measure, patch('builtins.print') as output, patch.dict('os.environ', {'RVPORT_KB_FIXTURE': '/fake'}):
             self.assertEqual(0, m.main())
         self.assertEqual({'files': 7}, json.loads(output.call_args.args[0]))
         measure.assert_called_once_with(Path('/fake'))
+        imports = {'CppWorkspaceCollector': 'kb_scanner.frontends.cpp', 'CppFrontend': 'kb_scanner.frontends.cpp',
+                   'GeneratedFactsKnowledgeProvider': 'kb_scanner.knowledge', 'CppEvidenceNormalizer': 'kb_scanner.normalization',
+                   'EvidenceGraphAnalyzer': 'kb_scanner.analyzers', 'LocalX86Detector': 'kb_scanner.detectors'}
+        for environment, expected in (({}, m.DEFAULT_FIXTURE), ({'RVPORT_KB_FIXTURE': '/custom'}, Path('/custom'))):
+            with self.subTest(environment=environment), ExitStack() as stack:
+                for name, (method, snapshot) in constructors.items():
+                    stack.enter_context(patch(imports[name] + '.' + name,
+                                              return_value=NS(**{method: lambda *_, s=snapshot: StageResult(value=s)})))
+                context = stack.enter_context(patch('tests.unit.knowledge_detection.support.make_context'))
+                output = stack.enter_context(patch('builtins.print'))
+                stack.enter_context(patch.dict('os.environ', environment, clear=True))
+                with self.assertRaises(SystemExit) as stopped:
+                    runpy.run_module('scripts.measure_evidence_graph_qualification', run_name='__main__')
+                self.assertEqual(0, stopped.exception.code)
+                self.assertEqual(expected, context.call_args.args[0])
+                payload = json.loads(output.call_args.args[0])
+                self.assertEqual(expected.as_posix(), payload['fixture'])
+                self.assertEqual(1, payload['files'])
+                self.assertEqual(1, payload['relations'])
 
     def test_knowledge_measurement_sample_limit_and_missing_fact(self):
         from scripts import measure_knowledge_qualification as m

@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "coverageThresholds": {
     "linePercent": 90,
-    "branchPercent": 80
+    "branchPercent": 90.0
   },
   "boundaries": "RPM native parser is forbidden in isolated gate (fake nodes/grammar/Parser); in-memory profiles and source readers; all project process execution forbidden. Existing non-RPM adapter units retain their established boundaries. Real Bash grammar belongs to component tests.",
   "modules": {
@@ -23,14 +23,21 @@
         "tests/test_rpm_architecture_component.py"
       ],
       "supportingUnits": [
-        "tests/unit/build_selection/test_rpm_graph.py"
+        "tests/unit/build_selection/test_rpm_graph.py",
+        "tests/unit/test_build_macro_normalization.py",
+        "tests/unit/test_usage_frontend.py"
       ]
     },
     "analyzers/build_selection.py": {
       "unit": "tests/unit/build_selection/test_analysis.py",
       "supportingUnits": [
+        "tests/unit/autoconf/test_graph.py",
+        "tests/unit/build_selection/test_rpm_graph.py",
+        "tests/unit/cmake/test_risk.py",
+        "tests/unit/performance/test_build_queries.py",
         "tests/unit/projection_reachability/test_build_reachability.py",
-        "tests/unit/build_selection/test_rpm_graph.py"
+        "tests/unit/test_build_effects.py",
+        "tests/unit/test_build_selection_boundaries.py"
       ],
       "higherLayers": [
         "tests/test_build_selection_component.py",
@@ -44,7 +51,9 @@
         "tests/test_rpm_architecture_component.py"
       ],
       "supportingUnits": [
-        "tests/unit/build_selection/test_rpm_graph.py"
+        "tests/unit/build_selection/test_rpm_graph.py",
+        "tests/unit/test_build_effects.py",
+        "tests/unit/test_build_selection_boundaries.py"
       ]
     },
     "frontends/build/rpm/macros.py": {
@@ -92,7 +101,14 @@
     "classifiers/policy.py": {
       "unit": "tests/unit/build_selection/test_rpm_graph.py",
       "supportingUnits": [
-        "tests/unit/classification_assessment/test_classifier.py"
+        "tests/unit/autoconf/test_graph.py",
+        "tests/unit/candidate_semantics/test_admission.py",
+        "tests/unit/classification_assessment/test_architecture_enum.py",
+        "tests/unit/classification_assessment/test_classifier.py",
+        "tests/unit/cmake/test_risk.py",
+        "tests/unit/test_architecture_family.py",
+        "tests/unit/test_function_multiversion_pipeline.py",
+        "tests/unit/test_test_content.py"
       ],
       "higherLayers": [
         "tests/test_rpm_architecture_component.py"
@@ -108,6 +124,12 @@
       "unit": "tests/unit/schema_v2_projection/test_rpm_projection.py",
       "higherLayers": [
         "tests/test_rpm_architecture_component.py"
+      ],
+      "supportingUnits": [
+        "tests/unit/schema_v2_projection/test_finding_mapper.py",
+        "tests/unit/test_function_multiversion_pipeline.py",
+        "tests/unit/test_macro_effect_projection.py",
+        "tests/unit/test_usage_projection.py"
       ]
     }
   }

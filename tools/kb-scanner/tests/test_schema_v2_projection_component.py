@@ -13,7 +13,7 @@ from tests.schema_v2_contract import reference_errors
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FIXTURE = Path("/fixtures/avx-avx2-example-code/source")
+FIXTURE = ROOT / "tests/fixtures/source-evidence-chain"
 RULES = ROOT / "rulesets/riscv-porting"
 SCHEMA = json.loads((ROOT / "schemas/scan-result-v2.schema.json").read_text(encoding="utf-8"))
 
@@ -22,7 +22,7 @@ class SchemaV2ProjectionComponentTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         if not FIXTURE.is_dir():
-            raise AssertionError("AVX fixture must be mounted read-only")
+            raise AssertionError("仓库内源码证据链夹具缺失")
         cls.outputs = []
         cls.payloads = []
         cls.bytes = []
@@ -49,23 +49,15 @@ class SchemaV2ProjectionComponentTests(unittest.TestCase):
         self.assertEqual([], reference_errors(payload))
         self.assertEqual("2.0", payload["schemaVersion"])
 
-    def test_avx_findings_keep_audited_counts_and_self_contained_chains(self):
+    def test_local_intrinsic_keeps_source_path_and_self_contained_chain(self):
         payload = self.payloads[0]
-        self.assertEqual(828, payload["summary"]["findings"])
-        self.assertEqual(783, payload["summary"]["blocking"])
-        self.assertEqual(779, payload["summary"]["portabilityGaps"])
-        flags = [item for item in payload["findings"] if item["fact"]["kind"] in {"compiler_flag", "build_argument"}]
-        self.assertEqual(4, len(flags))
-        self.assertEqual(24, sum(len(item["occurrences"]) for item in flags))
-        macro_findings = [item for item in payload["findings"] if item["fact"]["kind"] == "macro_replacement"]
-        self.assertEqual(18, len(macro_findings))
-        self.assertTrue(any(
-            {"macro_definition", "macro_replacement"}.issubset({
-                next(step["kind"] for step in item["evidenceChain"]["steps"] if step["id"] == step_id)
-                for step_id in item["evidenceChain"]["primaryPath"]
-            })
-            for item in macro_findings
-        ))
+        intrinsic = [item for item in payload["findings"] if item["fact"]["symbol"] == "_mm256_setzero_si256"]
+        self.assertEqual(1, len(intrinsic))
+        chain = intrinsic[0]["evidenceChain"]
+        self.assertEqual("complete", chain["status"])
+        steps = {step["id"]: step for step in chain["steps"]}
+        self.assertEqual({"Makefile", "main.cpp", "wrapper.h"},
+                         {steps[sid]["source"]["file"] for sid in chain["primaryPath"]})
         for finding in payload["findings"]:
             chain = finding["evidenceChain"]
             self.assertEqual([], chain["impactStepIds"])

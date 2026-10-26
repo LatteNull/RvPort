@@ -18,7 +18,7 @@ from tests.unit.knowledge_detection.support import make_context
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_FIXTURE = Path("/fixtures/avx-avx2-example-code/source")
+DEFAULT_FIXTURE = ROOT / "tests/fixtures/source-evidence-chain"
 
 
 def measure(fixture: Path = DEFAULT_FIXTURE) -> dict[str, object]:
@@ -79,7 +79,7 @@ def measure(fixture: Path = DEFAULT_FIXTURE) -> dict[str, object]:
 
 
 def main() -> int:
-    fixture = Path(os.environ.get("KB_SCANNER_AVX_FIXTURE", str(DEFAULT_FIXTURE)))
+    fixture = Path(os.environ.get("RVPORT_KB_FIXTURE", str(DEFAULT_FIXTURE)))
     print(json.dumps(measure(fixture), indent=2, sort_keys=True))
     return 0
 

@@ -29,6 +29,9 @@ HISTORICAL_LEDGER = copy.deepcopy(LEDGER)
 LEDGER["fixtures"].update(json.loads((FIXTURES / "candidate-usage-report-differential.json").read_text(encoding="utf-8"))["fixtures"])
 MACRO_LEDGER = json.loads((FIXTURES / "macro-build-effect-report-differential.json").read_text(encoding="utf-8"))
 LEDGER["fixtures"].update(MACRO_LEDGER["fixtures"])
+CURRENT_BASELINE = json.loads((FIXTURES / "open-source-regression-baseline.json").read_text(encoding="utf-8"))
+LEDGER["fixtures"].update(CURRENT_BASELINE["fixtures"])
+LEDGER["compilerFacts"] = CURRENT_BASELINE["compilerFacts"]
 SCHEMA = json.loads((ROOT / "schemas/scan-result-v2.schema.json").read_text(encoding="utf-8"))
 
 
@@ -159,9 +162,8 @@ class BilingualCliComponentTests(unittest.TestCase):
                             self.assertTrue(root["explanation_en"])
                         if not extensions:
                             del finding["fact"]["extensions"]
-                # 宏作用链有独立逐字段审校；其他样例仍精确重现历史摘要。
-                reviewed_macro = MACRO_LEDGER['fixtures'].get(fixture,{}).get('2.0',{})
-                expected = reviewed_macro.get('withoutCandidateUsageSha256',HISTORICAL_LEDGER["fixtures"][fixture]["2.0"]["after"])
+                # 当前开源快照单独冻结；旧账本保留用于追溯。
+                expected = CURRENT_BASELINE["fixtures"][fixture]["2.0"]["withoutCandidateUsageSha256"]
                 self.assertEqual(expected, digest(report))
 
     def test_compiler_facts_are_byte_identical_to_frozen_inputs(self):

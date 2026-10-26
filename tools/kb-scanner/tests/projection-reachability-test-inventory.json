@@ -1,7 +1,10 @@
 {
   "schemaVersion": "1.0",
   "change": "improve-kb-scanner-projection-and-reachability",
-  "coverageThresholds": {"linePercent": 90.0, "branchPercent": 80.0},
+  "coverageThresholds": {
+    "linePercent": 90.0,
+    "branchPercent": 90.0
+  },
   "container": "kb-scanner-test",
   "boundaries": {
     "graph": "in-memory snapshots/store and fake traversal budgets",
@@ -11,15 +14,53 @@
     "diagnostics": "synthetic diagnostic records"
   },
   "modules": {
-    "projection/reference.py": {"unit": "tests/unit/projection_reachability/test_reference.py", "higherLayers": ["tests/test_avx_projection_reachability.py"]},
-    "analyzers/macro_resolution.py": {"unit": "tests/unit/projection_reachability/test_macro_resolution.py", "higherLayers": ["tests/test_avx_evidence_graph.py"]},
-    "analyzers/relation_diagnostics.py": {"unit": "tests/unit/projection_reachability/test_relation_diagnostics.py", "higherLayers": ["tests/test_avx_projection_reachability.py"]},
-    "analyzers/build_selection.py": {"unit": "tests/unit/projection_reachability/test_build_reachability.py", "supportingUnits": ["tests/unit/build_selection/test_analysis.py"], "higherLayers": ["tests/test_build_selection_component.py"]},
-    "projection/mapper.py": {"unit": "tests/unit/projection_reachability/test_mapper_enrichment.py", "supportingUnits": ["tests/unit/compatible_cutover/test_mapper.py", "tests/unit/architecture_enum/test_architecture_enum.py"], "higherLayers": ["tests/test_avx_projection_reachability.py"]},
-    "projection/diagnostics.py": {"unit": "tests/unit/projection_reachability/test_projection_diagnostics.py", "higherLayers": ["tests/test_avx_projection_reachability.py"]},
+    "projection/reference.py": {"unit": "tests/unit/projection_reachability/test_reference.py", "higherLayers": ["tests/test_source_evidence_chain_component.py"]},
+    "analyzers/macro_resolution.py": {"unit": "tests/unit/projection_reachability/test_macro_resolution.py", "higherLayers": ["tests/test_evidence_graph_component.py"]},
+    "analyzers/relation_diagnostics.py": {"unit": "tests/unit/projection_reachability/test_relation_diagnostics.py", "higherLayers": ["tests/test_source_evidence_chain_component.py"]},
+    "analyzers/build_selection.py": {
+      "unit": "tests/unit/projection_reachability/test_build_reachability.py",
+      "supportingUnits": [
+        "tests/unit/autoconf/test_graph.py",
+        "tests/unit/build_selection/test_analysis.py",
+        "tests/unit/cmake/test_risk.py",
+        "tests/unit/performance/test_build_queries.py",
+        "tests/unit/test_build_effects.py",
+        "tests/unit/test_build_selection_boundaries.py"
+      ],
+      "higherLayers": [
+        "tests/test_build_selection_component.py"
+      ]
+    },
+    "projection/mapper.py": {"unit": "tests/unit/projection_reachability/test_mapper_enrichment.py", "supportingUnits": ["tests/unit/compatible_cutover/test_mapper.py", "tests/unit/architecture_enum/test_architecture_enum.py"], "higherLayers": ["tests/test_source_evidence_chain_component.py"]},
+    "projection/diagnostics.py": {"unit": "tests/unit/projection_reachability/test_projection_diagnostics.py", "higherLayers": ["tests/test_source_evidence_chain_component.py"]},
     "projection/renderers.py": {"unit": "tests/unit/projection_reachability/test_projection_diagnostics.py", "supportingUnits": ["tests/unit/compatible_cutover/test_renderers_projector.py"], "higherLayers": ["tests/test_compatible_cutover_contracts.py"]},
-    "classifiers/policy.py": {"unit": "tests/unit/projection_reachability/test_classification_assessment.py", "supportingUnits": ["tests/unit/classification_assessment/test_classifier.py"], "higherLayers": ["tests/test_avx_projection_reachability.py"]},
-    "classifiers/migration.py": {"unit": "tests/unit/projection_reachability/test_classification_assessment.py", "supportingUnits": ["tests/unit/classification_assessment/test_classifier.py", "tests/unit/candidate_semantics/test_admission.py"], "higherLayers": ["tests/test_avx_projection_reachability.py"]},
-    "assessors/migration.py": {"unit": "tests/unit/projection_reachability/test_classification_assessment.py", "supportingUnits": ["tests/unit/classification_assessment/test_assessor.py"], "higherLayers": ["tests/test_avx_projection_reachability.py"]}
+    "classifiers/policy.py": {
+      "unit": "tests/unit/projection_reachability/test_classification_assessment.py",
+      "supportingUnits": [
+        "tests/unit/autoconf/test_graph.py",
+        "tests/unit/candidate_semantics/test_admission.py",
+        "tests/unit/classification_assessment/test_architecture_enum.py",
+        "tests/unit/classification_assessment/test_classifier.py",
+        "tests/unit/cmake/test_risk.py",
+        "tests/unit/test_architecture_family.py",
+        "tests/unit/test_function_multiversion_pipeline.py",
+        "tests/unit/test_test_content.py"
+      ],
+      "higherLayers": [
+        "tests/test_source_evidence_chain_component.py"
+      ]
+    },
+    "classifiers/migration.py": {
+      "unit": "tests/unit/projection_reachability/test_classification_assessment.py",
+      "supportingUnits": [
+        "tests/unit/candidate_semantics/test_admission.py",
+        "tests/unit/classification_assessment/test_classifier.py",
+        "tests/unit/cmake/test_risk.py"
+      ],
+      "higherLayers": [
+        "tests/test_source_evidence_chain_component.py"
+      ]
+    },
+    "assessors/migration.py": {"unit": "tests/unit/projection_reachability/test_classification_assessment.py", "supportingUnits": ["tests/unit/classification_assessment/test_assessor.py"], "higherLayers": ["tests/test_source_evidence_chain_component.py"]}
   }
 }

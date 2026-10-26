@@ -10,7 +10,7 @@
   "contracts": [
     {"id": "json-schema", "tests": ["test_schema_is_valid", "test_all_completion_state_examples_are_valid", "test_directed_invalid_cases"]},
     {"id": "finding-references", "tests": ["test_all_completion_state_examples_are_valid", "test_directed_invalid_cases"]},
-    {"id": "source-context", "tests": ["test_avx_example_is_self_contained_and_matches_source"]},
+    {"id": "source-context", "tests": ["test_historical_example_is_readable_with_self_contained_source_context"]},
     {"id": "deterministic-ordering", "tests": ["test_canonicalization_is_deterministic"]},
     {"id": "v1-v2-contract-differences", "tests": ["test_v2_is_projected_directly_from_staged_snapshots"]},
     {"id": "compiler-facts-freeze", "tests": ["test_compiler_fact_files_are_frozen"]},

@@ -11,7 +11,6 @@ from tests.unit.build_selection.support import ROOT, context
 class ClassificationAssessmentComponentTests(unittest.TestCase):
     def test_real_static_projects_never_become_ready_from_missing_test_or_build_input(self) -> None:
         roots = (
-            Path("/fixtures/avx-avx2-example-code/source"),
             ROOT / "tests/fixtures/generated-entries/folder-matrix/c/before-x86-only",
             ROOT / "tests/fixtures/generated-entries/folder-matrix/cpp/before-x86-only",
         )

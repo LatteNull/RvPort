@@ -28,7 +28,7 @@ class ProjectionReachabilityTestQualityTests(unittest.TestCase):
             "assessors/migration.py",
         }
         self.assertEqual(expected, set(self.inventory["modules"]))
-        self.assertEqual({"linePercent": 90.0, "branchPercent": 80.0}, self.inventory["coverageThresholds"])
+        self.assertEqual({"linePercent": 90.0, "branchPercent": 90.0}, self.inventory["coverageThresholds"])
         self.assertEqual("kb-scanner-test", self.inventory["container"])
         for module, details in self.inventory["modules"].items():
             self.assertTrue((ROOT / "kb_scanner" / module).is_file(), module)

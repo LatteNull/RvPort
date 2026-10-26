@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from dataclasses import replace
 
 from kb_scanner.analyzers import TestAssetAnalyzer, TestProofBudgets, TestSelectionAnalyzer
 from kb_scanner.core import (
@@ -18,6 +19,27 @@ from tests.unit.classification_assessment.support import context, knowledge, tes
 
 
 class TestAnalysisTests(unittest.TestCase):
+    def test_missing_source_entity_is_recovered_for_confirmed_test_target(self) -> None:
+        facts = test_facts(include_x86=False)
+        facts = replace(facts, entities=(facts.entities[0],))
+        result = TestAssetAnalyzer().analyze(context(), facts, knowledge())
+        self.assertEqual(CompletionStatus.COMPLETE, result.status)
+        recovered = next(item for item in result.value.entities if item.kind == "test_source")
+        self.assertEqual("tests/test_math.c", recovered.name)
+        self.assertTrue(any(item.kind == "contains_test" and item.target_id == recovered.id for item in result.value.relations))
+
+    def test_other_configuration_and_unresolved_explicit_links_do_not_create_edges(self) -> None:
+        facts = test_facts(include_x86=False)
+        for fields in ({"configuration": "other"}, {"coverageTarget": "absent.c", "alternativeTestFor": "absent-test"}):
+            with self.subTest(fields=fields):
+                source = replace(facts.facts[1], metadata={**facts.facts[1].metadata, **fields})
+                changed = replace(facts, facts=(facts.facts[0], source))
+                assets = TestAssetAnalyzer().analyze(context(), changed, knowledge()).value
+                result = TestSelectionAnalyzer().analyze(context(), changed, knowledge(), assets)
+                self.assertFalse(any(item.kind in {"covers_candidate", "alternative_test_for"} for item in result.value.relations))
+                if "configuration" in fields:
+                    self.assertFalse(any(item.kind == "exercises" for item in result.value.relations))
+
     def test_ctest_target_source_and_x86_dependency_have_stable_bounded_proof(self) -> None:
         facts = test_facts()
         first = TestAssetAnalyzer().analyze(context(), facts, knowledge("-mavx"))
