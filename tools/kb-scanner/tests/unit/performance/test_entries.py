@@ -101,3 +101,67 @@ class EntryTests(unittest.TestCase):
                     record = json.loads((out / "performance.json").read_text())
                     self.assertEqual(mode == "normal", record["passed"])
                     self.assertEqual(1 if mode == "profile" else 2, process.call_count)
+
+    def test_parent_merges_base_manifest_without_overlap(self):
+        with tempfile.TemporaryDirectory() as raw, ExitStack() as stack:
+            out = Path(raw) / "output"
+            argv = ["benchmark", "--source", "/source", "--output", str(out), "--image-id", "image", "--revision", "rev"]
+            stack.enter_context(patch("sys.argv", argv))
+            read_text = Path.read_text
+            def read(path, *args, **kwargs):
+                if path.name == "PROVENANCE.json":
+                    return json.dumps({"inputManifest": "input-manifest.json", "baseInputManifest": "base-input-manifest.json", "files": 1, "budget": {"seconds": 300}})
+                if path.name == "input-manifest.json":
+                    return json.dumps({"a.c": "fake-digest"})
+                if path.name == "base-input-manifest.json":
+                    return json.dumps({"b.c": "fake-digest"})
+                return read_text(path, *args, **kwargs)
+            stack.enter_context(patch.object(Path, "read_text", read))
+            stack.enter_context(patch.object(Path, "rglob", return_value=iter(())))
+            stack.enter_context(patch.object(entry, "runtime_metadata", return_value={"runtime": "fake"}))
+            stack.enter_context(patch.object(entry, "verify_limits", return_value={"cpu": 2}))
+            context = SimpleNamespace(compile_commands_path=None)
+            stack.enter_context(patch.object(entry, "StagedContextFactory", return_value=Mock(build=Mock(return_value=SimpleNamespace(value=context)))))
+            stack.enter_context(patch.object(entry, "ProjectWorkspaceCollector", return_value=Mock(collect=Mock(return_value=SimpleNamespace(value=SimpleNamespace(files=("a.c", "b.c")))))))
+            captured = {}
+            def fake_verify_inputs(source, files, manifest, provenance):
+                captured["manifest"] = manifest
+                return "digest"
+            stack.enter_context(patch.object(entry, "verify_inputs", side_effect=fake_verify_inputs))
+            stack.enter_context(patch.object(entry, "accept_run", return_value={"rss": 1}))
+            stack.enter_context(patch.object(entry, "verify_report", return_value={"ok": True}))
+            def execute(command, events, stderr):
+                events.write(json.dumps({"stage": "fake"}) + "\n")
+                return {"status": "normal", "elapsedSeconds": 1}
+            process = stack.enter_context(patch.object(entry, "run_process", side_effect=execute))
+            stack.enter_context(patch("builtins.print"))
+            self.assertEqual(0, entry.main())
+            self.assertEqual(2, process.call_count)
+            self.assertEqual({"a.c": "fake-digest", "b.c": "fake-digest"}, captured["manifest"])
+
+    def test_parent_rejects_overlapping_base_manifest(self):
+        with tempfile.TemporaryDirectory() as raw, ExitStack() as stack:
+            out = Path(raw) / "output"
+            argv = ["benchmark", "--source", "/source", "--output", str(out), "--image-id", "image", "--revision", "rev"]
+            stack.enter_context(patch("sys.argv", argv))
+            read_text = Path.read_text
+            def read(path, *args, **kwargs):
+                if path.name == "PROVENANCE.json":
+                    return json.dumps({"inputManifest": "input-manifest.json", "baseInputManifest": "base-input-manifest.json", "files": 1, "budget": {"seconds": 300}})
+                if path.name == "input-manifest.json":
+                    return json.dumps({"a.c": "fake-digest"})
+                if path.name == "base-input-manifest.json":
+                    return json.dumps({"a.c": "fake-digest"})
+                return read_text(path, *args, **kwargs)
+            stack.enter_context(patch.object(Path, "read_text", read))
+            stack.enter_context(patch.object(Path, "rglob", return_value=iter(())))
+            stack.enter_context(patch.object(entry, "runtime_metadata", return_value={"runtime": "fake"}))
+            stack.enter_context(patch.object(entry, "verify_limits", return_value={"cpu": 2}))
+            with self.assertRaises(ValueError):
+                entry.main()
+
+    def test_parent_module_entrypoint_propagates_parse_failure(self):
+        with patch("sys.argv", ["benchmark"]):
+            with self.assertRaises(SystemExit) as raised:
+                runpy.run_module("tests.run_performance_tests", run_name="__main__")
+            self.assertEqual(2, raised.exception.code)
