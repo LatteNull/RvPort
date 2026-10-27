@@ -442,11 +442,23 @@ jobs:
 
       - name: Pre-check ports
         run: |
+          # 允许本项目已有容器占用端口（重复部署场景），仅拦截其他项目的占用。
           PORTS='8080 8081 5432 6379 5672 15672 9000 9001'
+          OWN_PORTS=$(docker ps \
+            --filter "label=com.docker.compose.project=${PROJECT}" \
+            --format '{{.Ports}}' | grep -oE ':[0-9]+->' | tr -d ':->' | sort -u)
+          echo "本项目已占用端口: $(echo ${OWN_PORTS} | tr '\n' ' ')"
           for port in ${PORTS}; do
             if docker ps --format '{{.Ports}}' | grep -q ":${port}->"; then
-              echo "::error:: 端口 ${port} 已被占用"
-              exit 1
+              if echo "${OWN_PORTS}" | grep -qx "${port}"; then
+                echo "[OK] 端口 ${port} 由本项目 ${PROJECT} 占用（属于覆盖部署）"
+              else
+                echo "::error:: 端口 ${port} 被其他容器占用，拒绝部署"
+                docker ps --format '{{.Names}}\t{{.Ports}}' | grep ":${port}->" || true
+                exit 1
+              fi
+            else
+              echo "[OK] 端口 ${port} 空闲"
             fi
           done
           echo '端口检查通过'
@@ -535,11 +547,23 @@ jobs:
 
       - name: Pre-check ports
         run: |
+          # 允许本项目已有容器占用端口（重复部署场景），仅拦截其他项目的占用。
           PORTS='18080 18081 15432 16379 15673 25672 19000 19001'
+          OWN_PORTS=$(docker ps \
+            --filter "label=com.docker.compose.project=${PROJECT}" \
+            --format '{{.Ports}}' | grep -oE ':[0-9]+->' | tr -d ':->' | sort -u)
+          echo "本项目已占用端口: $(echo ${OWN_PORTS} | tr '\n' ' ')"
           for port in ${PORTS}; do
             if docker ps --format '{{.Ports}}' | grep -q ":${port}->"; then
-              echo "::error:: 端口 ${port} 已被占用"
-              exit 1
+              if echo "${OWN_PORTS}" | grep -qx "${port}"; then
+                echo "[OK] 端口 ${port} 由本项目 ${PROJECT} 占用（属于覆盖部署）"
+              else
+                echo "::error:: 端口 ${port} 被其他容器占用，拒绝部署"
+                docker ps --format '{{.Names}}\t{{.Ports}}' | grep ":${port}->" || true
+                exit 1
+              fi
+            else
+              echo "[OK] 端口 ${port} 空闲"
             fi
           done
           echo '端口检查通过'
