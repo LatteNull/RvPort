@@ -68,7 +68,7 @@ class RpmArchitectureComponentTests(unittest.TestCase):
         for name in oracle['unknown']:
             self.assertEqual('unknown', findings[name]['conclusion']['status'])
             self.assertTrue(findings[name]['evidenceChain']['breaks'])
-        for name, digest in {'clang':'adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7',
+        for name, digest in {'clang':'947e2ad0797248f8179f2bc29f4e7e0591bd7a14801ba819c9e56d31926e9a8c',
                              'gcc':'22d68c2ab3c8c40c8606451af2e5f493877661d031b6b2f379eff7886c23d191'}.items():
             self.assertEqual(digest, hashlib.sha256((RULES/f'generated/{name}-x86-entries.json').read_bytes()).hexdigest())
 

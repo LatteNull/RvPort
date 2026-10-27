@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import copy
-import hashlib
 import unittest
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
+from tests.source_baseline import validate_fact_file
 
 from tests.schema_v2_contract import (
     FIXTURE_ROOT,
@@ -77,15 +77,12 @@ class SchemaV2DesignContractTest(unittest.TestCase):
 
     def test_compiler_fact_files_are_frozen(self) -> None:
         baseline = load_json(ROOT / "tests/fixtures/open-source-regression-baseline.json")
+        manifest = load_json(ROOT / "rulesets/riscv-porting/knowledge-manifest.json")
+        declared = {item["path"]: item["sha256"] for item in manifest["sources"]}
         for expected in baseline["compilerFactFiles"]:
             with self.subTest(path=expected["path"]):
                 path = ROOT / expected["path"]
-                raw = path.read_bytes()
-                data = load_json(path)
-                self.assertEqual(expected["bytes"], len(raw))
-                self.assertEqual(expected["sha256"], hashlib.sha256(raw).hexdigest())
-                self.assertEqual(expected["counts"], {key: len(data[key]) for key in expected["counts"]})
-                self.assertEqual(expected["source"], data["source"])
+                validate_fact_file(path, expected, declared[f"generated/{path.name}"])
 
     def test_v2_is_projected_directly_from_staged_snapshots(self) -> None:
         contract = load_json(FIXTURE_ROOT / "contract-differences.json")

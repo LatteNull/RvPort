@@ -62,7 +62,7 @@ class ArchitectureEnumAnalysisTests(unittest.TestCase):
             self.assertTrue((ROOT / mapping["unit"]).is_file(), module)
         self.assertTrue((ROOT / "docs/analysis-capabilities.md").is_file())
         expected = {
-            "clang-x86-entries.json": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7",
+            "clang-x86-entries.json": "947e2ad0797248f8179f2bc29f4e7e0591bd7a14801ba819c9e56d31926e9a8c",
             # 开源迁移只将 source.path 脱敏为相对路径；事实内容保持不变。
             "gcc-x86-entries.json": "22d68c2ab3c8c40c8606451af2e5f493877661d031b6b2f379eff7886c23d191",
         }

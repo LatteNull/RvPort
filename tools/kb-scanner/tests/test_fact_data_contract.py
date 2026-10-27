@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-import hashlib
 import json
 import unittest
 from pathlib import Path
+from tests.source_baseline import validate_fact_file
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -11,7 +11,8 @@ GENERATED = ROOT / "rulesets" / "riscv-porting" / "generated"
 CATEGORIES = ("headers", "intrinsics", "builtins", "vectorTypes", "platformMacros", "compilerFlags")
 BASELINE = {
     "clang-x86-entries.json": {
-        "sha256": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7",
+        "bytes": 293356,
+        "sha256": "947e2ad0797248f8179f2bc29f4e7e0591bd7a14801ba819c9e56d31926e9a8c",
         "counts": (125, 7563, 1993, 10, 5, 216),
         "source": {
             "name": "LLVM Clang builtin headers",
@@ -21,6 +22,7 @@ BASELINE = {
         },
     },
     "gcc-x86-entries.json": {
+        "bytes": 350593,
         "sha256": "22d68c2ab3c8c40c8606451af2e5f493877661d031b6b2f379eff7886c23d191",
         "counts": (120, 7602, 3438, 10, 47, 225),
         "source": {
@@ -33,13 +35,13 @@ BASELINE = {
 
 class FactDataContractTests(unittest.TestCase):
     def test_compiler_fact_files_remain_byte_and_shape_compatible(self) -> None:
+        manifest = json.loads((GENERATED.parent / "knowledge-manifest.json").read_text())
+        declared = {item["path"]: item["sha256"] for item in manifest["sources"]}
         for filename, expected in BASELINE.items():
             with self.subTest(filename=filename):
-                raw = (GENERATED / filename).read_bytes()
-                payload = json.loads(raw)
-                self.assertEqual(hashlib.sha256(raw).hexdigest(), expected["sha256"])
-                self.assertEqual(payload["source"], expected["source"])
-                self.assertEqual(tuple(len(payload[name]) for name in CATEGORIES), expected["counts"])
+                validate_fact_file(GENERATED / filename,
+                                   dict(expected, counts=dict(zip(CATEGORIES, expected["counts"]))),
+                                   declared[f"generated/{filename}"])
 
     def test_generated_set_rules_still_reference_all_six_fact_categories(self) -> None:
         import yaml
