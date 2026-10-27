@@ -12,6 +12,16 @@ See the [installation guide](docs/installation.md) for setup and operation, and 
 
 See [testing and coverage scope](docs/testing-and-coverage.md) for coverage requirements and the [frontend guide](frontend/README.md) for frontend development.
 
+## Contributions and releases
+
+- Use `Type: Message` with a `<type>: <English> / <中文>` subject and a bilingual English/Chinese body. Types are `feat`, `test`, `fix`, `refactor`, `ci`, `chconf`, and `docs`.
+- AI-generated and human-written code follow the same code audit, PR review, and applicable validation requirements. Automated checks do not replace code review.
+- `dev` integrates development; `master` is for releases. Fork upstream, clone locally, create a topic branch from upstream `dev`, push to your fork, and open a PR targeting upstream `dev`.
+- Versions use four components, major.minor.bug fix.hotfix, such as `1.2.0.0`. Prereleases append a type and number, such as `1.2.0.0-rc1` or `1.2.0.0-rc2`.
+- An agreed Roadmap leads to Issues with assignees. Link PRs to Issues and confirm closure after merging into `dev` and completing acceptance. Once the entire Roadmap is complete, merge `dev` into `master` through a release PR and publish.
+
+See the [development guide's contribution and release policy](docs/development.md#contribution-and-release-policy) for type definitions, bilingual commit examples, and the complete workflow.
+
 ## Repository layout
 
 | Directory or file | Purpose |

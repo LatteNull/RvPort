@@ -108,6 +108,72 @@ Only after the container exits successfully and the report confirms success shou
 - Maintain unit tests for normal behavior, boundaries, and error paths alongside implementation changes. Overall and affected-module coverage must reach 90% lines and, where supported, branches.
 - Update `.env.example` and installation documentation when adding configuration. Do not commit real credentials, runtime logs, or environment data.
 
+## Contribution and release policy
+
+### Commit messages
+
+Use the `Type: Message` format. Write the subject as `<type>: <English> / <中文>`, followed by an English body and its Chinese counterpart describing the changes, rationale, and actual validation results.
+
+| Type | Purpose |
+|---|---|
+| `feat` | New features or externally observable behavior |
+| `test` | Changes primarily concerned with tests, fixtures, or coverage validation |
+| `fix` | Defect fixes, including supporting tests |
+| `refactor` | Internal restructuring without changing external behavior |
+| `ci` | CI/CD pipeline or automation workflow configuration |
+| `chconf` | Non-CI project, build, runtime, or tool configuration |
+| `docs` | Documentation changes |
+
+Use only these seven abbreviations, not long names such as `feature` or `config change`. Choose the primary purpose for mixed changes; independent purposes can be split into separate commits. Retaining the `ci` type does not restore retired CI facilities. The `docs` type does not exempt executable code in a change from testing requirements.
+
+The following example assumes documentation checks have been completed. Adapt actual messages to the changes and validation performed:
+
+```text
+docs: Document contribution rules / 补充贡献规范
+
+Document commit types, code review, branch roles, version naming,
+and the Roadmap-to-release workflow. Checked content and relative links.
+
+补充提交类型、代码审查、分支职责、版本命名及 Roadmap 到发布的流程。
+已检查内容与相对链接。
+```
+
+### Code audit
+
+Human-written code and code generated or modified by AI must follow the same code audit and PR review process. Reviewers check requirements, correctness, risks, coverage of normal behavior, boundaries and error paths, and applicable validation evidence. Address findings and repeat relevant validation before merging. Passing automated checks does not replace code review.
+
+Code changes retain this guide's Docker validation requirements and at least 90% line and available branch coverage overall and for affected modules, with the documented temporary deferral of frontend coverage acceptance. Documentation-only changes require content, link, and formatting checks; unit tests, code coverage, and runtime builds are not applicable.
+
+### Branches and contributions
+
+`dev` is the development integration branch; `master` is the release branch. Routine development reaches upstream `dev` through PRs.
+
+1. Fork the upstream RvPort repository on the hosting platform, then clone your fork locally.
+2. Synchronize upstream `dev` and create a local topic branch from it.
+3. Complete applicable validation, push the topic branch to your fork, and open a PR targeting upstream `dev`.
+4. Link the corresponding Issue in the PR, describe the changes and validation, complete code review, and address feedback before merging into `dev`.
+5. Once the entire Roadmap is complete, merge `dev` into `master` through a release PR and publish using the version convention.
+
+These are collaboration rules, not a claim that remote branch protection or automated checks have been configured.
+
+### Version naming
+
+Use four numeric components: major.minor.bug fix.hotfix, written as `<major>.<minor>.<bugfix>.<hotfix>`. Prerelease versions append `-<type><number>`, such as the release candidate suffixes `rc1` and `rc2`.
+
+| Example | Meaning |
+|---|---|
+| `1.2.0.0-rc1` | First release candidate |
+| `1.2.0.0-rc2` | Second release candidate |
+| `1.2.0.0` | Final release |
+
+This is the project's four-component convention, not standard SemVer. The documentation specifies the format; it does not automatically update module versions.
+
+### Roadmap, Issues, and PRs
+
+Once the next Roadmap stage is agreed, break the plan into concrete Issues with tasks, acceptance criteria, and assignees. Owners develop on topic branches and deliver through PRs linked to their Issues. Confirm and close each Issue after its PR has merged into `dev` and acceptance is complete.
+
+Do not assume closing keywords in PRs targeting `dev` will automatically close Issues. Check their status after merging and close them manually when necessary. Completing an individual Issue completes that task; only after the entire Roadmap is complete should a release PR merge `dev` into `master` for publication.
+
 ## OpenSpec
 
 The repository root, backend, frontend, and three main scanners each have an independent OpenSpec root: six in total. Identify the current project root when executing commands; do not apply a backend change to a tool's store. Conclusions in specifications and archives describe their original revisions. Current implementations require current validation.

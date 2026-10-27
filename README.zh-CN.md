@@ -12,6 +12,16 @@ RvPort 面向 x86 到 RISC-V 的迁移评估与实施，提供项目和源码管
 
 覆盖率统计范围见 [测试与覆盖率范围](docs/测试与覆盖率范围.md)，前端开发见 [前端说明](frontend/README.zh-CN.md)。
 
+## 贡献与发布
+
+- 提交信息采用 `Type: Message`，标题为 `<type>: <English> / <中文>`，正文中英双语；类型为 `feat`、`test`、`fix`、`refactor`、`ci`、`chconf`、`docs`。
+- AI 生成代码与人工代码遵循相同的代码审计、PR 审查和适用验证要求，自动检查不能代替代码审查。
+- `dev` 用于开发集成，`master` 用于发布。先 fork 上游仓库并 clone 到本地，从上游 `dev` 创建主题分支，推送个人 fork 后向上游 `dev` 提交 PR。
+- 版本采用“大版本.小版本.bug fix.hotfix”四段格式，如 `1.2.0.0`；预发布版本追加类型与序号，如 `1.2.0.0-rc1`、`1.2.0.0-rc2`。
+- Roadmap 确定计划后创建 Issue 并指派负责人；关联 PR 合并至 `dev` 且验收完成后确认关闭 Issue；Roadmap 整体完成后经发布 PR 将 `dev` 合并至 `master` 并发布。
+
+类型含义、双语提交示例和完整流程见 [开发指南：协作与发布规范](docs/开发指南.md#协作与发布规范)。
+
 ## 进一步阅读
 
 - [后端 API](backend/docs/API_DESIGN.zh-CN.md)与[数据库设计](backend/docs/DATABASE_DESIGN.zh-CN.md)
