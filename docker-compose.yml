@@ -205,7 +205,7 @@ services:
       - rvport-infra
 
   backend-worker:
-    image: rvport-backend:local
+    image: ${BACKEND_IMAGE:-rvport-backend:local}
     restart: unless-stopped
     depends_on:
       postgres:
