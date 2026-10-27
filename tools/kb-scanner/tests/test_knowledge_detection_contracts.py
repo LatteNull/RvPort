@@ -22,7 +22,7 @@ class KnowledgeDetectionContractTests(unittest.TestCase):
         self.assertNotIn("curatedSets", payload)
         self.assertNotIn("detectors", payload)
         expected = {
-            "generated/clang-x86-entries.json": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7",
+            "generated/clang-x86-entries.json": "947e2ad0797248f8179f2bc29f4e7e0591bd7a14801ba819c9e56d31926e9a8c",
             "generated/gcc-x86-entries.json": "22d68c2ab3c8c40c8606451af2e5f493877661d031b6b2f379eff7886c23d191",
         }
         declared = {item["path"]: item["sha256"] for item in payload["sources"]}

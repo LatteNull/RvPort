@@ -48,6 +48,13 @@ class KnowledgeIdentityTests(unittest.TestCase):
             "789e09ea01e7a003765e378288fd2ff10124e6a46458d006d3493806f9be37bb",
         )
         self.assertEqual(
+            knowledge_source_id(
+                "clang-x86-entries", "generated/clang-x86-entries.json",
+                "947e2ad0797248f8179f2bc29f4e7e0591bd7a14801ba819c9e56d31926e9a8c",
+            ),
+            "7f02d7f6c245f6c9d6e917d7f3ab0171107e0b8de4be9d6582a1e9675144b066",
+        )
+        self.assertEqual(
             knowledge_entry_id("headers", "x86", "immintrin.h"),
             "a24d20b21942e6f6ef333716ff20cdb58422d0a1e2edc99374f70002c71554e8",
         )

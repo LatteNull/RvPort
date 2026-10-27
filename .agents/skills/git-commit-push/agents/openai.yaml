@@ -1,0 +1,4 @@
+interface:
+  display_name: "Git Commit & Push"
+  short_description: "汇总 RvPort 变更，生成中英文提交信息并按当前分支安全推送"
+  default_prompt: "使用 $git-commit-push 汇总当前变更，生成双语标题和英文在前、空一行后中文的正文，按当前分支提交，优先从 upstream 拉取校验并推送到 origin。"

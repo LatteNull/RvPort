@@ -35,7 +35,7 @@ def environment(*, report_ok=True, tests_ok=True, exists=True, performance=False
                 "missing_lines": [], "missing_branches": []} for name in (
                 "example.py", "kb_scanner/example.py", "kb_scanner/frontends/cpp/example.py",
                 "tests/tree_sitter_native_support.py", "tests/unit_mapping.py", "tests/run_container_tests.py",
-                "tests/architecture_family_performance.py", "tests/cmake_report_audit.py")}}
+                "tests/architecture_family_performance.py", "tests/cmake_report_audit.py", "tests/source_baseline.py")}}
     fake_coverage = Mock()
     result = Mock()
     result.wasSuccessful.return_value = tests_ok

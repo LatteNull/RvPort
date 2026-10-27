@@ -22,6 +22,12 @@ docker compose -f tools/kb-scanner/compose.test.yml run --rm kb-scanner-test tes
 
 以上局部命令用于快速定位，不能代表完整入口通过。全量通过也不能抵消独立子集的失败，子集覆盖率不会跨进程合并。
 
+正式验收还必须核对构建输入：本目录通过 `.gitattributes` 将文本声明为 LF。Windows 的旧工作区可能仍有 CRLF，Docker COPY 不会替你转换；只比较工作区与镜像，或只检查本次变更文件，不能证明与 Linux CI 一致。先用 `git ls-files --eol tools/kb-scanner` 和 `git check-attr text eol -- <文件>` 检查属性，再与拟提交 tree 的原始 blob 核对，范围包含未修改的知识、规则和测试夹具。
+
+已提交版本可使用 `git -c core.autocrlf=false archive --format=tar --output=<快照包> <提交>` 导出，但仍须核对导出字节与 blob（导出属性也可能转换或排除文件）。未提交修改应使用独立临时 index 构造包含本次修改的候选 tree，不污染真实暂存区，不用旧 HEAD 代替当前实现。完整镜像应从该快照构建并记录 tree、输入摘要、镜像及报告。
+
+冻结事实合同校验 LF、原始长度、SHA-256、六类计数、来源和 manifest；CRLF 污染或等长内容修改都应失败，不在读取时静默规范化。`tests/source_baseline.py` 由 runner 隔离单测及逐模块行/分支 90% 门槛覆盖。修改当前摘要前必须证明差异来源，历史账本和历史报告保持可追溯。
+
 测试与质量清单位于 `tests/*inventory.json`；当前可执行清单统一要求行/分支至少 90%。模块的 `unit` 是主测试，`supportingUnits` 列出同一模块的跨目录辅助测试；采用该结构的领域入口通过 `tests/unit_mapping.py` 加载并按测试 ID 去重，保留已有目录发现。移动或新增测试时同步更新映射，辅助测试应直接验证对应模块行为。文件缺失、越界、导入失败或空测试模块均使入口失败。原生崩溃清单中标注 `coverageGate` 的模块交由对应入口验证；性能清单保留点分模块名和既有隔离全量发现。
 
 冻结的事实哈希、V1/V2 reader、断点语义、恶意输入无副作用、原生崩溃和确定性回归都应保留。不要自动改写人工 oracle 或历史差异账本来接受新行为。

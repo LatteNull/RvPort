@@ -11,7 +11,15 @@ backend/backend/runtime/
 backend/e2e/.tmp/
 backend/runtime/
 *.log
-.agents/
+.agents/*
+!.agents/skills/
+.agents/skills/*
+!.agents/skills/git-commit-push/
+.agents/skills/git-commit-push/*
+!.agents/skills/git-commit-push/SKILL.md
+!.agents/skills/git-commit-push/agents/
+.agents/skills/git-commit-push/agents/*
+!.agents/skills/git-commit-push/agents/openai.yaml
 .codex-tmp/
 # 仅忽略根目录运行数据，避免误忽略源码和测试中的 runtime 包。
 /runtime/

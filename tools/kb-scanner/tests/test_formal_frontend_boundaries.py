@@ -11,22 +11,22 @@ import kb_scanner.frontends.cpp as public_frontend
 
 ROOT = Path(__file__).resolve().parents[1]
 FORMAL_PACKAGE = ROOT / "kb_scanner" / "frontends"
-# 原归档不随开源仓库交付；摘要从原归档逐文件核对后冻结，继续保护保留实现的字节。
+# 原归档不随开源仓库交付；旧摘要见 1f2746d。已证明旧字节仅有 CRLF 差异，当前冻结 Git LF 字节。
 LEGACY_FILE_HASHES = {
-    "compile_commands.py": "5b3c61ce0b6e83921eb5a501b7b4375894faff48196a39edbd9f456c572f72f1",
-    "cpp_frontend.py": "cb3033b848b7b56e71eaff4438423146828963ef2df053d07897124489974927",
-    "models.py": "1f5ffa70094424ade923dbd9346630d448445f0204e9c7bb9fbc3e387d95b2e8",
-    "rules.py": "cb1902f4fc8ca329cb4d3d23ef09d1b6899b3380383a479902704e192c18c7f4",
-    "report.py": "2e9be6a9bf04692375b712e5d4e062ba1546dbadb795feaa7142a518b5cb4450"
+    "compile_commands.py": "2bcc6adea3b7514e1e4e18f573c87a9d1d4aa6a85acb73375ddf8798a4569401",
+    "cpp_frontend.py": "116715e4a556a0dfe7102d930034b1e5ddd7f5bf8c1d0641994dcfd0cdd696ae",
+    "models.py": "7cd95199530d5d7cacbcaf5175e95482bb2173f0a70a378b64dc75a792b680cd",
+    "rules.py": "1088f05168fedc53b6aa224967069c9cb221f2a30aa89e77e38924b04d78b24a",
+    "report.py": "34d26b43ac373d73ffce8f43dbea00a49cb9887a1896c57ff593b15d0003a5bd"
 }
 EXPECTED_FACT_HASHES = {
-    "clang-x86-entries.json": "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7",
+    "clang-x86-entries.json": "947e2ad0797248f8179f2bc29f4e7e0591bd7a14801ba819c9e56d31926e9a8c",
     "gcc-x86-entries.json": "22d68c2ab3c8c40c8606451af2e5f493877661d031b6b2f379eff7886c23d191",
 }
 
 
 class FormalFrontendBoundaryTests(unittest.TestCase):
-    def test_legacy_implementation_files_keep_verified_archive_hashes(self) -> None:
+    def test_legacy_implementation_files_keep_verified_git_hashes(self) -> None:
         for relative_path, expected_hash in LEGACY_FILE_HASHES.items():
             with self.subTest(relative_path=relative_path):
                 current = ROOT / "kb_scanner" / relative_path

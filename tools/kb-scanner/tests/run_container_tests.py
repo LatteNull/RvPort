@@ -622,7 +622,8 @@ def _performance_unit_gate() -> bool:
 def _runner_unit_gate() -> bool:
     coverage = Coverage(data_file="/tmp/kb-runner.coverage", branch=True,
                         source=["tests.unit_mapping", "tests.run_container_tests",
-                                "tests.architecture_family_performance", "tests.cmake_report_audit"], config_file=False)
+                                "tests.architecture_family_performance", "tests.cmake_report_audit",
+                                "tests.source_baseline"], config_file=False)
     coverage.start()
     suite = unittest.defaultTestLoader.discover(str(TEST_ROOT / "unit" / "runner"),
                                               top_level_dir=str(ROOT))
@@ -633,7 +634,8 @@ def _runner_unit_gate() -> bool:
     coverage.json_report(outfile=path)
     payload = json.loads(Path(path).read_text())
     gate = evaluate_frontend_coverage(payload, ("tests/unit_mapping.py", "tests/run_container_tests.py",
-                                              "tests/architecture_family_performance.py", "tests/cmake_report_audit.py"),
+                                              "tests/architecture_family_performance.py", "tests/cmake_report_audit.py",
+                                              "tests/source_baseline.py"),
                                       line_threshold=90, branch_threshold=90, enforce_module_thresholds=True)
     print(f"runner-unit coverage: lines={gate.line_percent:.2f}% branches={gate.branch_percent:.2f}%", flush=True)
     for failure in gate.failures:

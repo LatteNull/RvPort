@@ -69,6 +69,6 @@ class CandidateSemanticRegressionTests(unittest.TestCase):
         reviewed = [f for f in audit["findings"] if f["review"]["group"] == "candidate_to_review"]
         self.assertTrue(all(f["review"]["implementationStatus"] == "retained_unknown" for f in reviewed))
         self.assertEqual(1, sum(f["review"]["implementationStatus"] == "deduplicated_same_fact" for f in audit["findings"]))
-        for name, expected in (("clang-x86-entries.json", "adf187416c006b120e43f2d2ce0677ee2104a4c27de4dd9cabd1df12add352f7"),
+        for name, expected in (("clang-x86-entries.json", "947e2ad0797248f8179f2bc29f4e7e0591bd7a14801ba819c9e56d31926e9a8c"),
                                ("gcc-x86-entries.json", "22d68c2ab3c8c40c8606451af2e5f493877661d031b6b2f379eff7886c23d191")):
             self.assertEqual(expected, hashlib.sha256((ROOT / "rulesets/riscv-porting/generated" / name).read_bytes()).hexdigest())
