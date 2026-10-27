@@ -464,6 +464,18 @@ jobs:
           done
           echo '端口检查通过'
 
+      - name: Ensure infra network exists
+        run: |
+          # compose 中该网络声明为 external，需预先存在。
+          # 已有网络保留不动（其中可能附着本项目容器），仅缺失时创建。
+          NET="${PROJECT}-infra"
+          if docker network inspect "${NET}" >/dev/null 2>&1; then
+            echo "[OK] 网络 ${NET} 已存在，保持不变"
+          else
+            docker network create "${NET}"
+            echo "[OK] 网络 ${NET} 已创建"
+          fi
+
       - name: Copy compose and init files (overwrite only)
         run: |
           cp docker-compose.yml "${DEPLOY_DIR}/docker-compose.yml"
@@ -569,6 +581,18 @@ jobs:
             fi
           done
           echo '端口检查通过'
+
+      - name: Ensure infra network exists
+        run: |
+          # compose 中该网络声明为 external，需预先存在。
+          # 已有网络保留不动（其中可能附着本项目容器），仅缺失时创建。
+          NET="${PROJECT}-infra"
+          if docker network inspect "${NET}" >/dev/null 2>&1; then
+            echo "[OK] 网络 ${NET} 已存在，保持不变"
+          else
+            docker network create "${NET}"
+            echo "[OK] 网络 ${NET} 已创建"
+          fi
 
       - name: Copy compose and init files (overwrite only)
         run: |
