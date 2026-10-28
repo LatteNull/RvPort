@@ -152,6 +152,7 @@ public class SpecializedAnalysisRepository {
     public List<UUID> listFindingIds(UUID runId) {
         return dsl.select(SPECIALIZED_ANALYSIS_FINDINGS.ID).from(SPECIALIZED_ANALYSIS_FINDINGS)
                 .where(SPECIALIZED_ANALYSIS_FINDINGS.RUN_ID.eq(runId))
+                .and(SPECIALIZED_ANALYSIS_FINDINGS.FINDING_KIND.ne("DISCHARGED"))
                 .orderBy(SPECIALIZED_ANALYSIS_FINDINGS.ID).fetch(SPECIALIZED_ANALYSIS_FINDINGS.ID);
     }
 
@@ -214,7 +215,8 @@ public class SpecializedAnalysisRepository {
                 .set(SPECIALIZED_ANALYSIS_RUNS.RESULT_JSON_ARTIFACT_ID, resultJsonArtifactId)
                 .set(SPECIALIZED_ANALYSIS_RUNS.RESULT_HTML_ARTIFACT_ID, resultHtmlArtifactId)
                 .set(SPECIALIZED_ANALYSIS_RUNS.AUDIT_BUNDLE_ARTIFACT_ID, auditBundleArtifactId)
-                .set(SPECIALIZED_ANALYSIS_RUNS.FINDING_COUNT, findings.size() - candidates)
+                .set(SPECIALIZED_ANALYSIS_RUNS.FINDING_COUNT, (int) findings.stream()
+                        .filter(item -> "FINDING".equals(item.findingKind())).count())
                 .set(SPECIALIZED_ANALYSIS_RUNS.CANDIDATE_COUNT, candidates)
                 .set(SPECIALIZED_ANALYSIS_RUNS.DIAGNOSTIC_COUNT, diagnostics)
                 .set(SPECIALIZED_ANALYSIS_RUNS.FINISHED_AT, OffsetDateTime.now())

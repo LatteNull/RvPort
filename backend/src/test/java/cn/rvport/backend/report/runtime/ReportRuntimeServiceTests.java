@@ -50,6 +50,38 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(MockitoExtension.class)
 class ReportRuntimeServiceTests {
+    @Test
+    void evidenceSummaryKeepsUnversionedMatchAndEmptyMatchReadable() {
+        String unversioned = ReflectionTestUtils.invokeMethod(service(), "evidenceSummary",
+                Map.of("source", "lib", "targetMatchEvidence", Map.of("matchedBy", "name", "name", "target")));
+        assertThat(unversioned).isEqualTo("source=lib, matchedBy=name, target=target");
+        String empty = ReflectionTestUtils.invokeMethod(service(), "evidenceSummary",
+                Map.of("source", "lib", "targetMatchEvidence", Map.of()));
+        assertThat(empty).isEqualTo("source=lib");
+    }
+
+    @Test
+    void confirmedLegacyCandidateDoesNotBecomeFormalRiskInNewReport() {
+        UUID projectId = UUID.randomUUID(), revisionId = UUID.randomUUID(), reportId = UUID.randomUUID(), taskId = UUID.randomUUID();
+        var candidate = ref(projectId, revisionId, MigrationInputSourceType.MEMORY_ORDER_FINDING, "HIGH", "src/a.c:5", "补齐证据");
+        when(context.task()).thenReturn(task(taskId, projectId));
+        when(reportRepository.findById(reportId)).thenReturn(Optional.of(report(reportId, projectId, revisionId, taskId, TaskStatus.RUNNING)));
+        when(migrationInputService.currentConfirmedRefsForSystem(projectId, revisionId)).thenReturn(List.of(candidate));
+        when(sourceResolver.detail(candidate)).thenReturn(Map.of("pendingVerification", true, "findingKind", "SOURCE_CANDIDATE"));
+        when(sourceResolver.memoryOrderAnalysisSummary(projectId, revisionId)).thenReturn(Map.of("analysisStatus", "PARTIAL"));
+        service().generate(new ReportGenerateInput(projectId, revisionId, reportId), context);
+        @SuppressWarnings("unchecked")
+        ArgumentCaptor<Map<String, ?>> summary = ArgumentCaptor.forClass(Map.class);
+        verify(reportStatusWriter).markSucceeded(eq(reportId), summary.capture(), eq("INFO"));
+        assertThat(summary.getValue().get("pendingVerificationCount")).isEqualTo(1);
+        assertThat(summary.getValue().get("highRiskIssueCount")).isEqualTo(0L);
+        assertThat(summary.getValue().get("priorityIssues")).isEqualTo(List.of());
+        assertThat(candidate.status()).isEqualTo(MigrationInputStatus.CONFIRMED);
+        ArgumentCaptor<StoredArtifactCreateCommand> html = ArgumentCaptor.forClass(StoredArtifactCreateCommand.class);
+        verify(storedArtifactService).store(html.capture(), eq(context));
+        String content = new String(html.getValue().content(), StandardCharsets.UTF_8);
+        assertThat(content).contains("待核实", "PARTIAL", "零正式风险不代表迁移安全").doesNotContain("<td>HIGH</td>");
+    }
 
     @Mock
     private ReportRepository reportRepository;

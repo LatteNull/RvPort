@@ -412,19 +412,24 @@ public class SpecializedAnalysisRuntimeService {
                     || document.path("exit_code").asInt(-1) != exitCode || !statusMatchesExit) {
                 throw new SpecializedAnalysisRuntimeException("内存序分析结果 schema、状态或退出码不符合协议");
             }
+            MemoryOrderResultPolicy.validateVersion(document);
         }
     }
 
     private FailureAudit persistFailureResult(SpecializedAnalysisTaskInput input, TaskExecutionContext context,
             Path resultJson, JsonNode document, Integer exitCode, PreparedInput prepared, Path workspace, Exception ex) {
         Map<String, Object> summary = failureSummary(document, exitCode, ex);
+        List<Path> roots = new ArrayList<>();
+        if (prepared != null) roots.add(prepared.sourceRoot());
+        if (workspace != null) roots.add(workspace);
+        if (input.analyzerType() == SpecializedAnalyzerType.MEMORY_ORDER) {
+            summary.putAll(document == null ? MemoryOrderResultPolicy.historicalSummary(Map.of())
+                    : MemoryOrderResultPolicy.diagnostics(sanitizeJson(document, roots)));
+        }
         if (resultJson == null || document == null || !Files.isRegularFile(resultJson)) {
             return new FailureAudit(summary, null, number(summary, "diagnosticCount"));
         }
         try {
-            List<Path> roots = new ArrayList<>();
-            if (prepared != null) roots.add(prepared.sourceRoot());
-            if (workspace != null) roots.add(workspace);
             JsonNode sanitized = sanitizeJson(document, roots);
             objectMapper.writeValue(resultJson.toFile(), sanitized);
             StoredArtifactView artifact = artifactService.storeLargeFile(input.projectId(), context.task().id(),
@@ -505,7 +510,10 @@ public class SpecializedAnalysisRuntimeService {
     private List<SpecializedFindingImport> parseFindings(SpecializedAnalyzerType type, JsonNode document) {
         List<SpecializedFindingImport> result = new ArrayList<>();
         parseFindingArray(type, document.path("findings"), "FINDING", result);
-        if (type == SpecializedAnalyzerType.MEMORY_ORDER) parseFindingArray(type, document.path("source_candidates"), "SOURCE_CANDIDATE", result);
+        if (type == SpecializedAnalyzerType.MEMORY_ORDER) {
+            parseFindingArray(type, document.path("source_candidates"), "SOURCE_CANDIDATE", result);
+            parseFindingArray(type, document.path("discharged_assessments"), "DISCHARGED", result);
+        }
         return result;
     }
 
@@ -534,11 +542,14 @@ public class SpecializedAnalysisRuntimeService {
             String file, Integer startLine, Integer startColumn, Integer endLine, Integer endColumn,
             SpecializedAnalyzerType type) {
         String id = text(value, "id", type.name().toLowerCase(Locale.ROOT) + "-" + index);
+        if (type == SpecializedAnalyzerType.MEMORY_ORDER) kind = MemoryOrderResultPolicy.kind(kind, value);
+        boolean unproven = type == SpecializedAnalyzerType.MEMORY_ORDER && MemoryOrderResultPolicy.pending(kind);
         String code = type == SpecializedAnalyzerType.FLOATING_POINT ? text(conclusion, "findingCode", "floating-point-risk")
                 : text(conclusion, "findingType", text(value.path("fact"), "kind", "memory-order-risk"));
         String severity = text(conclusion, "severity", "info").toUpperCase(Locale.ROOT);
         String confidence = conclusion.path("confidence").isNumber()
                 ? String.valueOf(conclusion.path("confidence").asDouble()) : text(conclusion, "confidence", null);
+        if (unproven) { severity = "INFO"; confidence = null; }
         String status = text(conclusion, "status", "complete").toUpperCase(Locale.ROOT);
         String message = type == SpecializedAnalyzerType.FLOATING_POINT
                 ? text(conclusion, "message", text(conclusion, "impact", "浮点迁移风险"))
@@ -553,7 +564,7 @@ public class SpecializedAnalysisRuntimeService {
                 text(conclusion, "suggestionEn", text(conclusion, "suggestion_en", null)),
                 text(conclusion, "testSuggestion", null), text(conclusion, "testSuggestionEn", null),
                 file, startLine, startColumn, endLine, endColumn,
-                conclusion.path("requiresHumanConfirmation").asBoolean(kind.equals("SOURCE_CANDIDATE")),
+                unproven || conclusion.path("requiresHumanConfirmation").asBoolean(kind.equals("SOURCE_CANDIDATE")),
                 text(value, "semanticDigest", text(value, "semantic_digest", null)), detail);
     }
 
@@ -561,10 +572,16 @@ public class SpecializedAnalysisRuntimeService {
             List<SpecializedFindingImport> findings) {
         Map<String, Object> summary = new LinkedHashMap<>();
         summary.put("analyzerType", type.name());
-        summary.put("findingCount", findings.stream().filter(item -> !"SOURCE_CANDIDATE".equals(item.findingKind())).count());
+        summary.put("findingCount", findings.stream().filter(item -> "FINDING".equals(item.findingKind())).count());
         summary.put("candidateCount", findings.stream().filter(item -> "SOURCE_CANDIDATE".equals(item.findingKind())).count());
         int diagnosticCount = document.path("diagnostics").isArray() ? document.path("diagnostics").size() : 0;
         summary.put("diagnosticCount", diagnosticCount);
+        if (type == SpecializedAnalyzerType.MEMORY_ORDER) {
+            summary.putAll(MemoryOrderResultPolicy.diagnostics(document));
+            summary.put("inconclusiveCount", findings.stream().filter(item -> "INCONCLUSIVE".equals(item.findingKind())).count());
+            summary.put("dischargedCount", findings.stream().filter(item -> "DISCHARGED".equals(item.findingKind())).count());
+            summary.put("findingSchemaVersion", document.path("finding_schema_version").asText());
+        }
         summary.put("status", type == SpecializedAnalyzerType.FLOATING_POINT
                 ? document.path("scan").path("status").asText() : document.path("status").asText());
         summary.put("verdict", type == SpecializedAnalyzerType.MEMORY_ORDER ? document.path("verdict").asText() : "analyzed");
@@ -640,7 +657,9 @@ public class SpecializedAnalysisRuntimeService {
             List<SpecializedFindingImport> findings, Path workspace) throws IOException {
         StringBuilder rows = new StringBuilder();
         for (SpecializedFindingImport finding : findings) {
-            rows.append("<tr><td>").append(escape(finding.severity())).append("</td><td>")
+            String label = type == SpecializedAnalyzerType.MEMORY_ORDER && MemoryOrderResultPolicy.pending(finding.findingKind())
+                    ? "DISCHARGED".equals(finding.findingKind()) ? "受限模型内消解" : "待核实（证据不足）" : finding.severity();
+            rows.append("<tr><td>").append(escape(label)).append("</td><td>")
                     .append(escape(finding.findingCode())).append("</td><td>").append(escape(finding.title()))
                     .append("</td><td>").append(escape(finding.filePath())).append(":")
                     .append(finding.startLine() == null ? "" : finding.startLine()).append("</td></tr>");

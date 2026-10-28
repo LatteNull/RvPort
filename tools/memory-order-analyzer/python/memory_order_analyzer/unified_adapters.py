@@ -22,9 +22,21 @@ from .pipeline import write_json
 from .provenance_contracts import expected_provenance_protocol, provenance_document
 from .publication_contracts import expected_publication_protocol, publication_document
 from .source_contracts import read_source_document
+from .thread_contracts import read_thread_document
 
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+def canonical_members(items, key):
+    """Normalize a protocol identity without discarding conflicting evidence."""
+    unique = {}
+    for item in items:
+        identifier = key(item)
+        if identifier in unique and canonical(unique[identifier]) != canonical(item):
+            raise AnalysisError("profile_conflict", f"Conflicting protocol member: {identifier}")
+        unique[identifier] = item
+    return [unique[identifier] for identifier in sorted(unique)]
 
 
 def dependency(kind, identifier, value):
@@ -113,11 +125,13 @@ def run_demand(scope, data, store, module_by_record, source_inputs, output, work
                         "standard": record["standard"], "target": record["target"]["triple"],
                         "data_layout": record["target"]["data_layout"], "abi": _abi(record),
                         "evidence_mode": "ast+ir" if source else "ir-only"})
+    if not members:
+        raise AnalysisError("adapter_dependency_incomplete", "R3 requires at least one attested IR member")
     request = demand_document(
         "DemandDrivenAnalysisRequest", scope_id=scope["target_id"],
         closed_scope=scope["closed"] and not scope["external_boundaries"],
         target=scope["target_triple"], data_layout=scope["records"][0]["target"]["data_layout"],
-        abi=_abi(scope["records"][0]), members=sorted(members, key=lambda item: item["artifact_key"]),
+        abi=_abi(scope["records"][0]), members=canonical_members(members, lambda item: item["physical_tu_id"]),
         evidence=sorted([
             evidence("RootDrivenAnalysisPlan", scope["target_id"], plan,
                      f"root-plans/{scope['target_id']}.json"),
@@ -152,17 +166,28 @@ def _profiles(directory, reader, kind, scope, data):
     result = []
     for standard in sorted({item["standard"] for item in scope["records"] if item["language"] == "c++"}):
         records = [item for item in scope["records"] if item["standard"] == standard]
-        vendors = {_infer_vendor(_source_fact(data, item)) for item in records} - {None}
-        candidates = []
+        vendors = {_infer_vendor(_source_fact(data, item)) for item in records}
+        candidates, differences = [], []
         for path in sorted((ROOT / directory).glob("*.json")):
             value = reader(path, kind)
-            if (value["status"] == "verified" and value["cxx_standard"] == standard and
-                    value["target"] == scope["target_triple"] and
-                    value["data_layout"] == records[0]["target"]["data_layout"] and
-                    (not vendors or value["vendor"] in vendors)):
+            mismatch = []
+            for record in records:
+                expected = {"status": "verified", "cxx_standard": standard,
+                            "target": record["target"]["triple"],
+                            "data_layout": record["target"]["data_layout"],
+                            "cxx_abi": record["target"]["abi"].get("cxx_abi")}
+                mismatch.extend(key for key, wanted in expected.items()
+                                if wanted is None or value.get(key) != wanted)
+            if len(vendors) != 1 or value["vendor"] not in vendors:
+                mismatch.append("vendor")
+            if not mismatch:
                 candidates.append((path, value))
+            else:
+                differences.append({"profile": value["profile_id"], "mismatches": sorted(set(mismatch))})
         if len(candidates) != 1:
-            raise AnalysisError("library_profile_ambiguous", f"No unique verified {kind} for {standard}")
+            code = "library_profile_missing" if not candidates else "library_profile_ambiguous"
+            raise AnalysisError(code, f"No unique verified {kind} for {standard}: " + canonical({
+                "matches": [item[1]["profile_id"] for item in candidates], "differences": differences}))
         result.append(candidates[0])
     return result
 
@@ -295,7 +320,7 @@ def run_provenance(scope, data, store, module_by_record, source_inputs, output,
             source_path = request_dir / f"source-{record['record_id']}.json"
             source_path.write_text(canonical(source_request) + "\n", encoding="utf-8")
         mapping = module_by_record.get(record["record_id"])
-        if mapping and source_entry:
+        if mapping:
             llvm_request = provenance_document(
                 "LLVMObjectProvenanceRequest", artifact_key=mapping["artifact_key"],
                 profile_id=profile_id, physical_tu_id=record["physical_tu_id"],
@@ -305,6 +330,9 @@ def run_provenance(scope, data, store, module_by_record, source_inputs, output,
                 semantic_digest=None)
             llvm_path = request_dir / f"llvm-{record['record_id']}.json"
             llvm_path.write_text(canonical(llvm_request) + "\n", encoding="utf-8")
+        if source_path is None and llvm_path is None:
+            raise AnalysisError("adapter_dependency_incomplete",
+                                f"A5 requires AST or LLVM evidence for {record['physical_tu_id']}")
         members.append({"physical_tu_id": record["physical_tu_id"], "profile_id": profile_id,
                         "language": record["language"], "standard": record["standard"],
                         "source_request": str(source_path) if source_path else None,
@@ -348,8 +376,8 @@ def _r2_evidence(scope, data):
 def run_concurrent(scope, data, module_by_record, source_inputs, output):
     refs = _r2_evidence(scope, data)
     required = {item["kind"] for item in refs}
-    if not {"RootDrivenAnalysisPlan", "ThreadEntryRootOverlay"} <= required:
-        raise AnalysisError("adapter_dependency_incomplete", "R2 requires root plan and thread-entry overlay")
+    if not {"RootDrivenAnalysisPlan", "ThreadEntryRootOverlay", "EffectSummary"} <= required:
+        raise AnalysisError("adapter_dependency_incomplete", "R2 requires root plan, thread-entry overlay and EffectSummary")
     binding = _json(data / f"source-ir-binding/{scope['target_id']}.json") if (data / f"source-ir-binding/{scope['target_id']}.json").is_file() else None
     members = []
     for record in scope["records"]:
@@ -372,13 +400,15 @@ def run_concurrent(scope, data, module_by_record, source_inputs, output):
     return report
 
 
-def run_publication(scope, data, output, worker):
-    paths = sorted((data / f"requests/{scope['target_id']}").glob("thread-*.json"),
-                   key=lambda path: int(path.stem.split("-")[-1]))
-    if not paths:
+def run_publication(scope, data, output, worker, thread_request=None):
+    if thread_request is None:
         raise AnalysisError("adapter_dependency_incomplete", "P4 requires a P3 thread request")
+    path = Path(thread_request).resolve()
+    if not path.is_relative_to((data / f"requests/{scope['target_id']}").resolve()):
+        raise AnalysisError("invalid_reference", "P3 request must belong to the current scope")
+    read_thread_document(path, "ThreadAnalysisRequest")
     request = publication_document(
-        "PublicationRiskRequest", thread_request=str(paths[-1]),
+        "PublicationRiskRequest", thread_request=str(path),
         model_id="c-cpp-single-publication-v1", budgets=expected_publication_protocol()["budgets"])
     request_path = _write_request(data / f"requests/{scope['target_id']}/publication.json", request)
     source = data / "source" / scope["target_id"]
@@ -387,11 +417,7 @@ def run_publication(scope, data, output, worker):
 
 def run_atomic(scope, data, output_root):
     reports = []
-    module_inputs = [hashed_input(data / f"facts/{_mapping['artifact_key']}.json")
-                     for record in scope["records"]
-                     if (_mapping := next((item for item in _json(data / "report.json")["record_artifacts"]
-                                           if item["record_id"] == record["record_id"] and item["artifact_key"]), None))]
-    source_inputs = [hashed_input(path) for path in sorted((data / "source-facts").glob("*.json"))] if (data / "source-facts").is_dir() else []
+    mappings = {item["record_id"]: item for item in _json(data / "report.json")["record_artifacts"]}
     optional = {
         "thread_graph": data / f"graphs/{scope['target_id']}.json",
         "provenance_graph": data / f"provenance-graphs/{scope['target_id']}.json",
@@ -404,16 +430,33 @@ def run_atomic(scope, data, output_root):
     optional["publication_graph"] = publication_graphs[0] if publication_graphs else Path("missing")
     values = {key: hashed_input(path) if path.is_file() else None for key, path in optional.items()}
     for standard in sorted({item["standard"] for item in scope["records"]}):
-        request = advanced_atomic_document(
-            "FenceRmwPublicationRequest", model_id="bounded-advanced-atomic-publication-v1",
-            scope_id=scope["target_id"], language_standard=standard,
-            closed_scope=scope["closed"] and not scope["external_boundaries"],
-            module_facts=module_inputs, source_facts=source_inputs,
-            budgets=expected_advanced_atomic_protocol()["budgets"], **values)
-        request_path = _write_request(
-            data / f"requests/{scope['target_id']}/atomic-{standard.replace('+', 'p')}.json",
-            request,
-        )
-        output = output_root / standard.replace("+", "p")
-        reports.append(model_fence_rmw_publication(request_path, data, output))
+        records = [item for item in scope["records"] if item["standard"] == standard]
+        module_paths = {data / f"facts/{mapping['artifact_key']}.json" for record in records
+                        if (mapping := mappings.get(record["record_id"])) and mapping["artifact_key"]}
+        source_paths = {data / f"source-facts/{record['physical_tu_id']}.json" for record in records}
+        module_inputs = [hashed_input(path) for path in sorted(module_paths) if path.is_file()]
+        source_inputs = [hashed_input(path) for path in sorted(source_paths) if path.is_file()]
+        if standard in {"compiler-default", "c89", "c99", "c++98", "c++03"} or not (module_inputs or source_inputs):
+            reports.append({"status": "partial", "language_standard": standard, "findings": [],
+                            "diagnostics": [{"code": "atomic-standard-unresolved" if standard == "compiler-default"
+                                             else "atomic-evidence-unsupported",
+                                             "detail": f"标准 {standard} 缺少可验证的 ISO 原子语义或输入证据",
+                                             "detail_en": f"Standard {standard} lacks verified ISO atomic semantics or input evidence"}]})
+            continue
+        try:
+            request = advanced_atomic_document(
+                "FenceRmwPublicationRequest", model_id="bounded-advanced-atomic-publication-v1",
+                scope_id=scope["target_id"], language_standard=standard,
+                closed_scope=scope["closed"] and not scope["external_boundaries"],
+                module_facts=module_inputs, source_facts=source_inputs,
+                budgets=expected_advanced_atomic_protocol()["budgets"], **values)
+            request_path = _write_request(
+                data / f"requests/{scope['target_id']}/atomic-{standard.replace('+', 'p')}.json", request)
+            output = output_root / standard.replace("+", "p")
+            reports.append(model_fence_rmw_publication(request_path, data, output))
+        except (AnalysisError, OSError, ValueError) as exc:
+            reports.append({"status": "partial", "language_standard": standard, "findings": [],
+                            "diagnostics": [{"code": getattr(exc, "code", "atomic-group-failed"),
+                                             "detail": f"原子标准组 {standard} 分析失败",
+                                             "detail_en": f"Atomic group {standard} failed: {exc}"}]})
     return reports

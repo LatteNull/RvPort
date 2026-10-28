@@ -265,6 +265,27 @@
                                         </limit>
                                     </limits>
                                 </rule>
+                                <!-- 内存序结果消费涉及的类单独验收，保留整体和全部包的既有门槛。 -->
+                                <rule>
+                                    <element>CLASS</element>
+                                    <includes>
+                                        <include>*MemoryOrderResultPolicy</include>
+                                        <include>*SpecializedAnalysisRepository</include>
+                                        <include>*SpecializedAnalysisResponse</include>
+                                        <include>*SpecializedAnalysisRuntimeService</include>
+                                        <include>*SpecializedFindingResponse</include>
+                                        <include>*MigrationInputSourceResolver</include>
+                                        <include>*ProjectOverviewResponse</include>
+                                        <include>*ProjectOverviewResponse$WorkflowStageResponse</include>
+                                        <include>*ProjectWorkflowStatusService</include>
+                                        <include>*ReportDocumentOrganizer</include>
+                                        <include>*ReportRuntimeService</include>
+                                    </includes>
+                                    <limits>
+                                        <limit><counter>LINE</counter><value>COVEREDRATIO</value><minimum>0.90</minimum></limit>
+                                        <limit><counter>BRANCH</counter><value>COVEREDRATIO</value><minimum>0.90</minimum></limit>
+                                    </limits>
+                                </rule>
                             </rules>
                         </configuration>
                     </execution>

@@ -28,7 +28,7 @@ public record SpecializedAnalysisResponse(
         Map<String, Object> summary,
         int findingCount,
         int candidateCount,
-        int diagnosticCount,
+        Integer diagnosticCount,
         boolean currentSourceRevision,
         List<String> staleReasons,
         UUID requestArtifactId,
@@ -41,13 +41,17 @@ public record SpecializedAnalysisResponse(
 ) {
     public static SpecializedAnalysisResponse from(SpecializedAnalysisRunView run, UUID activeSourceRevisionId) {
         boolean current = java.util.Objects.equals(run.sourceRevisionId(), activeSourceRevisionId);
+        Map<String, Object> summary = run.analyzerType() == SpecializedAnalyzerType.MEMORY_ORDER
+                ? MemoryOrderResultPolicy.historicalSummary(run.summary()) : run.summary();
+        Integer diagnosticCount = run.analyzerType() == SpecializedAnalyzerType.MEMORY_ORDER
+                && !Boolean.TRUE.equals(summary.get("diagnosticsAggregated")) ? null : run.diagnosticCount();
         return new SpecializedAnalysisResponse(run.id(), run.projectId(), run.taskId(), run.analyzerType(),
                 run.sourceRevisionId(), run.buildRunId(), run.artifactSetId(), run.analysisMode(), run.bcStatus(),
                 run.bcPlannedCount(), run.bcUsableCount(), run.bcFailedCount(),
                 Math.max(0, run.bcPlannedCount() - run.bcUsableCount()), run.bcDegradationReason(),
                 run.environmentConfigVersion(),
-                run.toolVersion(), run.status(), run.verdict(), run.exitCode(), run.summary(), run.findingCount(),
-                run.candidateCount(), run.diagnosticCount(), current,
+                run.toolVersion(), run.status(), run.verdict(), run.exitCode(), summary, run.findingCount(),
+                run.candidateCount(), diagnosticCount, current,
                 current ? List.of() : List.of("SOURCE_REVISION_CHANGED"), run.requestArtifactId(),
                 run.resultJsonArtifactId(), run.resultHtmlArtifactId(), run.auditBundleArtifactId(), run.startedAt(),
                 run.finishedAt(), run.createdAt());

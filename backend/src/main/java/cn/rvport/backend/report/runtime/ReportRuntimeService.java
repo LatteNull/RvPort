@@ -139,7 +139,10 @@ public class ReportRuntimeService {
             failureStage = "RENDER_REPORT";
             context.progress(60, "生成报告内容");
             Map<String, Object> summary = summary(refs, snapshots);
-            String riskLevel = overallRisk(refs);
+            summary.put("memoryOrderAnalysis", Objects.requireNonNullElse(
+                    sourceResolver.memoryOrderAnalysisSummary(input.projectId(), input.sourceRevisionId()), Map.of()));
+            String riskLevel = overallRisk(snapshots.stream().filter(item -> !ReportDocumentOrganizer.pendingVerification(item))
+                    .map(ReportRepository.ReportInputSnapshot::ref).toList());
             Map<String, Object> jsonReport = jsonReport(report, input, summary, riskLevel, snapshots);
             byte[] jsonBytes = prettyJson(jsonReport);
             byte[] htmlBytes = htmlReport(report, summary, riskLevel, snapshots).getBytes(StandardCharsets.UTF_8);
@@ -232,13 +235,20 @@ public class ReportRuntimeService {
     }
 
     private Map<String, Object> summary(List<MigrationInputRefView> refs, List<ReportRepository.ReportInputSnapshot> snapshots) {
+        int confirmedCount = refs.size();
+        List<Map<String, Object>> pending = snapshots.stream().filter(ReportDocumentOrganizer::pendingVerification)
+                .map(ReportRepository.ReportInputSnapshot::snapshot).toList();
+        refs = snapshots.stream().filter(item -> !ReportDocumentOrganizer.pendingVerification(item))
+                .map(ReportRepository.ReportInputSnapshot::ref).toList();
         Map<String, Long> bySourceType = refs.stream()
                 .collect(java.util.stream.Collectors.groupingBy(ref -> ref.sourceType().name(), LinkedHashMap::new, java.util.stream.Collectors.counting()));
         Map<String, Long> byDetectedLevel = refs.stream()
                 .collect(java.util.stream.Collectors.groupingBy(ref -> defaultText(ref.detectedLevel(), "UNKNOWN"), LinkedHashMap::new, java.util.stream.Collectors.counting()));
         Map<String, Object> summary = new LinkedHashMap<>();
         summary.put("schemaVersion", SCHEMA_VERSION);
-        summary.put("confirmedInputCount", refs.size());
+        summary.put("confirmedInputCount", confirmedCount);
+        summary.put("pendingVerificationCount", pending.size());
+        summary.put("pendingVerification", pending);
         summary.put("highRiskIssueCount", highRiskIssueCount(refs));
         summary.put("estimatedWorkload", estimatedWorkload(refs));
         summary.put("sourceTypeCounts", bySourceType);
@@ -250,10 +260,12 @@ public class ReportRuntimeService {
         summary.put("priorityIssues", priorityIssues(refs));
         summary.put("dependencySubstitutionNotes", dependencySubstitutionNotes(refs));
         summary.put("organizationAvailable", true);
-        summary.put("codeFindingCount", snapshots.stream().filter(item -> item.projection() != null && item.projection().moduleKey() != null).count());
-        summary.put("codeModuleCount", snapshots.stream().map(ReportRepository.ReportInputSnapshot::projection)
+        List<ReportRepository.ReportInputSnapshot> formalSnapshots = snapshots.stream()
+                .filter(item -> !ReportDocumentOrganizer.pendingVerification(item)).toList();
+        summary.put("codeFindingCount", formalSnapshots.stream().filter(item -> item.projection() != null && item.projection().moduleKey() != null).count());
+        summary.put("codeModuleCount", formalSnapshots.stream().map(ReportRepository.ReportInputSnapshot::projection)
                 .filter(Objects::nonNull).map(ReportInputProjection::moduleKey).filter(Objects::nonNull).distinct().count());
-        summary.put("codeFileCount", snapshots.stream().map(ReportRepository.ReportInputSnapshot::projection)
+        summary.put("codeFileCount", formalSnapshots.stream().map(ReportRepository.ReportInputSnapshot::projection)
                 .filter(Objects::nonNull).map(ReportInputProjection::fileKey).filter(Objects::nonNull).distinct().count());
         summary.put("generatedAt", OffsetDateTime.now());
         return summary;
@@ -298,7 +310,9 @@ public class ReportRuntimeService {
         payload.put("sections", Map.of(
                 "majorRisks", summary.get("priorityIssues"),
                 "dependencySubstitutionNotes", summary.get("dependencySubstitutionNotes"),
-                "estimatedWorkload", summary.get("estimatedWorkload")
+                "estimatedWorkload", summary.get("estimatedWorkload"),
+                "pendingVerification", summary.get("pendingVerification"),
+                "analysisLimitations", summary.get("memoryOrderAnalysis")
         ));
         payload.put("organization", ReportDocumentOrganizer.organize(snapshots));
         payload.put("inputs", snapshots.stream().map(ReportRepository.ReportInputSnapshot::snapshot).toList());
@@ -321,7 +335,7 @@ public class ReportRuntimeService {
         html.append("<div class=\"header\">").append(LOGO_SVG).append("<div><h1>").append(escape(report.title())).append("</h1>")
                 .append("<div class=\"meta\">迁移评估报告</div></div></div>");
         html.append("<div class=\"cards\">")
-                .append(card("总体风险", riskLevel))
+                .append(card("已纳入正式结果的风险等级", riskLevel))
                 .append(card("确认输入", summary.get("confirmedInputCount")))
                 .append(card("高风险问题", summary.get("highRiskIssueCount")))
                 .append(card("预计工作量", workloadText(summary.get("estimatedWorkload"))))
@@ -329,6 +343,16 @@ public class ReportRuntimeService {
         html.append("<div class=\"section\"><h2>主要风险和优先处理项</h2>");
         appendIssueList(html, summary.get("priorityIssues"));
         html.append("</div>");
+        html.append("<section><h2>人工纳入的待核实项</h2><p>纳入报告只表示人工选择，不构成正式风险或安全结论。</p>");
+        appendIssueList(html, snapshots.stream().filter(ReportDocumentOrganizer::pendingVerification).map(item -> {
+            Map<String, Object> display = new LinkedHashMap<>(item.snapshot());
+            display.put("detectedLevel", "待核实");
+            return display;
+        }).toList());
+        Map<String, Object> memoryAnalysis = mapValue(summary.get("memoryOrderAnalysis"));
+        html.append("<h2>分析局限</h2><p>内存序分析状态：")
+                .append(escape(memoryAnalysis.getOrDefault("analysisStatus", "UNAVAILABLE")))
+                .append("。结论受已提供的证据和模型限制；零正式风险不代表迁移安全。</p></section>");
         html.append("<div class=\"section\"><h2>依赖替代性注意点</h2>");
         appendIssueList(html, summary.get("dependencySubstitutionNotes"));
         html.append("</div>");
@@ -341,7 +365,8 @@ public class ReportRuntimeService {
             html.append("<tr>")
                     .append("<td>").append(escape(snapshot.get("issueTitle"))).append("</td>")
                     .append("<td>").append(escape(snapshot.get("sourceType"))).append("</td>")
-                    .append("<td>").append(escape(snapshot.get("detectedLevel"))).append("</td>")
+                    .append("<td>").append(escape(ReportDocumentOrganizer.pendingVerification(item)
+                            ? "待核实" : snapshot.get("detectedLevel"))).append("</td>")
                     .append("<td>").append(escape(firstNonBlank(stringValue(sourceDetail.get("targetMatchStatus")), statusToken(stringValue(snapshot.get("detectedLevel")))))).append("</td>")
                     .append("<td>").append(escape(sourceDetail.get("dependencyType"))).append("</td>")
                     .append("<td>").append(escape(snapshot.get("locationLabel"))).append("</td>")

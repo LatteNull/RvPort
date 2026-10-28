@@ -11,7 +11,7 @@ from memory_order_analyzer.execution import OutputStore
 def record(identifier="tu", *, language="c", standard="c17", family="clang"):
     return {"record_id": identifier, "physical_tu_id": "a" * 64, "producer": {"family": family},
             "compile_record_digest": "b" * 64, "language": language, "standard": standard,
-            "target": {"triple": "x86_64-pc-linux-gnu", "data_layout": "e-p:64:64", "abi": {"name": "c"}},
+            "target": {"triple": "x86_64-pc-linux-gnu", "data_layout": "e-p:64:64", "abi": {"name": "c", "cxx_abi": "itanium"}},
             "bitcode": {"sha256": "c" * 64}}
 
 
@@ -88,10 +88,10 @@ def test_vendor_inference_and_profile_ambiguity(tmp_path, monkeypatch):
     assert adapters._infer_vendor(None) is None
     monkeypatch.setattr(adapters, "ROOT", tmp_path)
     (tmp_path / "profiles").mkdir()
-    monkeypatch.setattr(adapters, "_source_fact", lambda *args: None)
+    monkeypatch.setattr(adapters, "_source_fact", lambda *args: {"nodes": [{"qualified_name": "std::thread"}]})
     fake = lambda path, kind: {"status": "verified", "cxx_standard": "c++17",
                                "target": "x86_64-pc-linux-gnu", "data_layout": "e-p:64:64",
-                               "vendor": path.stem, "profile_id": path.stem}
+                               "vendor": "libstdc++", "cxx_abi": "itanium", "profile_id": path.stem}
     write(tmp_path / "profiles/a.json", {}); write(tmp_path / "profiles/b.json", {})
     cpp = scope([record(language="c++", standard="c++17")])
     with pytest.raises(AnalysisError, match="unique"):
@@ -143,12 +143,13 @@ def test_provenance_concurrent_publication_and_atomic_adapters(tmp_path, monkeyp
         write(output / "graphs/g.json", {"kind": "BoundedObjectProvenanceGraph"})
         return {"status": "complete"}
     monkeypatch.setattr(adapters, "analyze_object_provenance", provenance)
-    result = adapters.run_provenance(scope(), data, store, {}, {}, data / "provenance", "s", "i")
+    result = adapters.run_provenance(scope(), data, store, {"tu": {"artifact_key": "e" * 64}}, {}, data / "provenance", "s", "i")
     assert result["status"] == "complete" and (data / "provenance-graphs/scope.json").is_file()
 
     plan = {"schema_version": 1, "kind": "RootDrivenAnalysisPlan", "policy_id": "root"}
     overlay = {"schema_version": 1, "kind": "ThreadEntryRootOverlay", "policy_id": "entry"}
     write(data / "root-plans/scope.json", plan); write(data / "thread-entry-roots/scope.json", overlay)
+    write(data / "summaries/s.json", {"context_id": "ctx"})
     monkeypatch.setattr(adapters, "concurrent_access_document", lambda kind, **fields: {"kind": kind, **fields})
     monkeypatch.setattr(adapters, "build_concurrent_access_candidates", lambda *args: {"status": "complete"})
     assert adapters.run_concurrent(scope(), data, {}, {}, data / "concurrent")["status"] == "complete"
@@ -157,10 +158,14 @@ def test_provenance_concurrent_publication_and_atomic_adapters(tmp_path, monkeyp
         adapters.run_concurrent(scope(), data, {}, {}, data / "bad")
 
     request_dir = data / "requests/scope"; request_dir.mkdir(parents=True, exist_ok=True)
-    write(request_dir / "thread-0.json", {})
+    from memory_order_analyzer.thread_contracts import thread_document, expected_thread_protocol
+    p3 = write(request_dir / "thread-0.json", thread_document(
+        "ThreadAnalysisRequest", scope=str(data / "scopes/scope.json"),
+        roots=[{"artifact_key": "e" * 64, "function_id": "f", "arguments": []}],
+        model_id="posix-pthread-v1", budgets=expected_thread_protocol()["budgets"]))
     monkeypatch.setattr(adapters, "publication_document", lambda kind, **fields: {"kind": kind, **fields})
     monkeypatch.setattr(adapters, "detect_publication_risks", lambda *args: {"status": "complete"})
-    assert adapters.run_publication(scope(), data, data / "pub", "worker")["status"] == "complete"
+    assert adapters.run_publication(scope(), data, data / "pub", "worker", p3)["status"] == "complete"
     (request_dir / "thread-0.json").unlink()
     with pytest.raises(AnalysisError, match="requires"):
         adapters.run_publication(scope(), data, data / "pub2", "worker")
@@ -212,7 +217,7 @@ def test_profiles_selects_verified_vendor_and_rejects_mismatch(tmp_path, monkeyp
     def reader(path, kind):
         return {"status": "verified" if path.stem == "good" else "unverified",
                 "cxx_standard": "c++17", "target": "x86_64-pc-linux-gnu",
-                "data_layout": "e-p:64:64", "vendor": "libc++",
+                "data_layout": "e-p:64:64", "vendor": "libc++", "cxx_abi": "itanium",
                 "profile_id": path.stem, "kind": kind}
     selected = adapters._profiles(
         "profiles", reader, "Profile", scope([record(language="c++", standard="c++17")]), tmp_path)
@@ -273,7 +278,7 @@ def test_concurrent_and_atomic_include_source_binding_and_optional_graphs(tmp_pa
     write(data / "source-ir-binding/scope.json", {"semantic_digest": "2" * 64})
     monkeypatch.setattr(adapters, "read_source_document", lambda path, kind: json.loads(Path(path).read_text()))
     monkeypatch.setattr(adapters, "_r2_evidence", lambda *args: [
-        {"kind": "RootDrivenAnalysisPlan"}, {"kind": "ThreadEntryRootOverlay"}])
+        {"kind": "RootDrivenAnalysisPlan"}, {"kind": "ThreadEntryRootOverlay"}, {"kind": "EffectSummary"}])
     captured = {}
     monkeypatch.setattr(adapters, "concurrent_access_document",
                         lambda kind, **fields: captured.update(fields) or {"kind": kind, **fields})
@@ -297,4 +302,6 @@ def test_concurrent_and_atomic_include_source_binding_and_optional_graphs(tmp_pa
     monkeypatch.setattr(adapters, "model_fence_rmw_publication", lambda *args: {"status": "complete"})
     reports = adapters.run_atomic(atomic_scope, data, data / "atomic")
     assert len(reports) == 2
+    assert len(captured_atomic) == 1
     assert all(value["thread_graph"] and value["publication_graph"] for value in captured_atomic)
+    assert reports[0]["status"] == "partial"

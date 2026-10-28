@@ -30,7 +30,9 @@ def request(**updates):
 
 
 def test_protocol_request_round_trip_and_runtime_paths_do_not_change_digest(tmp_path):
-    assert expected_unified_protocol()["finding_schema_version"] == "2.0"
+    assert expected_unified_protocol()["finding_schema_version"] == "3.0"
+    assert expected_unified_protocol()["cache_namespace"] == "unified-project-analysis-results-v3"
+    assert len(diagnostic("test", "中" * 600, "x" * 600)["detail"]) == 512
     value = request()
     changed = request(bundle={"path": "elsewhere/manifest.json", "sha256": "a" * 64},
                       cache={"mode": "disabled", "resume": False},
@@ -156,3 +158,21 @@ def test_execution_and_report_reject_inconsistent_claims_and_failure_builder():
             validate_unified_document(invalid, invalid["kind"])
     cancelled = failed_report("cancel", "取消", "cancelled", cancelled=True)
     assert cancelled["status"] == "cancelled"
+
+
+def test_report_rejects_mixed_versions_and_wrong_result_collection():
+    from memory_order_analyzer.finding_projection import project_assessment
+    from memory_order_analyzer.finding_contracts import provenance
+    source = project_assessment("scope", {"id": "source"},
+        [provenance("Fact", "id", "org.rvport.memory-order-analyzer.test", 1, "a" * 64)], category="source")
+    report = failed_report("partial", "证据不完整", "Incomplete evidence")
+    report["source_candidates"] = [source]
+    report["finding_schema_version"] = "2.0"
+    report["semantic_digest"] = semantic_digest(report)
+    with pytest.raises(AnalysisError, match="version disagrees"):
+        validate_unified_document(report, report["kind"])
+    report["finding_schema_version"] = "3.0"
+    report["findings"], report["source_candidates"] = [source], []
+    report["semantic_digest"] = semantic_digest(report)
+    with pytest.raises(AnalysisError, match="wrong Finding verdict"):
+        validate_unified_document(report, report["kind"])

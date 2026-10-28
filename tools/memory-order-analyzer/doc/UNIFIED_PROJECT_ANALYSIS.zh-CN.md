@@ -83,3 +83,13 @@ deadline 与 cancel file 在 ingestion、Scope 和主要 stage 边界协作式�
 | 1 | `failed` | 请求无效、无法建立任何所选 Scope 或所有证据失败 |
 
 `complete`、exit 0、零 Finding 或 `discharged-within-bounded-model` 均不得翻译为全程序安全。
+
+## 结果修复策略（3.0 投影）
+
+统一入口分别规范化 AST 的 TU 身份、LLVM 的 artifact 身份和 R3 的 TU 身份；相同身份冲突会失败。P4 使用协调器选定并校验的显式 P3 请求，不通过文件名推断轮次。原子分析按语言标准隔离输入；compiler-default 与 legacy 保留未知语义边界，单组失败不删除其他组产物。
+
+对外源码候选仅包含显式原子、线程、同步形状或同 Scope/TU/profile 内直接关联的访问。普通读写和循环仍留在原始事实中。`data/candidate-admission/<scope>.json` 记录 raw/admitted/excluded 和逐项准入原因，位置仍由原始节点/关系恢复，保留全部 occurrences。
+
+诊断按 Scope、TU/record、code 和细节归并，references 保留受影响阶段。顶层 summary 的 diagnostics_total/frontier_total 保留截断前数量；超过 frontier_items 时记录 diagnostic-budget-exhausted，完整明细写入 diagnostics/full.json 并纳入制品索引。诊断缺失不能解释为零错误。
+
+新投影使用 finding_schema_version=3.0，统一请求协议仍独立演进；缓存命名空间为 unified-project-analysis-results-v3，projection stage 版本为 memory-order-finding-v3。历史 complete 缓存不会复用到新输出策略。PARTIAL 表示分析未完成，即使任务执行已经结束。

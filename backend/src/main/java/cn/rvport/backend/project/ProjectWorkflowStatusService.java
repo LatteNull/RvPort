@@ -209,6 +209,10 @@ public class ProjectWorkflowStatusService {
     }
 
     private WorkflowStageResponse fromSpecializedStatus(String stageId, SpecializedAnalysisStatus status, String prefix) {
+        if ("MEMORY_ORDER".equals(prefix) && status == SpecializedAnalysisStatus.PARTIAL) {
+            return new WorkflowStageResponse(stageId, WorkflowStageStatus.DONE, "MEMORY_ORDER_PARTIAL",
+                    "PARTIAL", false, "部分分析完成", "Analysis partially completed");
+        }
         return switch (status) {
             case PENDING, QUEUED, RUNNING -> running(stageId, prefix + "_RUNNING");
             case COMPLETE, COMPLETE_WITH_RISK, PARTIAL -> done(stageId, prefix + "_READY");

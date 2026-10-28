@@ -27,6 +27,23 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 class SpecializedAnalysisRepositoryTests {
+    @Test
+    void readsExplicitEvidenceModesAndHistoricalMissingBitcodeWithoutInventingCompleteness() {
+        var record = (cn.rvport.backend.jooq.tables.records.SpecializedAnalysisRunsRecord) runResult().data.get(0);
+        record.setAnalysisMode("AST_ONLY");
+        record.setBcStatus("MISSING");
+        record.setBcPlannedCount(3);
+        SpecializedAnalysisRunView explicit = org.springframework.test.util.ReflectionTestUtils.invokeMethod(repository, "run", record);
+        assertThat(explicit.analysisMode()).isEqualTo(SpecializedAnalysisMode.AST_ONLY);
+        assertThat(explicit.bcStatus()).isEqualTo("MISSING");
+        assertThat(explicit.bcPlannedCount()).isEqualTo(3);
+        record.setAnalysisMode(null);
+        record.setBcStatus(null);
+        record.setArtifactSetId(null);
+        SpecializedAnalysisRunView historical = org.springframework.test.util.ReflectionTestUtils.invokeMethod(repository, "run", record);
+        assertThat(historical.analysisMode()).isEqualTo(SpecializedAnalysisMode.AST_ONLY);
+        assertThat(historical.bcStatus()).isEqualTo("UNKNOWN");
+    }
 
     private final List<String> sql = new ArrayList<>();
     private final DSLContext records = DSL.using(SQLDialect.POSTGRES);

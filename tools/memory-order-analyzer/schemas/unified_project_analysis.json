@@ -99,7 +99,7 @@
       "type": "object", "additionalProperties": false,
       "required": ["schema_version", "kind", "analysis_version", "policy_id", "finding_schema_version", "project", "request_digest", "bundle_id", "status", "verdict", "exit_code", "scope_records", "summary", "findings", "source_candidates", "discharged_assessments", "unsupported", "frontier", "diagnostics", "artifacts", "semantic_digest"],
       "properties": {
-        "schema_version": {"const": 1}, "kind": {"const": "UnifiedMemoryOrderAnalysisReport"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "unified-project-analysis-v1"}, "finding_schema_version": {"const": "2.0"},
+        "schema_version": {"const": 1}, "kind": {"const": "UnifiedMemoryOrderAnalysisReport"}, "analysis_version": {"const": "0.1.0"}, "policy_id": {"const": "unified-project-analysis-v1"}, "finding_schema_version": {"enum": ["2.0", "3.0"]},
         "project": {"type": "object"}, "request_digest": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}, "bundle_id": {"type": ["string", "null"]}, "status": {"enum": ["complete", "partial", "failed", "cancelled"]}, "verdict": {"enum": ["risk", "inconclusive", "no-finding-within-supported-model", "failed"]}, "exit_code": {"enum": [0, 1, 2, 3]},
         "scope_records": {"type": "array", "items": {"$ref": "#/$defs/Reference"}}, "summary": {"type": "object"},
         "findings": {"type": "array", "items": {"type": "object"}}, "source_candidates": {"type": "array", "items": {"type": "object"}}, "discharged_assessments": {"type": "array", "items": {"type": "object"}},

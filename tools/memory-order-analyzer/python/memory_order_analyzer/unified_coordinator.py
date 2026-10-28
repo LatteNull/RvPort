@@ -34,7 +34,9 @@ from .unified_contracts import (
     unified_document, validate_unified_document,
 )
 from .unified_plan import build_plan, preflight_bundle
+from .result_policy import admit_candidates, adapt_diagnostics, merge_diagnostics, stage_applicability, evidence_complete, bound_diagnostics
 from .unified_adapters import (
+    canonical_members,
     run_atomic, run_concurrent, run_cpp_lifecycle, run_demand, run_provenance,
     run_publication, run_raii,
 )
@@ -112,13 +114,22 @@ def _tree_bytes(root):
     return sum(path.stat().st_size for path in Path(root).rglob("*") if path.is_file())
 
 
+def _published_paths(root):
+    """任务目录及原子写入临时文件尚未发布，不能参与并发索引或缓存。"""
+    root = Path(root)
+    return sorted(path for path in root.rglob("*")
+                  if not any(part.startswith(".task-") or (part.startswith(".") and part.endswith(".tmp"))
+                             for part in path.relative_to(root).parts)
+                  and path.is_file())
+
+
 def _artifact_index(root):
     """Index immutable published output without making the report self-referential."""
     root = Path(root)
     references = []
-    for path in sorted(item for item in root.rglob("*") if item.is_file()):
+    for path in _published_paths(root):
         relative = path.relative_to(root).as_posix()
-        if relative in {"report.json", "artifacts.json"} or relative.startswith(".task-"):
+        if relative in {"report.json", "artifacts.json"}:
             continue
         value = None
         if path.suffix == ".json":
@@ -225,7 +236,7 @@ class AnalysisCoordinator:
 
     def _scope_cache_key(self, request, bundle, scope, plan):
         stages = [item for item in plan["stages"] if item["scope_id"] == scope["target_id"]]
-        return identity({"namespace": "unified-project-analysis-v1", "request": request["semantic_digest"],
+        return identity({"namespace": "unified-project-analysis-results-v3", "request": request["semantic_digest"],
                          "source_projection_revision": 2,
                          "bundle": bundle["manifest"]["bundle_id"], "scope": scope["target_id"],
                          "records": [(item["record_id"], (item.get("bitcode") or {}).get("sha256"),
@@ -233,7 +244,7 @@ class AnalysisCoordinator:
                          "stages": [(item["stage"], item["version"], item["id"]) for item in stages]})
 
     def _scope_cache_file(self, key):
-        return self.cache_path / "unified-project-analysis-v1" / key[:2] / f"{key}.json"
+        return self.cache_path / "unified-project-analysis-results-v3" / key[:2] / f"{key}.json"
 
     def _load_scope_cache(self, request, bundle, scope, plan, data_root):
         if (self.cache_path is None or request["cache"]["mode"] == "disabled" or
@@ -246,7 +257,7 @@ class AnalysisCoordinator:
         try:
             envelope = _json_document(path)
             payload = envelope["payload"]
-            if (envelope.get("namespace") != "unified-project-analysis-v1" or
+            if (envelope.get("namespace") != "unified-project-analysis-results-v3" or
                     envelope.get("key") != key or envelope.get("status") != "complete" or
                     envelope.get("payload_digest") != identity(payload)):
                 raise AnalysisError("cache_corrupt", "Unified Scope cache envelope is invalid")
@@ -295,7 +306,7 @@ class AnalysisCoordinator:
             shutil.rmtree(temporary_artifacts)
         temporary_artifacts.mkdir(parents=True)
         artifacts = []
-        for source in sorted(item for item in Path(data_root).rglob("*") if item.is_file()):
+        for source in _published_paths(data_root):
             relative = source.relative_to(data_root).as_posix()
             destination = temporary_artifacts / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
@@ -304,7 +315,7 @@ class AnalysisCoordinator:
         if artifact_root.exists():
             shutil.rmtree(artifact_root)
         os.replace(temporary_artifacts, artifact_root)
-        envelope = {"namespace": "unified-project-analysis-v1", "key": key, "status": "complete",
+        envelope = {"namespace": "unified-project-analysis-results-v3", "key": key, "status": "complete",
                     "payload": deepcopy(payload), "payload_digest": identity(payload),
                     "artifacts": artifacts}
         temporary = path.with_name(f".{path.name}.{os.getpid()}.tmp")
@@ -402,9 +413,16 @@ class AnalysisCoordinator:
         aggregate_dir = data / "source" / scope["target_id"]
         request_dir = data / "requests" / scope["target_id"]
         request_dir.mkdir(parents=True, exist_ok=True)
-        source_paths = [str(source_inputs[item["record_id"]]["path"]) for item in selected]
+        source_entries = canonical_members(
+            [source_inputs[item["record_id"]]["request"] for item in selected],
+            lambda item: item["physical_tu_id"])
+        source_paths = []
+        for entry in source_entries:
+            path = request_dir / f"source-{entry['physical_tu_id']}.json"
+            path.write_text(canonical(entry) + "\n", encoding="utf-8")
+            source_paths.append(str(path))
         modules = []
-        ir_paths = []
+        ir_requests = []
         for record in selected:
             mapping = module_by_record.get(record["record_id"])
             if not mapping:
@@ -418,9 +436,13 @@ class AnalysisCoordinator:
                 bitcode={"path": str(data / f"artifacts/{mapping['artifact_key']}.bc"),
                          "sha256": record["bitcode"]["sha256"]},
                 budgets=expected_source_protocol()["budgets"])
-            ir_path = request_dir / f"ir-{record['record_id']}.json"
-            ir_path.write_text(canonical(ir_request) + "\n", encoding="utf-8")
+            ir_requests.append(ir_request)
+        ir_paths = []
+        for entry in canonical_members(ir_requests, lambda item: item["artifact_key"]):
+            ir_path = request_dir / f"ir-{entry['artifact_key']}.json"
+            ir_path.write_text(canonical(entry) + "\n", encoding="utf-8")
             ir_paths.append(str(ir_path))
+        modules = canonical_members(modules, lambda item: (item["kind"], item["id"]))
         aggregate = source_document(
             "AstAssistedAnalysisRequest", scope_id=scope["target_id"],
             source_requests=source_paths, ir_requests=ir_paths,
@@ -536,6 +558,7 @@ class AnalysisCoordinator:
         member_extra, global_extra = {}, []
         previous_roots = None
         final_root_dir = final_thread_dir = None
+        final_thread_request = None
         frontier = []
         for iteration in range(min(16, request["budgets"]["worklist_items"])):
             self._check_stop(request, "execution-root", scope["target_id"])
@@ -567,6 +590,7 @@ class AnalysisCoordinator:
             model_threads(thread_path, data, thread_dir, self.ir_worker,
                           source_dir if source_dir.is_dir() else None)
             final_thread_dir = thread_dir
+            final_thread_request = thread_path
             member_extra = {}
             for record in scope["records"]:
                 mapping = module_by_record.get(record["record_id"])
@@ -605,7 +629,7 @@ class AnalysisCoordinator:
                        f"thread-creation-sites/{scope['target_id']}.json")
             plan_path = next((final_root_dir / "plans").glob("*.json"))
             _copy_once(store, plan_path, f"root-plans/{scope['target_id']}.json")
-        return final_root_dir, final_thread_dir, member_extra, global_extra, frontier
+        return final_root_dir, final_thread_dir, member_extra, global_extra, frontier, final_thread_request
 
     def _run_thread_entry(self, request, scope, data, store, module_by_record, source_inputs,
                           source_facts, globals_, root_dir, member_extra):
@@ -678,6 +702,17 @@ class AnalysisCoordinator:
         ingest_frontier = [diagnostic("bc-unavailable", "外部 BC 不可用", "External bitcode is unavailable",
                                       stage="ingest", scope_id=scope_id, references=[item["record_id"]])
                            for item in ingest_missing]
+        scope_record_ids = {item["record_id"] for item in scope["records"]}
+        ingest_frontier.extend(adapt_diagnostics(
+            [item for item in ingestion.get("diagnostics", [])
+             if item.get("record_id") in scope_record_ids or
+             scope_record_ids.intersection(item.get("references", []))], stage="ingest", scope_id=scope_id))
+        for item in scope["records"]:
+            if module_by_record.get(item["record_id"], {}).get("facts_status") == "partial":
+                ingest_frontier.append(diagnostic("facts_partial", "LLVM 事实提取不完整",
+                    "LLVM fact extraction is partial", stage="ingest", scope_id=scope_id,
+                    references=[item["record_id"]]))
+        ingest_frontier = merge_diagnostics(ingest_frontier)
         stage_results.append(_stage_result(planned["ingest"], "partial" if ingest_frontier else "complete",
                                            frontier=ingest_frontier))
         frontier.extend(ingest_frontier)
@@ -694,9 +729,12 @@ class AnalysisCoordinator:
                                                stage="source-evidence", scope_id=scope_id)])
             else:
                 source_status = source_report["status"]
-                source_frontier = [diagnostic(item["code"], item["detail"], item["detail_en"],
-                                              stage="source-evidence", scope_id=scope_id)
-                                   for item in source_report["frontier"]]
+                source_frontier = adapt_diagnostics(source_report["frontier"], stage="source-evidence", scope_id=scope_id)
+                diagnostics.extend(adapt_diagnostics(source_report.get("diagnostics", []),
+                                                      stage="source-evidence", scope_id=scope_id))
+                if degraded_report:
+                    diagnostics.extend(adapt_diagnostics(degraded_report.get("diagnostics", []),
+                                                          stage="source-evidence", scope_id=scope_id))
         except (AnalysisError, OSError, ValueError) as exc:
             self._propagate_stop(exc)
             source_status = "failed"
@@ -710,21 +748,25 @@ class AnalysisCoordinator:
 
         tu_modes = [_mode(record, source_usable=record["record_id"] in source_facts,
                           ir_usable=record["record_id"] in module_by_record) for record in scope["records"]]
+        for mode in tu_modes:
+            if module_by_record.get(mode["record_id"], {}).get("facts_status") == "partial":
+                mode["status"] = "partial"
+                mode["missing_evidence"] = sorted(set(mode["missing_evidence"] + ["complete-ir-facts"]))
         availability_frontier = []
-        if any(item["mode"] != "ast-ir" for item in tu_modes):
+        if any(item["status"] != "complete" for item in tu_modes):
             availability_frontier.append(diagnostic("tu-evidence-partial", "部分翻译单元证据不完整",
                                                     "Some translation units have incomplete evidence",
                                                     stage="evidence-availability", scope_id=scope_id,
-                                                    references=[item["record_id"] for item in tu_modes if item["mode"] != "ast-ir"]))
+                                                    references=[item["record_id"] for item in tu_modes if item["status"] != "complete"]))
         stage_results.append(_stage_result(planned["evidence-availability"],
                                            "partial" if availability_frontier else "complete",
                                            frontier=availability_frontier))
         frontier.extend(availability_frontier)
 
-        root_dir = thread_dir = None
+        root_dir = thread_dir = thread_request_path = None
         member_extra, global_extra = {}, []
         try:
-            root_dir, thread_dir, member_extra, global_extra, root_frontier = self._run_roots_and_threads(
+            root_dir, thread_dir, member_extra, global_extra, root_frontier, thread_request_path = self._run_roots_and_threads(
                 request, scope, data, store, module_by_record, source_inputs, source_facts, globals_)
             root_status = "partial" if root_frontier or root_dir is None else "complete"
         except (AnalysisError, OSError, ValueError) as exc:
@@ -754,7 +796,7 @@ class AnalysisCoordinator:
 
         def invoke(name, function, *args):
             stage = planned[name]
-            if stage["status"] == "skipped-not-applicable":
+            if stage["status"] == "skipped-not-applicable" or stage_applicability(name, scope["records"], source_facts) is False:
                 stage_results.append(_stage_result(stage, "skipped-not-applicable", cache="disabled"))
                 return None
             self._check_stop(request, name, scope_id)
@@ -767,8 +809,12 @@ class AnalysisCoordinator:
                     status = "skipped-not-applicable"
                 else:
                     status = value.get("status") or value.get("thread_modeling") or "partial"
-                status = "complete" if status in {"complete", "resolved"} else "failed" if status == "failed" else "partial"
-                stage_frontier = [] if status == "complete" else [diagnostic(
+                status = status if status == "skipped-not-applicable" else "complete" if status in {"complete", "resolved"} else "failed" if status == "failed" else "partial"
+                reports = value if isinstance(value, list) else [value] if value else []
+                details = adapt_diagnostics([item for report in reports for item in
+                    [*report.get("diagnostics", []), *report.get("frontier", [])]], stage=name, scope_id=scope_id)
+                diagnostics.extend(details)
+                stage_frontier = [] if status in {"complete", "skipped-not-applicable"} else details or [diagnostic(
                     "adapter-result-incomplete", "适配器结果不完整", "Adapter result is incomplete",
                     stage=name, scope_id=scope_id)]
                 stage_results.append(_stage_result(stage, status, frontier=stage_frontier))
@@ -790,7 +836,11 @@ class AnalysisCoordinator:
         invoke("demand-analysis", run_demand, scope, data, store, module_by_record,
                source_inputs, demand_dir, self.ir_worker)
 
-        effect_complete = bool(thread_dir and list((thread_dir / "effects/summaries").glob("*.json")))
+        effect_paths = sorted((thread_dir / "effects/summaries").glob("*.json")) if thread_dir else []
+        effect_documents = [_json_document(path) for path in effect_paths]
+        effect_complete = evidence_complete(effect_documents)
+        diagnostics.extend(adapt_diagnostics([item for value in effect_documents for item in
+            [*value.get("diagnostics", []), *value.get("frontier", [])]], stage="effect-summary", scope_id=scope_id))
         effect_item = ([] if effect_complete else [diagnostic(
             "effect-summary-unavailable", "效果摘要不可用", "Effect summaries are unavailable",
             stage="effect-summary", scope_id=scope_id)])
@@ -798,7 +848,12 @@ class AnalysisCoordinator:
                                            "complete" if effect_complete else "unknown",
                                            frontier=effect_item, cache="disabled" if not effect_complete else "miss"))
         frontier.extend(effect_item)
-        graph_complete = (data / f"graphs/{scope_id}.json").is_file()
+        graph_path = data / f"graphs/{scope_id}.json"
+        graph_document = _json_document(graph_path) if graph_path.is_file() else None
+        graph_complete = evidence_complete([graph_document] if graph_document is not None else [])
+        if graph_document:
+            diagnostics.extend(adapt_diagnostics([*graph_document.get("diagnostics", []),
+                *graph_document.get("frontier", [])], stage="thread-context", scope_id=scope_id))
         graph_item = ([] if graph_complete else [diagnostic(
             "thread-context-unavailable", "线程上下文图不可用", "Thread-context graph is unavailable",
             stage="thread-context", scope_id=scope_id)])
@@ -818,7 +873,7 @@ class AnalysisCoordinator:
                                    module_by_record, source_inputs,
                                    data / "analysis" / scope_id / "concurrent")
         publication_report = invoke("publication-risk", run_publication, scope, data,
-                                    data / "analysis" / scope_id / "publication", self.ir_worker)
+                                    data / "analysis" / scope_id / "publication", self.ir_worker, thread_request_path)
         atomic_reports = invoke("advanced-atomic", run_atomic, scope, data,
                                 data / "analysis" / scope_id / "advanced-atomic")
 
@@ -829,9 +884,14 @@ class AnalysisCoordinator:
             for record in scope["records"]]}
         if degraded_report:
             candidate_dir = data / "degraded" / scope_id / "source-candidates"
+            raw_candidates = []
             for reference in degraded_report.get("source_candidates", []):
                 candidate_path = candidate_dir / f"{reference['id']}.json"
                 candidate = _json_document(candidate_path) if candidate_path.is_file() else reference
+                raw_candidates.append(candidate)
+            accepted, admission = admit_candidates(raw_candidates)
+            write_json(store, admission, f"candidate-admission/{scope_id}.json")
+            for candidate in accepted:
                 prov = [provenance("DegradedSourceCandidate", candidate["id"],
                                    "org.rvport.memory-order-analyzer.degraded-source", 1,
                                    candidate.get("semantic_digest") or identity(candidate))]
@@ -869,6 +929,7 @@ class AnalysisCoordinator:
                 "projection-evidence-incomplete", "上游结论因证据层缺失而降级",
                 "An upstream assessment was downgraded because an evidence layer is missing",
                 stage="projection", scope_id=scope_id, references=[projected["id"]]))
+            candidates.append(projected)
 
         if publication_report:
             prov = [provenance("PublicationRiskReport", scope_id,
@@ -898,9 +959,9 @@ class AnalysisCoordinator:
                                                               category="formal", layers=atomic_layers, atomic=True),
                                  "risk", formal)
             overlay_path = data / f"analysis/{scope_id}/advanced-atomic"
-            standard_dirs = sorted(path for path in overlay_path.iterdir()) if overlay_path.is_dir() else []
-            if index < len(standard_dirs):
-                overlay_file = standard_dirs[index] / "advanced-publication-protocol-overlay.json"
+            standard = atomic_report.get("language_standard")
+            if standard:
+                overlay_file = overlay_path / standard.replace("+", "p") / "advanced-publication-protocol-overlay.json"
                 if overlay_file.is_file():
                     for assessment in _json_document(overlay_file).get("protocols", []):
                         if assessment.get("assessment") == "discharged-within-bounded-model":
@@ -926,7 +987,7 @@ class AnalysisCoordinator:
             counts={"translation_units": len(tu_modes), "complete_tus": sum(item["status"] == "complete" for item in tu_modes),
                     "formal_findings": len(formal), "source_candidates": len(candidates),
                     "discharged_assessments": len(bounded),
-                    "frontier": len(frontier)}, diagnostics=diagnostics,
+                    "frontier": len(frontier)}, diagnostics=merge_diagnostics([*diagnostics, *frontier]),
             frontier=sorted(frontier, key=lambda item: (item["stage"] or "", item["code"])))
         return record, formal, candidates, bounded
 
@@ -1062,8 +1123,19 @@ class AnalysisCoordinator:
                                            "The unified output budget was exhausted", stage="coordinator",
                                            references=[item.relative_to(workspace).as_posix() for item in oversized]))
             frontier = sorted(frontier, key=lambda item: (item["scope_id"] or "", item["stage"] or "", item["code"]))
-            unsupported = [item for item in frontier if "unsupported" in item["code"]]
+            all_diagnostics = merge_diagnostics([*run_diagnostics, *frontier,
+                *[item for value in scope_values for item in value["diagnostics"]]])
             stopped_codes = {item["code"] for item in frontier}
+            full_frontier_count = len(frontier)
+            diagnostic_limit = request["budgets"]["frontier_items"]
+            audit_path = "diagnostics/full.json"
+            if max(len(all_diagnostics), len(frontier)) > diagnostic_limit:
+                write_json(store, {"diagnostics": all_diagnostics, "frontier": frontier}, audit_path)
+            frontier = bound_diagnostics(frontier, diagnostic_limit, audit_path)
+            visible_diagnostics = bound_diagnostics(all_diagnostics, diagnostic_limit, audit_path)
+            if len(all_diagnostics) > diagnostic_limit and len(frontier) < diagnostic_limit:
+                frontier.append(visible_diagnostics[-1])
+            unsupported = [item for item in frontier if "unsupported" in item["code"]]
             if "analysis_cancelled" in stopped_codes or self._cancelled(request):
                 status = "cancelled"
             elif "analysis_deadline" in stopped_codes:
@@ -1096,11 +1168,12 @@ class AnalysisCoordinator:
                          "translation_units": sum(len(value["tu_modes"]) for value in scope_values),
                          "formal_findings": len(findings), "source_candidates": len(candidates),
                          "discharged_assessments": len(discharged), "unsupported": len(unsupported),
+                         "diagnostics_total": len(all_diagnostics), "frontier_total": full_frontier_count,
                          "frontier": len(frontier), "abstention": sum(value["status"] != "complete" for value in scope_values),
                          "snapshots": len(snapshots)},
                 findings=findings, source_candidates=candidates, discharged_assessments=discharged,
                 unsupported=unsupported, frontier=frontier,
-                diagnostics=sorted(run_diagnostics, key=lambda item: item["code"]),
+                diagnostics=visible_diagnostics,
                 artifacts=artifact_entries)
             write_json(store, report, "report.json")
         return report
