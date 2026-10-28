@@ -35,6 +35,8 @@ public class MigrationInputSourceResolver {
     private final DependencyAnalysisRepository dependencyAnalysisRepository;
     private final KbAiExtensionRepository kbAiExtensionRepository;
     private final SpecializedAnalysisRepository specializedAnalysisRepository;
+    @Autowired
+    private cn.rvport.backend.kb.KbScanContextService scanContextService;
 
     @Autowired
     public MigrationInputSourceResolver(
@@ -67,7 +69,8 @@ public class MigrationInputSourceResolver {
 
     List<UUID> latestSourceRefIds(UUID projectId, UUID sourceRevisionId, MigrationInputSourceType sourceType) {
         return switch (sourceType) {
-            case KB_FINDING -> kbScanRepository.findLatestSucceededRunBySourceRevision(projectId, sourceRevisionId)
+            case KB_FINDING -> scanContextService.currentRun(projectId, sourceRevisionId)
+                    .filter(run -> run.status() == TaskStatus.SUCCEEDED)
                     .map(KbScanView::id)
                     .map(kbScanRepository::listFindingIds)
                     .orElseGet(List::of);

@@ -278,6 +278,32 @@ class StageReadinessServiceTests {
     }
 
     @Test
+    void reportKbPrerequisiteRejectsStaleHistoryAndCurrentFailure() {
+        UUID project = UUID.randomUUID();
+        UUID source = UUID.randomUUID();
+        when(contextService.snapshot(project)).thenReturn(new ProjectContextSnapshot(source, 7L));
+        when(runtimeEnvironmentService.summary(project)).thenReturn(runtime(project, 7L));
+        var kb = org.mockito.Mockito.mock(cn.rvport.backend.kb.KbScanContextService.class);
+        var service = service();
+        ReflectionTestUtils.setField(service, "scanContextService", kb);
+        for (TaskStatus status : TaskStatus.values()) {
+            when(kb.currentRun(project, source)).thenReturn(Optional.of(cn.rvport.backend.kb.KbContextFixtures.scan(
+                    project, source, status, cn.rvport.backend.kb.KbContextFixtures.CONTEXT)));
+            var response = service.readiness(project, StageIds.REPORT, UUID.randomUUID(), false);
+            assertThat(response.prerequisites()).filteredOn(item -> item.key().equals(StagePrerequisiteKeys.KB_SCAN))
+                    .singleElement().satisfies(item -> assertThat(item.status()).isEqualTo(switch (status) {
+                        case SUCCEEDED -> StagePrerequisiteStatus.SATISFIED;
+                        case PENDING, QUEUED, RUNNING -> StagePrerequisiteStatus.RUNNING;
+                        default -> StagePrerequisiteStatus.FAILED;
+                    }));
+        }
+        when(kb.currentRun(project, source)).thenReturn(Optional.empty());
+        assertThat(service.readiness(project, StageIds.REPORT, UUID.randomUUID(), false).prerequisites())
+                .filteredOn(item -> item.key().equals(StagePrerequisiteKeys.KB_SCAN)).singleElement()
+                .satisfies(item -> assertThat(item.status()).isEqualTo(StagePrerequisiteStatus.MISSING));
+    }
+
+    @Test
     void reportReadinessTreatsZeroIncludedFindingsAsSatisfied() {
         UUID projectId = UUID.randomUUID();
         UUID sourceRevisionId = UUID.randomUUID();
@@ -634,8 +660,23 @@ class StageReadinessServiceTests {
                 });
     }
 
+    private StageReadinessService withKbContext(StageReadinessService service) {
+        var runtimes = org.mockito.Mockito.mock(cn.rvport.backend.project.runtime.ProjectRuntimeEnvironmentRepository.class);
+        org.mockito.Mockito.lenient().when(runtimes.find(org.mockito.ArgumentMatchers.any())).thenAnswer(call -> {
+            UUID project = call.getArgument(0);
+            var runtime = runtimeEnvironmentService.summary(project);
+            return runtime == null ? Optional.empty() : Optional.of(new ProjectRuntimeEnvironmentView(project,
+                    runtime.sourceEnvironment() == null ? null : runtime.sourceEnvironment().id(),
+                    runtime.targetEnvironment() == null ? null : runtime.targetEnvironment().id(),
+                    runtime.version(), null, null, null));
+        });
+        ReflectionTestUtils.setField(service, "scanContextService",
+                new cn.rvport.backend.kb.KbScanContextService(sourceRepository, runtimes, buildValidationRepository, kbScanRepository));
+        return service;
+    }
+
     private StageReadinessService service() {
-        return new StageReadinessService(
+        return withKbContext(new StageReadinessService(
                 projectAccessService,
                 contextService,
                 sourceRepository,
@@ -648,11 +689,11 @@ class StageReadinessServiceTests {
                 migrationInputService,
                 archiveCandidateService,
                 automatedTestRepository
-        );
+        ));
     }
 
     private StageReadinessService serviceWithSpecializedHealth() {
-        return new StageReadinessService(
+        return withKbContext(new StageReadinessService(
                 projectAccessService,
                 contextService,
                 sourceRepository,
@@ -667,16 +708,16 @@ class StageReadinessServiceTests {
                 automatedTestRepository,
                 specializedAnalysisRepository,
                 specializedToolHealthService
-        );
+        ));
     }
 
     private StageReadinessService serviceWithBitcodeResolver() {
-        return new StageReadinessService(
+        return withKbContext(new StageReadinessService(
                 projectAccessService, contextService, sourceRepository, runtimeEnvironmentService,
                 sourceDeployRepository, buildValidationRepository, kbScanRepository,
                 dependencyAnalysisRepository, reportRepository, migrationInputService,
                 archiveCandidateService, automatedTestRepository, specializedAnalysisRepository,
-                specializedToolHealthService, specializedBitcodeCapabilityResolver);
+                specializedToolHealthService, specializedBitcodeCapabilityResolver));
     }
 
     private ProjectRuntimeEnvironmentResponse runtime(UUID projectId, long version) {

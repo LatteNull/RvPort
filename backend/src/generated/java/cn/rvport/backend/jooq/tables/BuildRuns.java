@@ -9,6 +9,7 @@ import cn.rvport.backend.jooq.Keys;
 import cn.rvport.backend.jooq.Public;
 import cn.rvport.backend.jooq.tables.DependencyAnalysisRuns.DependencyAnalysisRunsPath;
 import cn.rvport.backend.jooq.tables.Environments.EnvironmentsPath;
+import cn.rvport.backend.jooq.tables.KbScanRuns.KbScanRunsPath;
 import cn.rvport.backend.jooq.tables.Projects.ProjectsPath;
 import cn.rvport.backend.jooq.tables.SourceDeployRuns.SourceDeployRunsPath;
 import cn.rvport.backend.jooq.tables.SourceRevisions.SourceRevisionsPath;
@@ -399,6 +400,19 @@ public class BuildRuns extends TableImpl<BuildRunsRecord> {
             _dependencyAnalysisRuns = new DependencyAnalysisRunsPath(this, null, Keys.DEPENDENCY_ANALYSIS_RUNS__DEPENDENCY_ANALYSIS_RUNS_SOURCE_BUILD_RUN_ID_FKEY.getInverseKey());
 
         return _dependencyAnalysisRuns;
+    }
+
+    private transient KbScanRunsPath _kbScanRuns;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.kb_scan_runs</code> table
+     */
+    public KbScanRunsPath kbScanRuns() {
+        if (_kbScanRuns == null)
+            _kbScanRuns = new KbScanRunsPath(this, null, Keys.KB_SCAN_RUNS__KB_SCAN_RUNS_BUILD_RUN_ID_FKEY.getInverseKey());
+
+        return _kbScanRuns;
     }
 
     private transient SpecializedAnalysisRunsPath _specializedAnalysisRuns;

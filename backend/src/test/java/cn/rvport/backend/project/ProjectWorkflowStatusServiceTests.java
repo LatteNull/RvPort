@@ -70,12 +70,52 @@ class ProjectWorkflowStatusServiceTests {
 
     @Mock private TaskRepository taskRepository;
     @Mock private KbScanRepository kbScanRepository;
+    @Mock private cn.rvport.backend.kb.KbScanContextService scanContextService;
     @Mock private BuildValidationRepository buildValidationRepository;
     @Mock private DependencyAnalysisRepository dependencyAnalysisRepository;
     @Mock private ReportRepository reportRepository;
     @Mock private AutomatedTestRepository automatedTestRepository;
     @Mock private OptimizationCycleRepository optimizationCycleRepository;
     @Mock private ProjectArchiveRepository archiveRepository;
+
+    @Test
+    void kbMapsOnlyCurrentRunsAndKeepsHistoricalSuccessPending() {
+        UUID project = UUID.randomUUID();
+        UUID source = UUID.randomUUID();
+        var context = new ProjectContextSnapshot(source, 7L);
+        for (TaskStatus status : TaskStatus.values()) {
+            when(scanContextService.currentRun(project, source)).thenReturn(Optional.of(
+                    cn.rvport.backend.kb.KbContextFixtures.scan(project, source, status, cn.rvport.backend.kb.KbContextFixtures.CONTEXT)));
+            WorkflowStageResponse result = ReflectionTestUtils.invokeMethod(service(), "kb", project, context);
+            assertThat(result.status()).isEqualTo(switch (status) {
+                case SUCCEEDED -> WorkflowStageStatus.DONE;
+                case PENDING, QUEUED, RUNNING -> WorkflowStageStatus.RUNNING;
+                default -> WorkflowStageStatus.BLOCKED;
+            });
+        }
+        when(scanContextService.currentRun(project, source)).thenReturn(Optional.empty());
+        WorkflowStageResponse missing = ReflectionTestUtils.invokeMethod(service(), "kb", project, context);
+        assertThat(missing.reasonCode()).isEqualTo("KB_SCAN_MISSING");
+        when(kbScanRepository.findLatestHistoricalRun(project)).thenReturn(Optional.of(
+                cn.rvport.backend.kb.KbContextFixtures.scan(project, source, TaskStatus.SUCCEEDED, null)));
+        for (var snapshot : List.of(context, new ProjectContextSnapshot(null, 7L))) {
+            WorkflowStageResponse stale = ReflectionTestUtils.invokeMethod(service(), "kb", project, snapshot);
+            assertThat(stale.status()).isEqualTo(WorkflowStageStatus.PENDING);
+            assertThat(stale.reasonCode()).isEqualTo("KB_SCAN_STALE");
+        }
+    }
+
+    @Test
+    void readyEnvironmentAndSourceRecommendX86BeforeKb() {
+        UUID project = UUID.randomUUID();
+        UUID source = UUID.randomUUID();
+        var revision = new SourceRevisionResponse(source, project, SourceRevisionType.GIT, "main", null, null, null, null, null, true, null, null);
+        var response = service().aggregate(project, revision,
+                runtime(project, environment(EnvironmentRole.SOURCE_X86, 7L), environment(EnvironmentRole.TARGET_RISCV, 7L), true),
+                new ProjectContextSnapshot(source, 7L));
+        assertThat(response.recommendedStageId()).isEqualTo("x86-build");
+        assertStage(response, "kb", WorkflowStageStatus.PENDING, "KB_SCAN_MISSING");
+    }
 
     @Test
     void returnsStableFullWorkflowForEmptyProject() {
@@ -85,7 +125,7 @@ class ProjectWorkflowStatusServiceTests {
         var response = service().aggregate(projectId, null, runtime, new ProjectContextSnapshot(null, 1L));
 
         assertThat(response.stages()).extracting(WorkflowStageResponse::id).containsExactly(
-                "project", "env", "assets", "kb", "x86-build", "rv-dependency-analysis",
+                "project", "env", "assets", "x86-build", "kb", "rv-dependency-analysis",
                 "floating-point-analysis", "memory-order-analysis",
                 "report", "manual", "build", "test", "optimize", "archive");
         assertThat(response.stages().getFirst().status()).isEqualTo(WorkflowStageStatus.DONE);
@@ -304,7 +344,7 @@ class ProjectWorkflowStatusServiceTests {
     }
 
     private ProjectWorkflowStatusService service() {
-        return new ProjectWorkflowStatusService(
+        var service = new ProjectWorkflowStatusService(
                 taskRepository,
                 kbScanRepository,
                 buildValidationRepository,
@@ -313,6 +353,8 @@ class ProjectWorkflowStatusServiceTests {
                 automatedTestRepository,
                 optimizationCycleRepository,
                 archiveRepository);
+        ReflectionTestUtils.setField(service, "scanContextService", scanContextService);
+        return service;
     }
 
     private ProjectRuntimeEnvironmentResponse runtime(

@@ -52,10 +52,16 @@ public class KbScanRepository {
     }
 
     public UUID createRun(KbScanInput input, UUID taskId) {
+        if (input.executionContext() == null || !input.executionContext().complete()) {
+            throw new IllegalArgumentException("KB scan requires a complete execution context");
+        }
         return dsl.insertInto(KB_SCAN_RUNS)
                 .set(KB_SCAN_RUNS.PROJECT_ID, input.projectId())
                 .set(KB_SCAN_RUNS.TASK_ID, taskId)
                 .set(KB_SCAN_RUNS.SOURCE_REVISION_ID, input.sourceRevisionId())
+                .set(KB_SCAN_RUNS.SOURCE_ENVIRONMENT_ID, input.executionContext().sourceEnvironmentId())
+                .set(KB_SCAN_RUNS.RUNTIME_ENVIRONMENT_VERSION, input.executionContext().runtimeEnvironmentVersion())
+                .set(KB_SCAN_RUNS.BUILD_RUN_ID, input.executionContext().buildRunId())
                 .set(KB_SCAN_RUNS.KB_VERSION, blankToNull(input.ruleVersion()))
                 .set(KB_SCAN_RUNS.SCOPE, toJsonb(input.scanScope()))
                 .set(KB_SCAN_RUNS.STATUS, TaskStatus.PENDING.name())
@@ -68,6 +74,33 @@ public class KbScanRepository {
                 .where(KB_SCAN_RUNS.ID.eq(id))
                 .fetchOptional()
                 .map(this::mapRun);
+    }
+
+    public void lockContext(UUID projectId) {
+        dsl.execute("select pg_advisory_xact_lock(hashtextextended('rvport-kb-context:' || cast(? as text), 0))", projectId);
+    }
+
+    public Optional<KbScanView> findLatestRunByContext(UUID projectId, UUID sourceRevisionId, KbExecutionContext context) {
+        return dsl.select(KB_SCAN_RUNS.fields()).from(KB_SCAN_RUNS)
+                .leftJoin(TASKS).on(TASKS.ID.eq(KB_SCAN_RUNS.TASK_ID))
+                .where(KB_SCAN_RUNS.PROJECT_ID.eq(projectId).and(KB_SCAN_RUNS.SOURCE_REVISION_ID.eq(sourceRevisionId))
+                        .and(contextFilter(context)))
+                .orderBy(activeFirst(KB_SCAN_RUNS.STATUS), TASKS.CREATED_AT.desc().nullsLast(), KB_SCAN_RUNS.ID.desc())
+                .limit(1).fetchOptional().map(record -> mapRun(record.into(KB_SCAN_RUNS)));
+    }
+
+    public Optional<KbScanView> findLatestHistoricalRun(UUID projectId) {
+        return dsl.select(KB_SCAN_RUNS.fields()).from(KB_SCAN_RUNS)
+                .leftJoin(TASKS).on(TASKS.ID.eq(KB_SCAN_RUNS.TASK_ID))
+                .where(KB_SCAN_RUNS.PROJECT_ID.eq(projectId))
+                .orderBy(TASKS.CREATED_AT.desc().nullsLast(), KB_SCAN_RUNS.ID.desc())
+                .limit(1).fetchOptional().map(record -> mapRun(record.into(KB_SCAN_RUNS)));
+    }
+
+    private Condition contextFilter(KbExecutionContext context) {
+        return KB_SCAN_RUNS.SOURCE_ENVIRONMENT_ID.eq(context.sourceEnvironmentId())
+                .and(KB_SCAN_RUNS.RUNTIME_ENVIRONMENT_VERSION.eq(context.runtimeEnvironmentVersion()))
+                .and(KB_SCAN_RUNS.BUILD_RUN_ID.eq(context.buildRunId()));
     }
 
     public Optional<KbScanView> findByTaskId(UUID taskId) {
@@ -318,6 +351,7 @@ public class KbScanRepository {
 
     private Condition runFilter(UUID projectId, KbScanListRequest request) {
         Condition condition = KB_SCAN_RUNS.PROJECT_ID.eq(projectId);
+        if (request.executionContext() != null) condition = condition.and(contextFilter(request.executionContext()));
         if (request.status() != null) {
             condition = condition.and(KB_SCAN_RUNS.STATUS.eq(request.status().name()));
         }

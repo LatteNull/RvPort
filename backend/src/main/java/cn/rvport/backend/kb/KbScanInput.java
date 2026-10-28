@@ -12,6 +12,11 @@ public record KbScanInput(
         String language,
         String targetArch,
         Map<String, Object> scanScope,
-        List<String> excludePaths
+        List<String> excludePaths,
+        KbExecutionContext executionContext
 ) {
+    public KbScanInput(UUID projectId, UUID scanRunId, UUID sourceRevisionId, String ruleVersion,
+            String language, String targetArch, Map<String, Object> scanScope, List<String> excludePaths) {
+        this(projectId, scanRunId, sourceRevisionId, ruleVersion, language, targetArch, scanScope, excludePaths, null);
+    }
 }

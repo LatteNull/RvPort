@@ -57,6 +57,8 @@ public class ProjectWorkflowStatusService {
     private final OptimizationCycleRepository optimizationCycleRepository;
     private final ProjectArchiveRepository archiveRepository;
     private final SpecializedAnalysisRepository specializedAnalysisRepository;
+    @Autowired
+    private cn.rvport.backend.kb.KbScanContextService scanContextService;
 
     @Autowired
     public ProjectWorkflowStatusService(
@@ -105,8 +107,8 @@ public class ProjectWorkflowStatusService {
         stages.add(done(PROJECT, "PROJECT_READY"));
         stages.add(environment(projectId, runtime));
         stages.add(assets(projectId, activeSource));
-        stages.add(kb(projectId, context));
         stages.add(x86Build(projectId, runtime, context));
+        stages.add(kb(projectId, context));
         stages.add(dependency(projectId, context));
         stages.add(specialized(projectId, context, SpecializedAnalyzerType.FLOATING_POINT, FLOATING_POINT));
         stages.add(specialized(projectId, context, SpecializedAnalyzerType.MEMORY_ORDER, MEMORY_ORDER));
@@ -162,11 +164,13 @@ public class ProjectWorkflowStatusService {
 
     private WorkflowStageResponse kb(UUID projectId, ProjectContextSnapshot context) {
         if (context.sourceRevisionId() == null) {
-            return pending(KB, "ACTIVE_SOURCE_MISSING");
+            return pending(KB, kbScanRepository.findLatestHistoricalRun(projectId).isPresent()
+                    ? "KB_SCAN_STALE" : "ACTIVE_SOURCE_MISSING");
         }
-        return kbScanRepository.findLatestRunBySourceRevision(projectId, context.sourceRevisionId())
+        return scanContextService.currentRun(projectId, context.sourceRevisionId())
                 .map(run -> fromStatus(KB, run.status(), "KB_SCAN"))
-                .orElseGet(() -> pending(KB, "KB_SCAN_MISSING"));
+                .orElseGet(() -> pending(KB, kbScanRepository.findLatestHistoricalRun(projectId).isPresent()
+                        ? "KB_SCAN_STALE" : "KB_SCAN_MISSING"));
     }
 
     private WorkflowStageResponse x86Build(

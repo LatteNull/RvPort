@@ -152,3 +152,6 @@ databaseChangeLog:
   - include:
       file: changes/0127-specialized-analysis-evidence-mode.sql
       relativeToChangelogFile: true
+  - include:
+      file: changes/0128-kb-scan-execution-context.sql
+      relativeToChangelogFile: true

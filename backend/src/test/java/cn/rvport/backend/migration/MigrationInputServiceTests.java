@@ -236,11 +236,30 @@ class MigrationInputServiceTests {
         when(projectAccessService.requireSourceRevisionAccess(projectId, sourceRevisionId, actorId, false))
                 .thenReturn(revision(projectId, sourceRevisionId));
         when(migrationInputRepository.listAll(projectId, sourceRevisionId)).thenReturn(List.of(confirmed));
+        when(sourceResolver.latestSourceRefIds(projectId, sourceRevisionId, MigrationInputSourceType.DEPENDENCY_RESULT)).thenReturn(List.of());
+        when(sourceResolver.latestSourceRefIds(projectId, sourceRevisionId, MigrationInputSourceType.KB_FINDING))
+                .thenReturn(List.of(confirmed.sourceRefId()));
 
         List<MigrationInputRefView> refs = service().confirmedRefs(projectId, sourceRevisionId, actorId, false);
 
         assertThat(refs).containsExactly(confirmed);
         verify(migrationInputRepository).listAll(projectId, sourceRevisionId);
+    }
+
+    @Test
+    void newReportInputsExcludeStaleConfirmedKbWithoutDeletingHistory() {
+        UUID project = UUID.randomUUID();
+        UUID source = UUID.randomUUID();
+        var stale = ref(project, source, UUID.randomUUID(), "historical", MigrationInputStatus.CONFIRMED);
+        var current = ref(project, source, UUID.randomUUID(), "current", MigrationInputStatus.CONFIRMED);
+        when(migrationInputRepository.listAll(project, source)).thenReturn(List.of(stale, current));
+        when(sourceResolver.latestSourceRefIds(project, source, MigrationInputSourceType.DEPENDENCY_RESULT)).thenReturn(List.of());
+        when(sourceResolver.latestSourceRefIds(project, source, MigrationInputSourceType.KB_FINDING))
+                .thenReturn(List.of(current.sourceRefId()), List.of());
+        assertThat(service().currentConfirmedRefsForSystem(project, source)).containsExactly(current);
+        assertThat(service().currentConfirmedRefsForSystem(project, source)).isEmpty();
+        verify(migrationInputRepository, org.mockito.Mockito.times(2)).listAll(project, source);
+        org.mockito.Mockito.verifyNoMoreInteractions(migrationInputRepository);
     }
 
     @Test
@@ -312,6 +331,8 @@ class MigrationInputServiceTests {
         UUID revisionId = UUID.randomUUID();
         UUID actorId = UUID.randomUUID();
         MigrationInputRefView first = ref(projectId, revisionId, UUID.randomUUID(), "Alpha issue", MigrationInputStatus.CONFIRMED);
+        when(sourceResolver.latestSourceRefIds(projectId, revisionId, MigrationInputSourceType.KB_FINDING))
+                .thenReturn(List.of(first.sourceRefId()));
         MigrationInputRefView second = dependencyRef(projectId, revisionId, UUID.randomUUID(), "Beta issue",
                 MigrationInputStatus.CANDIDATE, "LOW/TARGET_NEWER", "BUILD_TOOL", "gcc");
         when(migrationInputRepository.listAll(projectId, revisionId)).thenReturn(List.of(first, second));
@@ -333,6 +354,9 @@ class MigrationInputServiceTests {
         UUID actorId = UUID.randomUUID();
         MigrationInputRefView first = ref(projectId, revisionId, UUID.randomUUID(), "Zulu", MigrationInputStatus.CONFIRMED);
         MigrationInputRefView second = ref(projectId, revisionId, UUID.randomUUID(), "Alpha", MigrationInputStatus.CANDIDATE);
+        when(sourceResolver.latestSourceRefIds(projectId, revisionId, MigrationInputSourceType.DEPENDENCY_RESULT)).thenReturn(List.of());
+        when(sourceResolver.latestSourceRefIds(projectId, revisionId, MigrationInputSourceType.KB_FINDING))
+                .thenReturn(List.of(first.sourceRefId(), second.sourceRefId()));
         when(migrationInputRepository.listAll(projectId, revisionId)).thenReturn(List.of(first, second));
         for (String sortBy : List.of("createdAt", "updatedAt", "sourceType", "detectedLevel", "status", "issueTitle", "")) {
             assertThat(service().list(projectId, revisionId,

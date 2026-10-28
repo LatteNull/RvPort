@@ -7,6 +7,8 @@ package cn.rvport.backend.jooq.tables;
 import cn.rvport.backend.jooq.Indexes;
 import cn.rvport.backend.jooq.Keys;
 import cn.rvport.backend.jooq.Public;
+import cn.rvport.backend.jooq.tables.BuildRuns.BuildRunsPath;
+import cn.rvport.backend.jooq.tables.Environments.EnvironmentsPath;
 import cn.rvport.backend.jooq.tables.Findings.FindingsPath;
 import cn.rvport.backend.jooq.tables.KbAiExtensionResults.KbAiExtensionResultsPath;
 import cn.rvport.backend.jooq.tables.KbAiExtensionRuns.KbAiExtensionRunsPath;
@@ -120,6 +122,21 @@ public class KbScanRuns extends TableImpl<KbScanRunsRecord> {
      */
     public final TableField<KbScanRunsRecord, OffsetDateTime> FINISHED_AT = createField(DSL.name("finished_at"), SQLDataType.TIMESTAMPWITHTIMEZONE(6), this, "");
 
+    /**
+     * The column <code>public.kb_scan_runs.source_environment_id</code>.
+     */
+    public final TableField<KbScanRunsRecord, UUID> SOURCE_ENVIRONMENT_ID = createField(DSL.name("source_environment_id"), SQLDataType.UUID, this, "");
+
+    /**
+     * The column <code>public.kb_scan_runs.runtime_environment_version</code>.
+     */
+    public final TableField<KbScanRunsRecord, Long> RUNTIME_ENVIRONMENT_VERSION = createField(DSL.name("runtime_environment_version"), SQLDataType.BIGINT, this, "");
+
+    /**
+     * The column <code>public.kb_scan_runs.build_run_id</code>.
+     */
+    public final TableField<KbScanRunsRecord, UUID> BUILD_RUN_ID = createField(DSL.name("build_run_id"), SQLDataType.UUID, this, "");
+
     private KbScanRuns(Name alias, Table<KbScanRunsRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }
@@ -189,7 +206,7 @@ public class KbScanRuns extends TableImpl<KbScanRunsRecord> {
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.asList(Indexes.KB_SCAN_RUNS_PROJECT_REVISION_STARTED_IDX, Indexes.KB_SCAN_RUNS_PROJECT_STARTED_IDX, Indexes.KB_SCAN_RUNS_PROJECT_STATUS_STARTED_IDX, Indexes.KB_SCAN_RUNS_SOURCE_REVISION_IDX);
+        return Arrays.asList(Indexes.KB_SCAN_RUNS_EXECUTION_CONTEXT_IDX, Indexes.KB_SCAN_RUNS_PROJECT_REVISION_STARTED_IDX, Indexes.KB_SCAN_RUNS_PROJECT_STARTED_IDX, Indexes.KB_SCAN_RUNS_PROJECT_STATUS_STARTED_IDX, Indexes.KB_SCAN_RUNS_SOURCE_REVISION_IDX);
     }
 
     @Override
@@ -204,7 +221,19 @@ public class KbScanRuns extends TableImpl<KbScanRunsRecord> {
 
     @Override
     public List<ForeignKey<KbScanRunsRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.KB_SCAN_RUNS__KB_SCAN_RUNS_PROJECT_ID_FKEY, Keys.KB_SCAN_RUNS__KB_SCAN_RUNS_SOURCE_REVISION_ID_FKEY, Keys.KB_SCAN_RUNS__KB_SCAN_RUNS_TASK_ID_FKEY);
+        return Arrays.asList(Keys.KB_SCAN_RUNS__KB_SCAN_RUNS_BUILD_RUN_ID_FKEY, Keys.KB_SCAN_RUNS__KB_SCAN_RUNS_PROJECT_ID_FKEY, Keys.KB_SCAN_RUNS__KB_SCAN_RUNS_SOURCE_ENVIRONMENT_ID_FKEY, Keys.KB_SCAN_RUNS__KB_SCAN_RUNS_SOURCE_REVISION_ID_FKEY, Keys.KB_SCAN_RUNS__KB_SCAN_RUNS_TASK_ID_FKEY);
+    }
+
+    private transient BuildRunsPath _buildRuns;
+
+    /**
+     * Get the implicit join path to the <code>public.build_runs</code> table.
+     */
+    public BuildRunsPath buildRuns() {
+        if (_buildRuns == null)
+            _buildRuns = new BuildRunsPath(this, Keys.KB_SCAN_RUNS__KB_SCAN_RUNS_BUILD_RUN_ID_FKEY, null);
+
+        return _buildRuns;
     }
 
     private transient ProjectsPath _projects;
@@ -217,6 +246,18 @@ public class KbScanRuns extends TableImpl<KbScanRunsRecord> {
             _projects = new ProjectsPath(this, Keys.KB_SCAN_RUNS__KB_SCAN_RUNS_PROJECT_ID_FKEY, null);
 
         return _projects;
+    }
+
+    private transient EnvironmentsPath _environments;
+
+    /**
+     * Get the implicit join path to the <code>public.environments</code> table.
+     */
+    public EnvironmentsPath environments() {
+        if (_environments == null)
+            _environments = new EnvironmentsPath(this, Keys.KB_SCAN_RUNS__KB_SCAN_RUNS_SOURCE_ENVIRONMENT_ID_FKEY, null);
+
+        return _environments;
     }
 
     private transient SourceRevisionsPath _sourceRevisions;
@@ -327,6 +368,7 @@ public class KbScanRuns extends TableImpl<KbScanRunsRecord> {
     @Override
     public List<Check<KbScanRunsRecord>> getChecks() {
         return Arrays.asList(
+            Internal.createCheck(this, DSL.name("kb_scan_execution_context_complete_chk"), "((((source_environment_id IS NULL) AND (runtime_environment_version IS NULL) AND (build_run_id IS NULL)) OR ((source_environment_id IS NOT NULL) AND (runtime_environment_version IS NOT NULL) AND (runtime_environment_version >= 0) AND (build_run_id IS NOT NULL))))", true),
             Internal.createCheck(this, DSL.name("kb_scan_runs_status_chk"), "((status = ANY (ARRAY['PENDING'::text, 'QUEUED'::text, 'RUNNING'::text, 'SUCCEEDED'::text, 'FAILED'::text, 'CANCELLED'::text, 'TIMEOUT'::text])))", true)
         );
     }
