@@ -326,6 +326,10 @@ def test_validation_consumes_result_v2_findings_and_assessments() -> None:
         "finding_keys": ["comparison:1"],
         "diagnostic_codes": [],
         "suppression_ids": [],
+        "assessment_statuses": ["matched"],
+        "affected_counts": [1],
+        "scan_status": "complete",
+        "suppression_count": 0,
     }
     corpus = {
         "cases": [
@@ -378,6 +382,10 @@ def test_validation_normalizes_v2_observation_boundaries() -> None:
         "finding_keys": ["finding-fallback"],
         "diagnostic_codes": ["example-diagnostic"],
         "suppression_ids": ["suppression-1"],
+        "assessment_statuses": ["not_matched"],
+        "affected_counts": [1],
+        "scan_status": None,
+        "suppression_count": 2,
     }
 
 

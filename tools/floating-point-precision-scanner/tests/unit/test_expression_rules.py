@@ -208,13 +208,14 @@ def test_reduction_heuristic_ir_verified_compensated_and_ambiguous() -> None:
         "group_id": "c" * 64,
     }
     verified = run("reduction-reassociation", [reduction], ir=[ir])
-    assert verified.findings[0]["evidence_origin"] == "deterministic"
+    # 无绑定的 TU 级 IR 不能提升当前候选的置信度。
+    assert verified.findings[0]["evidence_origin"] == "heuristic"
     compensated = dict(reduction)
     compensated["payload"] = {**reduction["payload"], "compensation": "kahan"}
     assert run("reduction-reassociation", [compensated]).assessments[0].status == "not_matched"
     invalidated = run("reduction-reassociation", [compensated], ir=[ir])
-    assert invalidated.assessments[0].status == "matched"
-    assert invalidated.findings[0]["semantic"]["compensation_invalidated"] is True
+    assert invalidated.assessments[0].status == "not_matched"
+    assert invalidated.findings == ()
     ambiguous = dict(reduction)
     ambiguous["payload"] = {**reduction["payload"], "ambiguous": True}
     assert run("reduction-reassociation", [ambiguous]).assessments[0].status == "unknown"
@@ -456,7 +457,7 @@ class _ExpressionFrontend:
 
     def ast(self, context: Any) -> dict[str, Any]:
         path = str(context.absolute_file)
-        return {
+        body = {
             "kind": "TranslationUnitDecl",
             "inner": [
                 {
@@ -491,6 +492,7 @@ class _ExpressionFrontend:
                     "type": {"qualType": "double"},
                     "iterationCount": 100,
                     "loc": {"file": path, "line": 3, "col": 1},
+                    "inner": [{"kind": "DeclRefExpr", "referencedDecl": {"id": "sum"}}],
                 },
                 {
                     "kind": "CallExpr",
@@ -524,6 +526,13 @@ class _ExpressionFrontend:
                 },
             ],
         }
+        body["inner"].append({"kind": "VarDecl", "id": "sum", "name": "sum",
+                              "loc": {"file": path, "line": 1, "col": 20},
+                              "type": {"qualType": "double"}})
+        body["inner"] = [{"kind": "FunctionDecl", "name": "compute",
+                          "loc": {"file": path, "line": 1, "col": 1},
+                          "inner": body["inner"]}]
+        return body
 
 
 def test_schema_13_application_runs_ten_rules_and_audits_suppression(tmp_path) -> None:

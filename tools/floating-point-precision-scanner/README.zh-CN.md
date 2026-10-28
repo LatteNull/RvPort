@@ -66,6 +66,15 @@ fp-precision-scanner scan --request request.json --output result.json --clang /u
 
 ## 表达式风险规则
 
+`reduction-reassociation@1.1` 按独立循环和累加器生成独立 Finding。同一函数的两个循环即使
+复用 `result` 也分别评估；同一循环的 `sum` 和 `product` 也分别评估。单候选可以包含多个
+证据位置，但 `affectedCount` 为 1。证据、置信度、unknown/failed 和 suppression 均按候选
+隔离。复杂递推身份不明确时局部 unknown，不再把整个编译单元的归约合成一条结果。
+
+AST-only 保持 heuristic。置信度提升要求本候选无歧义的 build-faithful IR 关联、重结合标志，
+以及明确的源/目标重结合策略差异。当前内置 profiles 没有声明该策略差异，因此默认仍要求
+人工确认。输出继续采用结果 schema v2；历史结果保持原样，重新扫描后才能得到新粒度。
+
 | 规则 | 主要输入 | 结论边界 |
 |---|---|---|
 | `floating-environment` | fenv pragma/API、函数摘要、effective options、profile/IR | 间接调用、外部调用或摘要预算边界返回 `unknown` |

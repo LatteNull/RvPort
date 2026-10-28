@@ -7,6 +7,7 @@ from collections.abc import Mapping
 from typing import Any
 
 from . import (
+    EVIDENCE_SCHEMA_VERSION,
     FACT_MAPPER_VERSION,
     FACTS_SCHEMA_VERSION,
     LLVM_EXTRACTOR_VERSION,
@@ -561,6 +562,7 @@ class Scanner:
                             evidence_key = cache_key(
                                 "evidence",
                                 {
+                                    "evidence_schema_version": EVIDENCE_SCHEMA_VERSION,
                                     "source_digest": source_bundle["semantic_digest"],
                                     "ir_digest": bundle["semantic_digest"],
                                     "artifact_key": member.artifact_key,

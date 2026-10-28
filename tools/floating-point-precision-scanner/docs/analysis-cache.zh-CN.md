@@ -1,5 +1,10 @@
 # 分析缓存维护说明
 
+归约粒度修复使用 facts **1.5**、mapper **1.2**、evidence **1.2** 和 rule registry **1.3**。
+facts 保存最近循环与累加器的稳定身份；source-facts key 随 schema/mapper 变化而失效。
+evidence key 显式包含 evidence schema，旧绑定缓存不能复用。归约 binding ID 由自身关联
+身份生成，bundle digest 仍用于来源校验，但不再让无关候选的变化扰动本候选 ID。
+
 [English](analysis-cache.md) | 简体中文
 
 schema 1.4 提供 `off`、`read-only`、`write-only` 和 `read-write` 四种模式。缓存根目录必须是

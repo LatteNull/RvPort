@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from collections import defaultdict
+from collections import Counter, defaultdict
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
@@ -61,17 +61,17 @@ class QualityCounts:
 def _score_case(oracle: Mapping[str, Any], actual: Mapping[str, Any]) -> QualityCounts:
     expected = str(oracle["expected_status"])
     actual_status = str(actual.get("status", "missing"))
-    expected_keys = frozenset(str(item) for item in oracle.get("finding_keys", []))
-    actual_keys = frozenset(str(item) for item in actual.get("finding_keys", []))
+    expected_keys = Counter(str(item) for item in oracle.get("finding_keys", []))
+    actual_keys = Counter(str(item) for item in actual.get("finding_keys", []))
     unsupported = bool(oracle.get("unsupported", False))
     abstained = actual_status in {"unknown", "skipped", "failed", "missing"}
-    tp = len(expected_keys & actual_keys) if expected == "matched" else 0
-    fp = len(actual_keys - expected_keys)
+    tp = sum((expected_keys & actual_keys).values()) if expected == "matched" else 0
+    fp = sum((actual_keys - expected_keys).values())
     if expected == "not_matched":
-        fp += len(actual_keys & expected_keys)
+        fp += sum((actual_keys & expected_keys).values())
     if unsupported and actual_status == "matched":
         fp += max(1, len(actual_keys))
-    fn = len(expected_keys - actual_keys) if expected == "matched" else 0
+    fn = sum((expected_keys - actual_keys).values()) if expected == "matched" else 0
     if expected == "matched" and abstained and not expected_keys:
         fn += 1
     diagnostics_exact = frozenset(actual.get("diagnostic_codes", [])) == frozenset(
@@ -85,6 +85,16 @@ def _score_case(oracle: Mapping[str, Any], actual: Mapping[str, Any]) -> Quality
         and expected_keys == actual_keys
         and diagnostics_exact
         and suppressions_exact
+        and all(
+            oracle[key] == actual.get(key)
+            for key in (
+                "assessment_statuses",
+                "affected_counts",
+                "scan_status",
+                "suppression_count",
+            )
+            if key in oracle
+        )
     )
     if unsupported:
         supported_tp = supported_fp = supported_fn = 0
@@ -103,7 +113,12 @@ def _score_case(oracle: Mapping[str, Any], actual: Mapping[str, Any]) -> Quality
     )
 
 
-def _observation_from_result(result: Mapping[str, Any], rule_code: str) -> dict[str, Any]:
+def _observation_from_result(
+    result: Mapping[str, Any],
+    rule_code: str,
+    *,
+    locations: bool = False,
+) -> dict[str, Any]:
     """从结果 v2 提取 reviewed corpus 需要的最小 oracle 观察值。"""
     extensions = result.get("extensions")
     analysis = extensions.get(EXTENSION_ANALYSIS) if isinstance(extensions, Mapping) else None
@@ -113,11 +128,21 @@ def _observation_from_result(result: Mapping[str, Any], rule_code: str) -> dict[
         for item in assessments
         if isinstance(item, Mapping) and item.get("ruleCode") == rule_code
     ]
-    status = str(matching[0].get("status", "missing")) if matching else "missing"
-    if status == "notMatched":
-        status = "not_matched"
+    statuses = sorted(
+        str(item.get("status", "missing")).replace("notMatched", "not_matched") for item in matching
+    )
+    status = next(
+        (
+            value
+            for value in ("matched", "failed", "unknown", "skipped", "not_matched")
+            if value in statuses
+        ),
+        "missing",
+    )
     findings = result.get("findings", [])
     finding_keys: list[str] = []
+    affected_counts: list[int] = []
+    location_counts: Counter[str] = Counter()
     for item in findings if isinstance(findings, list) else []:
         if not isinstance(item, Mapping):
             continue
@@ -125,10 +150,15 @@ def _observation_from_result(result: Mapping[str, Any], rule_code: str) -> dict[
         if not isinstance(conclusion, Mapping) or conclusion.get("findingCode") != rule_code:
             continue
         semantic = conclusion.get("semantic")
-        validation_key = (
-            semantic.get("validationKey") if isinstance(semantic, Mapping) else None
-        )
-        finding_keys.append(str(validation_key or item.get("id")))
+        validation_key = semantic.get("validationKey") if isinstance(semantic, Mapping) else None
+        if locations:
+            location = item["fact"]["primaryLocation"]
+            key = f"{location['file']}:{location['line']}" if location else "unlocated"
+            location_counts[key] += 1
+            finding_keys.append(f"{key}#{location_counts[key]}")
+        else:
+            finding_keys.append(str(validation_key or item.get("id")))
+        affected_counts.append(int(conclusion.get("affectedCount", 1)))
     diagnostics = result.get("diagnostics", [])
     suppression_extension = (
         extensions.get(EXTENSION_SUPPRESSIONS) if isinstance(extensions, Mapping) else None
@@ -144,9 +174,13 @@ def _observation_from_result(result: Mapping[str, Any], rule_code: str) -> dict[
         "diagnostic_codes": sorted(
             str(item.get("code")) for item in diagnostics if isinstance(item, Mapping)
         ),
-        "suppression_ids": sorted(
-            str(item.get("id")) for item in suppressions if isinstance(item, Mapping)
-        ),
+        "suppression_ids": []
+        if locations
+        else sorted(str(item.get("id")) for item in suppressions if isinstance(item, Mapping)),
+        "assessment_statuses": statuses,
+        "affected_counts": sorted(affected_counts),
+        "scan_status": result.get("scan", {}).get("status"),
+        "suppression_count": len(suppressions),
     }
 
 
@@ -188,7 +222,11 @@ def evaluate_corpus(
             raise ValueError("unknown_validation_rule")
         actual = observed.get(case_id, {})
         if actual.get("schemaVersion") == RESULT_SCHEMA_VERSION:
-            actual = _observation_from_result(actual, rule)
+            actual = _observation_from_result(
+                actual,
+                rule,
+                locations=corpus.get("observation_mode") == "locations",
+            )
         score = _score_case(raw, actual)
         expected_status = str(raw["expected_status"])
         if expected_status == "matched":
@@ -231,6 +269,16 @@ def evaluate_corpus(
                     "finding_keys": item.get("finding_keys", []),
                     "diagnostic_codes": item.get("diagnostic_codes", []),
                     "suppression_ids": item.get("suppression_ids", []),
+                    **{
+                        key: item[key]
+                        for key in (
+                            "assessment_statuses",
+                            "affected_counts",
+                            "scan_status",
+                            "suppression_count",
+                        )
+                        if key in item
+                    },
                 }
                 for item in cases
                 if isinstance(item, Mapping)
@@ -273,6 +321,16 @@ def main(argv: list[str] | None = None) -> int:
     errors = SchemaRegistry().validate("validation_corpus", corpus)
     if errors:
         raise ValueError(errors[0].diagnostic_code)
+    if corpus.get("observation_mode") == "locations":
+        from .corpus_runner import source_digests
+
+        if observed_document.get("source_digests") != source_digests():
+            raise ValueError("validation_source_digest_mismatch")
+        expected_digests = {case["case_id"]: case["fixture_digest"] for case in corpus["cases"]}
+        if observed_document.get("fixture_digests") != expected_digests:
+            raise ValueError("validation_fixture_digest_mismatch")
+        if set(observations) != set(expected_digests):
+            raise ValueError("validation_observation_cases_mismatch")
     report = evaluate_corpus(
         corpus,
         {str(key): value for key, value in observations.items() if isinstance(value, Mapping)},

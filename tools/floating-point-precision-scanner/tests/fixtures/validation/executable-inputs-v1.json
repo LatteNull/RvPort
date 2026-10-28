@@ -1,0 +1,1615 @@
+{
+  "kind": "FloatingPointExecutableCorpus",
+  "schema_version": "1.0",
+  "cases": [
+    {
+      "case_id": "long-double-abi-global",
+      "rule": "long-double-abi",
+      "source": "long double external_value;\n"
+    },
+    {
+      "case_id": "long-double-abi-parameter",
+      "rule": "long-double-abi",
+      "source": "void consume(long double value) {}\n"
+    },
+    {
+      "case_id": "long-double-abi-return",
+      "rule": "long-double-abi",
+      "source": "long double produce(void) { return 1.0L; }\n"
+    },
+    {
+      "case_id": "long-double-abi-record",
+      "rule": "long-double-abi",
+      "source": "struct Record {\n  long double value;\n};\n"
+    },
+    {
+      "case_id": "long-double-abi-typedef",
+      "rule": "long-double-abi",
+      "source": "typedef long double Extended;\nExtended external_value;\n"
+    },
+    {
+      "case_id": "long-double-abi-cpp-return",
+      "rule": "long-double-abi",
+      "source": "long double produce() { return 0.0L; }\n",
+      "standard": "c++17"
+    },
+    {
+      "case_id": "long-double-abi-double-global",
+      "rule": "long-double-abi",
+      "source": "double value;\n"
+    },
+    {
+      "case_id": "long-double-abi-float-param",
+      "rule": "long-double-abi",
+      "source": "void consume(float x) {}\n"
+    },
+    {
+      "case_id": "long-double-abi-local-long-double",
+      "rule": "long-double-abi",
+      "source": "int compute(void) { long double x=1.0L; return x > 0; }\n"
+    },
+    {
+      "case_id": "long-double-abi-integer-return",
+      "rule": "long-double-abi",
+      "source": "long compute(long x) { return x; }\n"
+    },
+    {
+      "case_id": "long-double-abi-double-record",
+      "rule": "long-double-abi",
+      "source": "struct R { double x; };\n"
+    },
+    {
+      "case_id": "long-double-abi-empty",
+      "rule": "long-double-abi",
+      "source": "void compute(void) {}\n"
+    },
+    {
+      "case_id": "long-double-abi-unknown-global",
+      "rule": "long-double-abi",
+      "source": "long double external_value;\n",
+      "profile_patches": {
+        "target": {
+          "floating_types.long_double.abi_class": "unknown"
+        }
+      }
+    },
+    {
+      "case_id": "long-double-abi-unknown-parameter",
+      "rule": "long-double-abi",
+      "source": "void consume(long double value) {}\n",
+      "profile_patches": {
+        "target": {
+          "floating_types.long_double.abi_class": "unknown"
+        }
+      }
+    },
+    {
+      "case_id": "long-double-abi-unknown-return",
+      "rule": "long-double-abi",
+      "source": "long double produce(void) { return 1.0L; }\n",
+      "profile_patches": {
+        "target": {
+          "floating_types.long_double.abi_class": "unknown"
+        }
+      }
+    },
+    {
+      "case_id": "x87-excess-precision-chain-1",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a+b)*c;\n}\n",
+      "flags": [
+        "-m32",
+        "-mno-sse",
+        "-mfpmath=387",
+        "-fexcess-precision=fast",
+        "-g"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "x87-excess-precision-standard-1",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a+b)*c;\n}\n"
+    },
+    {
+      "case_id": "x87-excess-precision-chain-2",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a-b)/c;\n}\n",
+      "flags": [
+        "-m32",
+        "-mno-sse",
+        "-mfpmath=387",
+        "-fexcess-precision=fast",
+        "-g"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "x87-excess-precision-standard-2",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a-b)/c;\n}\n"
+    },
+    {
+      "case_id": "x87-excess-precision-chain-3",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a*b)+c;\n}\n",
+      "flags": [
+        "-m32",
+        "-mno-sse",
+        "-mfpmath=387",
+        "-fexcess-precision=fast",
+        "-g"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "x87-excess-precision-standard-3",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a*b)+c;\n}\n"
+    },
+    {
+      "case_id": "x87-excess-precision-chain-4",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+(b+c);\n}\n",
+      "flags": [
+        "-m32",
+        "-mno-sse",
+        "-mfpmath=387",
+        "-fexcess-precision=fast",
+        "-g"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "x87-excess-precision-standard-4",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+(b+c);\n}\n"
+    },
+    {
+      "case_id": "x87-excess-precision-chain-5",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a/c)-b;\n}\n",
+      "flags": [
+        "-m32",
+        "-mno-sse",
+        "-mfpmath=387",
+        "-fexcess-precision=fast",
+        "-g"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "x87-excess-precision-standard-5",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a/c)-b;\n}\n"
+    },
+    {
+      "case_id": "x87-excess-precision-chain-6",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a*b)/c;\n}\n",
+      "flags": [
+        "-m32",
+        "-mno-sse",
+        "-mfpmath=387",
+        "-fexcess-precision=fast",
+        "-g"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "x87-excess-precision-standard-6",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a*b)/c;\n}\n"
+    },
+    {
+      "case_id": "x87-excess-precision-missing-ir-1",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a+b)*c;\n}\n",
+      "flags": [
+        "-m32",
+        "-mno-sse",
+        "-mfpmath=387",
+        "-fexcess-precision=fast",
+        "-g"
+      ]
+    },
+    {
+      "case_id": "x87-excess-precision-missing-ir-2",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a-b)/c;\n}\n",
+      "flags": [
+        "-m32",
+        "-mno-sse",
+        "-mfpmath=387",
+        "-fexcess-precision=fast",
+        "-g"
+      ]
+    },
+    {
+      "case_id": "x87-excess-precision-missing-ir-3",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a*b)+c;\n}\n",
+      "flags": [
+        "-m32",
+        "-mno-sse",
+        "-mfpmath=387",
+        "-fexcess-precision=fast",
+        "-g"
+      ]
+    },
+    {
+      "case_id": "fma-contraction-fused-1",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return a*b+c;\n}\n",
+      "flags": [
+        "-O2",
+        "-g",
+        "-ffast-math",
+        "-ffp-contract=fast"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "fma-contraction-fused-2",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return a*b-c;\n}\n",
+      "flags": [
+        "-O2",
+        "-g",
+        "-ffast-math",
+        "-ffp-contract=fast"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "fma-contraction-fused-3",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return c+a*b;\n}\n",
+      "flags": [
+        "-O2",
+        "-g",
+        "-ffast-math",
+        "-ffp-contract=fast"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "fma-contraction-fused-4",
+      "rule": "fma-contraction",
+      "source": "float compute(float a, float b, float c)\n{\n  return a*b+c;\n}\n",
+      "flags": [
+        "-O2",
+        "-g",
+        "-ffast-math",
+        "-ffp-contract=fast"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "fma-contraction-fused-5",
+      "rule": "fma-contraction",
+      "source": "float compute(float a, float b, float c)\n{\n  return a*b-c;\n}\n",
+      "flags": [
+        "-O2",
+        "-g",
+        "-ffast-math",
+        "-ffp-contract=fast"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "fma-contraction-fused-6",
+      "rule": "fma-contraction",
+      "source": "float compute(float a, float b, float c)\n{\n  return c+a*b;\n}\n",
+      "flags": [
+        "-O2",
+        "-g",
+        "-ffast-math",
+        "-ffp-contract=fast"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "fma-contraction-non-fused-1",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+b;\n}\n"
+    },
+    {
+      "case_id": "fma-contraction-non-fused-2",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return a*b;\n}\n"
+    },
+    {
+      "case_id": "fma-contraction-non-fused-3",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return a/b;\n}\n"
+    },
+    {
+      "case_id": "fma-contraction-non-fused-4",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return a-b;\n}\n"
+    },
+    {
+      "case_id": "fma-contraction-non-fused-5",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+b+c;\n}\n"
+    },
+    {
+      "case_id": "fma-contraction-non-fused-6",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return a*b*c;\n}\n"
+    },
+    {
+      "case_id": "fma-contraction-missing-ir-1",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return a*b+c;\n}\n"
+    },
+    {
+      "case_id": "fma-contraction-missing-ir-2",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return a*b-c;\n}\n"
+    },
+    {
+      "case_id": "fma-contraction-missing-ir-3",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return c+a*b;\n}\n"
+    },
+    {
+      "case_id": "fma-contraction-complex-binding-1",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a+1.0)*b+c;\n}\n",
+      "flags": [
+        "-O2",
+        "-g",
+        "-ffast-math",
+        "-ffp-contract=fast"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "fma-contraction-complex-binding-2",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return a*(b+1.0)+c;\n}\n",
+      "flags": [
+        "-O2",
+        "-g",
+        "-ffast-math",
+        "-ffp-contract=fast"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "fma-contraction-complex-binding-3",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return a*b+(c+1.0);\n}\n",
+      "flags": [
+        "-O2",
+        "-g",
+        "-ffast-math",
+        "-ffp-contract=fast"
+      ],
+      "bitcode": true
+    },
+    {
+      "case_id": "unsafe-fp-optimization-hazard-1",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+b;\n}\n",
+      "flags": [
+        "-ffast-math"
+      ]
+    },
+    {
+      "case_id": "unsafe-fp-optimization-hazard-2",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+b;\n}\n",
+      "flags": [
+        "-fno-signed-zeros"
+      ]
+    },
+    {
+      "case_id": "unsafe-fp-optimization-hazard-3",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+b;\n}\n",
+      "flags": [
+        "-fno-honor-nans"
+      ]
+    },
+    {
+      "case_id": "unsafe-fp-optimization-hazard-4",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+b;\n}\n",
+      "flags": [
+        "-fno-honor-infinities"
+      ]
+    },
+    {
+      "case_id": "unsafe-fp-optimization-hazard-5",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+b;\n}\n",
+      "flags": [
+        "-fno-math-errno"
+      ]
+    },
+    {
+      "case_id": "unsafe-fp-optimization-hazard-6",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+b;\n}\n",
+      "flags": [
+        "-fno-trapping-math"
+      ]
+    },
+    {
+      "case_id": "unsafe-fp-optimization-strict-1",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+b;\n}\n"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-strict-2",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return a*b;\n}\n"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-strict-3",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return a/b;\n}\n"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-strict-4",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return a-b;\n}\n"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-strict-5",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+b+c;\n}\n"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-strict-6",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return a*b+c;\n}\n"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-option-ir-conflict-1",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a+b)*c;\n}\n",
+      "bitcode": true,
+      "bitcode_flags": [
+        "-g",
+        "-ffast-math"
+      ]
+    },
+    {
+      "case_id": "unsafe-fp-optimization-option-ir-conflict-2",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a-b)/c;\n}\n",
+      "bitcode": true,
+      "bitcode_flags": [
+        "-g",
+        "-ffast-math"
+      ]
+    },
+    {
+      "case_id": "unsafe-fp-optimization-option-ir-conflict-3",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a*b)+c;\n}\n",
+      "bitcode": true,
+      "bitcode_flags": [
+        "-g",
+        "-ffast-math"
+      ]
+    },
+    {
+      "case_id": "floating-environment-conflict-1",
+      "rule": "floating-environment",
+      "source": "int fesetround(int);\nint compute(void) {\n  return fesetround(0);\n}\n",
+      "flags": [],
+      "standard": "c17"
+    },
+    {
+      "case_id": "floating-environment-compatible-1",
+      "rule": "floating-environment",
+      "source": "int fesetround(int);\nint compute(void) {\n  return fesetround(0);\n}\n",
+      "flags": [
+        "-frounding-math",
+        "-ftrapping-math"
+      ],
+      "standard": "c17"
+    },
+    {
+      "case_id": "floating-environment-conflict-2",
+      "rule": "floating-environment",
+      "source": "int fetestexcept(int);\nint compute(void) {\n  return fetestexcept(1);\n}\n",
+      "flags": [
+        "-fno-trapping-math"
+      ],
+      "standard": "c17"
+    },
+    {
+      "case_id": "floating-environment-compatible-2",
+      "rule": "floating-environment",
+      "source": "int fetestexcept(int);\nint compute(void) {\n  return fetestexcept(1);\n}\n",
+      "flags": [
+        "-frounding-math",
+        "-ftrapping-math"
+      ],
+      "standard": "c17"
+    },
+    {
+      "case_id": "floating-environment-conflict-3",
+      "rule": "floating-environment",
+      "source": "int feraiseexcept(int);\nint compute(void) {\n  return feraiseexcept(1);\n}\n",
+      "flags": [
+        "-fno-trapping-math"
+      ],
+      "standard": "c17"
+    },
+    {
+      "case_id": "floating-environment-compatible-3",
+      "rule": "floating-environment",
+      "source": "int feraiseexcept(int);\nint compute(void) {\n  return feraiseexcept(1);\n}\n",
+      "flags": [
+        "-frounding-math",
+        "-ftrapping-math"
+      ],
+      "standard": "c17"
+    },
+    {
+      "case_id": "floating-environment-conflict-4",
+      "rule": "floating-environment",
+      "source": "int fesetround(int);\nint compute(void) {\n  return fesetround(0);\n}\n",
+      "flags": [],
+      "standard": "c++17"
+    },
+    {
+      "case_id": "floating-environment-compatible-4",
+      "rule": "floating-environment",
+      "source": "int fesetround(int);\nint compute(void) {\n  return fesetround(0);\n}\n",
+      "flags": [
+        "-frounding-math",
+        "-ftrapping-math"
+      ],
+      "standard": "c++17"
+    },
+    {
+      "case_id": "floating-environment-conflict-5",
+      "rule": "floating-environment",
+      "source": "int fetestexcept(int);\nint compute(void) {\n  return fetestexcept(1);\n}\n",
+      "flags": [
+        "-fno-trapping-math"
+      ],
+      "standard": "c++17"
+    },
+    {
+      "case_id": "floating-environment-compatible-5",
+      "rule": "floating-environment",
+      "source": "int fetestexcept(int);\nint compute(void) {\n  return fetestexcept(1);\n}\n",
+      "flags": [
+        "-frounding-math",
+        "-ftrapping-math"
+      ],
+      "standard": "c++17"
+    },
+    {
+      "case_id": "floating-environment-conflict-6",
+      "rule": "floating-environment",
+      "source": "int feraiseexcept(int);\nint compute(void) {\n  return feraiseexcept(1);\n}\n",
+      "flags": [
+        "-fno-trapping-math"
+      ],
+      "standard": "c++17"
+    },
+    {
+      "case_id": "floating-environment-compatible-6",
+      "rule": "floating-environment",
+      "source": "int feraiseexcept(int);\nint compute(void) {\n  return feraiseexcept(1);\n}\n",
+      "flags": [
+        "-frounding-math",
+        "-ftrapping-math"
+      ],
+      "standard": "c++17"
+    },
+    {
+      "case_id": "floating-environment-unknown-profile-1",
+      "rule": "floating-environment",
+      "source": "int fesetround(int);\nint compute(void) {\n  return fesetround(0);\n}\n",
+      "flags": [],
+      "profile_patches": {
+        "target": {
+          "environment": {
+            "status": "unknown",
+            "reason": "语料缺少环境信息",
+            "source": "fixed-corpus"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "floating-environment-unknown-profile-2",
+      "rule": "floating-environment",
+      "source": "int fetestexcept(int);\nint compute(void) {\n  return fetestexcept(1);\n}\n",
+      "flags": [
+        "-fno-trapping-math"
+      ],
+      "profile_patches": {
+        "target": {
+          "environment": {
+            "status": "unknown",
+            "reason": "语料缺少环境信息",
+            "source": "fixed-corpus"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "floating-environment-unknown-profile-3",
+      "rule": "floating-environment",
+      "source": "int feraiseexcept(int);\nint compute(void) {\n  return feraiseexcept(1);\n}\n",
+      "flags": [
+        "-fno-trapping-math"
+      ],
+      "profile_patches": {
+        "target": {
+          "environment": {
+            "status": "unknown",
+            "reason": "语料缺少环境信息",
+            "source": "fixed-corpus"
+          }
+        }
+      }
+    },
+    {
+      "case_id": "mixed-precision-conversion-double-float",
+      "rule": "mixed-precision-conversion",
+      "source": "float compute(double a)\n{\n  return a;\n}\n"
+    },
+    {
+      "case_id": "mixed-precision-conversion-int-float",
+      "rule": "mixed-precision-conversion",
+      "source": "float compute(int a)\n{\n  return a;\n}\n"
+    },
+    {
+      "case_id": "mixed-precision-conversion-long-double",
+      "rule": "mixed-precision-conversion",
+      "source": "double compute(long a)\n{\n  return a;\n}\n"
+    },
+    {
+      "case_id": "mixed-precision-conversion-unsigned-float",
+      "rule": "mixed-precision-conversion",
+      "source": "float compute(unsigned a)\n{\n  return a;\n}\n"
+    },
+    {
+      "case_id": "mixed-precision-conversion-constant-inexact",
+      "rule": "mixed-precision-conversion",
+      "source": "float compute(void)\n{\n  return 0.1;\n}\n"
+    },
+    {
+      "case_id": "mixed-precision-conversion-integer-boundary",
+      "rule": "mixed-precision-conversion",
+      "source": "float compute(void)\n{\n  return 16777217;\n}\n"
+    },
+    {
+      "case_id": "mixed-precision-conversion-widen",
+      "rule": "mixed-precision-conversion",
+      "source": "double compute(float a)\n{\n  return a;\n}\n"
+    },
+    {
+      "case_id": "mixed-precision-conversion-explicit",
+      "rule": "mixed-precision-conversion",
+      "source": "float compute(double a)\n{\n  return (float)a;\n}\n"
+    },
+    {
+      "case_id": "mixed-precision-conversion-one",
+      "rule": "mixed-precision-conversion",
+      "source": "float compute(void)\n{\n  return 1.0;\n}\n"
+    },
+    {
+      "case_id": "mixed-precision-conversion-power-two",
+      "rule": "mixed-precision-conversion",
+      "source": "float compute(void)\n{\n  return 16777216;\n}\n"
+    },
+    {
+      "case_id": "mixed-precision-conversion-short-float",
+      "rule": "mixed-precision-conversion",
+      "source": "float compute(short a)\n{\n  return a;\n}\n"
+    },
+    {
+      "case_id": "mixed-precision-conversion-fraction",
+      "rule": "mixed-precision-conversion",
+      "source": "float compute(void)\n{\n  return 0.5;\n}\n"
+    },
+    {
+      "case_id": "mixed-precision-conversion-unsupported-extension-1",
+      "rule": "mixed-precision-conversion",
+      "source": "float compute(__float128 a)\n{\n  return a;\n}\n"
+    },
+    {
+      "case_id": "mixed-precision-conversion-unsupported-extension-2",
+      "rule": "mixed-precision-conversion",
+      "source": "double compute(__float128 a)\n{\n  return a;\n}\n"
+    },
+    {
+      "case_id": "mixed-precision-conversion-unsupported-extension-3",
+      "rule": "mixed-precision-conversion",
+      "source": "long double compute(__float128 a)\n{\n  return a;\n}\n"
+    },
+    {
+      "case_id": "fragile-fp-comparison-equality-1",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return a==b;\n}\n"
+    },
+    {
+      "case_id": "fragile-fp-comparison-equality-2",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return a!=b;\n}\n"
+    },
+    {
+      "case_id": "fragile-fp-comparison-equality-3",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return a==0.1;\n}\n"
+    },
+    {
+      "case_id": "fragile-fp-comparison-equality-4",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return a!=0.1;\n}\n"
+    },
+    {
+      "case_id": "fragile-fp-comparison-equality-5",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return a+b==c;\n}\n"
+    },
+    {
+      "case_id": "fragile-fp-comparison-equality-6",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return a*b!=c;\n}\n"
+    },
+    {
+      "case_id": "fragile-fp-comparison-safe-comparison-1",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return a==0.0;\n}\n"
+    },
+    {
+      "case_id": "fragile-fp-comparison-safe-comparison-2",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return a!=0.0;\n}\n"
+    },
+    {
+      "case_id": "fragile-fp-comparison-safe-comparison-3",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return a<b;\n}\n"
+    },
+    {
+      "case_id": "fragile-fp-comparison-safe-comparison-4",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return a>b;\n}\n"
+    },
+    {
+      "case_id": "fragile-fp-comparison-safe-comparison-5",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return a<=b;\n}\n"
+    },
+    {
+      "case_id": "fragile-fp-comparison-safe-comparison-6",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return a>=b;\n}\n"
+    },
+    {
+      "case_id": "fragile-fp-comparison-evidence-budget-1",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return (a==b)+(b==c);\n}\n",
+      "budgets": {
+        "max_rule_evidence_refs": 1
+      }
+    },
+    {
+      "case_id": "fragile-fp-comparison-evidence-budget-2",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return (a!=b)+(b==c);\n}\n",
+      "budgets": {
+        "max_rule_evidence_refs": 1
+      }
+    },
+    {
+      "case_id": "fragile-fp-comparison-evidence-budget-3",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return (a==0.1)+(b==c);\n}\n",
+      "budgets": {
+        "max_rule_evidence_refs": 1
+      }
+    },
+    {
+      "case_id": "reduction-reassociation-for",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  for(int i=0;i<n;++i) s+=a[i];\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-while",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  int i=0; while(i<n) s+=a[i++];\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-do",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  int i=0; do { s+=a[i++]; } while(i<n);\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-product",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  for(int i=0;i<n;++i) s*=a[i];\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-subtract",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  for(int i=0;i<n;++i) s-=a[i];\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-cpp-for",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  for(int i=0;i<n;++i) s+=a[i];\n  return s;\n}\n",
+      "standard": "c++20"
+    },
+    {
+      "case_id": "reduction-reassociation-outside-loop",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  s+=a[0];\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-assignment",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  for(int i=0;i<n;++i) s=a[i];\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-integer",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  int t=0; for(int i=0;i<n;++i) t+=i;\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-empty-loop",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  for(int i=0;i<n;++i) {}\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-no-loop",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  s=a[0]*a[1];\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-comparison",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  for(int i=0;i<n;++i) if(a[i]>s) s=a[i];\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-ambiguous-1",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  for(int i=0;i<n;++i) a[i]+=s;\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-ambiguous-2",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  for(int i=0;i<n;++i) *a+=s;\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-ambiguous-3",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  for(int i=0;i<n;++i) { s+=a[i]; s*=a[i]; }\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-two-loops",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=0;\n  for(int i=0;i<n;++i) s+=a[i];\n  for(int j=0;j<n;++j) s+=a[j];\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-two-functions",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=0;\n  for(int i=0;i<n;++i) s+=a[i];\n  for(int j=0;j<n;++j) s+=a[j];\n  return s;\n}\ndouble second(double *a, int n) {\n  double s=0;\n  for(int i=0;i<n;++i) s+=a[i];\n  for(int j=0;j<n;++j) s+=a[j];\n  return s;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-single-point-suppression",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=0;\n  for(int i=0;i<n;++i) s+=a[i];\n  for(int j=0;j<n;++j) s+=a[j];\n  return s;\n}\n",
+      "suppressions": [
+        {
+          "code": "reduction-reassociation",
+          "path": "main.c",
+          "start_line": 3,
+          "end_line": 3,
+          "reason": "固定单点抑制验收"
+        }
+      ]
+    },
+    {
+      "case_id": "reduction-reassociation-candidate-budget",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=0;\n  for(int i=0;i<n;++i) s+=a[i];\n  for(int j=0;j<n;++j) s+=a[j];\n  return s;\n}\n",
+      "budgets": {
+        "max_rule_candidates": 1
+      }
+    },
+    {
+      "case_id": "math-library-variance-sqrt",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return sqrt(a);\n}\n",
+      "libm": {
+        "source": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        },
+        "target": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": false,
+          "exceptions": true,
+          "special_values": "iec60559"
+        }
+      }
+    },
+    {
+      "case_id": "math-library-variance-equal-sqrt",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return sqrt(a);\n}\n",
+      "libm": {
+        "source": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        },
+        "target": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        }
+      }
+    },
+    {
+      "case_id": "math-library-variance-missing-context-sqrt",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return sqrt(a);\n}\n"
+    },
+    {
+      "case_id": "math-library-variance-sin",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return sin(a);\n}\n",
+      "libm": {
+        "source": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        },
+        "target": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": false,
+          "exceptions": true,
+          "special_values": "iec60559"
+        }
+      }
+    },
+    {
+      "case_id": "math-library-variance-equal-sin",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return sin(a);\n}\n",
+      "libm": {
+        "source": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        },
+        "target": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        }
+      }
+    },
+    {
+      "case_id": "math-library-variance-missing-context-sin",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return sin(a);\n}\n"
+    },
+    {
+      "case_id": "math-library-variance-cos",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return cos(a);\n}\n",
+      "libm": {
+        "source": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        },
+        "target": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": false,
+          "exceptions": true,
+          "special_values": "iec60559"
+        }
+      }
+    },
+    {
+      "case_id": "math-library-variance-equal-cos",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return cos(a);\n}\n",
+      "libm": {
+        "source": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        },
+        "target": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        }
+      }
+    },
+    {
+      "case_id": "math-library-variance-missing-context-cos",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return cos(a);\n}\n"
+    },
+    {
+      "case_id": "math-library-variance-exp",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return exp(a);\n}\n",
+      "libm": {
+        "source": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        },
+        "target": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": false,
+          "exceptions": true,
+          "special_values": "iec60559"
+        }
+      }
+    },
+    {
+      "case_id": "math-library-variance-equal-exp",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return exp(a);\n}\n",
+      "libm": {
+        "source": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        },
+        "target": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        }
+      }
+    },
+    {
+      "case_id": "math-library-variance-log",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return log(a);\n}\n",
+      "libm": {
+        "source": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        },
+        "target": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": false,
+          "exceptions": true,
+          "special_values": "iec60559"
+        }
+      }
+    },
+    {
+      "case_id": "math-library-variance-equal-log",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return log(a);\n}\n",
+      "libm": {
+        "source": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        },
+        "target": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        }
+      }
+    },
+    {
+      "case_id": "math-library-variance-tan",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return tan(a);\n}\n",
+      "libm": {
+        "source": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        },
+        "target": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": false,
+          "exceptions": true,
+          "special_values": "iec60559"
+        }
+      }
+    },
+    {
+      "case_id": "math-library-variance-equal-tan",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return tan(a);\n}\n",
+      "libm": {
+        "source": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        },
+        "target": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        }
+      }
+    },
+    {
+      "case_id": "architecture-specific-fp-api-intrinsic-1",
+      "rule": "architecture-specific-fp-api",
+      "source": "#include <xmmintrin.h>\n__m128 compute(__m128 a, __m128 b) {\n  return _mm_add_ss(a, b);\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-resolved-macro-1",
+      "rule": "architecture-specific-fp-api",
+      "source": "#include <xmmintrin.h>\n#define APPLY(x,y) _mm_add_ss(x,y)\n__m128 compute(__m128 a, __m128 b) {\n  return APPLY(a, b);\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-evidence-budget-1",
+      "rule": "architecture-specific-fp-api",
+      "source": "#include <xmmintrin.h>\n__m128 compute(__m128 a, __m128 b) {\n  a = _mm_add_ss(a, b);\n  return _mm_add_ss(a, b);\n}\n",
+      "budgets": {
+        "max_rule_evidence_refs": 1
+      }
+    },
+    {
+      "case_id": "architecture-specific-fp-api-intrinsic-2",
+      "rule": "architecture-specific-fp-api",
+      "source": "#include <xmmintrin.h>\n__m128 compute(__m128 a, __m128 b) {\n  return _mm_sub_ss(a, b);\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-resolved-macro-2",
+      "rule": "architecture-specific-fp-api",
+      "source": "#include <xmmintrin.h>\n#define APPLY(x,y) _mm_sub_ss(x,y)\n__m128 compute(__m128 a, __m128 b) {\n  return APPLY(a, b);\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-evidence-budget-2",
+      "rule": "architecture-specific-fp-api",
+      "source": "#include <xmmintrin.h>\n__m128 compute(__m128 a, __m128 b) {\n  a = _mm_sub_ss(a, b);\n  return _mm_sub_ss(a, b);\n}\n",
+      "budgets": {
+        "max_rule_evidence_refs": 1
+      }
+    },
+    {
+      "case_id": "architecture-specific-fp-api-intrinsic-3",
+      "rule": "architecture-specific-fp-api",
+      "source": "#include <xmmintrin.h>\n__m128 compute(__m128 a, __m128 b) {\n  return _mm_mul_ss(a, b);\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-resolved-macro-3",
+      "rule": "architecture-specific-fp-api",
+      "source": "#include <xmmintrin.h>\n#define APPLY(x,y) _mm_mul_ss(x,y)\n__m128 compute(__m128 a, __m128 b) {\n  return APPLY(a, b);\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-evidence-budget-3",
+      "rule": "architecture-specific-fp-api",
+      "source": "#include <xmmintrin.h>\n__m128 compute(__m128 a, __m128 b) {\n  a = _mm_mul_ss(a, b);\n  return _mm_mul_ss(a, b);\n}\n",
+      "budgets": {
+        "max_rule_evidence_refs": 1
+      }
+    },
+    {
+      "case_id": "architecture-specific-fp-api-intrinsic-4",
+      "rule": "architecture-specific-fp-api",
+      "source": "#include <xmmintrin.h>\n__m128 compute(__m128 a, __m128 b) {\n  return _mm_div_ss(a, b);\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-intrinsic-5",
+      "rule": "architecture-specific-fp-api",
+      "source": "#include <xmmintrin.h>\n__m128 compute(__m128 a, __m128 b) {\n  return _mm_sqrt_ss(a);\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-intrinsic-6",
+      "rule": "architecture-specific-fp-api",
+      "source": "#include <xmmintrin.h>\n__m128 compute(__m128 a, __m128 b) {\n  return _mm_min_ss(a, b);\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-portable-1",
+      "rule": "architecture-specific-fp-api",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+b;\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-portable-2",
+      "rule": "architecture-specific-fp-api",
+      "source": "double compute(double a, double b, double c)\n{\n  return a-b;\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-portable-3",
+      "rule": "architecture-specific-fp-api",
+      "source": "double compute(double a, double b, double c)\n{\n  return a*b;\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-portable-4",
+      "rule": "architecture-specific-fp-api",
+      "source": "double compute(double a, double b, double c)\n{\n  return a/b;\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-portable-5",
+      "rule": "architecture-specific-fp-api",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+b+c;\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-portable-6",
+      "rule": "architecture-specific-fp-api",
+      "source": "double compute(double a, double b, double c)\n{\n  return a*b+c;\n}\n"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-suppression-lifecycle",
+      "rule": "architecture-specific-fp-api",
+      "source": "#include <xmmintrin.h>\n__m128 compute(__m128 a, __m128 b) {\n  return _mm_add_ss(a, b);\n}\n",
+      "suppressions": [
+        {
+          "code": "architecture-specific-fp-api",
+          "path": "main.c",
+          "start_line": 1,
+          "end_line": 100,
+          "reason": "固定范围抑制验收"
+        }
+      ]
+    },
+    {
+      "case_id": "architecture-specific-fp-api-exact-budget-boundary",
+      "rule": "architecture-specific-fp-api",
+      "source": "#include <xmmintrin.h>\n__m128 compute(__m128 a, __m128 b) {\n  return _mm_add_ss(a, b);\n}\n",
+      "budgets": {
+        "max_rule_candidates": 1,
+        "max_rule_assessments": 1
+      },
+      "standard": "c11"
+    },
+    {
+      "case_id": "floating-environment-suppression-lifecycle",
+      "rule": "floating-environment",
+      "source": "int fesetround(int);\nint compute(void) {\n  return fesetround(0);\n}\n",
+      "flags": [],
+      "standard": "c17",
+      "suppressions": [
+        {
+          "code": "floating-environment",
+          "path": "main.c",
+          "start_line": 1,
+          "end_line": 100,
+          "reason": "固定范围抑制验收"
+        }
+      ]
+    },
+    {
+      "case_id": "floating-environment-exact-budget-boundary",
+      "rule": "floating-environment",
+      "source": "int fesetround(int);\nint compute(void) {\n  return fesetround(0);\n}\n",
+      "flags": [],
+      "standard": "c11",
+      "budgets": {
+        "max_rule_candidates": 1,
+        "max_rule_assessments": 1
+      }
+    },
+    {
+      "case_id": "fma-contraction-suppression-lifecycle",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return a*b+c;\n}\n",
+      "flags": [
+        "-O2",
+        "-g",
+        "-ffast-math",
+        "-ffp-contract=fast"
+      ],
+      "bitcode": true,
+      "suppressions": [
+        {
+          "code": "fma-contraction",
+          "path": "main.c",
+          "start_line": 1,
+          "end_line": 100,
+          "reason": "固定范围抑制验收"
+        }
+      ]
+    },
+    {
+      "case_id": "fma-contraction-exact-budget-boundary",
+      "rule": "fma-contraction",
+      "source": "double compute(double a, double b, double c)\n{\n  return a*b+c;\n}\n",
+      "flags": [
+        "-O2",
+        "-g",
+        "-ffast-math",
+        "-ffp-contract=fast"
+      ],
+      "bitcode": true,
+      "budgets": {
+        "max_rule_candidates": 1,
+        "max_rule_assessments": 1
+      },
+      "standard": "c11"
+    },
+    {
+      "case_id": "fragile-fp-comparison-suppression-lifecycle",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return a==b;\n}\n",
+      "suppressions": [
+        {
+          "code": "fragile-fp-comparison",
+          "path": "main.c",
+          "start_line": 1,
+          "end_line": 100,
+          "reason": "固定范围抑制验收"
+        }
+      ]
+    },
+    {
+      "case_id": "fragile-fp-comparison-exact-budget-boundary",
+      "rule": "fragile-fp-comparison",
+      "source": "int compute(double a, double b, double c)\n{\n  return a==b;\n}\n",
+      "budgets": {
+        "max_rule_candidates": 1,
+        "max_rule_assessments": 1
+      },
+      "standard": "c11"
+    },
+    {
+      "case_id": "long-double-abi-suppression-lifecycle",
+      "rule": "long-double-abi",
+      "source": "long double external_value;\n",
+      "suppressions": [
+        {
+          "code": "long-double-abi",
+          "path": "main.c",
+          "start_line": 1,
+          "end_line": 100,
+          "reason": "固定范围抑制验收"
+        }
+      ]
+    },
+    {
+      "case_id": "long-double-abi-exact-budget-boundary",
+      "rule": "long-double-abi",
+      "source": "long double external_value;\n",
+      "budgets": {
+        "max_rule_candidates": 1,
+        "max_rule_assessments": 1
+      },
+      "standard": "c11"
+    },
+    {
+      "case_id": "math-library-variance-suppression-lifecycle",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return sqrt(a);\n}\n",
+      "libm": {
+        "source": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        },
+        "target": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": false,
+          "exceptions": true,
+          "special_values": "iec60559"
+        }
+      },
+      "suppressions": [
+        {
+          "code": "math-library-variance",
+          "path": "main.c",
+          "start_line": 1,
+          "end_line": 100,
+          "reason": "固定范围抑制验收"
+        }
+      ]
+    },
+    {
+      "case_id": "math-library-variance-exact-budget-boundary",
+      "rule": "math-library-variance",
+      "source": "#include <math.h>\ndouble compute(double a) {\n  return sqrt(a);\n}\n",
+      "libm": {
+        "source": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": true,
+          "exceptions": true,
+          "special_values": "iec60559"
+        },
+        "target": {
+          "implementation": "fixture-libm",
+          "version": "test-only",
+          "errno": false,
+          "exceptions": true,
+          "special_values": "iec60559"
+        }
+      },
+      "budgets": {
+        "max_rule_candidates": 1,
+        "max_rule_assessments": 1
+      },
+      "standard": "c11"
+    },
+    {
+      "case_id": "mixed-precision-conversion-suppression-lifecycle",
+      "rule": "mixed-precision-conversion",
+      "source": "float compute(double a)\n{\n  return a;\n}\n",
+      "suppressions": [
+        {
+          "code": "mixed-precision-conversion",
+          "path": "main.c",
+          "start_line": 1,
+          "end_line": 100,
+          "reason": "固定范围抑制验收"
+        }
+      ]
+    },
+    {
+      "case_id": "mixed-precision-conversion-exact-budget-boundary",
+      "rule": "mixed-precision-conversion",
+      "source": "float compute(double a)\n{\n  return a;\n}\n",
+      "budgets": {
+        "max_rule_candidates": 1,
+        "max_rule_assessments": 1
+      },
+      "standard": "c11"
+    },
+    {
+      "case_id": "reduction-reassociation-suppression-lifecycle",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  for(int i=0;i<n;++i) s+=a[i];\n  return s;\n}\n",
+      "suppressions": [
+        {
+          "code": "reduction-reassociation",
+          "path": "main.c",
+          "start_line": 1,
+          "end_line": 100,
+          "reason": "固定范围抑制验收"
+        }
+      ]
+    },
+    {
+      "case_id": "reduction-reassociation-exact-budget-boundary",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a, int n) {\n  double s=1.0;\n  for(int i=0;i<n;++i) s+=a[i];\n  return s;\n}\n",
+      "budgets": {
+        "max_rule_candidates": 1,
+        "max_rule_assessments": 1
+      },
+      "standard": "c11"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-suppression-lifecycle",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+b;\n}\n",
+      "flags": [
+        "-ffast-math"
+      ],
+      "suppressions": [
+        {
+          "code": "unsafe-fp-optimization",
+          "path": "main.c",
+          "start_line": 1,
+          "end_line": 100,
+          "reason": "固定范围抑制验收"
+        }
+      ]
+    },
+    {
+      "case_id": "unsafe-fp-optimization-exact-budget-boundary",
+      "rule": "unsafe-fp-optimization",
+      "source": "double compute(double a, double b, double c)\n{\n  return a+b;\n}\n",
+      "flags": [
+        "-ffast-math"
+      ],
+      "budgets": {
+        "max_rule_candidates": 1,
+        "max_rule_assessments": 1
+      },
+      "standard": "c11"
+    },
+    {
+      "case_id": "x87-excess-precision-suppression-lifecycle",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a+b)*c;\n}\n",
+      "flags": [
+        "-m32",
+        "-mno-sse",
+        "-mfpmath=387",
+        "-fexcess-precision=fast",
+        "-g"
+      ],
+      "bitcode": true,
+      "suppressions": [
+        {
+          "code": "x87-excess-precision",
+          "path": "main.c",
+          "start_line": 1,
+          "end_line": 100,
+          "reason": "固定范围抑制验收"
+        }
+      ]
+    },
+    {
+      "case_id": "x87-excess-precision-exact-budget-boundary",
+      "rule": "x87-excess-precision",
+      "source": "double compute(double a, double b, double c)\n{\n  return (a+b)*c;\n}\n",
+      "flags": [
+        "-m32",
+        "-mno-sse",
+        "-mfpmath=387",
+        "-fexcess-precision=fast",
+        "-g"
+      ],
+      "bitcode": true,
+      "budgets": {
+        "max_rule_candidates": 1,
+        "max_rule_assessments": 1
+      },
+      "standard": "c11"
+    },
+    {
+      "case_id": "reduction-reassociation-two-accumulators",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a,int n) {\n  double s=0,t=0;\n  for(int i=0;i<n;++i) { s+=a[i]; t+=a[i]; }\n  return s+t;\n}\n"
+    },
+    {
+      "case_id": "reduction-reassociation-mixed-unknown",
+      "rule": "reduction-reassociation",
+      "source": "double compute(double *a,int n) {\n  double s=0;\n  for(int i=0;i<n;++i) s+=a[i];\n  for(int j=0;j<n;++j) a[j]+=s;\n  return s;\n}\n"
+    }
+  ]
+}

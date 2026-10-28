@@ -1,0 +1,4610 @@
+{
+  "kind": "FloatingPointScannerValidationCorpus",
+  "schema_version": "1.0",
+  "reviewer": "独立编写的固定预期；人工审查遵循仓库 PR 流程",
+  "review_revision": "fix-reduction-finding-granularity-2026-10-28",
+  "observation_mode": "locations",
+  "cases": [
+    {
+      "case_id": "long-double-abi-global",
+      "fixture_digest": "73d825f03543042afc5713d814359df02131539cf871615403bdc97419885d79",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:1#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "独立公开 long double ABI 边界；x86 扩展精度与 RISC-V binary128 不同。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "long-double-abi-parameter",
+      "fixture_digest": "ab1c4c1a9164e45f16411f28848392704492744761bb2c75eefafbc2cd8bcd88",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:1#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "独立公开 long double ABI 边界；x86 扩展精度与 RISC-V binary128 不同。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "long-double-abi-return",
+      "fixture_digest": "282c877205c814c6c473c6712aaa7afb90fc98abe047389005f99eccc80983d1",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:1#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "独立公开 long double ABI 边界；x86 扩展精度与 RISC-V binary128 不同。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "long-double-abi-record",
+      "fixture_digest": "e35095fd8e17dd44be0e941f6f6755a051df56a3bbe7fba196e20124ad640d9a",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:2#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "独立公开 long double ABI 边界；x86 扩展精度与 RISC-V binary128 不同。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "long-double-abi-typedef",
+      "fixture_digest": "8dad8fcded3f35b19ed95a1c36d1bfd1d4c3e5d0f964a4e28fd5d9f514d8dfde",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:2#1"
+      ],
+      "diagnostic_codes": [
+        "unsupported_floating_fact"
+      ],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "独立公开 long double ABI 边界；x86 扩展精度与 RISC-V binary128 不同。 typedef 声明本身尚不映射为事实，应保留不支持诊断。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "partial"
+    },
+    {
+      "case_id": "long-double-abi-cpp-return",
+      "fixture_digest": "15bf895195c0c6e987cfe50d401eb26bb00fff73d6f68b08221999e8e5e531b8",
+      "language_standard": "c++17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.cpp:1#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "独立公开 long double ABI 边界；x86 扩展精度与 RISC-V binary128 不同。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "long-double-abi-double-global",
+      "fixture_digest": "f503b5a2583fc7748c73a31b05914794c8bea7ee506ec7fe0aa798277a28e851",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "无跨目标 long double 公开 ABI 边界。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "long-double-abi-float-param",
+      "fixture_digest": "fa1b753891a624c2a13449ddac0a101b3abed4943a72d2897324f4690d0979ae",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "无跨目标 long double 公开 ABI 边界。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "long-double-abi-local-long-double",
+      "fixture_digest": "94a01650919635416726e0112a7008194aa33ba8840411d4e8b869e1d29a3bea",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "无跨目标 long double 公开 ABI 边界。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "long-double-abi-integer-return",
+      "fixture_digest": "c1699460bef2c46657d0cdbfaa8d820a6640f45447fb8a85f9cd5af9cf73178c",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "无跨目标 long double 公开 ABI 边界。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "long-double-abi-double-record",
+      "fixture_digest": "0ee13acd2c5ff01f3a66ea37400fa6f2a73f1f539508a5242c441367fc4f6b70",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "无跨目标 long double 公开 ABI 边界。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "long-double-abi-empty",
+      "fixture_digest": "ba0899d91921abc05c1abceb665dea1c0dcbcd5a15395677a6d0ecbdbe2a01a2",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "无跨目标 long double 公开 ABI 边界。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "long-double-abi-unknown-global",
+      "fixture_digest": "bbf0fd6237a8cee74aa5d017cded4b84850920a789e8740230f84604d1c960e2",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "long_double_abi_profile_field_unknown"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "目标 ABI 分类未提供，不得推定迁移差异。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "long-double-abi-unknown-parameter",
+      "fixture_digest": "891335051775b11d9af2ef38370eb7c128482785703b23e38854bef8deaa7643",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "long_double_abi_profile_field_unknown"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "目标 ABI 分类未提供，不得推定迁移差异。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "long-double-abi-unknown-return",
+      "fixture_digest": "1e4e95718b79e183e196078376e7dc4be244aae96d1fc1ff84d8f109dfb47596",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "long_double_abi_profile_field_unknown"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "目标 ABI 分类未提供，不得推定迁移差异。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "x87-excess-precision-chain-1",
+      "fixture_digest": "e9d1b93774e24c6f201cac370064972b3737d78f9f6ec3e73786df97b8294748",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "x87 多步浮点运算具有扩展中间精度；提供真实 build-faithful IR。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "x87-excess-precision-standard-1",
+      "fixture_digest": "0c96ed1647cf7428c57c34bd410795aca26527ed9e12f005624d05991a4ab12d",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "相同多步表达式使用默认 SSE 标准求值，不能仅凭多步运算报告 x87 风险。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "x87-excess-precision-chain-2",
+      "fixture_digest": "0b19a39dacf9ee2ccb07d383b4f330bc2b9e15aa44e5422c27fddf702e23d18d",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "x87 多步浮点运算具有扩展中间精度；提供真实 build-faithful IR。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "x87-excess-precision-standard-2",
+      "fixture_digest": "5fcf1576f647d57fb34213e3fcda55ce5155238ff07f823e1709de0238f8d73a",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "相同多步表达式使用默认 SSE 标准求值，不能仅凭多步运算报告 x87 风险。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "x87-excess-precision-chain-3",
+      "fixture_digest": "df589e0ec55a1ebc8f3e297afa65f038fe6a5b357f2b9f32b67f56f4a9225c5c",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [
+        "source_mapping_incomplete"
+      ],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "x87 多步浮点运算具有扩展中间精度；提供真实 build-faithful IR。 同行复合运算不能完全唯一绑定，需保留映射不完整诊断；该规则仍有整体 IR 求值证据。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "x87-excess-precision-standard-3",
+      "fixture_digest": "d3b7cbe9d96323c19521c5c7c376676a9af9555fbb1df3ccf631ce5425a209b4",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "相同多步表达式使用默认 SSE 标准求值，不能仅凭多步运算报告 x87 风险。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "x87-excess-precision-chain-4",
+      "fixture_digest": "4e4f053f42233ed4598ad21ce7b9198488363fe78fb2057d79ecf97c043f9b0c",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [
+        "source_mapping_incomplete"
+      ],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "x87 多步浮点运算具有扩展中间精度；提供真实 build-faithful IR。 同行复合运算不能完全唯一绑定，需保留映射不完整诊断；该规则仍有整体 IR 求值证据。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "x87-excess-precision-standard-4",
+      "fixture_digest": "e4354140bf3e8ad8cf2295c4c191126cc3989e0558f43d50d19cf655536890cc",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "相同多步表达式使用默认 SSE 标准求值，不能仅凭多步运算报告 x87 风险。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "x87-excess-precision-chain-5",
+      "fixture_digest": "3a81f8316a43d1fccbfa71ec37391cb760c43d4242d86a83544f800f4dd4342b",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "x87 多步浮点运算具有扩展中间精度；提供真实 build-faithful IR。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "x87-excess-precision-standard-5",
+      "fixture_digest": "221ff5cf566ff4d13c4aca95073da8d36867e76a9fe16f8e5c978da38f3624ea",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "相同多步表达式使用默认 SSE 标准求值，不能仅凭多步运算报告 x87 风险。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "x87-excess-precision-chain-6",
+      "fixture_digest": "6eeff040d036059846cacef43559a10eb9e20b3c0dbbfb1a086c0843e42233af",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "x87 多步浮点运算具有扩展中间精度；提供真实 build-faithful IR。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "x87-excess-precision-standard-6",
+      "fixture_digest": "356d6befe0d51cc0063b063b6d59cd8458dc9f4beca0675629c52b9277d7428b",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "相同多步表达式使用默认 SSE 标准求值，不能仅凭多步运算报告 x87 风险。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "x87-excess-precision-missing-ir-1",
+      "fixture_digest": "220cf520b6a497ad9e7586ec1cecfb828637eaaf061288325ed3c7702d7892b0",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "x87_excess_precision_ir_evidence_missing"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "已启用 x87，但缺少 IR 证据，应保守 unknown。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "x87-excess-precision-missing-ir-2",
+      "fixture_digest": "6667bb885c378d5e2f48fb20c0402cf154801086f813c68703062dbda4e12359",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "x87_excess_precision_ir_evidence_missing"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "已启用 x87，但缺少 IR 证据，应保守 unknown。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "x87-excess-precision-missing-ir-3",
+      "fixture_digest": "b38d3adcc5edf1963502ec83ce70e472350c1d5c9bb27a64042430298542baf0",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "x87_excess_precision_ir_evidence_missing"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "已启用 x87，但缺少 IR 证据，应保守 unknown。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "fma-contraction-fused-1",
+      "fixture_digest": "5ba176aa78ff41c52190b384362fa4fd505f5bd6011c1fd05d6a7a4659a90c0f",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "可收缩乘加、fast contraction 与真实融合 IR 构成匹配证据。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fma-contraction-fused-2",
+      "fixture_digest": "c0e682a7134aa4e3ca5d3944b668bd54b724501f521fb6317382e2345f85c92f",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "可收缩乘加、fast contraction 与真实融合 IR 构成匹配证据。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fma-contraction-fused-3",
+      "fixture_digest": "f978b91e7dc9ce520cfd13fae0161fb40cf5509f01c4c5706ae5351787da4daa",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "可收缩乘加、fast contraction 与真实融合 IR 构成匹配证据。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fma-contraction-fused-4",
+      "fixture_digest": "97a612b01649f96c025f17a0472869cecf928867a3a09680a33dfa823db48b14",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "可收缩乘加、fast contraction 与真实融合 IR 构成匹配证据。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fma-contraction-fused-5",
+      "fixture_digest": "84fd3a3044f1638884bb04b8d62464d66ea5afdbfaf616d7ec619511c1c84ba5",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "可收缩乘加、fast contraction 与真实融合 IR 构成匹配证据。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fma-contraction-fused-6",
+      "fixture_digest": "0cdcf6cd961fee0ce9ba02b64d77e3977d021a8765502f6674c57d6f4dd3b7df",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "可收缩乘加、fast contraction 与真实融合 IR 构成匹配证据。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fma-contraction-non-fused-1",
+      "fixture_digest": "10008be7186a24264cffd82cb0df39a54bc40ac06afe0e37086b725029679219",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "没有乘加融合候选。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fma-contraction-non-fused-2",
+      "fixture_digest": "9035a67dbf7bfcd514bdae3aef2676507e73577e0e482ba89e9494666582c2fb",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "没有乘加融合候选。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fma-contraction-non-fused-3",
+      "fixture_digest": "513d640b0ea5caad3489738f343508bd21bbcce9d55bcc19f900ea25ba915ead",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "没有乘加融合候选。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fma-contraction-non-fused-4",
+      "fixture_digest": "8d5709a57006df7d7a2d540a3d89e90084f6e15e8f38e0f64a6d609dbfccb685",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "没有乘加融合候选。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fma-contraction-non-fused-5",
+      "fixture_digest": "278c70e02e440fb783e13248b15e6a372972961ee3222339648822379ca89a0e",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "没有乘加融合候选。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fma-contraction-non-fused-6",
+      "fixture_digest": "26cac44223ec91bcc00e08ee92f10fb17d9294e7756b65904fad9630eb92131e",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "没有乘加融合候选。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fma-contraction-missing-ir-1",
+      "fixture_digest": "976450553d1c3b843cb6fed439a6e0b67b072404d70f94da4761fdd93f17133a",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "fma_contraction_build_faithful_ir_missing"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "只有乘加 AST 候选，没有真实 build-faithful IR，不能判定已融合。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "fma-contraction-missing-ir-2",
+      "fixture_digest": "fe34c069aa0537bd2f9927a898b08980254c3573dc943797447581302d017ed7",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "fma_contraction_build_faithful_ir_missing"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "只有乘加 AST 候选，没有真实 build-faithful IR，不能判定已融合。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "fma-contraction-missing-ir-3",
+      "fixture_digest": "836a787d1441c55a313222e7b62798063ab4fbf587fa3ca1cc20f974daafe001",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "fma_contraction_build_faithful_ir_missing"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "只有乘加 AST 候选，没有真实 build-faithful IR，不能判定已融合。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "fma-contraction-complex-binding-1",
+      "fixture_digest": "a167288d266a5729bbd4cf568a7ac3861db8acb0230ec54dd7e3cc89faa37f3f",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "fma_contraction_binding_ambiguous",
+        "source_mapping_incomplete"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "同一位置多个算术候选，现有 AST/IR 映射不能证明唯一融合归属；不得借共享 IR 升级为确定匹配。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "fma-contraction-complex-binding-2",
+      "fixture_digest": "383c5075c80265fcb90dafb3f3e2881457aaeddece8edce7d0a37b4a01edfcbf",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "fma_contraction_binding_ambiguous",
+        "source_mapping_incomplete"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "同一位置多个算术候选，现有 AST/IR 映射不能证明唯一融合归属；不得借共享 IR 升级为确定匹配。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "fma-contraction-complex-binding-3",
+      "fixture_digest": "ba85f6d9e9931951badfc0c58efcb6aabc125c6c017923d2c080ed04ccba2642",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "fma_contraction_binding_ambiguous",
+        "source_mapping_incomplete"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "同一位置多个算术候选，现有 AST/IR 映射不能证明唯一融合归属；不得借共享 IR 升级为确定匹配。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-hazard-1",
+      "fixture_digest": "701812fb8ad5dfea0c07f56078f3aa9172da82b07ef94ffd97b9c5bdad8de9a7",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:1#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "编译选项 -ffast-math 放松浮点语义，配置级结果包含返回类型、三个参数和算术事实，共五个位置。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        5
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-hazard-2",
+      "fixture_digest": "8dcd7c10d174ba5f95189e26f37f8278c9bb16c32cad6ddba3724e82e8ab0f5e",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:1#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "编译选项 -fno-signed-zeros 放松浮点语义，配置级结果包含返回类型、三个参数和算术事实，共五个位置。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        5
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-hazard-3",
+      "fixture_digest": "7f51ba758f1135cffb3e302404608acc7d4eb01eb82025392e3250a47f88f1da",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:1#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "编译选项 -fno-honor-nans 放松浮点语义，配置级结果包含返回类型、三个参数和算术事实，共五个位置。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        5
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-hazard-4",
+      "fixture_digest": "33ee7188ed70515eb63cf19b93cc6ea585e65f3a74ce83280d89108c2ca719ce",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:1#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "编译选项 -fno-honor-infinities 放松浮点语义，配置级结果包含返回类型、三个参数和算术事实，共五个位置。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        5
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-hazard-5",
+      "fixture_digest": "1a5cbbef2fcda24185c08542303dadca0d2d05a5fcf2d9c4fff1818e18dfbec7",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:1#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "编译选项 -fno-math-errno 放松浮点语义，配置级结果包含返回类型、三个参数和算术事实，共五个位置。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        5
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-hazard-6",
+      "fixture_digest": "64a16abe86a32415b9406509934b43de7a570e663469b21eae7fb86189d3033a",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:1#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "编译选项 -fno-trapping-math 放松浮点语义，配置级结果包含返回类型、三个参数和算术事实，共五个位置。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        5
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-strict-1",
+      "fixture_digest": "5340ee506a01ed4acdb618c327fcd22204700ff0ddcc649ae98b2f3056462090",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "严格默认选项没有不安全语义。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-strict-2",
+      "fixture_digest": "2c1f0cddd8c9bb8025fd5f44c521d9dd2b2dd2344fe8abacfdc5e9b6acfd4416",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "严格默认选项没有不安全语义。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-strict-3",
+      "fixture_digest": "4ea66be0a7506139324dd6169c971ad7c08228a726869dcdcf57ede3d8df71b1",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "严格默认选项没有不安全语义。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-strict-4",
+      "fixture_digest": "4e1d74f4a38546c82c109f0cf30f3649d21ea96550a6d022aad4c2d84f9e17f3",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "严格默认选项没有不安全语义。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-strict-5",
+      "fixture_digest": "c01fef2fc7ce0a6156224fc209ef43897afef5c291c85bd8d859d80247cde01a",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "严格默认选项没有不安全语义。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-strict-6",
+      "fixture_digest": "a46ccfe07031a5582390377bcf90dfae8b758d91543c8c7e6f6a1fe946cc9930",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "严格默认选项没有不安全语义。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-option-ir-conflict-1",
+      "fixture_digest": "190c48e36e8262118411c29b6f6bb2426b9b375a5f830adb61fc9f641138998a",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "unsafe_fp_optimization_option_ir_conflict"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "故意提供 fast IR 与严格 AST 编译上下文，必须报告冲突而非确定风险。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-option-ir-conflict-2",
+      "fixture_digest": "bd9b993ff38922559d57c8347ed1708e5eccd53a13497511a35fff228b08ee97",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "unsafe_fp_optimization_option_ir_conflict"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "故意提供 fast IR 与严格 AST 编译上下文，必须报告冲突而非确定风险。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-option-ir-conflict-3",
+      "fixture_digest": "b1ae5944f6c4fc24339ee0fd12a07afa67ffb19a2c3245b8f0acddab17cb047e",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "unsafe_fp_optimization_option_ir_conflict"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "故意提供 fast IR 与严格 AST 编译上下文，必须报告冲突而非确定风险。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "floating-environment-conflict-1",
+      "fixture_digest": "8ce78055c22ad6dada0dc7d83b1fad767b669d705269213e012133352ed2c5e6",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "浮点环境操作与 rounding/trapping 编译选项冲突。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "floating-environment-compatible-1",
+      "fixture_digest": "ae2d4a386eda4d3f141615509bb817688dee6601cfdc4ace38bac5cb844875f4",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "已启用环境语义对应的编译选项，不产生选项冲突。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "floating-environment-conflict-2",
+      "fixture_digest": "783aed4666be2a0324dfb593314409e27fa60a08d7db148e586d44110ca322c5",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "浮点环境操作与 rounding/trapping 编译选项冲突。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "floating-environment-compatible-2",
+      "fixture_digest": "3d55d6254bb0ba5d2acac3f96995e96f1b922a89baa8c76f25961a99816d2ac5",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "已启用环境语义对应的编译选项，不产生选项冲突。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "floating-environment-conflict-3",
+      "fixture_digest": "e73c87a99fd7a4ccbf938360b2fa216eb84e2a516ce8c56a818663d3b9054e16",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "浮点环境操作与 rounding/trapping 编译选项冲突。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "floating-environment-compatible-3",
+      "fixture_digest": "9f51167084021113234d1c90424a6894ad80a1352d5b83d7d95ba534ccc9f4d0",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "已启用环境语义对应的编译选项，不产生选项冲突。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "floating-environment-conflict-4",
+      "fixture_digest": "d36412f301f5708bcebbd4b102116469c60a3c45545e412910ace2f9681ea9f3",
+      "language_standard": "c++17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.cpp:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "浮点环境操作与 rounding/trapping 编译选项冲突。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "floating-environment-compatible-4",
+      "fixture_digest": "dd8844055bf4a72cf7f772df449e9a23e73c8091ed81d3aa6298eb0370f621e4",
+      "language_standard": "c++17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "已启用环境语义对应的编译选项，不产生选项冲突。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "floating-environment-conflict-5",
+      "fixture_digest": "8a161a64ef9cc0a5b1cd3a23ffee064ffb3d428b6865d6abf51e729c3d33de57",
+      "language_standard": "c++17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.cpp:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "浮点环境操作与 rounding/trapping 编译选项冲突。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "floating-environment-compatible-5",
+      "fixture_digest": "6e5b28ed70a939d9aa2989539f941e28d25af55ff6aaea6e4bbd0c2e2eb6ce50",
+      "language_standard": "c++17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "已启用环境语义对应的编译选项，不产生选项冲突。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "floating-environment-conflict-6",
+      "fixture_digest": "41755c1077bf1f0072796786eb4e363a82e3630cdcba99838bc801c860218fa7",
+      "language_standard": "c++17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.cpp:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "浮点环境操作与 rounding/trapping 编译选项冲突。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "floating-environment-compatible-6",
+      "fixture_digest": "f2fd0873a00eed4a1af6b44c350d77a4927f1167e56e1bafe781b4ab65d872b3",
+      "language_standard": "c++17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "已启用环境语义对应的编译选项，不产生选项冲突。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "floating-environment-unknown-profile-1",
+      "fixture_digest": "357c621741cd6c9286269cf5705dab9d182fb713b7f9b90cf82dc8d6230a4136",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "floating_environment_profile_field_unknown"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "目标环境能力未知，应停止确定判断。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "floating-environment-unknown-profile-2",
+      "fixture_digest": "a69e744501b4352746c9dde21ea08aac50fa6dcc42ea74ac4777fccc25182163",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "floating_environment_profile_field_unknown"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "目标环境能力未知，应停止确定判断。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "floating-environment-unknown-profile-3",
+      "fixture_digest": "6330a3186a71e9af67a9cb8c4432c11f561c101972eab7eefc8e0f2cacc31ec9",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "floating_environment_profile_field_unknown"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "目标环境能力未知，应停止确定判断。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "mixed-precision-conversion-double-float",
+      "fixture_digest": "1fbba7de97ccaf4b34eb79e11463dcbb3491ad615390189c6acbd9939f610527",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "隐式转换的有效精度不足，且常量（若有）不可精确表示。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "mixed-precision-conversion-int-float",
+      "fixture_digest": "d1595c5811fc8186bf81119681f5d411ea5211fb0286e3e2e11072d73f09c9e9",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "隐式转换的有效精度不足，且常量（若有）不可精确表示。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "mixed-precision-conversion-long-double",
+      "fixture_digest": "b83b1673fb411218e91650e2e507f0dc2c3d23f12eed7d2ff3229811f60744f3",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "隐式转换的有效精度不足，且常量（若有）不可精确表示。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "mixed-precision-conversion-unsigned-float",
+      "fixture_digest": "3d8b447ce98a01575f8115262c8fc4404cee18f064e05af9e8b3a579717c9519",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "隐式转换的有效精度不足，且常量（若有）不可精确表示。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "mixed-precision-conversion-constant-inexact",
+      "fixture_digest": "d91f2c1de32be5022903908634aa49e59a6d91e0e84d41594b382076ab8c5015",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "隐式转换的有效精度不足，且常量（若有）不可精确表示。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "mixed-precision-conversion-integer-boundary",
+      "fixture_digest": "5b516ffb3ffc99621fbef1aacd90ee5428893cc7692860dcb390ecadba1ae78d",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "隐式转换的有效精度不足，且常量（若有）不可精确表示。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "mixed-precision-conversion-widen",
+      "fixture_digest": "caceadaadec824554394c63da6ba4b82edacf3664930a55214e89235ced1067b",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "宽化、显式转换或可精确表示的窄化，不报隐式精度损失。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "mixed-precision-conversion-explicit",
+      "fixture_digest": "0af9fc8e990c5b00e87e9281c67e20d5026a3b0f02a18108c0ca87c71cb663f5",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "宽化、显式转换或可精确表示的窄化，不报隐式精度损失。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "mixed-precision-conversion-one",
+      "fixture_digest": "cc33666023e19e0b9baf659b908476013a9d9b5c06cf9f5ecdb67cb93f3883cd",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "宽化、显式转换或可精确表示的窄化，不报隐式精度损失。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "mixed-precision-conversion-power-two",
+      "fixture_digest": "fe8fc392d3883ed7a294ebacc5865314f5bebf66ee5e817423b903caaa648742",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "宽化、显式转换或可精确表示的窄化，不报隐式精度损失。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "mixed-precision-conversion-short-float",
+      "fixture_digest": "869d59205ccc83d0b10dedc67cc171997728868fb386db34ede5fcb355e9b0c8",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "宽化、显式转换或可精确表示的窄化，不报隐式精度损失。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "mixed-precision-conversion-fraction",
+      "fixture_digest": "bb4ba755205a8069d0979dda9848d5ecb6b48f89f9ea68618c01a2412e2a618f",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "宽化、显式转换或可精确表示的窄化，不报隐式精度损失。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "mixed-precision-conversion-unsupported-extension-1",
+      "fixture_digest": "39e9161f99896b061c9ab105f85ca6bf76774e4c3026d2d7b98b5a0263d3a727",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "mixed_precision_conversion_conversion_type_unknown"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "__float128 扩展精度未在当前规则中建模，不得按 double 或 long double 猜测。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "mixed-precision-conversion-unsupported-extension-2",
+      "fixture_digest": "36302822da60699a57bd3a24aab00d6910b408a13893f19a36dfec52036038c8",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "mixed_precision_conversion_conversion_type_unknown"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "__float128 扩展精度未在当前规则中建模，不得按 double 或 long double 猜测。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "mixed-precision-conversion-unsupported-extension-3",
+      "fixture_digest": "27a52a02feb2c2a2e7adba50a73a85a9dd9f4102e022f10cdd0620e2a51ab06b",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "mixed_precision_conversion_conversion_type_unknown"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "__float128 扩展精度未在当前规则中建模，不得按 double 或 long double 猜测。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "fragile-fp-comparison-equality-1",
+      "fixture_digest": "fe02793c9b530041d59c2c72dd29830bdff1a653139f5a0839e3725c7282d10c",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "浮点非零精确相等/不等比较，需要人工确认。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fragile-fp-comparison-equality-2",
+      "fixture_digest": "7dd75d2e96f120cde0a3b7cd228a5ae24299e25eca717eb378a4977f7ae16927",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "浮点非零精确相等/不等比较，需要人工确认。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fragile-fp-comparison-equality-3",
+      "fixture_digest": "fda22b86461b98d9ec641f90bae31c2a12d62f4681b9b5f9a76fc44af79501a4",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "浮点非零精确相等/不等比较，需要人工确认。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fragile-fp-comparison-equality-4",
+      "fixture_digest": "af28a2a6f175794ba8ccbd177105c16d4fe89823cb66dc2c4de72bcc0f4abeef",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "浮点非零精确相等/不等比较，需要人工确认。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fragile-fp-comparison-equality-5",
+      "fixture_digest": "5353a62d8cf505f86393fdb2a9df5a71c55f758ff314eda7fc53a2ab7dcd8270",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "浮点非零精确相等/不等比较，需要人工确认。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fragile-fp-comparison-equality-6",
+      "fixture_digest": "6124340dddad3e795423f4cd51b7e115266cd7d64231e874d64764b5ea438706",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "浮点非零精确相等/不等比较，需要人工确认。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fragile-fp-comparison-safe-comparison-1",
+      "fixture_digest": "3c3a332cfd2b42f4a23541962322cdf0351f013ee0cb169fe42c9cb78a608bcb",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "零比较或有序大小比较不属于脆弱精确比较规则。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fragile-fp-comparison-safe-comparison-2",
+      "fixture_digest": "97781ee280d27ffceae2afdf7d453a5b7f2dd9c62b520e06ae3dcc43b53c8651",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "零比较或有序大小比较不属于脆弱精确比较规则。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fragile-fp-comparison-safe-comparison-3",
+      "fixture_digest": "caa34a0cffb2cc7b2e9f306874f52f18e14625de43c7fecef8359b8e4b11c713",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "零比较或有序大小比较不属于脆弱精确比较规则。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fragile-fp-comparison-safe-comparison-4",
+      "fixture_digest": "92b6238ddc36ca3c1f8e6d6048439da52e05102aaa6a04f1c9b4b5f2c9849051",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "零比较或有序大小比较不属于脆弱精确比较规则。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fragile-fp-comparison-safe-comparison-5",
+      "fixture_digest": "dff81f4e0d68e86f256a1d608b5ba3cb36be17b1f1790f07a565e7c8ce1d84ca",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "零比较或有序大小比较不属于脆弱精确比较规则。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fragile-fp-comparison-safe-comparison-6",
+      "fixture_digest": "c50f2187d842451ef2f1ef9ab929ab6d28bef44bf23d9daeb761b711f80894a1",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "零比较或有序大小比较不属于脆弱精确比较规则。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fragile-fp-comparison-evidence-budget-1",
+      "fixture_digest": "9d12ffab6f64d9d4b96ae733a31844b92cb85ce3a2e91b4ba23e94fbf43b7e18",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "fragile_fp_comparison_provenance_budget_exceeded"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": true,
+      "review_basis": "证据引用预算不足，比较候选保持 unknown。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "fragile-fp-comparison-evidence-budget-2",
+      "fixture_digest": "f2c40c72c396ba4c943f2a4458a0e5b6d3bd17feb0669adec2df4285fcd6c998",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "fragile_fp_comparison_provenance_budget_exceeded"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": true,
+      "review_basis": "证据引用预算不足，比较候选保持 unknown。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "fragile-fp-comparison-evidence-budget-3",
+      "fixture_digest": "38be79176fe9a7f3eb1ecfea3e85044bd1a64c2bbcea91d5c58ac6af6d35d99d",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "fragile_fp_comparison_provenance_budget_exceeded"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": true,
+      "review_basis": "证据引用预算不足，比较候选保持 unknown。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "reduction-reassociation-for",
+      "fixture_digest": "0d209d5ea7bebbc02f8d0ddfe1183f5e9767a079b51c9ae9e76a918fa42e2451",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "循环内独立浮点累加器递推；AST-only 应给出 heuristic Finding。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-while",
+      "fixture_digest": "8ed6e688b67fea29001614391b53cd02f41df0b973d0d9456330ac5d3167550b",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "循环内独立浮点累加器递推；AST-only 应给出 heuristic Finding。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-do",
+      "fixture_digest": "b4df6d13efbae1d0d21ca0d99c0dd55e66e07089ac70e61863fb2e8fa703740a",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "循环内独立浮点累加器递推；AST-only 应给出 heuristic Finding。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-product",
+      "fixture_digest": "08dedaa0f5c0eec9c09f572ff6b92f89494f4ec7001950f36b6ccc2b05ff9c9e",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "循环内独立浮点累加器递推；AST-only 应给出 heuristic Finding。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-subtract",
+      "fixture_digest": "04e78f4c882efde50c465524c261c14c4ea6c72db593e98af21c42499efb28ba",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "循环内独立浮点累加器递推；AST-only 应给出 heuristic Finding。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-cpp-for",
+      "fixture_digest": "2d3290c41404218c021447a3166513a4b6add05f89df23bc020e222917345fe1",
+      "language_standard": "c++20",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.cpp:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "循环内独立浮点累加器递推；AST-only 应给出 heuristic Finding。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-outside-loop",
+      "fixture_digest": "baf13ad1740d65a155df45fac2017761cdda24cb38cf951f6209e715132c3e00",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "unsupported_floating_fact"
+      ],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "没有循环中的浮点归约递推。 循环外复合赋值尚未映射为普通算术事实，应保留诊断。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "partial"
+    },
+    {
+      "case_id": "reduction-reassociation-assignment",
+      "fixture_digest": "2a6a683f19c8a64a49e511366ddc80198643aa1ff95f828967fa023759569fd9",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "没有循环中的浮点归约递推。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-integer",
+      "fixture_digest": "27fcd7bc6914ea1f0371f7d95f7dff457c1ed5b612a5a9abb499c07d7bf96585",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "没有循环中的浮点归约递推。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-empty-loop",
+      "fixture_digest": "2e16d1926a39ffd50ba8f81989528f89e839fefa712956801a36a6b52d0cafec",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "没有循环中的浮点归约递推。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-no-loop",
+      "fixture_digest": "cc51f170f5810848775db87d813cbf4852b2e8f2ef28ae11d1dfb274c8c9e466",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "没有循环中的浮点归约递推。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-comparison",
+      "fixture_digest": "7f912c18f858ad75c075960dc49cfa07dc04c20ee59ef1ac128e6444edb3b8fe",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "没有循环中的浮点归约递推。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-ambiguous-1",
+      "fixture_digest": "ff56b5d8359050afd48c497c1a03de434b1fde71dbf03ada067dc0645865d636",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "reduction_reassociation_reduction_identity_unknown"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "复杂左值无法唯一识别累加器，或同累加器混合不同归约操作，应局部 unknown。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "reduction-reassociation-ambiguous-2",
+      "fixture_digest": "dd9a89be9be20cd3703172c5f5e70d4e7fe8d0f26cb69a43c46f0fb57feb5250",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "reduction_reassociation_reduction_identity_unknown"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "复杂左值无法唯一识别累加器，或同累加器混合不同归约操作，应局部 unknown。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "reduction-reassociation-ambiguous-3",
+      "fixture_digest": "ba11f630bef2db861375ac3e676137a1eb493d6754303d6e7fdae4829c7238b0",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "reduction_reassociation_reduction_recurrence_ambiguous"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "复杂左值无法唯一识别累加器，或同累加器混合不同归约操作，应局部 unknown。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "reduction-reassociation-two-loops",
+      "fixture_digest": "3c97028d2793ce53c340fb796372c354bfeda7eaa48c6fb70a4a0a5d0c877c94",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1",
+        "main.c:4#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "同函数复用累加器的两个独立循环必须产生两条结果，不能聚合。",
+      "assessment_statuses": [
+        "matched",
+        "matched"
+      ],
+      "affected_counts": [
+        1,
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-two-functions",
+      "fixture_digest": "00bab0d2e562c8d411815c994856c269e95ed0b23cebb21beae47746574874d0",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:10#1",
+        "main.c:3#1",
+        "main.c:4#1",
+        "main.c:9#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "同一编译单元两个函数、四个循环必须保持四个独立候选。",
+      "assessment_statuses": [
+        "matched",
+        "matched",
+        "matched",
+        "matched"
+      ],
+      "affected_counts": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-single-point-suppression",
+      "fixture_digest": "5d64eccfe0f1910d7a2e7a34981478d6a6199bd93992748050d5c42a54b2e921",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:4#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "抑制第一个循环后第二个仍可见，审计记录必须为一条。",
+      "assessment_statuses": [
+        "matched",
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 1,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-candidate-budget",
+      "fixture_digest": "d70233ea7f0576eb67e4fa20d0076b891742fa5e1e9029111b188fa63537e14f",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [
+        "reduction_reassociation_budget_exceeded"
+      ],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "候选预算为一时保留第一条匹配，第二条明确 unknown。",
+      "assessment_statuses": [
+        "matched",
+        "unknown"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "partial"
+    },
+    {
+      "case_id": "math-library-variance-sqrt",
+      "fixture_digest": "470dec1d348ad44de6aad3d1a5ba93353c7b89c90ff7c02643924c27f0f56089",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "固定 libm overlay 的 errno 契约不同；仅验证规则，不宣称真实平台库不同。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "math-library-variance-equal-sqrt",
+      "fixture_digest": "8db36bbc48532eb67e9aee85e199b228ad5e4eec856876bd21e4540682be4121",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "两端 libm 语义契约相同，函数名本身不足以判定迁移风险。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "math-library-variance-missing-context-sqrt",
+      "fixture_digest": "628aa8c5911ac4776f3d8b3ce6d1e32ba90edc0efe12733af9062a927abe4d77",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "math_library_variance_libm_context_missing"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "缺少已绑定构建环境，不能从函数名推断库差异。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "math-library-variance-sin",
+      "fixture_digest": "c006d8f95b034286c97f0d25aef816eadcdbc2f1131c609314c4b14c4526e572",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "固定 libm overlay 的 errno 契约不同；仅验证规则，不宣称真实平台库不同。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "math-library-variance-equal-sin",
+      "fixture_digest": "6f87e5a174efd5e14fef35cd8421f4fc82a9b469e3eea53381ca60c2de7140eb",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "两端 libm 语义契约相同，函数名本身不足以判定迁移风险。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "math-library-variance-missing-context-sin",
+      "fixture_digest": "14321acbfdeecbc45a92262fbd374d530296ae90f0f170f5d7c13014720c47c1",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "math_library_variance_libm_context_missing"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "缺少已绑定构建环境，不能从函数名推断库差异。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "math-library-variance-cos",
+      "fixture_digest": "11c360b8f55fce4c8dab018590a09479233853eeb0af8d760caf41458fb84b00",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "固定 libm overlay 的 errno 契约不同；仅验证规则，不宣称真实平台库不同。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "math-library-variance-equal-cos",
+      "fixture_digest": "5e1016869af8934693749c98b6235a444fbf1c569251d4f2d6d164d2b2e17bf0",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "两端 libm 语义契约相同，函数名本身不足以判定迁移风险。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "math-library-variance-missing-context-cos",
+      "fixture_digest": "5e587f33b0a44905dde4b8cf1adb5b58cfb187a53646ded11efb8db895740a41",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "math_library_variance_libm_context_missing"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": false,
+      "review_basis": "缺少已绑定构建环境，不能从函数名推断库差异。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "math-library-variance-exp",
+      "fixture_digest": "3162cfc0ff30cc176e42d6cf9541e5be000a3346415da23e83e05c62ceaf8562",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "固定 libm overlay 的 errno 契约不同；仅验证规则，不宣称真实平台库不同。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "math-library-variance-equal-exp",
+      "fixture_digest": "c9b074474a52dc5d955cee63b1d30be91c4e9c5d93255959a676a0c45243700e",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "两端 libm 语义契约相同，函数名本身不足以判定迁移风险。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "math-library-variance-log",
+      "fixture_digest": "5f2708f16114fc449b01e95f0b3242cfb4a9720865434e67d67fbe8a436fa080",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "固定 libm overlay 的 errno 契约不同；仅验证规则，不宣称真实平台库不同。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "math-library-variance-equal-log",
+      "fixture_digest": "fca9f7d99fa739da68922f8b70820ebad39c14aa2e17c144dc545b9e45c8b66d",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "两端 libm 语义契约相同，函数名本身不足以判定迁移风险。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "math-library-variance-tan",
+      "fixture_digest": "fd667ccb8aef18a5111bfb306109cf9551ad66aee1ea8f15dd6a0f331c228542",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "固定 libm overlay 的 errno 契约不同；仅验证规则，不宣称真实平台库不同。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "math-library-variance-equal-tan",
+      "fixture_digest": "bd95a84c9cad75786a545e057ac9c0b9703f25e1fd620ee6a3810cfc2a90a3a5",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "两端 libm 语义契约相同，函数名本身不足以判定迁移风险。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-intrinsic-1",
+      "fixture_digest": "d73da099523f7384f85dee36fa157ea8019aabbf84a40b8319bde9592fe67cce",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "已解析的 x86 SSE 浮点 intrinsic 在 RISC-V 目标上需要替换。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-resolved-macro-1",
+      "fixture_digest": "c456fbd83071065bb8a168272eaa535570e30b27657252656aa224f39048e9d2",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:4#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "宏展开仍解析到唯一的 x86 intrinsic 声明，且没有目标保护或可移植替代，保留架构迁移风险。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-evidence-budget-1",
+      "fixture_digest": "c0e0c6fff6d2f3295a997b1fa846003a1ea359f57258cd7813ccc826237c0ead",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "architecture_specific_fp_api_provenance_budget_exceeded"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": true,
+      "review_basis": "两个架构 API 位置至少需要两条直接证据；预算为一不能生成不完整 Finding。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-intrinsic-2",
+      "fixture_digest": "30ac55c918f6e86dd2c10b50d0d8c2a0c18cbaf6416daae9d2912f29f648c952",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "已解析的 x86 SSE 浮点 intrinsic 在 RISC-V 目标上需要替换。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-resolved-macro-2",
+      "fixture_digest": "ff9fedc550196ebc2543480a04c988e6d9868ec544ebdbbd8a54d9b713637982",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:4#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "宏展开仍解析到唯一的 x86 intrinsic 声明，且没有目标保护或可移植替代，保留架构迁移风险。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-evidence-budget-2",
+      "fixture_digest": "fc7db3bd2af4e3e441b540920c0384b58e922d92672b53a876214e09cd949499",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "architecture_specific_fp_api_provenance_budget_exceeded"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": true,
+      "review_basis": "两个架构 API 位置至少需要两条直接证据；预算为一不能生成不完整 Finding。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-intrinsic-3",
+      "fixture_digest": "2233f6c94ab9944b2d481d4bbc317a250d2267a27c689bee85d365edb786e284",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "已解析的 x86 SSE 浮点 intrinsic 在 RISC-V 目标上需要替换。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-resolved-macro-3",
+      "fixture_digest": "0404c5436acc2fbcc590c8247e71f093937b8f9bc8920ecb7acf1ec81a82cb86",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:4#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "宏展开仍解析到唯一的 x86 intrinsic 声明，且没有目标保护或可移植替代，保留架构迁移风险。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-evidence-budget-3",
+      "fixture_digest": "6d5df1578da1a7807ef592eba40a87062f45cac5b7d72c7c565cdd50a13a6aa4",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "unknown",
+      "finding_keys": [],
+      "diagnostic_codes": [
+        "architecture_specific_fp_api_provenance_budget_exceeded"
+      ],
+      "suppression_ids": [],
+      "unsupported": true,
+      "lifecycle": true,
+      "review_basis": "两个架构 API 位置至少需要两条直接证据；预算为一不能生成不完整 Finding。 根据公开退出码契约，全部必需 assessment 均 unknown、没有可用判断时 scan 为 failed。",
+      "assessment_statuses": [
+        "unknown"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "failed"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-intrinsic-4",
+      "fixture_digest": "9b6196a4fa550e1d114664683325efbcc2141791a1b093b246d4037266bdb795",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "已解析的 x86 SSE 浮点 intrinsic 在 RISC-V 目标上需要替换。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-intrinsic-5",
+      "fixture_digest": "14d5c6d42187e9583b951eccef86adce1174590271f2c5e45c3d7b8c33474ad8",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "已解析的 x86 SSE 浮点 intrinsic 在 RISC-V 目标上需要替换。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-intrinsic-6",
+      "fixture_digest": "8af08427a046e89f956a37272cab8f8a34b2c5b723b8489bd16b38c5c709a471",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "已解析的 x86 SSE 浮点 intrinsic 在 RISC-V 目标上需要替换。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-portable-1",
+      "fixture_digest": "ab2ded913b7d06cf0c8bb83d38d94e716e094e77c180dc73aad3aefbca7a56a7",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "可移植标量表达式没有架构专有 API。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-portable-2",
+      "fixture_digest": "4bbb62e8dea265dad21ba1325cd137971592c0ddc51f8c6e12858853e55e6201",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "可移植标量表达式没有架构专有 API。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-portable-3",
+      "fixture_digest": "5286a064c362e7ae00497ceca8c7af3f034258ad1a4472be3810e2f97a8b8fbd",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "可移植标量表达式没有架构专有 API。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-portable-4",
+      "fixture_digest": "7884406203f6eb82dfa058e6069325b4dca4721bcaf7537f8d796def2a262f38",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "可移植标量表达式没有架构专有 API。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-portable-5",
+      "fixture_digest": "f98faf33ff826637d7d43e78d4b32aff1d4c56c906074409b975fc4c9d625dee",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "可移植标量表达式没有架构专有 API。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-portable-6",
+      "fixture_digest": "1f4b84c5906f46a8624875bd627de37b41a1dbf168710b68bedf452590d2cbd6",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "not_matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": false,
+      "review_basis": "可移植标量表达式没有架构专有 API。",
+      "assessment_statuses": [
+        "not_matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-suppression-lifecycle",
+      "fixture_digest": "37d9c9a3b2db3aebd31c120aac6f7c1b338f80c05ffda2a23fa8159d210cb77d",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "范围抑制隐藏该规则的单个结果，保留原 matched assessment 和一条审计记录。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 1,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "architecture-specific-fp-api-exact-budget-boundary",
+      "fixture_digest": "d09f28005c642fb022087f4a291219e722fb0ece907f4e6ecfb1c5bcdd4305b9",
+      "language_standard": "c11",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "architecture-specific-fp-api",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "C11 下恰好一个候选与一条 assessment，预算不应误报超限。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "floating-environment-suppression-lifecycle",
+      "fixture_digest": "c734ee5d14c3c602f0daeb1dfdf3f24a0d47de70c46a06562b5c043188c40de4",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "范围抑制隐藏该规则的单个结果，保留原 matched assessment 和一条审计记录。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 1,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "floating-environment-exact-budget-boundary",
+      "fixture_digest": "8c4fd20c5dabaea9edd9f83d27809312319164b49be2a2422c6cab03146c39f7",
+      "language_standard": "c11",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "floating-environment",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "C11 下恰好一个候选与一条 assessment，预算不应误报超限。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fma-contraction-suppression-lifecycle",
+      "fixture_digest": "977b61be7e3fa118c82fe6a0cb4a7940469daa01430a1e341ef0c426f205ec3d",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "范围抑制隐藏该规则的单个结果，保留原 matched assessment 和一条审计记录。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 1,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fma-contraction-exact-budget-boundary",
+      "fixture_digest": "dd25a71d5d6f3ac3effa274b2cedf1d0d94a2ea991e317f53aa10edd70aaf104",
+      "language_standard": "c11",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fma-contraction",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "C11 下恰好一个候选与一条 assessment，预算不应误报超限。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fragile-fp-comparison-suppression-lifecycle",
+      "fixture_digest": "c3ba287ea2fef58d49dbb8fe75e9e88157389dcf1bfe12a989f9ff26dd15f3c0",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "范围抑制隐藏该规则的单个结果，保留原 matched assessment 和一条审计记录。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 1,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "fragile-fp-comparison-exact-budget-boundary",
+      "fixture_digest": "ba5a2b0c0cb2e4f669ab10f35054606523acfd903f73f815b74ca2aef31fe171",
+      "language_standard": "c11",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "fragile-fp-comparison",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "C11 下恰好一个候选与一条 assessment，预算不应误报超限。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "long-double-abi-suppression-lifecycle",
+      "fixture_digest": "e96a4d007477c0acbbf242a6cd9f386a44ebad1a0b54a18c27a884c7c744f6b5",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "范围抑制隐藏该规则的单个结果，保留原 matched assessment 和一条审计记录。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 1,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "long-double-abi-exact-budget-boundary",
+      "fixture_digest": "c89ac72229c383fa2854ac0e6fdd99082a59b154b500d8508cfff695597ff12b",
+      "language_standard": "c11",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "long-double-abi",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:1#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "C11 下恰好一个候选与一条 assessment，预算不应误报超限。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "math-library-variance-suppression-lifecycle",
+      "fixture_digest": "856bf50d27091edf38b77641dc760db36fa0983cf122e4ce92bd6537193d4c1a",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "范围抑制隐藏该规则的单个结果，保留原 matched assessment 和一条审计记录。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 1,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "math-library-variance-exact-budget-boundary",
+      "fixture_digest": "bbaed475a286f71f2560e47270a8c7d39551b9fe640d558048d62368917d81db",
+      "language_standard": "c11",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "math-library-variance",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "C11 下恰好一个候选与一条 assessment，预算不应误报超限。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "mixed-precision-conversion-suppression-lifecycle",
+      "fixture_digest": "0227baaaa40ac83efe854e04e6c15177870a26c511508eedf76697840217153b",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "范围抑制隐藏该规则的单个结果，保留原 matched assessment 和一条审计记录。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 1,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "mixed-precision-conversion-exact-budget-boundary",
+      "fixture_digest": "224a256ca67500f651569123e31d4907ab6bfd60b99c4eb529ad7fb26b911f47",
+      "language_standard": "c11",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "mixed-precision-conversion",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "C11 下恰好一个候选与一条 assessment，预算不应误报超限。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-suppression-lifecycle",
+      "fixture_digest": "214155094eb4efc10936e2ad489a00e336e4c0c09fbde0dce4a9e16556e8603a",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "范围抑制隐藏该规则的单个结果，保留原 matched assessment 和一条审计记录。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 1,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-exact-budget-boundary",
+      "fixture_digest": "b55daf9f133950abdd2de260f84cd5152fe4e08f42c90abd4bc3803f49dc4c70",
+      "language_standard": "c11",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "C11 下恰好一个候选与一条 assessment，预算不应误报超限。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-suppression-lifecycle",
+      "fixture_digest": "44236c2156e312fc4e3aac33c7320a5a67b895069a256f42e2a92cb1fde511db",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "范围抑制隐藏该规则的单个结果，保留原 matched assessment 和一条审计记录。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 1,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "unsafe-fp-optimization-exact-budget-boundary",
+      "fixture_digest": "45d49edb4c366d57b68f158e8300bee30f3ab9ff54429e2e5bd9eaa73678dbb6",
+      "language_standard": "c11",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "unsafe-fp-optimization",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:1#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "C11 下恰好一个候选与一条 assessment，预算不应误报超限。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        5
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "x87-excess-precision-suppression-lifecycle",
+      "fixture_digest": "c696fe4688aa1e6771c26a5cf84027eaee0933f9751a573d12d84bb36119e0eb",
+      "language_standard": "c17",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "范围抑制隐藏该规则的单个结果，保留原 matched assessment 和一条审计记录。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [],
+      "suppression_count": 1,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "x87-excess-precision-exact-budget-boundary",
+      "fixture_digest": "ea38da4067b19a91a9cd80339b3a5f3f0cf6213ea2901e54588e00348c288798",
+      "language_standard": "c11",
+      "input_mode": "ast-ir-evidence",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "x87-excess-precision",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "C11 下恰好一个候选与一条 assessment，预算不应误报超限。",
+      "assessment_statuses": [
+        "matched"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-two-accumulators",
+      "fixture_digest": "354fa20d2876a3474048ef241f0acaa3442f3cf59aee22ab9e17055f69bc54d9",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1",
+        "main.c:3#2"
+      ],
+      "diagnostic_codes": [],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "同一循环两个独立累加器必须产生两条 Finding，即使主位置在同一行。",
+      "assessment_statuses": [
+        "matched",
+        "matched"
+      ],
+      "affected_counts": [
+        1,
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "complete"
+    },
+    {
+      "case_id": "reduction-reassociation-mixed-unknown",
+      "fixture_digest": "d6a30df7b4c1752b87318a10f283be56b4dc58211541737d34ec65b95f2e5103",
+      "language_standard": "c17",
+      "input_mode": "ast-only",
+      "source_profile": "x86_64-linux-gnu-clang21@1.0",
+      "target_profile": "riscv64-linux-gnu-lp64d-clang21@1.0",
+      "rule_code": "reduction-reassociation",
+      "scope": "固定单编译单元",
+      "expected_status": "matched",
+      "finding_keys": [
+        "main.c:3#1"
+      ],
+      "diagnostic_codes": [
+        "reduction_reassociation_reduction_identity_unknown"
+      ],
+      "suppression_ids": [],
+      "unsupported": false,
+      "lifecycle": true,
+      "review_basis": "第二个复杂左值候选 unknown 不得遮蔽第一个独立循环的匹配。",
+      "assessment_statuses": [
+        "matched",
+        "unknown"
+      ],
+      "affected_counts": [
+        1
+      ],
+      "suppression_count": 0,
+      "scan_status": "partial"
+    }
+  ]
+}

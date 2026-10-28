@@ -4,6 +4,8 @@ import json
 import re
 from pathlib import Path
 
+from floating_point_precision_scanner.protocol import SCHEMA_PATHS, SchemaRegistry
+
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -30,3 +32,17 @@ def test_container_and_license_inventory_reference_locked_versions() -> None:
     assert "sha256sum -c" in dockerfile
     assert re.search(r"Clang/LLVM\s*\|\s*21\.1\.8", licenses)
     assert "coverage.py | 7.6.12" in licenses
+
+
+def test_packaged_schemas_survive_build_output_filters_and_keep_public_id() -> None:
+    # 仓库构建排除 tools/**/build 和 tools/**/build-*，协议资源不能命中这些名称。
+    registry = SchemaRegistry()
+    for name, resource in SCHEMA_PATHS.items():
+        assert all(part != "build" and not part.startswith("build-")
+                   for part in Path(resource).parts), resource
+        assert registry.schema(name)["$schema"] == "https://json-schema.org/draft/2020-12/schema"
+    assert registry.schema("build_context")["$id"] == (
+        "https://rvport.dev/schemas/floating-point-precision-scanner/"
+        "build-context/v1/build-context.schema.json"
+    )
+    assert registry.validate("build_context", {})  # 资源可读且执行必填字段校验。

@@ -5,7 +5,7 @@ from __future__ import annotations
 import math
 import struct
 from collections import Counter
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Iterable, Iterator, Mapping, Sequence
 from dataclasses import dataclass
 from decimal import Decimal, InvalidOperation
 from typing import TYPE_CHECKING, Any, Literal
@@ -13,6 +13,8 @@ from typing import TYPE_CHECKING, Any, Literal
 from . import RULE_REGISTRY_VERSION
 from .canonical import semantic_digest, stable_id
 from .diagnostics import Diagnostic, diagnostic
+from .reduction_candidates import ReductionCandidate, bound_evidence
+from .reduction_candidates import candidates as reduction_candidates
 
 if TYPE_CHECKING:
     from .build_contexts import BuildContext
@@ -160,7 +162,7 @@ RULES: tuple[RuleDescriptor, ...] = (
     ),
     RuleDescriptor(
         "reduction-reassociation",
-        "1.0",
+        "1.1",
         "reduction-semantics",
         ("reduction",),
         ("reduction", "arithmetic"),
@@ -1395,57 +1397,122 @@ def _fragile_comparison(context: RuleContext) -> tuple[RuleAssessment, dict[str,
     )
 
 
-def _reduction(context: RuleContext) -> tuple[RuleAssessment, dict[str, Any] | None]:
+def _reduction_candidate(
+    context: RuleContext,
+    candidate: ReductionCandidate,
+    scope: str,
+) -> tuple[RuleAssessment, dict[str, Any] | None]:
     descriptor = RULE_BY_CODE["reduction-reassociation"]
-    candidates = [fact for fact in _facts(context) if fact.get("fact_kind") == "reduction"]
-    if not candidates:
-        return _assessment(descriptor, context.scope, "not_matched", "no_reduction"), None
-    refs = _fact_refs(candidates)
-    if any(bool(_payload(item).get("ambiguous")) for item in candidates):
+    facts = candidate.facts
+    refs = _fact_refs(facts)
+    payloads = [_payload(fact) for fact in facts]
+    if any(payload.get("ambiguous") for payload in payloads) or len(
+        {(payload.get("operation"), payload.get("reduction_kind")) for payload in payloads}
+    ) > 1:
         return _assessment(
-            descriptor, context.scope, "unknown", "reduction_recurrence_ambiguous", refs
+            descriptor, scope, "unknown", "reduction_recurrence_ambiguous", refs
         ), None
-    ir_candidates = [
-        item
-        for item in _ir_facts(context)
-        if item.get("reduction_group")
-        or "reassoc" in [str(flag) for flag in item.get("fast_math_flags", [])]
-        or str(item.get("callee", "")).startswith("llvm.vector.reduce.")
-    ]
+    if any(
+        not fact.get("function_id")
+        or not (payload.get("loop_id") or payload.get("iteration_count") is not None)
+        or ("accumulator_id" in payload and not payload["accumulator_id"])
+        for fact, payload in zip(facts, payloads, strict=True)
+    ):
+        return _assessment(descriptor, scope, "unknown", "reduction_identity_unknown", refs), None
+    ir, bindings, ambiguous = bound_evidence(
+        candidate, context.ir_bundles, context.evidence_bundles
+    )
+    if ambiguous:
+        return _assessment(descriptor, scope, "unknown", "binding_ambiguous", refs), None
+    refs.extend(EvidenceRef("ir_fact", str(item["fact_id"])) for item in ir)
+    refs.extend(EvidenceRef("binding", str(item["binding_id"])) for item in bindings)
+    reordered = [item for item in ir if set(item.get("fast_math_flags", [])) & {"reassoc", "fast"}]
     risky = [
-        item
-        for item in candidates
-        if (not _payload(item).get("compensation") or bool(ir_candidates))
-        and int(_payload(item).get("iteration_count") or 2) > 1
-        and not bool(_payload(item).get("fixed_order"))
+        fact
+        for fact, payload in zip(facts, payloads, strict=True)
+        if (not payload.get("compensation") or reordered)
+        and (payload.get("iteration_count") is None or int(payload["iteration_count"]) > 1)
+        and not payload.get("fixed_order")
     ]
     if not risky:
-        return _assessment(
-            descriptor, context.scope, "not_matched", "compensated_or_fixed", refs
-        ), None
-    refs.extend(EvidenceRef("ir_fact", str(item.get("fact_id", ""))) for item in ir_candidates)
+        return _assessment(descriptor, scope, "not_matched", "compensated_or_fixed", refs), None
+    # 不把 x87 可用性等无关 profile 差异解释成归约顺序差异。
+    source_policy = _profile_value(context.source_profile, "evaluation") or {}
+    target_policy = _profile_value(context.target_profile, "evaluation") or {}
+    build_ids = {
+        str(fact["fact_id"])
+        for bundle in context.ir_bundles
+        if bundle.get("artifact", {}).get("profile") == "build-faithful"
+        for fact in bundle.get("facts", [])
+    }
+    verified = (
+        source_policy.get("reassociation") is True
+        and target_policy.get("reassociation") is False
+        and any(str(item["fact_id"]) in build_ids for item in reordered)
+    )
+    if verified:
+        refs.extend(_profile_refs(context))
     assessment = _assessment(
         descriptor,
-        context.scope,
+        scope,
         "matched",
-        "verified_reassociation" if ir_candidates else "order_sensitive_reduction",
+        "verified_reassociation" if verified else "order_sensitive_reduction",
         refs,
     )
-    return assessment, _finding(
+    finding = _finding(
         descriptor,
         assessment,
         risky,
         context,
         {
-            "rationale": "verified_reassociation" if ir_candidates else "order_sensitive_reduction",
-            "ir_fact_ids": sorted(str(item.get("fact_id", "")) for item in ir_candidates),
-            "compensation_invalidated": any(
-                bool(_payload(item).get("compensation")) for item in risky
-            ),
+            "rationale": assessment.reason_code,
+            "translation_unit_id": context.scope,
+            "candidate_id": candidate.identity,
+            "ir_fact_ids": sorted(str(item["fact_id"]) for item in ir),
+            "compensation_invalidated": bool(reordered)
+            and any(p.get("compensation") for p in payloads),
         },
-        confidence="high" if ir_candidates else "medium",
-        evidence_origin="deterministic" if ir_candidates else "heuristic",
+        confidence="high" if verified else "medium",
+        evidence_origin="deterministic" if verified else "heuristic",
     )
+    finding["affected_count"] = 1
+    return assessment, finding
+
+
+def _reduction_evaluations(
+    context: RuleContext,
+    limit: int,
+) -> Iterator[tuple[RuleAssessment, dict[str, Any] | None]]:
+    descriptor = RULE_BY_CODE["reduction-reassociation"]
+    candidates = reduction_candidates(_facts(context), context.scope)
+    if not candidates:
+        yield _assessment(descriptor, context.scope, "not_matched", "no_reduction"), None
+    for index, candidate in enumerate(candidates):
+        scope = stable_id(
+            "rule_candidate_scope",
+            {
+                "rule": descriptor.code,
+                "version": descriptor.version,
+                "candidate": candidate.identity,
+            },
+        )
+        if index >= limit:
+            yield (
+                _assessment(
+                    descriptor, scope, "unknown", "budget_exceeded", frontier=candidate.identity
+                ),
+                None,
+            )
+            return
+        try:
+            yield _reduction_candidate(context, candidate, scope)
+        except (AttributeError, KeyError, TypeError, ValueError):
+            yield (
+                _assessment(
+                    descriptor, scope, "failed", "invalid_rule_input", _fact_refs(candidate.facts)
+                ),
+                None,
+            )
 
 
 def _math_library(context: RuleContext) -> tuple[RuleAssessment, dict[str, Any] | None]:
@@ -1554,7 +1621,6 @@ _EVALUATORS = {
     "floating-environment": _floating_environment,
     "mixed-precision-conversion": _mixed_precision,
     "fragile-fp-comparison": _fragile_comparison,
-    "reduction-reassociation": _reduction,
     "math-library-variance": _math_library,
     "architecture-specific-fp-api": _architecture_api,
 }
@@ -1693,10 +1759,16 @@ def evaluate_rules(
                 diagnostics.append(_unknown_diagnostic(item))
                 continue
             try:
+                evaluations: Iterable[tuple[RuleAssessment, dict[str, Any] | None]]
                 if code == "long-double-abi":
                     evaluations = _long_double_evaluations(context)
                 elif code == "mixed-precision-conversion":
                     evaluations = _mixed_precision_evaluations(context)
+                elif code == "reduction-reassociation":
+                    evaluations = _reduction_evaluations(
+                        context, min(max_candidates - candidate_counts[code],
+                                     max_assessments - len(assessments)),
+                    )
                 else:
                     evaluations = [_EVALUATORS[code](context)]
             except (AttributeError, KeyError, TypeError, ValueError) as exc:
@@ -1716,7 +1788,10 @@ def evaluate_rules(
                 )
             for assessment, finding in evaluations:
                 if candidate_counts[code] >= max_candidates or len(assessments) >= max_assessments:
-                    budget_item = _assessment(
+                    budget_item = assessment if (
+                        code == "reduction-reassociation"
+                        and assessment.reason_code == "budget_exceeded"
+                    ) else _assessment(
                         descriptor, context.scope, "unknown", "budget_exceeded",
                         frontier=assessments[-1].assessment_id if assessments else None,
                     )
@@ -1727,6 +1802,15 @@ def evaluate_rules(
                 assessments.append(assessment)
                 if assessment.status == "unknown":
                     diagnostics.append(_unknown_diagnostic(assessment))
+                if code == "reduction-reassociation" and assessment.status == "failed":
+                    diagnostics.append(diagnostic(
+                        "rule_evaluation_failed", "rule_evaluation",
+                        "当前归约候选包含无效输入，其他候选继续评估。",
+                        "This reduction candidate has invalid input; other candidates continue.",
+                        translation_unit_id=context.scope,
+                        suggestion=f"检查候选：{assessment.scope}。",
+                        suggestion_en=f"Check candidate: {assessment.scope}.",
+                    ))
                 if finding is not None and len(finding.get("evidence", [])) > max_evidence_refs:
                     assessment = _assessment(
                         descriptor,

@@ -106,6 +106,7 @@ def _walk_with_function(
     parent_kind: str | None = None,
     enclosing_loop_kind: str | None = None,
     project_member: bool | None = None,
+    enclosing_loop: Mapping[str, Any] | None = None,
 ) -> Iterator[
     tuple[
         Mapping[str, Any],
@@ -115,6 +116,7 @@ def _walk_with_function(
         str | None,
         str | None,
         bool | None,
+        Mapping[str, Any] | None,
     ]
 ]:
     explicit_membership = _node_project_membership(node, root)
@@ -135,6 +137,8 @@ def _walk_with_function(
     current_symbol = function_symbol
     current_metadata = function_metadata
     if str(node.get("kind", "")) in _FUNCTION_KINDS:
+        enclosing_loop_kind = None
+        enclosing_loop = None
         current_symbol = str(node.get("mangledName") or node.get("name") or "") or None
         current = stable_id(
             "function",
@@ -160,6 +164,17 @@ def _walk_with_function(
         if kind in {"ForStmt", "WhileStmt", "DoStmt", "CXXForRangeStmt"}
         else enclosing_loop_kind
     )
+    loop = enclosing_loop
+    if kind in {"ForStmt", "WhileStmt", "DoStmt", "CXXForRangeStmt"}:
+        loop_range = source_range(node, root)
+        loop_location = source_location(node, root)
+        loop = {
+            "loop_id": stable_id("reduction_loop", {
+                "function": current, "kind": kind,
+                "range": loop_range, "location": loop_location,
+            }) if current and (loop_range or loop_location) else None,
+            "loop_range": loop_range,
+        }
     yield (
         node,
         current,
@@ -168,6 +183,7 @@ def _walk_with_function(
         parent_kind,
         current_loop,
         current_project_member,
+        loop,
     )
     children = node.get("inner", ())
     if isinstance(children, list):
@@ -183,6 +199,7 @@ def _walk_with_function(
                     str(node.get("kind", "")) or None,
                     current_loop,
                     current_project_member,
+                    loop,
                 )
 
 
@@ -613,6 +630,16 @@ def map_ast(
     max_function_summary_depth: int = 3,
 ) -> dict[str, Any]:
     SourceLocations(project_root, context.directory, context.absolute_file).normalize(ast)
+    # Clang 的声明指针仅用于本次查找，不能进入稳定身份。
+    declarations = {
+        str(node["id"]): stable_id("reduction_accumulator", {
+            "kind": node.get("kind"), "name": node.get("name"),
+            "type": _qual_type(node), "location": source_location(node, project_root),
+        })
+        for node in _walk(ast)
+        if node.get("kind") in {"VarDecl", "ParmVarDecl"}
+        and node.get("id") and source_location(node, project_root)
+    }
     facts: list[dict[str, Any]] = []
     unknowns: list[dict[str, Any]] = []
     for (
@@ -623,6 +650,7 @@ def map_ast(
         parent_kind,
         enclosing_loop_kind,
         project_member,
+        enclosing_loop,
     ) in _walk_with_function(ast, None, None, None, context.translation_unit_id, project_root):
         if project_member is None:
             if _has_source_location_shape(node):
@@ -653,6 +681,14 @@ def map_ast(
             enclosing_loop_kind,
         )
         location = source_location(node, project_root)
+        if fact_kind == "reduction":
+            payload.update(enclosing_loop or {"loop_id": None, "loop_range": None})
+            children = _children(node)
+            lhs = children[0] if children else {}
+            while lhs.get("kind") in {"ParenExpr", "ImplicitCastExpr"} and _children(lhs):
+                lhs = _children(lhs)[0]
+            declaration = lhs.get("referencedDecl", {}) if lhs.get("kind") == "DeclRefExpr" else {}
+            payload["accumulator_id"] = declarations.get(str(declaration.get("id")))
         if fact_kind:
             identity = {
                 "translation_unit_id": context.translation_unit_id,

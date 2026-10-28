@@ -39,7 +39,7 @@ SCHEMA_PATHS = {
     "llvm_facts": "schemas/ir-facts/v1/llvm-floating-point-facts.schema.json",
     "evidence": "schemas/evidence/v1/floating-point-evidence.schema.json",
     "binding_sidecar": "schemas/evidence/v1/binding-sidecar.schema.json",
-    "build_context": "schemas/build-context/v1/build-context.schema.json",
+    "build_context": "schemas/contexts/v1/context.schema.json",
     "cache_entry": "schemas/cache/v1/cache-entry.schema.json",
     "validation_corpus": "schemas/validation/v1/validation-corpus.schema.json",
     "validation_oracle": "schemas/validation/v1/validation-oracle.schema.json",
