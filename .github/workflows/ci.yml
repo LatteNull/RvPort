@@ -416,7 +416,9 @@ jobs:
   deploy-dev:
     name: Deploy / dev
     needs: build
-    if: needs.build.result == 'success' && (github.ref == 'refs/heads/ci' || github.ref == 'refs/heads/master')
+    # 任意分支均可部署；PR 事件下 build 被跳过，因此不会误触发。
+    # 仍受 environment: dev 的人工审批门禁保护。
+    if: needs.build.result == 'success'
     runs-on: self-hosted
     environment: dev
     env:
@@ -534,7 +536,9 @@ jobs:
   deploy-test:
     name: Deploy / test
     needs: build
-    if: needs.build.result == 'success' && (github.ref == 'refs/heads/ci' || github.ref == 'refs/heads/master')
+    # 任意分支均可部署；PR 事件下 build 被跳过，因此不会误触发。
+    # 仍受 environment: test 的人工审批门禁保护。
+    if: needs.build.result == 'success'
     runs-on: self-hosted
     environment: test
     env:
