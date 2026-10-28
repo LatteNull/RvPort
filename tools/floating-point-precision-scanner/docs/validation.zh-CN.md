@@ -6,14 +6,31 @@
 
 <a id="doc-validation-corpus"></a>
 
-## 人工真值语料
+## 固定输入与独立预期
 
-`tests/fixtures/validation/reviewed-corpus-v1.json` 是版本化 oracle，
-`reviewed-observed-v1.json` 是经接受的最小 oracle 观察集。真实验证运行可以在每个 case 下直接
-提供结果 v2；验证器从 `conclusion`、analysis assessments、diagnostics 和 suppressions 扩展提取
-finding key、状态及生命周期审计，再与 oracle 比较。二者禁止在验证运行时由当前实现自动改写。
-修改 case 必须更新 reviewer、review revision、fixture digest、review basis 和对应观察，并通过
-代码评审说明真值依据。
+归约粒度的当前源码验收使用 `tests/fixtures/validation/reduction-granularity-oracle-v1.json`
+与 `tests/integration/test_reduction_granularity.py`。预期按源码独立编写，`make integration`
+执行真实 Clang 扫描并导出 `artifacts/validation/reduction-*-observed.json`，覆盖独立循环、
+同循环独立累加器、抑制、冷暖缓存及匹配/无关 IR。单元测试另外覆盖负例、unknown、failed、
+歧义与预算。本报告不能代替十规则完整语料的 precision/recall 验收。
+
+`make validation` 先执行 `corpus_runner`，再评分。输入为
+`tests/fixtures/validation/executable-inputs-v1.json`，预期为独立编写的
+`executable-corpus-v1.json`。182 个输入都包含真实 C/C++ 源码；运行器在独立临时目录中使用
+锁定的 Clang 扫描，需要 IR 的 case 当场生成共享 bitcode 并进入正式证据流水线。
+libm overlay 明确为测试契约，不宣称代表真实平台运行库。运行器不读取 oracle。
+
+评分比较全部候选状态、结果位置与重数、affectedCount、诊断、扫描状态和抑制审计数量。
+状态混合时先报告 matched，但仍精确比较完整 assessment 状态多重集，不能隐藏 unknown。
+位置 key 为 `文件:行#同一行第几个结果`，避免依赖实现生成的 Finding 哈希；列、引用归属、
+置信度和稳定身份另外由单元/契约测试严格验证。重复输出计入 FP，不能经集合去重消失。
+
+`artifacts/validation/current-observed.json` 记录当前源码/协议资源与每个输入的摘要，
+`artifacts/validation/cases/` 保留各 case 的完整结果 v2；评分器拒绝源码摘要、输入摘要或
+case 集合不一致的 observed。命令失败立即阻止门禁，不用旧报告继续评分。
+历史 `reviewed-corpus-v1.json` / `reviewed-observed-v1.json` 原样保留为旧评分器回归基线，
+不再作为交付准确率证据。新预期及修订理由纳入正常代码审查；不声称已完成人工批准，
+禁止运行后自动回填 oracle。
 
 十条规则各包含至少 6 个正例、6 个反例和 3 个 unknown/unsupported case，并覆盖 C11、C17、
 C++17、C++20、x86/RISC-V profiles、AST-only、共享 BC、AST↔IR evidence、suppression、预算及
@@ -21,7 +38,9 @@ C++17、C++20、x86/RISC-V profiles、AST-only、共享 BC、AST↔IR evidence�
 明确声明不支持的 case；零分母输出 `null`。
 
 ```text
-python -m floating_point_precision_scanner.validation --corpus tests/fixtures/validation/reviewed-corpus-v1.json --observed tests/fixtures/validation/reviewed-observed-v1.json --output artifacts/validation/validation-result.json
+make validation
+python -m floating_point_precision_scanner.corpus_runner --inputs tests/fixtures/validation/executable-inputs-v1.json --output artifacts/validation/current-observed.json
+python -m floating_point_precision_scanner.validation --corpus tests/fixtures/validation/executable-corpus-v1.json --observed artifacts/validation/current-observed.json --output artifacts/validation/validation-result.json
 ```
 
 每条规则 strict precision/recall 必须至少 90%，整体 exact match 至少 95%，lifecycle case 必须

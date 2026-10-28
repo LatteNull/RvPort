@@ -372,6 +372,13 @@ def test_evidence_sidecar_paths(tmp_path: Path) -> None:
     assert result["bindings"][0]["confidence"] == "exact"
     assert result["bindings"][0]["method"] == "explicit-sidecar"
 
+    source["facts"][0]["fact_kind"] = "reduction"
+    reduction_result, _ = build_evidence(
+        source, bundle, member, SchemaRegistry(), mapping_required=True
+    )
+    assert reduction_result["bindings"][0]["relation"] == "reduction-lowering"
+    assert reduction_result["bindings"][0]["binding_id"] != result["bindings"][0]["binding_id"]
+
     mismatched = sidecar_document()
     mismatched["source_fact_bundle_digest"] = "0" * 64
     sidecar.write_text(json.dumps(mismatched), encoding="utf-8")

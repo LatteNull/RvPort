@@ -11,6 +11,7 @@ from .artifacts import BitcodeMember
 from .canonical import semantic_digest, stable_id
 from .diagnostics import Diagnostic, diagnostic
 from .protocol import SchemaRegistry
+from .reduction_candidates import position_matches_source
 
 
 def _point(location: Any) -> tuple[str, int, int] | None:
@@ -45,6 +46,12 @@ def _compatible(source: Mapping[str, Any], ir: Mapping[str, Any]) -> bool:
     source_opcode = source.get("payload", {}).get("opcode")
     if kind == "arithmetic" and source_opcode in arithmetic:
         return opcode == arithmetic[source_opcode]
+    if kind == "reduction":
+        operation = source.get("payload", {}).get("operation")
+        expected = {"+=": "fadd", "-=": "fsub", "*=": "fmul"}.get(operation)
+        if opcode == "call":
+            return str(ir.get("callee", "")).startswith("llvm.vector.reduce." + (expected or "f"))
+        return opcode == "phi" or opcode in ({expected} if expected else {"fadd", "fsub", "fmul"})
     return (
         (kind == "arithmetic" and opcode in {"fadd", "fsub", "fmul", "fdiv", "frem"})
         or (kind == "comparison" and opcode == "fcmp")
@@ -53,7 +60,6 @@ def _compatible(source: Mapping[str, Any], ir: Mapping[str, Any]) -> bool:
             and opcode in {"fptrunc", "fpext", "sitofp", "uitofp", "fptosi", "fptoui"}
         )
         or (kind in {"call", "environment", "api"} and opcode in {"call", "invoke", "callbr"})
-        or (kind == "reduction" and opcode in {"phi", "fadd", "fsub", "fmul", "call"})
     )
 
 
@@ -76,8 +82,13 @@ def _binding(
         "ir_fact_bundle_digest": ir_digest,
         "relation": relation,
     }
+    stable_identity = dict(identity)
+    if relation == "reduction-lowering":
+        # bundle 摘要用于校验来源；无关候选变化不能改变本条归约关联的身份。
+        stable_identity.pop("source_fact_bundle_digest")
+        stable_identity.pop("ir_fact_bundle_digest")
     return {
-        "binding_id": stable_id("evidence_binding", identity),
+        "binding_id": stable_id("evidence_binding", stable_identity),
         **identity,
         "reason": reason,
     }
@@ -90,6 +101,7 @@ def _sidecar_bindings(
     ir_ids: set[str],
     source_digest: str,
     ir_digest: str,
+    reduction_ids: set[str],
 ) -> tuple[list[dict[str, Any]], list[Diagnostic]]:
     if member.sidecar_path is None:
         return [], []
@@ -147,7 +159,7 @@ def _sidecar_bindings(
                 "producer binding sidecar",
                 source_digest,
                 ir_digest,
-                "explicit",
+                "reduction-lowering" if source_id in reduction_ids else "explicit",
             )
         )
     return bindings, []
@@ -175,6 +187,7 @@ def build_evidence(
         set(ir_by_id),
         source_digest,
         ir_digest,
+        {key for key, value in source_by_id.items() if value.get("fact_kind") == "reduction"},
     )
     matched_source = {item["source_fact_id"] for item in bindings}
     matched_ir = {item["ir_fact_id"] for item in bindings}
@@ -203,6 +216,10 @@ def build_evidence(
                     for ir_point in debug_points
                 )
                 and _compatible(source_fact, ir_fact)
+                and (
+                    source_fact.get("fact_kind") != "reduction"
+                    or position_matches_source(source_fact, ir_fact.get("debug_location"))
+                )
             ):
                 candidates.append((source_id, source_fact))
         if budget_exhausted:

@@ -1,0 +1,14 @@
+{
+  "kind": "ReductionGranularityOracle",
+  "revision": "fix-reduction-finding-granularity-v1",
+  "review_status": "待代码审查；预期人工编写，禁止从 observed 回填",
+  "fixture": "expression-risks/independent-reductions.c",
+  "basis": "dot_tail 的第 4、7 行属于两个独立循环；two_accumulators 的第 16、17 行使用不同累加器，四个候选独立。",
+  "matched_lines": [4, 7, 16, 17],
+  "affected_count_per_finding": 1,
+  "evidence_origin": "heuristic",
+  "suppressed_lines": [4],
+  "remaining_lines": [7, 16, 17],
+  "matching_ir": "每个候选仅关联其更新表达式内的 IR",
+  "unrelated_ir": "不得进入任何归约候选的 evidenceChain"
+}

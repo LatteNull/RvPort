@@ -20,9 +20,12 @@ integration:
 
 validation:
 	mkdir -p artifacts/validation
+	python -m floating_point_precision_scanner.corpus_runner \
+		--inputs tests/fixtures/validation/executable-inputs-v1.json \
+		--output artifacts/validation/current-observed.json
 	python -m floating_point_precision_scanner.validation \
-		--corpus tests/fixtures/validation/reviewed-corpus-v1.json \
-		--observed tests/fixtures/validation/reviewed-observed-v1.json \
+		--corpus tests/fixtures/validation/executable-corpus-v1.json \
+		--observed artifacts/validation/current-observed.json \
 		--output artifacts/validation/validation-result.json
 
 benchmark:
@@ -46,6 +49,7 @@ coverage:
 		--affected floating_point_precision_scanner.profiles \
 		--affected floating_point_precision_scanner.build_contexts \
 		--affected floating_point_precision_scanner.rules \
+		--affected floating_point_precision_scanner.reduction_candidates \
 		--affected floating_point_precision_scanner.application \
 		--affected floating_point_precision_scanner.protocol \
 		--affected floating_point_precision_scanner.result_v2 \
@@ -55,6 +59,7 @@ coverage:
 		--affected floating_point_precision_scanner.budget \
 		--affected floating_point_precision_scanner.cache \
 		--affected floating_point_precision_scanner.validation \
+		--affected floating_point_precision_scanner.corpus_runner \
 		--affected floating_point_precision_scanner.benchmark \
 		--affected floating_point_precision_scanner.benchmark_runner \
 		--affected floating_point_precision_scanner.source_locations

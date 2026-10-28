@@ -9,6 +9,7 @@
     "schema_version": {"const": "1.0"},
     "reviewer": {"type": "string", "minLength": 1},
     "review_revision": {"type": "string", "minLength": 1},
+    "observation_mode": {"enum": ["locations"]},
     "cases": {
       "type": "array",
       "minItems": 1,
@@ -26,6 +27,10 @@
           "rule_code": {"type": "string", "minLength": 1},
           "scope": {"type": "string", "minLength": 1},
           "expected_status": {"enum": ["matched", "not_matched", "unknown", "skipped", "failed"]},
+          "assessment_statuses": {"type": "array", "items": {"enum": ["matched", "not_matched", "unknown", "skipped", "failed"]}},
+          "affected_counts": {"type": "array", "items": {"type": "integer", "minimum": 1}},
+          "scan_status": {"type": "string", "minLength": 1},
+          "suppression_count": {"type": "integer", "minimum": 0},
           "finding_keys": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
           "diagnostic_codes": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
           "suppression_ids": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
