@@ -110,7 +110,7 @@ public class ProjectService {
         return ProjectResponse.from(updated, summary(updated.id()));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
     public ProjectOverviewResponse overview(UUID projectId, UUID actorUserId, boolean superAdmin) {
         ProjectView projectView = projectAccessService.requireProjectAccess(projectId, actorUserId, superAdmin);
         long latestTaskEventId = taskEventService.latestEventId(projectId);

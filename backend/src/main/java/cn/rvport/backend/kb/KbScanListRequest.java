@@ -14,8 +14,13 @@ public record KbScanListRequest(
         Boolean includeStale,
         String kbVersion,
         String sortBy,
-        String sortDirection
+        String sortDirection,
+        KbExecutionContext executionContext
 ) {
+    public KbScanListRequest(Integer page, Integer pageSize, TaskStatus status, UUID sourceRevisionId,
+            Boolean currentOnly, Boolean includeStale, String kbVersion, String sortBy, String sortDirection) {
+        this(page, pageSize, status, sourceRevisionId, currentOnly, includeStale, kbVersion, sortBy, sortDirection, null);
+    }
     public KbScanListRequest(
             Integer page,
             Integer pageSize,
@@ -58,5 +63,10 @@ public record KbScanListRequest(
                 sortBy,
                 sortDirection
         );
+    }
+
+    public KbScanListRequest withContext(UUID sourceId, KbExecutionContext context) {
+        return new KbScanListRequest(page, pageSize, status, sourceId, currentOnly, includeStale,
+                kbVersion, sortBy, sortDirection, context);
     }
 }

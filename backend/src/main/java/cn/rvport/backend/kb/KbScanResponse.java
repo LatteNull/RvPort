@@ -1,7 +1,6 @@
 package cn.rvport.backend.kb;
 
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -18,34 +17,20 @@ public record KbScanResponse(
         List<String> staleReasons,
         Map<String, Object> summary,
         OffsetDateTime startedAt,
-        OffsetDateTime finishedAt
+        OffsetDateTime finishedAt,
+        KbExecutionContext executionContext,
+        boolean current,
+        String message,
+        String message_en
 ) {
-    static KbScanResponse from(KbScanView view) {
-        return from(view, false);
-    }
-
-    static KbScanResponse from(KbScanView view, boolean currentSourceRevision) {
-        return new KbScanResponse(
-                view.id(),
-                view.projectId(),
-                view.taskId(),
-                view.sourceRevisionId(),
-                view.kbVersion(),
-                view.scope(),
-                view.status().name(),
-                currentSourceRevision,
-                staleReasons(currentSourceRevision),
-                view.summary(),
-                view.startedAt(),
-                view.finishedAt()
-        );
-    }
-
-    private static List<String> staleReasons(boolean currentSourceRevision) {
-        List<String> reasons = new ArrayList<>();
-        if (!currentSourceRevision) {
-            reasons.add("SOURCE_REVISION_CHANGED");
-        }
-        return List.copyOf(reasons);
+    static KbScanResponse from(KbScanView view, KbScanContextService.Selection selection) {
+        String reason = selection.staleReason(view);
+        boolean current = reason == null;
+        return new KbScanResponse(view.id(), view.projectId(), view.taskId(), view.sourceRevisionId(),
+                view.kbVersion(), view.scope(), view.status().name(),
+                java.util.Objects.equals(view.sourceRevisionId(), selection.sourceRevisionId()),
+                current ? List.of() : List.of(reason), view.summary(), view.startedAt(), view.finishedAt(),
+                view.executionContext(), current, current ? "当前扫描结果" : "历史扫描结果，需在当前构建下重新扫描",
+                current ? "Current scan result" : "Historical scan result; scan again against the current build");
     }
 }

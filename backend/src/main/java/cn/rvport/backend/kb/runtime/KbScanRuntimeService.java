@@ -75,6 +75,8 @@ public class KbScanRuntimeService {
     private final MigrationInputService migrationInputService;
     private final BuildValidationRepository buildValidationRepository;
     private final ProjectRuntimeEnvironmentRepository runtimeEnvironmentRepository;
+    @org.springframework.beans.factory.annotation.Autowired
+    private cn.rvport.backend.kb.KbScanContextService scanContextService;
 
     public KbScanRuntimeService(
             KbScanRepository kbScanRepository,
@@ -111,6 +113,17 @@ public class KbScanRuntimeService {
         Path outputDir = outputDir(run);
         try {
             context.throwIfCancellationRequested();
+            BuildValidationRunView boundBuild;
+            try {
+                boundBuild = scanContextService.requireExecution(run, input);
+            } catch (cn.rvport.backend.workflow.PrerequisiteNotSatisfiedException ex) {
+                finishFailed(context, run.id(), null, TaskStatus.FAILED,
+                        Map.of("phase", phase, "reasonCode", "KB_SCAN_CONTEXT_INVALID",
+                                "message", "KB 扫描执行上下文已失效，请重新构建并扫描",
+                                "message_en", "KB scan context is stale; rebuild and scan again"));
+                throw new TaskExecutionException(TaskErrorCode.INPUT_INVALID,
+                        "KB 扫描执行上下文已失效: " + ex.details().get("prerequisite"), null);
+            }
             context.publish(() -> { kbScanRepository.markRunning(run.id()); return null; });
             context.progress(5, "准备 KB 扫描");
             Files.createDirectories(outputDir);
@@ -131,7 +144,7 @@ public class KbScanRuntimeService {
 
             phase = "SCAN";
             context.progress(15, "执行 KB Scanner");
-            CompileCommandsContext compileCommands = resolveCompileCommands(run, sourceRoot, outputDir, context);
+            CompileCommandsContext compileCommands = resolveCompileCommands(boundBuild, run, sourceRoot, outputDir, context);
             ProcessResult rawProcess;
             try {
                 rawProcess = runScanner(input, sourceRoot, outputDir, compileCommands.path(), context);
@@ -264,25 +277,14 @@ public class KbScanRuntimeService {
         return command;
     }
 
-    private CompileCommandsContext resolveCompileCommands(KbScanView run, Path sourceRoot, Path outputDir, TaskExecutionContext context) {
-        ProjectRuntimeEnvironmentView runtime = runtimeEnvironmentRepository.find(run.projectId()).orElse(null);
-        if (runtime == null || runtime.sourceEnvironmentId() == null) {
-            return CompileCommandsContext.notAvailable("SOURCE_ENVIRONMENT_NOT_CONFIGURED");
-        }
-        BuildValidationRunView buildRun = buildValidationRepository
-                .findLatestSucceededSourceBuildWithCompileDatabase(
-                        run.projectId(),
-                        run.sourceRevisionId(),
-                        runtime.sourceEnvironmentId(),
-                        runtime.version())
-                .orElse(null);
-        if (buildRun == null) {
-            return CompileCommandsContext.notAvailable("NO_SUCCESSFUL_SOURCE_BUILD");
-        }
+    private CompileCommandsContext resolveCompileCommands(BuildValidationRunView buildRun, KbScanView run, Path sourceRoot, Path outputDir, TaskExecutionContext context) {
         Map<String, Object> compileDatabase = mapValue(buildRun.buildFacts().get("compileDatabase"));
+        if (!Boolean.TRUE.equals(compileDatabase.get("available"))) {
+            return withBuild(CompileCommandsContext.notAvailable("COMPILE_DATABASE_NOT_AVAILABLE"), buildRun);
+        }
         UUID artifactId = uuidValue(compileDatabase.get("storedArtifactId"));
         if (artifactId == null) {
-            return CompileCommandsContext.fallback("ARTIFACT_ID_MISSING");
+            return withBuild(CompileCommandsContext.fallback("ARTIFACT_ID_MISSING"), buildRun);
         }
         try {
             StoredArtifactResource resource = storedArtifactService.download(artifactId);
@@ -290,7 +292,7 @@ public class KbScanRuntimeService {
                     || !resource.artifact().ownerId().equals(buildRun.id())
                     || !resource.artifact().projectId().equals(run.projectId())
                     || !BuildValidationArtifacts.COMPILE_COMMANDS_JSON.equals(resource.artifact().artifactType())) {
-                return CompileCommandsContext.fallback("ARTIFACT_OWNER_MISMATCH");
+                return withBuild(CompileCommandsContext.fallback("ARTIFACT_OWNER_MISMATCH"), buildRun);
             }
             Path compileCommandsPath = outputDir.resolve("compile_commands.input.json").toAbsolutePath().normalize();
             boolean pathRewritten = writeLocalCompileCommands(
@@ -301,7 +303,7 @@ public class KbScanRuntimeService {
             );
             Map<String, Object> summary = new LinkedHashMap<>();
             summary.put("mode", "USED");
-            summary.put("source", "LATEST_SOURCE_BUILD");
+            summary.put("source", "BOUND_SOURCE_BUILD");
             summary.put("buildRunId", buildRun.id());
             summary.put("storedArtifactId", artifactId);
             summary.put("rewritten", pathRewritten);
@@ -313,8 +315,15 @@ public class KbScanRuntimeService {
             return new CompileCommandsContext(compileCommandsPath, summary);
         } catch (Exception ex) {
             context.log(TaskLogType.STDERR, "RVPORT_OBSERVATION_WARNING kbCompileCommandsUnavailable reason=ARTIFACT_DOWNLOAD_FAILED" + System.lineSeparator());
-            return CompileCommandsContext.fallback("ARTIFACT_DOWNLOAD_FAILED");
+            return withBuild(CompileCommandsContext.fallback("ARTIFACT_DOWNLOAD_FAILED"), buildRun);
         }
+    }
+
+    private CompileCommandsContext withBuild(CompileCommandsContext commands, BuildValidationRunView build) {
+        Map<String, Object> summary = new LinkedHashMap<>(commands.summary());
+        summary.put("buildRunId", build.id());
+        summary.put("source", "BOUND_SOURCE_BUILD");
+        return new CompileCommandsContext(commands.path(), summary);
     }
 
     private boolean writeLocalCompileCommands(
@@ -323,6 +332,15 @@ public class KbScanRuntimeService {
             String remoteSourceRoot,
             Path localSourceRoot
     ) throws IOException {
+        JsonNode database = objectMapper.readTree(content);
+        if (database == null || !database.isArray()) throw new IOException("Invalid compile database");
+        for (JsonNode entry : database) {
+            if (!entry.isObject() || !entry.path("file").isTextual() || entry.path("file").asText().isBlank()
+                    || !(entry.path("command").isTextual() && !entry.path("command").asText().isBlank()
+                        || entry.path("arguments").isArray() && !entry.path("arguments").isEmpty())) {
+                throw new IOException("Invalid compile database entry");
+            }
+        }
         if (blankToNull(remoteSourceRoot) == null) {
             Files.write(outputPath, content);
             return false;

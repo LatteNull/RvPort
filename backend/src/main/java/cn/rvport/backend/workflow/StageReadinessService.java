@@ -35,6 +35,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class StageReadinessService {
+    @Autowired
+    private cn.rvport.backend.kb.KbScanContextService scanContextService;
 
     private final ProjectAccessService projectAccessService;
     private final ProjectContextService contextService;
@@ -122,7 +124,7 @@ public class StageReadinessService {
                 specializedToolHealthService, null);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
     public StageReadinessResponse readiness(UUID projectId, String stageId, UUID actorUserId, boolean superAdmin) {
         projectAccessService.requireProjectAccess(projectId, actorUserId, superAdmin);
         String normalizedStageId = normalizeStageId(stageId);
@@ -146,7 +148,7 @@ public class StageReadinessService {
         return new StageReadinessResponse(normalizedStageId, context, prerequisites);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
     public void requireSatisfied(UUID projectId, String stageId, List<String> requiredKeys, UUID actorUserId, boolean superAdmin) {
         StageReadinessResponse response = readiness(projectId, stageId, actorUserId, superAdmin);
         for (String key : requiredKeys) {
@@ -199,7 +201,7 @@ public class StageReadinessService {
     private List<StagePrerequisiteResponse> analysis(UUID projectId, ProjectContextSnapshot context, ProjectRuntimeEnvironmentView runtime) {
         return List.of(
                 activeSource(projectId),
-                x86BuildRun(projectId, context, runtime)
+                scanContextService.resolve(projectId, context.sourceRevisionId()).prerequisite()
         );
     }
 
@@ -253,7 +255,7 @@ public class StageReadinessService {
         }
         long included = migrationInputService.currentConfirmedRefsForSystem(projectId, context.sourceRevisionId()).size();
         return List.of(
-                runStatus(StagePrerequisiteKeys.KB_SCAN, "KB_SCAN", kbScanRepository.findLatestRunBySourceRevision(projectId, context.sourceRevisionId())
+                runStatus(StagePrerequisiteKeys.KB_SCAN, "KB_SCAN", scanContextService.currentRun(projectId, context.sourceRevisionId())
                         .map(run -> new RunRef(run.id(), run.status()))),
                 runStatus(StagePrerequisiteKeys.DEPENDENCY_ANALYSIS, "DEPENDENCY_ANALYSIS", dependencyAnalysisRepository.findLatestRun(projectId, context.sourceRevisionId(), context.runtimeEnvironmentVersion())
                         .map(run -> new RunRef(run.id(), run.status()))),

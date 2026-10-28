@@ -72,8 +72,77 @@ class KbScanServiceTests {
     @Mock
     private KbAiExtensionRepository kbAiExtensionRepository;
 
+    @Mock private KbScanContextService scanContextService;
+
+    @org.junit.jupiter.api.BeforeEach
+    void contextDefaults() {
+        org.mockito.Mockito.lenient().when(scanContextService.resolve(any(), any()))
+                .thenAnswer(call -> KbContextFixtures.ready(call.getArgument(0), call.getArgument(1)));
+        org.mockito.Mockito.lenient().when(scanContextService.current(any())).thenAnswer(call -> {
+            UUID project = call.getArgument(0);
+            UUID source = sourceRepository.findActive(project).map(SourceRevisionView::id).orElse(null);
+            return KbContextFixtures.ready(project, source);
+        });
+    }
+
     @TempDir
     private Path tempDir;
+
+    @Test
+    void rejectsScanWithoutCurrentSuccessfulBuildBeforeAnyCreationSideEffects() throws Exception {
+        UUID project = UUID.randomUUID();
+        UUID source = UUID.randomUUID();
+        when(sourceRepository.findActive(project)).thenReturn(Optional.of(sourceRevision(project, source, tempDir)));
+        org.mockito.Mockito.doReturn(new KbScanContextService.Selection(project, source, KbContextFixtures.ENV, 7L, null))
+                .when(scanContextService).resolve(project, source);
+        assertThatThrownBy(() -> service().create(project, null, UUID.randomUUID(), false, new MockHttpServletRequest()))
+                .isInstanceOf(cn.rvport.backend.workflow.PrerequisiteNotSatisfiedException.class)
+                .extracting("code").isEqualTo("PREREQUISITE_NOT_SATISFIED");
+        org.mockito.Mockito.verifyNoInteractions(taskService, kbScanRepository, auditLogService);
+        var order = org.mockito.Mockito.inOrder(projectAccessService, scanContextService, sourceRepository);
+        order.verify(projectAccessService).requireProjectAccess(eq(project), any(), eq(false));
+        order.verify(scanContextService).lock(project);
+        order.verify(sourceRepository).findActive(project);
+        order.verify(scanContextService).resolve(project, source);
+    }
+
+    @Test
+    void currentListRequiresWholeContextAndHonorsExplicitSourceFilter() {
+        UUID project = UUID.randomUUID();
+        UUID source = UUID.randomUUID();
+        var selected = KbContextFixtures.ready(project, source);
+        org.mockito.Mockito.doReturn(selected).when(scanContextService).current(project);
+        var request = new KbScanListRequest(null, null, null, null, null, null, null);
+        var bound = request.withContext(source, selected.executionContext());
+        when(kbScanRepository.countRuns(project, bound)).thenReturn(1L);
+        when(kbScanRepository.listRuns(project, bound))
+                .thenReturn(List.of(KbContextFixtures.scan(project, source, TaskStatus.SUCCEEDED, selected.executionContext())));
+        var result = service().list(project, request, UUID.randomUUID(), false);
+        assertThat(result.items()).singleElement().satisfies(item -> {
+            assertThat(item.current()).isTrue();
+            assertThat(item.staleReasons()).isEmpty();
+            assertThat(item.message()).isNotBlank();
+            assertThat(item.message_en()).isNotBlank();
+        });
+        var mismatched = new KbScanListRequest(null, null, null, UUID.randomUUID(), null, null, null);
+        assertThat(service().list(project, mismatched, UUID.randomUUID(), false).items()).isEmpty();
+        var explicit = new KbScanListRequest(null, null, null, source, null, null, null);
+        when(kbScanRepository.listRuns(project, explicit.withContext(source, selected.executionContext()))).thenReturn(List.of());
+        assertThat(service().list(project, explicit, UUID.randomUUID(), false).items()).isEmpty();
+        org.mockito.Mockito.doReturn(new KbScanContextService.Selection(project, source, KbContextFixtures.ENV, 8L, null))
+                .when(scanContextService).current(project);
+        assertThat(service().list(project, request, UUID.randomUUID(), false).items()).isEmpty();
+    }
+
+    @Test
+    void rejectsAccessBeforeReadingScanContext() {
+        UUID project = UUID.randomUUID();
+        UUID actor = UUID.randomUUID();
+        doThrow(new ApiException(HttpStatus.FORBIDDEN, "FORBIDDEN", "denied"))
+                .when(projectAccessService).requireProjectAccess(project, actor, false);
+        assertThatThrownBy(() -> service().latest(project, actor, false)).isInstanceOf(ApiException.class);
+        org.mockito.Mockito.verifyNoInteractions(scanContextService, kbScanRepository);
+    }
 
     @Test
     void createsKbScanWithActiveSourceRevision() throws Exception {
@@ -94,6 +163,7 @@ class KbScanServiceTests {
         verify(taskService).create(commandCaptor.capture());
         assertThat(commandCaptor.getValue().type()).isEqualTo(RvPortTaskTypes.KB_SCAN);
         assertThat(commandCaptor.getValue().inputSnapshot().get("sourceRevisionId")).isEqualTo(sourceRevisionId);
+        assertThat(commandCaptor.getValue().inputSnapshot().get("executionContext")).isEqualTo(KbContextFixtures.CONTEXT);
         assertThat(commandCaptor.getValue().inputSnapshot().toString()).doesNotContain(source.toString());
         assertThat(commandCaptor.getValue().inputSnapshot().get("excludePaths")).isEqualTo(List.of(".git", "build"));
     }
@@ -194,6 +264,7 @@ class KbScanServiceTests {
                 5,
                 TaskStatus.SUCCEEDED,
                 sourceRevisionId,
+                false, true,
                 "riscv-porting@2026-07",
                 "finishedAt",
                 "desc"
@@ -612,7 +683,7 @@ class KbScanServiceTests {
     }
 
     private KbScanService service(RvPortProperties properties) {
-        return new KbScanService(
+        KbScanService service = new KbScanService(
                 kbScanRepository,
                 sourceRepository,
                 projectAccessService,
@@ -623,6 +694,8 @@ class KbScanServiceTests {
                 nodeReportInclusionService,
                 kbAiExtensionRepository
         );
+        org.springframework.test.util.ReflectionTestUtils.setField(service, "scanContextService", scanContextService);
+        return service;
     }
 
     private SourceRevisionView sourceRevision(UUID projectId, UUID sourceRevisionId, Path workingCopy) {

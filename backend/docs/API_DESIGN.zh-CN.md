@@ -179,3 +179,7 @@
 | `GET` | `/api/admin/workers/{workerInstanceId}` | [AdminWorkerController.java](../src/main/java/cn/rvport/backend/worker/AdminWorkerController.java) |
 | `PUT` | `/api/admin/workers/{workerInstanceId}/concurrency` | [AdminWorkerController.java](../src/main/java/cn/rvport/backend/worker/AdminWorkerController.java) |
 | `GET` | `/api/projects/{projectId}/readiness` | [StageReadinessController.java](../src/main/java/cn/rvport/backend/workflow/StageReadinessController.java) |
+
+### KB 扫描工作流一致性
+
+KB 创建必须绑定当前运行环境下选中的成功 `SOURCE_ONLY` 构建；overview、latest、默认当前列表和报告 KB 来源使用完整上下文判定。历史成功不等于当前阶段已完成。字段、原因码、状态矩阵与升级说明见 [KB 扫描上下文与历史结果](kb-scan-workflow-consistency.zh-CN.md)。

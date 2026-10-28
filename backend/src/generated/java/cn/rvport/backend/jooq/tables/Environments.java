@@ -13,6 +13,7 @@ import cn.rvport.backend.jooq.tables.DependencyAnalysisRuns.DependencyAnalysisRu
 import cn.rvport.backend.jooq.tables.DependencyAutoFixRuns.DependencyAutoFixRunsPath;
 import cn.rvport.backend.jooq.tables.EnvironmentSnapshots.EnvironmentSnapshotsPath;
 import cn.rvport.backend.jooq.tables.Environments.EnvironmentsPath;
+import cn.rvport.backend.jooq.tables.KbScanRuns.KbScanRunsPath;
 import cn.rvport.backend.jooq.tables.ProjectRuntimeEnvironments.ProjectRuntimeEnvironmentsPath;
 import cn.rvport.backend.jooq.tables.Projects.ProjectsPath;
 import cn.rvport.backend.jooq.tables.SourceDeployRuns.SourceDeployRunsPath;
@@ -348,6 +349,19 @@ public class Environments extends TableImpl<EnvironmentsRecord> {
             _environmentSnapshots = new EnvironmentSnapshotsPath(this, null, Keys.ENVIRONMENT_SNAPSHOTS__ENVIRONMENT_SNAPSHOTS_ENVIRONMENT_ID_FKEY.getInverseKey());
 
         return _environmentSnapshots;
+    }
+
+    private transient KbScanRunsPath _kbScanRuns;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>public.kb_scan_runs</code> table
+     */
+    public KbScanRunsPath kbScanRuns() {
+        if (_kbScanRuns == null)
+            _kbScanRuns = new KbScanRunsPath(this, null, Keys.KB_SCAN_RUNS__KB_SCAN_RUNS_SOURCE_ENVIRONMENT_ID_FKEY.getInverseKey());
+
+        return _kbScanRuns;
     }
 
     private transient ProjectRuntimeEnvironmentsPath _projectRuntimeEnvironmentsSourceEnvironmentIdFkey;

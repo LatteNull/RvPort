@@ -32,6 +32,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class MigrationInputSourceResolverTests {
+    @org.mockito.Mock private cn.rvport.backend.kb.KbScanContextService scanContextService;
     @Test
     void sourceAnchorsHandleMissingEmptyAndBlankEvidenceWithoutChangingIdentity() {
         UUID projectId = UUID.randomUUID(), revisionId = UUID.randomUUID(), id = UUID.randomUUID();
@@ -280,7 +281,7 @@ class MigrationInputSourceResolverTests {
         UUID kbRunId = UUID.randomUUID();
         UUID findingId = UUID.randomUUID();
         UUID resultItemId = UUID.randomUUID();
-        when(kbScanRepository.findLatestSucceededRunBySourceRevision(projectId, sourceRevisionId)).thenReturn(Optional.of(kbRun(projectId, sourceRevisionId, kbRunId)));
+        when(scanContextService.currentRun(projectId, sourceRevisionId)).thenReturn(Optional.of(kbRun(projectId, sourceRevisionId, kbRunId)));
         when(kbScanRepository.listFindingIds(kbRunId)).thenReturn(List.of(findingId));
 
         assertThat(resolver().latestSourceRefIds(projectId, sourceRevisionId, MigrationInputSourceType.KB_FINDING)).containsExactly(findingId);
@@ -380,7 +381,7 @@ class MigrationInputSourceResolverTests {
     void latestSourceIdsReturnEmptyForMissingOrUnsuccessfulRunsAndResolveDependencyRun() {
         UUID projectId = UUID.randomUUID();
         UUID revisionId = UUID.randomUUID();
-        when(kbScanRepository.findLatestSucceededRunBySourceRevision(projectId, revisionId)).thenReturn(Optional.empty());
+        when(scanContextService.currentRun(projectId, revisionId)).thenReturn(Optional.empty());
         assertThat(resolver().latestSourceRefIds(projectId, revisionId, MigrationInputSourceType.KB_FINDING)).isEmpty();
 
         UUID runId = UUID.randomUUID();
@@ -401,7 +402,9 @@ class MigrationInputSourceResolverTests {
     }
 
     private MigrationInputSourceResolver resolver() {
-        return new MigrationInputSourceResolver(kbScanRepository, dependencyAnalysisRepository);
+        MigrationInputSourceResolver service = new MigrationInputSourceResolver(kbScanRepository, dependencyAnalysisRepository);
+        org.springframework.test.util.ReflectionTestUtils.setField(service, "scanContextService", scanContextService);
+        return service;
     }
 
     @Test
@@ -419,8 +422,10 @@ class MigrationInputSourceResolverTests {
     }
 
     private MigrationInputSourceResolver specializedResolver() {
-        return new MigrationInputSourceResolver(kbScanRepository, dependencyAnalysisRepository,
+        MigrationInputSourceResolver service = new MigrationInputSourceResolver(kbScanRepository, dependencyAnalysisRepository,
                 null, specializedAnalysisRepository);
+        org.springframework.test.util.ReflectionTestUtils.setField(service, "scanContextService", scanContextService);
+        return service;
     }
 
     private SpecializedAnalysisFindingView specializedFinding(

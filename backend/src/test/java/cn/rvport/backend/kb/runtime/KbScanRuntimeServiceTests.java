@@ -58,6 +58,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class KbScanRuntimeServiceTests {
+    @Mock private cn.rvport.backend.kb.KbScanContextService scanContextService;
+
+    @org.junit.jupiter.api.BeforeEach
+    void successfulBuildDefault() {
+        lenient().when(scanContextService.requireExecution(any(), any())).thenAnswer(call -> {
+            KbScanView run = call.getArgument(0);
+            return cn.rvport.backend.kb.KbContextFixtures.build(run.projectId(), run.sourceRevisionId());
+        });
+    }
 
     @Mock
     private KbScanRepository kbScanRepository;
@@ -90,6 +99,51 @@ class KbScanRuntimeServiceTests {
 
     @TempDir
     private Path tempDir;
+
+    @Test
+    void contextChangeAfterStartKeepsPinnedBuildAndSuccessfulZeroFindingResult() throws Exception {
+        UUID project = UUID.randomUUID(), taskId = UUID.randomUUID(), revision = UUID.randomUUID(), scanId = UUID.randomUUID();
+        var binding = cn.rvport.backend.kb.KbContextFixtures.CONTEXT;
+        var run = new KbScanView(scanId, project, taskId, revision, "rules", Map.of(), TaskStatus.QUEUED, Map.of(), null, null, binding);
+        when(context.task()).thenReturn(task(taskId, project));
+        when(kbScanRepository.findByTaskId(taskId)).thenReturn(Optional.of(run));
+        when(sourceRepository.findById(revision)).thenReturn(Optional.of(sourceRevision(project, revision, tempDir)));
+        when(toolRunRepository.create(any(), any(), any(), any(), any(), any(), any())).thenReturn(UUID.randomUUID());
+        when(migrationInputService.syncSourceRefs(project, revision, MigrationInputSourceType.KB_FINDING, List.of()))
+                .thenReturn(new MigrationInputRepository.InsertResult(List.of(), 0));
+        var current = new java.util.concurrent.atomic.AtomicReference<>(cn.rvport.backend.kb.KbContextFixtures.ready(project, revision));
+        org.mockito.Mockito.doAnswer(call -> {
+            if (Integer.valueOf(15).equals(call.getArgument(0)))
+                current.set(new cn.rvport.backend.kb.KbScanContextService.Selection(project, revision, binding.sourceEnvironmentId(), 8L, null));
+            return null;
+        }).when(context).progress(org.mockito.ArgumentMatchers.anyInt(), any());
+        service(fakeScannerWithBody("""
+                {"schemaVersion":"2.0","findings":[],"diagnostics":[],"summary":{}}
+                """, true)).scan(input(project, revision), context);
+        verify(scanContextService).requireExecution(eq(run), any());
+        verify(kbScanRepository).replaceFindings(scanId, List.of());
+        verify(kbScanRepository).markSucceeded(eq(scanId), org.mockito.ArgumentMatchers.argThat(summary ->
+                Integer.valueOf(0).equals(summary.get("findingCount"))
+                && binding.buildRunId().equals(((Map<?, ?>) summary.get("compileCommands")).get("buildRunId"))));
+        assertThat(current.get().staleReason(run)).isEqualTo("KB_SCAN_ENVIRONMENT_CHANGED");
+    }
+
+    @Test
+    void scannerTimeoutCannotImportOrSucceed() throws Exception {
+        UUID project = UUID.randomUUID(), taskId = UUID.randomUUID(), revision = UUID.randomUUID(), scanId = UUID.randomUUID();
+        when(context.task()).thenReturn(task(taskId, project));
+        when(kbScanRepository.findByTaskId(taskId)).thenReturn(Optional.of(run(scanId, project, taskId, revision)));
+        when(sourceRepository.findById(revision)).thenReturn(Optional.of(sourceRevision(project, revision, tempDir)));
+        UUID toolId = UUID.randomUUID();
+        when(toolRunRepository.create(any(), any(), any(), any(), any(), any(), any())).thenReturn(toolId);
+        Path scanner = fakeScanner("2.0", true);
+        Files.writeString(scanner.resolve("kb_scanner/__main__.py"), "import time\ntime.sleep(30)\n");
+        assertThatThrownBy(() -> service(scanner, 1).scan(input(project, revision), context)).isInstanceOf(TaskExecutionException.class);
+        verify(kbScanRepository).markFailed(eq(scanId), any());
+        verify(toolRunRepository).finish(eq(toolId), eq(TaskStatus.FAILED), eq(124), any());
+        verify(kbScanRepository, never()).markSucceeded(any(), any());
+        verify(kbScanRepository, never()).replaceFindings(any(), any());
+    }
 
     @Test
     void scanRunsScannerAndImportsFindingsAndArtifacts() throws Exception {
@@ -252,8 +306,8 @@ class KbScanRuntimeServiceTests {
         when(kbScanRepository.listFindingIds(scanId)).thenReturn(List.of());
         when(migrationInputService.syncSourceRefs(projectId, sourceRevisionId, MigrationInputSourceType.KB_FINDING, List.of()))
                 .thenReturn(new MigrationInputRepository.InsertResult(List.of(), 0));
-        when(buildValidationRepository.findLatestSucceededSourceBuildWithCompileDatabase(projectId, sourceRevisionId, sourceEnvironmentId, 7L))
-                .thenReturn(Optional.of(buildRun(projectId, taskId, sourceRevisionId, sourceEnvironmentId, buildRunId, artifactId)));
+        org.mockito.Mockito.doReturn(buildRun(projectId, taskId, sourceRevisionId, sourceEnvironmentId, buildRunId, artifactId))
+                .when(scanContextService).requireExecution(any(), any());
         when(storedArtifactService.download(artifactId)).thenReturn(new StoredArtifactResource(
                 storedArtifact(projectId, taskId, StoredArtifactOwnerType.BUILD_VALIDATION, buildRunId,
                         BuildValidationArtifacts.COMPILE_COMMANDS_JSON, artifactId),
@@ -262,8 +316,6 @@ class KbScanRuntimeServiceTests {
                         """.getBytes(java.nio.charset.StandardCharsets.UTF_8))
         ));
         KbScanRuntimeService service = service(fakeScannerThatRequiresCompileCommands());
-        when(runtimeEnvironmentRepository.find(projectId)).thenReturn(Optional.of(new ProjectRuntimeEnvironmentView(
-                projectId, sourceEnvironmentId, UUID.randomUUID(), 7L, UUID.randomUUID(), OffsetDateTime.now(), OffsetDateTime.now())));
 
         service.scan(input(projectId, sourceRevisionId), context);
 
@@ -272,7 +324,7 @@ class KbScanRuntimeServiceTests {
         verify(kbScanRepository).markSucceeded(eq(scanId), summaryCaptor.capture());
         Map<?, ?> compileCommands = (Map<?, ?>) summaryCaptor.getValue().get("compileCommands");
         assertThat(compileCommands.get("mode")).isEqualTo("USED");
-        assertThat(compileCommands.get("source")).isEqualTo("LATEST_SOURCE_BUILD");
+        assertThat(compileCommands.get("source")).isEqualTo("BOUND_SOURCE_BUILD");
         assertThat(compileCommands.get("buildRunId")).isEqualTo(buildRunId);
         assertThat(compileCommands.get("storedArtifactId")).isEqualTo(artifactId);
         assertThat(compileCommands.get("commandCount")).isEqualTo(1);
@@ -302,12 +354,10 @@ class KbScanRuntimeServiceTests {
         when(kbScanRepository.listFindingIds(scanId)).thenReturn(List.of());
         when(migrationInputService.syncSourceRefs(projectId, sourceRevisionId, MigrationInputSourceType.KB_FINDING, List.of()))
                 .thenReturn(new MigrationInputRepository.InsertResult(List.of(), 0));
-        when(buildValidationRepository.findLatestSucceededSourceBuildWithCompileDatabase(projectId, sourceRevisionId, sourceEnvironmentId, 7L))
-                .thenReturn(Optional.of(buildRun(projectId, taskId, sourceRevisionId, sourceEnvironmentId, buildRunId, artifactId)));
+        org.mockito.Mockito.doReturn(buildRun(projectId, taskId, sourceRevisionId, sourceEnvironmentId, buildRunId, artifactId))
+                .when(scanContextService).requireExecution(any(), any());
         when(storedArtifactService.download(artifactId)).thenThrow(new IllegalStateException("object missing"));
         KbScanRuntimeService service = service(fakeScanner("2.0", true));
-        when(runtimeEnvironmentRepository.find(projectId)).thenReturn(Optional.of(new ProjectRuntimeEnvironmentView(
-                projectId, sourceEnvironmentId, UUID.randomUUID(), 7L, UUID.randomUUID(), OffsetDateTime.now(), OffsetDateTime.now())));
 
         service.scan(input(projectId, sourceRevisionId), context);
 
@@ -321,45 +371,28 @@ class KbScanRuntimeServiceTests {
     }
 
     @Test
-    void scanFallsBackWhenNoBuildContextExistsForCurrentSourceRevision() throws Exception {
+    void scanRejectsMissingOrStaleBuildBeforeLaunchingScanner() throws Exception {
         UUID projectId = UUID.randomUUID();
         UUID taskId = UUID.randomUUID();
         UUID scanId = UUID.randomUUID();
-        UUID sourceRevisionId = UUID.randomUUID();
-        UUID otherSourceRevisionId = UUID.randomUUID();
-        UUID toolRunId = UUID.randomUUID();
-        UUID sourceEnvironmentId = UUID.randomUUID();
-        Path sourceRoot = Files.createDirectories(tempDir.resolve("source-no-context"));
-        Files.writeString(sourceRoot.resolve("main.c"), "int main(){return 0;}\n");
-        KbScanView run = run(scanId, projectId, taskId, sourceRevisionId);
+        UUID revision = UUID.randomUUID();
         when(context.task()).thenReturn(task(taskId, projectId));
-        when(kbScanRepository.findByTaskId(taskId)).thenReturn(Optional.of(run));
-        when(sourceRepository.findById(sourceRevisionId)).thenReturn(Optional.of(sourceRevision(projectId, sourceRevisionId, sourceRoot)));
-        when(toolRunRepository.create(eq(projectId), eq(taskId), eq("kb-scanner"), any(), any(), eq(TaskStatus.RUNNING), any()))
-                .thenReturn(toolRunId);
-        when(kbScanRepository.listFindingIds(scanId)).thenReturn(List.of());
-        when(migrationInputService.syncSourceRefs(projectId, sourceRevisionId, MigrationInputSourceType.KB_FINDING, List.of()))
-                .thenReturn(new MigrationInputRepository.InsertResult(List.of(), 0));
-        KbScanRuntimeService service = service(fakeScanner("2.0", true));
-        when(runtimeEnvironmentRepository.find(projectId)).thenReturn(Optional.of(new ProjectRuntimeEnvironmentView(
-                projectId, sourceEnvironmentId, UUID.randomUUID(), 7L, UUID.randomUUID(), OffsetDateTime.now(), OffsetDateTime.now())));
-        when(buildValidationRepository.findLatestSucceededSourceBuildWithCompileDatabase(projectId, sourceRevisionId, sourceEnvironmentId, 7L))
-                .thenReturn(Optional.empty());
-
-        service.scan(input(projectId, sourceRevisionId), context);
-
-        @SuppressWarnings("unchecked")
-        ArgumentCaptor<Map<String, Object>> summaryCaptor = ArgumentCaptor.forClass(Map.class);
-        verify(kbScanRepository).markSucceeded(eq(scanId), summaryCaptor.capture());
-        Map<?, ?> compileCommands = (Map<?, ?>) summaryCaptor.getValue().get("compileCommands");
-        assertThat(compileCommands.get("mode")).isEqualTo("NOT_AVAILABLE");
-        assertThat(compileCommands.get("reason")).isEqualTo("NO_SUCCESSFUL_SOURCE_BUILD");
-        verify(buildValidationRepository).findLatestSucceededSourceBuildWithCompileDatabase(projectId, sourceRevisionId, sourceEnvironmentId, 7L);
-        verify(buildValidationRepository, org.mockito.Mockito.never())
-                .findLatestSucceededSourceBuildWithCompileDatabase(eq(projectId), eq(otherSourceRevisionId), any(), any());
-        verify(storedArtifactService, org.mockito.Mockito.never()).download(any());
+        when(kbScanRepository.findByTaskId(taskId)).thenReturn(Optional.of(run(scanId, projectId, taskId, revision)));
+        when(sourceRepository.findById(revision)).thenReturn(Optional.of(sourceRevision(projectId, revision, tempDir)));
+        org.mockito.Mockito.doThrow(
+                new cn.rvport.backend.workflow.PrerequisiteNotSatisfiedException("kb",
+                    cn.rvport.backend.workflow.StagePrerequisiteResponse.of("X86_BUILD",
+                        cn.rvport.backend.workflow.StagePrerequisiteStatus.MISSING, null, "X86_BUILD_MISSING")))
+                .when(scanContextService).requireExecution(any(), any());
+        assertThatThrownBy(() -> service(fakeScanner("2.0", true)).scan(input(projectId, revision), context))
+                .isInstanceOf(TaskExecutionException.class);
+        verify(kbScanRepository).markFailed(eq(scanId), org.mockito.ArgumentMatchers.argThat(summary ->
+                "KB_SCAN_CONTEXT_INVALID".equals(summary.get("reasonCode"))));
+        verify(kbScanRepository, org.mockito.Mockito.never()).markRunning(any());
+        verify(kbScanRepository, org.mockito.Mockito.never()).markSucceeded(any(), any());
+        verify(kbScanRepository, org.mockito.Mockito.never()).replaceFindings(any(), any());
+        org.mockito.Mockito.verifyNoInteractions(toolRunRepository, migrationInputService);
     }
-
     @Test
     void scanRejectsIncompatibleSchemaVersionAndMarksFailed() throws Exception {
         UUID projectId = UUID.randomUUID();
@@ -695,17 +728,21 @@ class KbScanRuntimeServiceTests {
     }
 
     private KbScanRuntimeService service(Path scannerRoot) throws Exception {
+        return service(scannerRoot, 10);
+    }
+
+    private KbScanRuntimeService service(Path scannerRoot, int timeout) throws Exception {
         lenient().when(storedArtifactService.storeFile(any(), any(), any(), any(), any(), any(), any(), any(), any(), eq(context)))
                 .thenReturn(storedArtifact());
         lenient().when(runtimeEnvironmentRepository.find(any())).thenReturn(Optional.empty());
-        return new KbScanRuntimeService(
+        var service = new KbScanRuntimeService(
                 kbScanRepository,
                 sourceRepository,
                 toolRunRepository,
                 new RvPortProperties(
                         null,
                         new RvPortProperties.KbScan("python", scannerRoot.toString(), "rulesets/riscv-porting",
-                                tempDir.resolve("runtime/kb-scans").toString(), 10, 10_485_760L, "c,cpp", "riscv64", 20),
+                                tempDir.resolve("runtime/kb-scans").toString(), timeout, 10_485_760L, "c,cpp", "riscv64", 20),
                         new RvPortProperties.Worker(false)
                 ),
                 new ObjectMapper(),
@@ -715,6 +752,8 @@ class KbScanRuntimeServiceTests {
                 buildValidationRepository,
                 runtimeEnvironmentRepository
         );
+        org.springframework.test.util.ReflectionTestUtils.setField(service, "scanContextService", scanContextService);
+        return service;
     }
 
     private StoredArtifactView storedArtifact() {

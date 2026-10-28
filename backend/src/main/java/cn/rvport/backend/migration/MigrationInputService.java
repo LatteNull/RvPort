@@ -173,12 +173,12 @@ public class MigrationInputService {
         return currentConfirmedRefsForSystem(projectId, sourceRevisionId);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
     public List<MigrationInputRefView> currentRefsForSystem(UUID projectId, UUID sourceRevisionId) {
         return currentEffectiveRefs(projectId, sourceRevisionId, migrationInputRepository.listAll(projectId, sourceRevisionId));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
     public List<MigrationInputRefView> currentConfirmedRefsForSystem(UUID projectId, UUID sourceRevisionId) {
         return currentRefsForSystem(projectId, sourceRevisionId)
                 .stream()
@@ -253,8 +253,11 @@ public class MigrationInputService {
                 MigrationInputSourceType.DEPENDENCY_RESULT
         );
         Set<UUID> latestDependencyRefIds = latestDependencySourceRefIds == null ? Set.of() : Set.copyOf(latestDependencySourceRefIds);
+        Set<UUID> latestKbRefIds = Set.copyOf(sourceResolver.latestSourceRefIds(projectId, sourceRevisionId,
+                MigrationInputSourceType.KB_FINDING));
         Map<String, MigrationInputRefView> byKey = new LinkedHashMap<>();
         for (MigrationInputRefView ref : refs) {
+            if (ref.sourceType() == MigrationInputSourceType.KB_FINDING && !latestKbRefIds.contains(ref.sourceRefId())) continue;
             if (ref.sourceType() == MigrationInputSourceType.DEPENDENCY_RESULT
                     && !latestDependencyRefIds.contains(ref.sourceRefId())) {
                 continue;

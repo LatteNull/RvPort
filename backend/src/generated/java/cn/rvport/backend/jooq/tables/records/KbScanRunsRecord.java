@@ -162,6 +162,48 @@ public class KbScanRunsRecord extends UpdatableRecordImpl<KbScanRunsRecord> {
         return (OffsetDateTime) get(9);
     }
 
+    /**
+     * Setter for <code>public.kb_scan_runs.source_environment_id</code>.
+     */
+    public void setSourceEnvironmentId(UUID value) {
+        set(10, value);
+    }
+
+    /**
+     * Getter for <code>public.kb_scan_runs.source_environment_id</code>.
+     */
+    public UUID getSourceEnvironmentId() {
+        return (UUID) get(10);
+    }
+
+    /**
+     * Setter for <code>public.kb_scan_runs.runtime_environment_version</code>.
+     */
+    public void setRuntimeEnvironmentVersion(Long value) {
+        set(11, value);
+    }
+
+    /**
+     * Getter for <code>public.kb_scan_runs.runtime_environment_version</code>.
+     */
+    public Long getRuntimeEnvironmentVersion() {
+        return (Long) get(11);
+    }
+
+    /**
+     * Setter for <code>public.kb_scan_runs.build_run_id</code>.
+     */
+    public void setBuildRunId(UUID value) {
+        set(12, value);
+    }
+
+    /**
+     * Getter for <code>public.kb_scan_runs.build_run_id</code>.
+     */
+    public UUID getBuildRunId() {
+        return (UUID) get(12);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -185,7 +227,7 @@ public class KbScanRunsRecord extends UpdatableRecordImpl<KbScanRunsRecord> {
     /**
      * Create a detached, initialised KbScanRunsRecord
      */
-    public KbScanRunsRecord(UUID id, UUID projectId, UUID taskId, UUID sourceRevisionId, String kbVersion, JSONB scope, String status, JSONB summary, OffsetDateTime startedAt, OffsetDateTime finishedAt) {
+    public KbScanRunsRecord(UUID id, UUID projectId, UUID taskId, UUID sourceRevisionId, String kbVersion, JSONB scope, String status, JSONB summary, OffsetDateTime startedAt, OffsetDateTime finishedAt, UUID sourceEnvironmentId, Long runtimeEnvironmentVersion, UUID buildRunId) {
         super(KbScanRuns.KB_SCAN_RUNS);
 
         setId(id);
@@ -198,6 +240,9 @@ public class KbScanRunsRecord extends UpdatableRecordImpl<KbScanRunsRecord> {
         setSummary(summary);
         setStartedAt(startedAt);
         setFinishedAt(finishedAt);
+        setSourceEnvironmentId(sourceEnvironmentId);
+        setRuntimeEnvironmentVersion(runtimeEnvironmentVersion);
+        setBuildRunId(buildRunId);
         resetTouchedOnNotNull();
     }
 }

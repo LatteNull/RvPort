@@ -58,6 +58,8 @@ public class KbScanService {
     private final StoredArtifactService storedArtifactService;
     private final NodeReportInclusionService nodeReportInclusionService;
     private final KbAiExtensionRepository kbAiExtensionRepository;
+    @Autowired
+    private KbScanContextService scanContextService;
 
     @Autowired
     public KbScanService(
@@ -104,8 +106,10 @@ public class KbScanService {
     @Transactional
     public TaskResponse create(UUID projectId, KbScanRequest request, UUID actorUserId, boolean superAdmin, HttpServletRequest httpRequest) {
         projectAccessService.requireProjectAccess(projectId, actorUserId, superAdmin);
+        scanContextService.lock(projectId);
         SourceRevisionView sourceRevision = resolveSourceRevision(projectId, request == null ? null : request.sourceRevisionId());
         validateWorkingCopy(sourceRevision);
+        KbExecutionContext executionContext = scanContextService.resolve(projectId, sourceRevision.id()).requireReady();
 
         String language = defaultText(request == null ? null : request.language(), defaultLanguage());
         String targetArch = defaultText(properties.kbScan() == null ? null : properties.kbScan().targetArch(), "riscv64");
@@ -121,6 +125,7 @@ public class KbScanService {
         inputSnapshot.put("targetArch", targetArch);
         inputSnapshot.put("scanScope", scanScope);
         inputSnapshot.put("excludePaths", excludePaths);
+        inputSnapshot.put("executionContext", executionContext);
 
         TaskResponse task = taskService.create(new TaskCreateCommand(
                 projectId,
@@ -130,58 +135,57 @@ public class KbScanService {
                 timeoutSeconds(),
                 "KB 扫描任务已创建"
         ));
-        KbScanInput runInput = new KbScanInput(projectId, null, sourceRevision.id(), ruleVersion, language, targetArch, scanScope, excludePaths);
+        KbScanInput runInput = new KbScanInput(projectId, null, sourceRevision.id(), ruleVersion, language, targetArch, scanScope, excludePaths, executionContext);
         UUID runId = kbScanRepository.createRun(runInput, task.id());
         auditLogService.record(projectId, actorUserId, "kb.scan.create", "kb_scan_run", runId,
                 Map.of("taskId", task.id(), "sourceRevisionId", sourceRevision.id()), httpRequest);
         return task;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
     public PageResponse<KbScanResponse> list(UUID projectId, KbScanListRequest request, UUID actorUserId, boolean superAdmin) {
         projectAccessService.requireProjectAccess(projectId, actorUserId, superAdmin);
         int page = request.normalizedPage();
         int pageSize = request.normalizedPageSize();
         try {
-            KbScanListRequest effectiveRequest = currentRequest(projectId, request);
-            if (effectiveRequest == null) {
+            KbScanContextService.Selection selection = scanContextService.current(projectId);
+            if (request.effectiveCurrentOnly() && (!selection.ready()
+                    || (request.sourceRevisionId() != null && !Objects.equals(request.sourceRevisionId(), selection.sourceRevisionId())))) {
                 return PageResponse.of(List.of(), page, pageSize, 0);
             }
-            UUID activeSourceRevisionId = sourceRepository.findActive(projectId).map(SourceRevisionView::id).orElse(null);
+            KbScanListRequest effectiveRequest = request.effectiveCurrentOnly()
+                    ? request.withContext(selection.sourceRevisionId(), selection.executionContext()) : request;
             long total = kbScanRepository.countRuns(projectId, effectiveRequest);
             return PageResponse.of(kbScanRepository.listRuns(projectId, effectiveRequest).stream()
-                    .map(run -> KbScanResponse.from(run, Objects.equals(run.sourceRevisionId(), activeSourceRevisionId)))
+                    .map(run -> KbScanResponse.from(run, selection))
                     .toList(), effectiveRequest.normalizedPage(), effectiveRequest.normalizedPageSize(), total);
         } catch (IllegalArgumentException ex) {
             throw badRequest("KB_SCAN_QUERY_INVALID", "KB 扫描查询参数不正确");
         }
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
     public KbScanResponse get(UUID scanId, UUID actorUserId, boolean superAdmin) {
         KbScanView run = requireAccessibleRun(scanId, actorUserId, superAdmin);
-        UUID activeSourceRevisionId = sourceRepository.findActive(run.projectId()).map(SourceRevisionView::id).orElse(null);
-        return KbScanResponse.from(run, Objects.equals(run.sourceRevisionId(), activeSourceRevisionId));
+        return KbScanResponse.from(run, scanContextService.current(run.projectId()));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = org.springframework.transaction.annotation.Isolation.REPEATABLE_READ)
     public DomainLatestResponse<KbScanResponse> latest(UUID projectId, UUID actorUserId, boolean superAdmin) {
         projectAccessService.requireProjectAccess(projectId, actorUserId, superAdmin);
-        ProjectContextSnapshot context = projectContextService.snapshot(projectId);
-        if (context.sourceRevisionId() == null) {
-            return DomainLatestResponse.empty(context);
-        }
-        return kbScanRepository.findLatestRunBySourceRevision(projectId, context.sourceRevisionId())
+        KbScanContextService.Selection selection = scanContextService.current(projectId);
+        ProjectContextSnapshot context = selection.snapshot();
+        return scanContextService.latest(selection)
                 .map(run -> new DomainLatestResponse<>(
                         context,
                         DomainLatestFreshness.CURRENT,
                         DomainLatestExecutionResponse.from(run.id(), taskRepository.findById(run.taskId()).orElse(null)),
-                        KbScanResponse.from(run, true)))
-                .orElseGet(() -> kbScanRepository.findLatestRun(projectId)
+                        KbScanResponse.from(run, selection)))
+                .orElseGet(() -> kbScanRepository.findLatestHistoricalRun(projectId)
                         .map(run -> DomainLatestResponse.stale(
                                 context,
                                 DomainLatestExecutionResponse.from(run.id(), taskRepository.findById(run.taskId()).orElse(null)),
-                                KbScanResponse.from(run, false)))
+                                KbScanResponse.from(run, selection)))
                         .orElseGet(() -> DomainLatestResponse.empty(context)));
     }
 
@@ -356,19 +360,6 @@ public class KbScanService {
             throw notFound("SOURCE_REVISION_NOT_FOUND", "源码版本不存在");
         }
         return sourceRevision;
-    }
-
-    private KbScanListRequest currentRequest(UUID projectId, KbScanListRequest request) {
-        if (!request.effectiveCurrentOnly()) {
-            return request;
-        }
-        UUID activeSourceRevisionId = sourceRepository.findActive(projectId)
-                .map(SourceRevisionView::id)
-                .orElse(null);
-        if (activeSourceRevisionId == null && request.sourceRevisionId() == null) {
-            return null;
-        }
-        return request.withCurrentSourceRevision(activeSourceRevisionId);
     }
 
     private void validateWorkingCopy(SourceRevisionView sourceRevision) {

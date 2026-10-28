@@ -16,8 +16,14 @@ public record KbScanView(
         TaskStatus status,
         Map<String, Object> summary,
         OffsetDateTime startedAt,
-        OffsetDateTime finishedAt
+        OffsetDateTime finishedAt,
+        KbExecutionContext executionContext
 ) {
+    public KbScanView(UUID id, UUID projectId, UUID taskId, UUID sourceRevisionId, String kbVersion,
+            Map<String, Object> scope, TaskStatus status, Map<String, Object> summary,
+            OffsetDateTime startedAt, OffsetDateTime finishedAt) {
+        this(id, projectId, taskId, sourceRevisionId, kbVersion, scope, status, summary, startedAt, finishedAt, null);
+    }
     static KbScanView from(KbScanRunsRecord record, Map<String, Object> scope, Map<String, Object> summary) {
         return new KbScanView(
                 record.getId(),
@@ -29,7 +35,8 @@ public record KbScanView(
                 TaskStatus.valueOf(record.getStatus()),
                 summary,
                 record.getStartedAt(),
-                record.getFinishedAt()
+                record.getFinishedAt(),
+                new KbExecutionContext(record.getSourceEnvironmentId(), record.getRuntimeEnvironmentVersion(), record.getBuildRunId())
         );
     }
 }
