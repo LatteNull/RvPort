@@ -10,8 +10,13 @@ on:
 #   1. lint      — 提交规范 + 前端 lint/typecheck
 #   2. unittest  — 各组件单元测试与覆盖率门槛（90% 行/分支）
 #   3. compile   — 各组件生产构建校验
-#   4. build     — 构建并推送 GHCR 镜像（tag: v<yyyyMMdd>-<HHmmss>）
+#   4. build     — 构建镜像（push 事件推送 GHCR；PR 事件仅构建不推送）
 #   5. deploy    — 部署 dev / test（并行，需 environment 人工审批）
+#
+# 触发策略：
+#   - push（任意分支）：跑完 1→5，build 推送镜像，deploy 等待人工审批
+#   - pull_request    ：只跑 1→4 的构建校验，不推送镜像，不出现 deploy
+#   - workflow_dispatch：同 push
 # ============================================================================
 
 env:
@@ -347,7 +352,6 @@ jobs:
   build:
     name: Build / Docker Images
     needs: [compile-backend, compile-frontend, compile-tools]
-    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -364,7 +368,20 @@ jobs:
           echo "TAG=${TAG}" >> "$GITHUB_OUTPUT"
           echo "镜像 Tag: ${TAG}"
 
+      # PR 事件只做镜像构建验证，不推送到 GHCR（避免 PR 的 latest 覆盖可部署镜像）。
+      - name: Resolve push flag
+        id: pushflag
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "PUSH=false" >> "$GITHUB_OUTPUT"
+            echo "PR 事件：仅构建校验，不推送镜像"
+          else
+            echo "PUSH=true" >> "$GITHUB_OUTPUT"
+            echo "推送镜像到 ${REGISTRY}"
+          fi
+
       - name: Login to GHCR
+        if: steps.pushflag.outputs.PUSH == 'true'
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
@@ -382,7 +399,7 @@ jobs:
         with:
           context: .
           file: backend/Dockerfile
-          push: true
+          push: ${{ steps.pushflag.outputs.PUSH }}
           tags: |
             ${{ env.BACKEND_IMAGE }}:${{ steps.tags.outputs.TAG }}
             ${{ env.BACKEND_IMAGE }}:latest
@@ -394,7 +411,7 @@ jobs:
         with:
           context: frontend
           file: frontend/deploy/docker/Dockerfile
-          push: true
+          push: ${{ steps.pushflag.outputs.PUSH }}
           tags: |
             ${{ env.FRONTEND_IMAGE }}:${{ steps.tags.outputs.TAG }}
             ${{ env.FRONTEND_IMAGE }}:latest
@@ -404,7 +421,11 @@ jobs:
       - name: Summary
         run: |
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo "  镜像构建 & 推送完成"
+          if [ "${{ steps.pushflag.outputs.PUSH }}" = "true" ]; then
+            echo "  镜像构建 & 推送完成"
+          else
+            echo "  镜像构建校验完成（PR 事件，未推送）"
+          fi
           echo "  Tag: ${{ steps.tags.outputs.TAG }}"
           echo "  后端: ${{ env.BACKEND_IMAGE }}:${{ steps.tags.outputs.TAG }}"
           echo "  前端: ${{ env.FRONTEND_IMAGE }}:${{ steps.tags.outputs.TAG }}"
@@ -416,9 +437,9 @@ jobs:
   deploy-dev:
     name: Deploy / dev
     needs: build
-    # 任意分支均可部署；PR 事件下 build 被跳过，因此不会误触发。
-    # 仍受 environment: dev 的人工审批门禁保护。
-    if: needs.build.result == 'success'
+    # 任意分支推送均可部署（不限 ci/master）；PR 事件只跑到 build，不出现 deploy。
+    # 仍需 environment: dev 的人工审批。
+    if: needs.build.result == 'success' && github.event_name != 'pull_request'
     runs-on: self-hosted
     environment: dev
     env:
@@ -536,9 +557,9 @@ jobs:
   deploy-test:
     name: Deploy / test
     needs: build
-    # 任意分支均可部署；PR 事件下 build 被跳过，因此不会误触发。
-    # 仍受 environment: test 的人工审批门禁保护。
-    if: needs.build.result == 'success'
+    # 任意分支推送均可部署（不限 ci/master）；PR 事件只跑到 build，不出现 deploy。
+    # 仍需 environment: test 的人工审批。
+    if: needs.build.result == 'success' && github.event_name != 'pull_request'
     runs-on: self-hosted
     environment: test
     env:
