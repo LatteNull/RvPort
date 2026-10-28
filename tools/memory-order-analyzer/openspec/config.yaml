@@ -1,6 +1,8 @@
 schema: spec-driven
 
 context: |
+  写入边界（用户于 2026-10-28 明确）：当前 OpenSpec root 同时是实施文件边界，只能修改 D:/projects/RvPort/tools/memory-order-analyzer/ 内的文件。
+  本工具的 change 不得安排或执行 backend、frontend、仓库根或兄弟工具的文件修改；跨项目需求只提供交接说明，由对应 root 独立管理。历史跨目录修改不构成以后继续修改的授权。
   Scope: tools/memory-order-analyzer, an independent C/C++ memory-order analyzer project.
   Planning home: this directory's openspec/; do not write changes or specs into the RvPort root or sibling tools.
   Current stage: foundation, P1 enrich-ir-semantic-facts, P2 add-scoped-effect-summaries, P3 model-thread-and-sync-contexts, P4 detect-single-publication-risks, P5 validate-and-scale-analysis, A1 integrate-ast-cross-tu-evidence, A2 add-degraded-source-analysis and A3 model-cpp-thread-lifecycle are implemented, quality-verified, synchronized and archived. A4 model-cpp-raii-synchronization is implemented and undergoing its final required gate; it is not yet synchronized or archived. ModuleFacts and RunReport remain v2; P2 EffectSummary, P3 ThreadContextGraph, P4 SinglePublicationProtocolGraph, A1 source-evidence, A2 degraded-source and A3 lifecycle protocols remain independently versioned and unchanged by A4. A4 adds verified libstdc++/libc++ mutex profiles, independent source/IR local facts, owner/held-region state and bounded same-mutex proofs; it does not implement a general happens-before solver or whole-program safety proof.
@@ -18,6 +20,7 @@ context: |
 
 rules:
   proposal:
+    - 将实施范围限制为当前 root 内文件；外部消费者仅记录接口影响与交接，不纳入本 change 的实施能力。
     - Write explanatory prose in Chinese and retain the schema's required headings.
     - State whether this is a documentation-only or runtime implementation change.
     - Scope new capabilities to this project's own specs; do not claim to modify unowned sibling specs.
@@ -29,5 +32,6 @@ rules:
     - Use testable SHALL/MUST requirements with WHEN/THEN scenarios.
     - For documentation-only changes, requirements govern documentation content rather than claiming runtime functionality.
   tasks:
+    - 任务仅包含当前 root 内的实施及其验证；外部项目任务移交到对应 root，不作为本 change 的待办或完成项。
     - Keep documentation-only changes free of analyzer implementation or mandatory remote-execution tasks.
     - Include document link, consistency and evidence-provenance checks appropriate to the change.

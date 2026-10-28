@@ -40,7 +40,9 @@ def release_sequence_policy(language_standard):
         return "c11-c17-cpp17-v1"
     if language_standard == "c++20":
         return "cpp20-v1"
-    if language_standard in {"compiler-default", "c89", "c99", "c++98", "c++03"}:
+    if language_standard == "compiler-default":
+        return "unresolved-standard-v1"
+    if language_standard in {"c89", "c99", "c++98", "c++03"}:
         return "legacy-no-iso-atomics-v1"
     raise ValueError(f"unsupported language standard: {language_standard}")
 
@@ -839,6 +841,10 @@ def build_communication_graph(local_facts, *, scope_id, language_standard, budge
     started_wall, started_cpu = time.monotonic(), time.process_time()
     events = deepcopy(local_facts["events"])
     frontier = deepcopy(local_facts["frontier"])
+    policy = release_sequence_policy(language_standard)
+    if policy in {"legacy-no-iso-atomics-v1", "unresolved-standard-v1"}:
+        frontier.append(diagnostic("atomic-standard-unsupported", "语言标准未建立 ISO 原子语义",
+                                   "The language standard does not establish ISO atomic semantics"))
     if not closed_scope:
         frontier.append(diagnostic("reads-from-candidate-set-open", "分析 scope 未闭合",
                                    "Analysis scope is open"))
@@ -996,7 +1002,7 @@ def build_communication_graph(local_facts, *, scope_id, language_standard, budge
             status = "risk"
         else:
             status = "unknown"
-        if _frontier_affects(read, incoming, frontier, by_id):
+        if policy in {"legacy-no-iso-atomics-v1", "unresolved-standard-v1"} or _frontier_affects(read, incoming, frontier, by_id):
             status = "unknown"
         assessments.append({"id": identity({"read": read["id"], "status": status}),
                             "read_event": read["id"], "assessment": status,

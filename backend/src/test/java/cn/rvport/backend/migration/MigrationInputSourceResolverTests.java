@@ -32,6 +32,45 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class MigrationInputSourceResolverTests {
+    @Test
+    void sourceAnchorsHandleMissingEmptyAndBlankEvidenceWithoutChangingIdentity() {
+        UUID projectId = UUID.randomUUID(), revisionId = UUID.randomUUID(), id = UUID.randomUUID();
+        var evidenceValues = new java.util.ArrayList<Map<String, Object>>();
+        evidenceValues.add(null);
+        evidenceValues.add(Map.of());
+        evidenceValues.add(Map.of("anchor", " ", "snippet", "actual anchor"));
+        for (var evidence : evidenceValues) {
+            var finding = new FindingView(id, projectId, UUID.randomUUID(), revisionId, "RULE", "category", "high",
+                    "title", "description", "a.c", 1, 1, "symbol", evidence, "fix", "fallback-fingerprint", "DETECTED", OffsetDateTime.now());
+            when(kbScanRepository.findFinding(id)).thenReturn(Optional.of(finding));
+            var candidate = resolver().resolve(projectId, revisionId, MigrationInputSourceType.KB_FINDING, id);
+            assertThat(candidate.identityAnchor()).isEqualTo(evidence == null || evidence.isEmpty() ? "fallback-fingerprint" : "actual anchor");
+        }
+    }
+
+    @Test
+    void memoryOrderDefaultsToPendingAndKeepsHistoricalSelectionSeparate() {
+        UUID projectId = UUID.randomUUID(), revisionId = UUID.randomUUID(), id = UUID.randomUUID();
+        var raw = specializedFinding(id, projectId, revisionId, SpecializedAnalyzerType.MEMORY_ORDER, 1, 2, "candidate", "verify", "digest");
+        when(specializedAnalysisRepository.findFinding(id)).thenReturn(Optional.of(raw));
+        var resolver = specializedResolver();
+        assertThat(resolver.resolve(projectId, revisionId, MigrationInputSourceType.MEMORY_ORDER_FINDING, id).initialStatus())
+                .isEqualTo(MigrationInputStatus.CANDIDATE);
+        var confirmed = ref(projectId, revisionId, MigrationInputSourceType.MEMORY_ORDER_FINDING, id);
+        assertThat(resolver.detail(confirmed)).containsEntry("pendingVerification", true).containsEntry("findingKind", "INCONCLUSIVE");
+        assertThat(confirmed.status()).isEqualTo(MigrationInputStatus.CONFIRMED);
+        assertThat(raw.severity()).isEqualTo("high");
+        assertThat(resolver().memoryOrderAnalysisSummary(projectId, revisionId)).containsEntry("analysisStatus", "UNAVAILABLE");
+        assertThat(resolver.memoryOrderAnalysisSummary(projectId, revisionId)).containsEntry("analysisStatus", "UNAVAILABLE");
+        var run = new SpecializedAnalysisRunView(UUID.randomUUID(), projectId, UUID.randomUUID(), SpecializedAnalyzerType.MEMORY_ORDER,
+                revisionId, UUID.randomUUID(), "artifact-set", 1L, "tool", "request", "result", "policy",
+                SpecializedAnalysisStatus.PARTIAL, "inconclusive", 2, Map.of("diagnosticCount", 0), null, null, null, null,
+                0, 1, 0, UUID.randomUUID(), null, null, OffsetDateTime.now(), OffsetDateTime.now());
+        when(specializedAnalysisRepository.latestPublished(projectId, revisionId, SpecializedAnalyzerType.MEMORY_ORDER)).thenReturn(Optional.of(run));
+        assertThat(resolver.memoryOrderAnalysisSummary(projectId, revisionId)).containsEntry("analysisStatus", "PARTIAL")
+                .containsEntry("diagnosticCount", null).containsEntry("diagnosticsAggregated", false);
+        assertThat(run.summary()).containsEntry("diagnosticCount", 0);
+    }
 
     @Mock
     private KbScanRepository kbScanRepository;

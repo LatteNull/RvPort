@@ -66,6 +66,52 @@ import org.springframework.core.io.ByteArrayResource;
 
 @ExtendWith(MockitoExtension.class)
 class SpecializedAnalysisRuntimeServiceTests {
+    @Test
+    void memoryOrderStatusVerdictAndExitCodeMustAgree() {
+        ObjectNode base = mapper.createObjectNode().put("kind", "UnifiedMemoryOrderAnalysisReport")
+                .put("schema_version", 1).put("finding_schema_version", "3.0");
+        for (Object[] row : new Object[][] {{0, "complete", "no-finding-within-supported-model"},
+                {3, "complete", "risk"}, {2, "partial", "inconclusive"}, {2, "cancelled", "inconclusive"}}) {
+            ObjectNode report = base.deepCopy().put("exit_code", (int) row[0]).put("status", (String) row[1]).put("verdict", (String) row[2]);
+            org.springframework.test.util.ReflectionTestUtils.invokeMethod(service(), "validateResult", SpecializedAnalyzerType.MEMORY_ORDER, report, row[0]);
+        }
+        for (Object[] row : new Object[][] {{0, "partial", "no-finding-within-supported-model"},
+                {0, "complete", "risk"}, {3, "partial", "risk"}, {3, "complete", "inconclusive"},
+                {2, "complete", "inconclusive"}, {2, "partial", "risk"}, {4, "partial", "inconclusive"}}) {
+            ObjectNode report = base.deepCopy().put("exit_code", (int) row[0]).put("status", (String) row[1]).put("verdict", (String) row[2]);
+            assertThatThrownBy(() -> org.springframework.test.util.ReflectionTestUtils.invokeMethod(service(), "validateResult",
+                    SpecializedAnalyzerType.MEMORY_ORDER, report, row[0])).hasMessageContaining("schema");
+        }
+        ObjectNode mismatch = base.deepCopy().put("schema_version", 2).put("exit_code", 2).put("status", "partial").put("verdict", "inconclusive");
+        assertThatThrownBy(() -> org.springframework.test.util.ReflectionTestUtils.invokeMethod(service(), "validateResult",
+                SpecializedAnalyzerType.MEMORY_ORDER, mismatch, 2)).hasMessageContaining("schema");
+    }
+
+    @Test
+    void bundleRejectsSpecialEntriesAndEnforcesExtractionBudgets() throws Exception {
+        for (byte type : new byte[] {'1', '2', '3', '4', '6', '5'}) {
+            Path bundle = tempDir.resolve("entry-" + type + ".tar.gz");
+            try (var gzip = new GzipCompressorOutputStream(Files.newOutputStream(bundle));
+                 var tar = new TarArchiveOutputStream(gzip)) {
+                var entry = new TarArchiveEntry(type == '5' ? "directory/" : "special", type);
+                entry.setLinkName("target");
+                tar.putArchiveEntry(entry); tar.closeArchiveEntry();
+            }
+            Path destination = tempDir.resolve("extracted-" + type);
+            if (type == '5') {
+                org.springframework.test.util.ReflectionTestUtils.invokeMethod(service(), "extractBundle", bundle, destination);
+                assertThat(destination.resolve("directory")).isDirectory();
+            } else {
+                assertThatThrownBy(() -> org.springframework.test.util.ReflectionTestUtils.invokeMethod(service(), "extractBundle", bundle, destination))
+                        .hasMessageContaining("不安全条目");
+            }
+        }
+        Path bundle = Files.write(tempDir.resolve("budget.tar.gz"), bundle("a.bc", "b.bc"));
+        assertThatThrownBy(() -> org.springframework.test.util.ReflectionTestUtils.invokeMethod(service(1024, 1024, 1),
+                "extractBundle", bundle, tempDir.resolve("files-budget"))).hasMessageContaining("文件数超过预算");
+        assertThatThrownBy(() -> org.springframework.test.util.ReflectionTestUtils.invokeMethod(service(1024, 1, 10),
+                "extractBundle", bundle, tempDir.resolve("bytes-budget"))).hasMessageContaining("解压大小超过预算");
+    }
 
     @Mock SpecializedAnalysisRepository repository;
     @Mock SpecializedAnalysisCompletionService completionService;
@@ -254,12 +300,12 @@ class SpecializedAnalysisRuntimeServiceTests {
             Path output = argumentPath(command, "--output");
             Files.createDirectories(output);
             Files.writeString(output.resolve("report.json"), """
-                    {"kind":"UnifiedMemoryOrderAnalysisReport","schema_version":1,"exit_code":3,"status":"complete",
-                     "verdict":"risk","diagnostics":[],"findings":[{"id":"mo-1","semantic_digest":"mo-digest",
+                    {"kind":"UnifiedMemoryOrderAnalysisReport","schema_version":1,"finding_schema_version":"2.0","exit_code":3,"status":"complete",
+                     "verdict":"risk","diagnostics":[],"findings":[{"schemaVersion":"2.0","id":"mo-1","semantic_digest":"mo-digest",
                      "fact":{"kind":"publication","primaryLocation":{"file":"main.cpp","span":{"start":{"line":3,"column":2},"end":{"line":4,"column":5}}}},
-                     "conclusion":{"findingType":"weak-ordering","severity":"critical","status":"confirmed",
+                     "conclusion":{"verdict":"risk","findingType":"weak-ordering","severity":"critical","status":"confirmed",
                      "title":"发布顺序风险","title_en":"Publication ordering risk","detail":"缺少同步","detail_en":"Missing synchronization"}}],
-                     "source_candidates":[{"id":"candidate-1","fact":{"kind":"candidate","primaryLocation":{"file":"main.cpp","span":{"start":{"line":8,"column":1},"end":{"line":8,"column":9}}}},
+                     "source_candidates":[{"schemaVersion":"2.0","id":"candidate-1","fact":{"kind":"candidate","primaryLocation":{"file":"main.cpp","span":{"start":{"line":8,"column":1},"end":{"line":8,"column":9}}}},
                      "conclusion":{"findingType":"candidate","severity":"medium","status":"inconclusive","detail":"需人工确认"}}]}
                     """, StandardCharsets.UTF_8);
             return result(3);
@@ -294,7 +340,7 @@ class SpecializedAnalysisRuntimeServiceTests {
             Path output = argumentPath(command, "--output");
             Files.createDirectories(output);
             Files.writeString(output.resolve("report.json"), """
-                    {"kind":"UnifiedMemoryOrderAnalysisReport","schema_version":1,"exit_code":0,
+                    {"kind":"UnifiedMemoryOrderAnalysisReport","schema_version":1,"finding_schema_version":"2.0","exit_code":0,
                      "status":"complete","verdict":"no-finding-within-supported-model","findings":[],
                      "source_candidates":[],"diagnostics":[]}
                     """, StandardCharsets.UTF_8);
@@ -463,9 +509,9 @@ class SpecializedAnalysisRuntimeServiceTests {
             Path output = argumentPath(command, "--output");
             Files.createDirectories(output);
             Files.writeString(output.resolve("report.json"), """
-                    {"kind":"UnifiedMemoryOrderAnalysisReport","schema_version":1,"exit_code":2,
+                    {"kind":"UnifiedMemoryOrderAnalysisReport","schema_version":1,"finding_schema_version":"2.0","exit_code":2,
                      "status":"partial","verdict":"inconclusive","diagnostics":[{"code":"LIMIT"}],
-                     "findings":[{"fact":{"kind":"ordering","primaryLocation":{"file":"main.cpp","line":7,"column":3}},
+                     "findings":[{"schemaVersion":"2.0","fact":{"kind":"ordering","primaryLocation":{"file":"main.cpp","line":7,"column":3}},
                      "conclusion":{"reason":"证据不完整","reason_en":"Incomplete evidence"}}]}
                     """, StandardCharsets.UTF_8);
             return result(2);
@@ -650,7 +696,7 @@ class SpecializedAnalysisRuntimeServiceTests {
             Path output = argumentPath(command, "--output");
             Files.createDirectories(output);
             Files.writeString(output.resolve("report.json"), """
-                    {"kind":"UnifiedMemoryOrderAnalysisReport","schema_version":1,"exit_code":3,
+                    {"kind":"UnifiedMemoryOrderAnalysisReport","schema_version":1,"finding_schema_version":"2.0","exit_code":3,
                      "status":"complete","verdict":"no-finding-within-supported-model"}
                     """, StandardCharsets.UTF_8);
             return result(3);

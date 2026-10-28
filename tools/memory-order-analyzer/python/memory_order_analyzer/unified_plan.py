@@ -68,7 +68,7 @@ STAGES = (
      "inputs": ("ConcurrentAccessCandidateGraph", "PublicationRiskReport"),
      "outputs": ("FenceRmwPublicationReport",), "dependencies": ("concurrent-access", "publication-risk"),
      "budget": "findings", "cache": "complete-only", "failure": "isolate"},
-    {"name": "projection", "version": "memory-order-finding-v2",
+    {"name": "projection", "version": "memory-order-finding-v3",
      "inputs": ("PublicationRiskReport", "FenceRmwPublicationReport", "ConcurrentAccessCandidateGraph"),
      "outputs": ("MemoryOrderFindingProjection",),
      "dependencies": ("publication-risk", "advanced-atomic"), "budget": "findings",

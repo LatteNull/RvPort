@@ -21,12 +21,15 @@ public record SpecializedFindingResponse(
 
     public static SpecializedFindingResponse from(SpecializedAnalysisFindingView value, NodeReportInclusionState state,
             SpecializedFindingCodeContextResponse context, String unavailableReason) {
+        String kind = value.analyzerType() == SpecializedAnalyzerType.MEMORY_ORDER
+                ? MemoryOrderResultPolicy.kind(value.findingKind(), value.detail()) : value.findingKind();
+        boolean pending = value.analyzerType() == SpecializedAnalyzerType.MEMORY_ORDER && MemoryOrderResultPolicy.pending(kind);
         return new SpecializedFindingResponse(value.id(), value.runId(), value.analyzerType(), value.externalFindingId(),
-                value.findingKind(), value.findingCode(), value.category(), value.severity(), value.confidence(),
+                kind, value.findingCode(), value.category(), pending ? "INFO" : value.severity(), pending ? null : value.confidence(),
                 value.resultStatus(), value.title(), value.titleEn(), value.message(), value.messageEn(),
                 value.suggestion(), value.suggestionEn(), value.testSuggestion(), value.testSuggestionEn(),
                 value.filePath(), value.startLine(), value.startColumn(), value.endLine(), value.endColumn(),
-                value.requiresHumanConfirmation(), value.semanticDigest(), value.detail(), state, value.createdAt(),
+                pending || value.requiresHumanConfirmation(), value.semanticDigest(), value.detail(), state, value.createdAt(),
                 context, unavailableReason);
     }
 }

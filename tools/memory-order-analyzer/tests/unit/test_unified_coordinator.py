@@ -78,9 +78,41 @@ def test_stage_outputs_are_typed_and_scope_filtered(tmp_path):
     assert results[0]["outputs"][0]["kind"] == "ModuleFacts"
 
 
-def test_coordinator_run_aggregates_scope_failure_and_success(tmp_path, monkeypatch):
+@pytest.mark.parametrize("unpublished", [
+    "source/other-scope/.task-pending/document.json",
+    "derived/source-ir-binding/.digest.random.tmp",
+    "derived/.digest.artifacts.tmp/document.json",
+])
+def test_nested_inflight_outputs_are_never_read_or_cached(tmp_path, monkeypatch, unpublished):
+    root = tmp_path / "data"
+    staging = root / unpublished
+    staging.parent.mkdir(parents=True)
+    staging.write_text('{"kind":"IncompleteOtherScope"}')
+    published = root / "source/current-scope/facts.json"
+    published.parent.mkdir(parents=True)
+    published.write_text('{"kind":"SourceSemanticFacts"}')
+    read_text = Path.read_text
+    def guarded_read(path, *args, **kwargs):
+        assert path != staging, "Unpublished output from another scope must not be consumed"
+        return read_text(path, *args, **kwargs)
+    monkeypatch.setattr(Path, "read_text", guarded_read)
+    assert coordinator._published_paths(root) == [published]
+    assert [item["path"] for item in coordinator._artifact_index(root)] == ["source/current-scope/facts.json"]
+    request_path = tmp_path / "request.json"
+    req = request(request_path, "b" * 64, cache={"mode": "read-write", "resume": True})
+    scope = {"target_id": "scope", "records": []}
+    bundle = {"manifest": {"bundle_id": "bundle"}}
+    analyzer = coordinator.AnalysisCoordinator(request_path, tmp_path / "out", cache_path=tmp_path / "cache")
+    analyzer._store_scope_cache(req, bundle, scope, stage_plan(), coordinator._cache_payload(complete_record(), [], [], []), root)
+    envelope = json.loads(analyzer._scope_cache_file(analyzer._scope_cache_key(req, bundle, scope, stage_plan())).read_text())
+    assert [item["path"] for item in envelope["artifacts"]] == ["source/current-scope/facts.json"]
+
+
+@pytest.mark.parametrize("diagnostic_budget", [1, 2, 100])
+def test_coordinator_run_aggregates_scope_failure_and_success(tmp_path, monkeypatch, diagnostic_budget):
     bundle_path = tmp_path / "bundle.json"; bundle_path.write_text("{}")
-    request_path = tmp_path / "request.json"; req = request(request_path, file_hash(bundle_path))
+    request_path = tmp_path / "request.json"; req = request(request_path, file_hash(bundle_path),
+        budgets={**expected_unified_protocol()["budgets"], "frontier_items": diagnostic_budget})
     records = [{"record_id": "tu", "physical_tu_id": "a" * 64, "source": None}]
     bundle = {"manifest": {"bundle_id": "bundle"}, "manifest_path": bundle_path,
               "records": {"tu": records[0]}, "source_requests": {},
@@ -99,12 +131,17 @@ def test_coordinator_run_aggregates_scope_failure_and_success(tmp_path, monkeypa
     record = unified_document("ScopeAnalysisExecutionRecord", scope_id="scope", status="partial",
                               tu_modes=[{"record_id": "tu", "physical_tu_id": "a" * 64, "mode": "failed",
                                          "status": "failed", "available_evidence": [], "missing_evidence": ["ast", "ir"]}],
-                              stages=[], counts={}, diagnostics=[],
+                              stages=[], counts={}, diagnostics=[coordinator.diagnostic(f"cause-{i}", "原因", "cause") for i in range(3)],
                               frontier=[coordinator.diagnostic("x", "不完整", "incomplete", scope_id="scope")])
     monkeypatch.setattr(analyzer, "_scope", lambda *args: (record, [], [], []))
     report = analyzer.run()
     assert report["status"] == "partial" and report["exit_code"] == 2
     assert (tmp_path / "result/report.json").is_file()
+    assert report["summary"]["diagnostics_total"] == 4
+    assert len(report["diagnostics"]) <= diagnostic_budget
+    if diagnostic_budget < 4:
+        assert report["diagnostics"][-1]["code"] == "diagnostic-budget-exhausted"
+        assert len(json.loads((tmp_path / "result/diagnostics/full.json").read_text())["diagnostics"]) == 4
 
 
 def test_cancel_deadline_and_failed_scope_record(tmp_path, monkeypatch):
@@ -208,6 +245,12 @@ def test_scope_cache_round_trip_rejects_corruption_and_partial(tmp_path):
     assert (data / "proof.json").is_file()
     key = analyzer._scope_cache_key(req, bundle, scope, stage_plan())
     cache_file = analyzer._scope_cache_file(key)
+    old_envelope = json.loads(cache_file.read_text())
+    old_envelope["namespace"] = "unified-project-analysis-v1"
+    cache_file.write_text(json.dumps(old_envelope))
+    loaded, problem = analyzer._load_scope_cache(req, bundle, scope, stage_plan(), data)
+    assert loaded is None and problem["code"] == "cache-corrupt"
+    assert json.loads(cache_file.read_text()) == old_envelope
     cache_file.write_text("{}")
     loaded, problem = analyzer._load_scope_cache(req, bundle, scope, stage_plan(), data)
     assert loaded is None and problem["code"] == "cache-corrupt"
@@ -319,13 +362,13 @@ def test_scope_pipeline_happy_path_keeps_formal_and_bounded_results(tmp_path, mo
     source_facts = {"tu": {"profile_id": "e" * 64, "nodes": [], "relations": []}}
     monkeypatch.setattr(analyzer, "_scope_source_analysis",
                         lambda *args: ({"status": "complete", "frontier": []},
-                                       {"source_candidates": [{"id": "candidate", "reason": "AST candidate"}]},
+                                       {"source_candidates": [{"id": "candidate", "shape": "atomic", "reason": "AST candidate"}]},
                                        source_facts, {}))
     thread_dir = data / "thread"; (thread_dir / "effects/summaries").mkdir(parents=True)
-    (thread_dir / "effects/summaries/s.json").write_text("{}")
-    (data / "graphs").mkdir(); (data / "graphs/scope.json").write_text("{}")
+    (thread_dir / "effects/summaries/s.json").write_text('{"status":"complete"}')
+    (data / "graphs").mkdir(); (data / "graphs/scope.json").write_text('{"status":"complete"}')
     monkeypatch.setattr(analyzer, "_run_roots_and_threads",
-                        lambda *args: (data / "roots", thread_dir, {}, [], []))
+                        lambda *args: (data / "roots", thread_dir, {}, [], [], None))
     monkeypatch.setattr(analyzer, "_run_thread_entry", lambda *args: {"status": "complete"})
     for relative in ("execution-roots/scope.json", "thread-entry-sites/scope.json",
                      "provenance-graphs/scope.json", "analysis/scope/concurrent/candidate-graph.json",
@@ -342,7 +385,7 @@ def test_scope_pipeline_happy_path_keeps_formal_and_bounded_results(tmp_path, mo
     monkeypatch.setattr(coordinator, "run_publication", lambda *args: publication)
     graph_dir = data / "analysis/scope/publication/graphs"; graph_dir.mkdir(parents=True)
     (graph_dir / "g.json").write_text(json.dumps({"assessments": [{"id": "ok", "status": "discharged"}]}))
-    atomic = {"status": "complete", "semantic_digest": "1" * 64,
+    atomic = {"status": "complete", "semantic_digest": "1" * 64, "language_standard": "c++17",
               "findings": [{"id": "atomic-risk", "reason": "fence"}]}
     monkeypatch.setattr(coordinator, "run_atomic", lambda *args: [atomic])
     atomic_dir = data / "analysis/scope/advanced-atomic/cpp17"; atomic_dir.mkdir(parents=True)
@@ -489,7 +532,7 @@ def test_scope_source_analysis_orders_requests_by_physical_tu(tmp_path, monkeypa
         source_path.write_text("{}", encoding="utf-8")
         source_inputs[record_id] = {
             "path": source_path,
-            "request": {"profile": {"profile_id": record_id}},
+            "request": {"physical_tu_id": record["physical_tu_id"], "profile": {"profile_id": record_id}},
         }
         artifact_key = ("3" if record_id == "a-record" else "4") * 64
         module_by_record[record_id] = {"artifact_key": artifact_key}
@@ -518,12 +561,12 @@ def test_scope_source_analysis_orders_requests_by_physical_tu(tmp_path, monkeypa
             data, OutputStore(data), source_inputs, module_by_record)
 
     expected = [
-        str(source_inputs["z-record"]["path"]),
-        str(source_inputs["a-record"]["path"]),
+        str(data / "requests/scope" / ("source-" + "a" * 64 + ".json")),
+        str(data / "requests/scope" / ("source-" + "b" * 64 + ".json")),
     ]
     assert captured["source_requests"] == expected
     assert [item["path"] for item in degraded["source_requests"]] == sorted(
-        str(value["path"]) for value in source_inputs.values())
+        expected)
 
 
 def test_root_request_worklist_and_thread_entry_adapters(tmp_path, monkeypatch):
@@ -567,7 +610,7 @@ def test_root_request_worklist_and_thread_entry_adapters(tmp_path, monkeypatch):
         return {"status": "complete"}
     monkeypatch.setattr(coordinator, "model_threads", threads)
     req = {"cancel_file": None, "budgets": {"deadline_seconds": 100, "worklist_items": 3}}
-    root_dir, thread_dir, members, globals_, frontier = analyzer._run_roots_and_threads(
+    root_dir, thread_dir, members, globals_, frontier, p3_request = analyzer._run_roots_and_threads(
         req, scope, data, store, {"tu": {"artifact_key": "d" * 64}}, {}, {}, {})
     assert calls["root"] == 2 and root_dir and thread_dir and not frontier
     assert members["tu"] and {item["kind"] for item in globals_} == {"ThreadContextGraph", "EffectSummary"}
@@ -648,7 +691,7 @@ def test_empty_and_budgeted_root_worklists_and_cpp_entry_models(tmp_path, monkey
         (output / "thread-creation-sites").mkdir(); write("thread-creation-sites/index.json", {})
     monkeypatch.setattr(coordinator, "plan_execution_roots", empty_roots)
     req = {"cancel_file": None, "budgets": {"deadline_seconds": 100, "worklist_items": 1}}
-    root_dir, thread_dir, _, _, frontier = analyzer._run_roots_and_threads(
+    root_dir, thread_dir, _, _, frontier, p3_request = analyzer._run_roots_and_threads(
         req, scope_value, data, store, {}, {}, {}, {})
     assert root_dir and thread_dir is None and not frontier
 
@@ -669,7 +712,7 @@ def test_empty_and_budgeted_root_worklists_and_cpp_entry_models(tmp_path, monkey
     shutil.rmtree(data / "analysis/scope")
     for relative in ("execution-roots", "thread-creation-sites", "root-plans"):
         shutil.rmtree(data / relative)
-    _, _, _, _, frontier = analyzer._run_roots_and_threads(req, scope_value, data, store, {}, {}, {}, {})
+    _, _, _, _, frontier, _ = analyzer._run_roots_and_threads(req, scope_value, data, store, {}, {}, {}, {})
     assert frontier[0]["code"] == "demand-worklist-budget"
 
     root_for_entry = data / "entry-root"; (root_for_entry / "execution-roots").mkdir(parents=True)
@@ -718,7 +761,8 @@ def test_scope_conservatively_handles_source_root_and_adapter_failures(tmp_path,
                        "context_lines": 256, "context_characters": 65536}}
     result, formal, candidates, bounded = analyzer._scope(
         req, stage_plan(), {"manifest_path": tmp_path / "bundle.json"}, scope_value, data, store, ingestion, {}, {}, tmp_path)
-    assert result["status"] == "failed" and not formal and not candidates and not bounded
+    assert result["status"] == "failed" and not formal and not bounded
+    assert len(candidates) == 2 and all(item["conclusion"]["verdict"] == "inconclusive" for item in candidates)
     assert {item["code"] for item in result["frontier"]} >= {
         "bc-unavailable", "source-failed", "root-failed", "thread-entry-incomplete", "raii",
         "projection-evidence-incomplete"}
@@ -785,7 +829,7 @@ def test_scope_disabled_source_and_not_applicable_cpp_stages(tmp_path, monkeypat
     analyzer = coordinator.AnalysisCoordinator(tmp_path / "request", tmp_path / "out", clock=lambda: 0)
     analyzer.started = 0
     monkeypatch.setattr(analyzer, "_scope_source_analysis", lambda *args: (None, None, {}, {}))
-    monkeypatch.setattr(analyzer, "_run_roots_and_threads", lambda *args: (None, None, {}, [], []))
+    monkeypatch.setattr(analyzer, "_run_roots_and_threads", lambda *args: (None, None, {}, [], [], None))
     monkeypatch.setattr(analyzer, "_run_thread_entry", lambda *args: None)
     for name in ("run_demand", "run_provenance", "run_concurrent", "run_publication"):
         monkeypatch.setattr(coordinator, name, lambda *args: {"status": "complete"})

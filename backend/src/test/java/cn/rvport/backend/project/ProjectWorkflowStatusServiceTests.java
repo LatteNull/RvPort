@@ -37,6 +37,36 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(MockitoExtension.class)
 class ProjectWorkflowStatusServiceTests {
+    @Test
+    void memoryOrderExecutionStatesKeepExistingDependencySemantics() {
+        for (var status : cn.rvport.backend.analysis.SpecializedAnalysisStatus.values()) {
+            WorkflowStageResponse response = ReflectionTestUtils.invokeMethod(service(), "fromSpecializedStatus",
+                    "memory-order-analysis", status, "MEMORY_ORDER");
+            var expected = switch (status) {
+                case PENDING, QUEUED, RUNNING -> WorkflowStageStatus.RUNNING;
+                case COMPLETE, COMPLETE_WITH_RISK, PARTIAL -> WorkflowStageStatus.DONE;
+                case FAILED, CANCELLED, TIMEOUT -> WorkflowStageStatus.BLOCKED;
+            };
+            assertThat(response.status()).isEqualTo(expected);
+            if (status == cn.rvport.backend.analysis.SpecializedAnalysisStatus.PARTIAL) {
+                assertThat(response.analysisComplete()).isFalse();
+            }
+        }
+    }
+    @Test
+    void memoryOrderPartialKeepsDependencyCompletionAndExposesWarningMetadata() {
+        WorkflowStageResponse partial = ReflectionTestUtils.invokeMethod(service(), "fromSpecializedStatus",
+                "memory-order-analysis", cn.rvport.backend.analysis.SpecializedAnalysisStatus.PARTIAL, "MEMORY_ORDER");
+        assertThat(partial.status()).isEqualTo(WorkflowStageStatus.DONE);
+        assertThat(partial.reasonCode()).isEqualTo("MEMORY_ORDER_PARTIAL");
+        assertThat(partial.analysisStatus()).isEqualTo("PARTIAL");
+        assertThat(partial.analysisComplete()).isFalse();
+        assertThat(partial.message()).isEqualTo("部分分析完成");
+        assertThat(partial.messageEn()).isNotBlank();
+        WorkflowStageResponse floating = ReflectionTestUtils.invokeMethod(service(), "fromSpecializedStatus",
+                "floating-point-analysis", cn.rvport.backend.analysis.SpecializedAnalysisStatus.PARTIAL, "FLOATING_POINT");
+        assertThat(floating.reasonCode()).isEqualTo("FLOATING_POINT_READY");
+    }
 
     @Mock private TaskRepository taskRepository;
     @Mock private KbScanRepository kbScanRepository;

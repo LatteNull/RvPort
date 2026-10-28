@@ -89,6 +89,20 @@ def test_release_policy_is_language_specific():
         release_sequence_policy("c++23")
 
 
+@pytest.mark.parametrize("standard,policy", [("compiler-default", "unresolved-standard-v1"),
+                                          ("c99", "legacy-no-iso-atomics-v1"),
+                                          ("c++03", "legacy-no-iso-atomics-v1")])
+def test_unknown_or_legacy_standard_has_explicit_schema_valid_boundary(standard, policy):
+    raw = [raw_event("f:b0:i0", "store", "release"), raw_event("f:b0:i1", "load", "acquire")]
+    local = extract_local_facts([module(raw)], scope_id="scope", language_standard=standard,
+                                thread_graph=thread_graph(raw, ["writer", "reader"]), budgets=budgets())
+    graph = build_communication_graph(local, scope_id="scope", language_standard=standard, budgets=budgets())
+    assert graph["release_sequence_policy"] == policy
+    assert graph["status"] == "partial"
+    assert any(item["code"] == "atomic-standard-unsupported" for item in graph["frontier"])
+    assert all(item["assessment"] == "unknown" for item in graph["assessments"])
+
+
 def test_extracts_rmw_cas_outcomes_and_signal_fence_frontier():
     raw = [raw_event("f:b0:i0", "atomicrmw", "monotonic", operation="add"),
            raw_event("f:b0:i1", "cmpxchg", None, weak=True),

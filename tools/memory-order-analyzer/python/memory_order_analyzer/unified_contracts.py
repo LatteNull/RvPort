@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SCHEMA = ROOT / "schemas/unified_project_analysis.json"
 PROTOCOL = ROOT / "protocols/unified-project-analysis-protocol.json"
 POLICY_ID = "unified-project-analysis-v1"
+CACHE_NAMESPACE = "unified-project-analysis-results-v3"
 KINDS = ("UnifiedMemoryOrderAnalysisRequest", "UnifiedAnalysisPlan",
          "ScopeAnalysisExecutionRecord", "UnifiedMemoryOrderAnalysisReport")
 PROTOCOL_KINDS = (*KINDS, "MemoryOrderFindingProjection")
@@ -33,8 +34,8 @@ def expected_unified_protocol(path=PROTOCOL):
     schema = _load(SCHEMA, "unified_schema")
     maxima = {name: rule["maximum"] for name, rule in schema["$defs"]["Budgets"]["properties"].items()}
     expected = {"protocol_version": 2, "analysis_version": "0.1.0",
-                "policy_id": POLICY_ID, "cache_namespace": POLICY_ID,
-                "finding_schema_version": "2.0", "kinds": LATEST_KIND_VERSIONS,
+                "policy_id": POLICY_ID, "cache_namespace": CACHE_NAMESPACE,
+                "finding_schema_version": "3.0", "kinds": LATEST_KIND_VERSIONS,
                 "budgets": maxima}
     if canonical(value) != canonical(expected):
         raise AnalysisError("unified_protocol", "Unified protocol and schema maxima disagree")
@@ -44,8 +45,8 @@ def expected_unified_protocol(path=PROTOCOL):
 def diagnostic(code, detail, detail_en, *, suggestion="检查输入证据、分析边界和预算后重试",
                suggestion_en="Inspect input evidence, analysis boundaries, and budgets before retrying",
                stage=None, scope_id=None, relevant=True, references=()):
-    return {"code": str(code), "detail": str(detail)[:4096], "detail_en": str(detail_en)[:4096],
-            "suggestion": str(suggestion)[:4096], "suggestion_en": str(suggestion_en)[:4096],
+    return {"code": str(code), "detail": str(detail)[:512], "detail_en": str(detail_en)[:512],
+            "suggestion": str(suggestion)[:512], "suggestion_en": str(suggestion_en)[:512],
             "stage": stage, "scope_id": scope_id, "relevant": bool(relevant),
             "references": sorted(set(str(item) for item in references))}
 
@@ -160,7 +161,10 @@ def _validate_report(value):
         _unique_sorted(value[collection], lambda item: item["id"], f"{collection} must be unique and sorted")
         for item in value[collection]:
             validate_finding(item)
-            if item["conclusion"]["verdict"] != expected_verdict:
+            if item["schemaVersion"] != value["finding_schema_version"]:
+                raise AnalysisError("schema_invalid", "Finding version disagrees with report version")
+            allowed = {expected_verdict, "inconclusive"} if collection == "source_candidates" else {expected_verdict}
+            if item["conclusion"]["verdict"] not in allowed:
                 raise AnalysisError("report_collection", f"{collection} contains the wrong Finding verdict")
     expected_verdict = ("failed" if value["status"] == "failed" else
                         "inconclusive" if value["status"] in {"partial", "cancelled"} or value["source_candidates"] or value["frontier"] else

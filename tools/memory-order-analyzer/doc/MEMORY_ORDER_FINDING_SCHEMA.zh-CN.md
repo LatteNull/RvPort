@@ -11,22 +11,22 @@
 统一报告将相同投影结构放入互斥集合：
 
 - `findings[]`：`conclusion.verdict=risk`，只来自 P4/A6 在证据闭合时采用的正式风险；
-- `source_candidates[]`：`verdict=source-candidate`、`status=unknown`，用于 AST-only/源码候选，必须有非空 break；
+- `source_candidates[]`：`verdict=source-candidate/inconclusive`、`status=unknown/partial`，用于源码候选或证据不足的评估，必须有非空 break；
 - `discharged_assessments[]`：`verdict=discharged-within-bounded-model`，只说明受限模式内消解，不代表安全。
 
-`inconclusive` 用于无法可靠投影的正式评估或项目状态；证据层缺失时，上游 risk/discharge 不会被悄悄放入错误集合，而会产生 projection frontier。
+证据层缺失时，上游 risk/discharge 产生 projection frontier，并作为 `inconclusive` 待核实项保留；不能继续作为正式风险或受限消解发布。
 
 ## 顶层结构
 
 每项包含：
 
-- `id`、`schemaVersion=2.0`、`tool`、`ruleId`、`scopeId`、`semanticDigest`；
+- `id`、`schemaVersion=3.0`、`scopeId`、`semanticDigest`；
 - `fact`：实际观察、双语描述、typed provenance；
-- `conclusion`：verdict/status/severity/confidence，以及 `title/title_en`、`reason/reason_en`、`suggestion/suggestion_en`；
+- `conclusion`：verdict/status/severity/confidence/evidenceLevel，以及 `title/title_en`、`reason/reason_en`、`detail/detail_en`、`suggestion/suggestion_en`；
 - `occurrences[]` 与存在于数组中的 `primaryOccurrenceId`；
 - `evidenceChain`：`rootStepId`、连通 `primaryPath`、完整 `steps/edges`、一等 `breaks`、`impactStepIds` 和预算。
 
-稳定 ID/digest 不包含绝对路径、时间、后端 task ID、线程调度顺序或翻译文本。每个 provenance 固定 `kind/id/producer/schemaVersion/digest`；producer 必须位于本工具命名空间。引用不存在的 step、occurrence 或 artifact 会被 schema/semantic validator 拒绝。
+semanticDigest 覆盖完整投影内容，任何字段变更后均须重新计算；源码路径须为项目内相对路径。每个 provenance 固定 `kind/id/producer/schemaVersion/digest`；producer 必须位于本工具命名空间。引用不存在的 step、occurrence 或 artifact 会被 schema/semantic validator 拒绝。
 
 ## 证据节点、边与断点
 
@@ -114,3 +114,11 @@ Linux 下独立单测：`PYTHONPATH=python python3 -m pytest -q tests/unit`。
 真实 Clang 用例：`PYTHONPATH=python MOA_WORKER=/output/build/moa-worker python3 -m pytest -q tests/integration/test_finding_source_context.py`。
 后者要求同目录存在 `memory-order-source-worker`。它验证真实 Clang 绝对头文件路径到快照的映射，
 不代替独立单元测试或后端正式 API 验收。
+
+## 3.0 与历史 2.0 的兼容
+
+这里的版本号表示结果数据协议，不是软件或 C/C++ 标准版本。3.0 新输出的 `conclusion.evidenceLevel` 按 verdict 区分 `source-only`、`incomplete`、`bounded-model`；`confidence=null` 表示未评估，不可转换为零概率或固定 0.5。源码候选和 inconclusive 为 info、非阻断、unknown/partial，必须展示为待核实，而非低风险或安全。
+
+验证器仍读取 2.0；2.0 要求数值 confidence，不允许 evidenceLevel。后端按 kind/verdict 对历史候选只读派生展示字段，原始 detail、JSON/HTML 和用户选择不改写。未知版本与顶层/逐项版本冲突显式拒绝。人工纳入只改变报告输入选择，不能升级分析结论。
+
+steps 数组按稳定 ID 存储，显示顺序使用 primaryPath；edges 保存其他分支，breaks 保存缺口。不能把数组排序解释为证明顺序。

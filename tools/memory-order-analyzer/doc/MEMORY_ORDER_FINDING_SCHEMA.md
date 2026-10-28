@@ -18,7 +18,7 @@ inconclusive describes formal assessments/project states that cannot be projecte
 
 ## Top-level structure
 
-Each item includes id, schemaVersion=2.0, tool, ruleId, scopeId, semanticDigest; fact (observation, bilingual description, typed provenance); conclusion (verdict/status/severity/confidence, title/title_en, reason/reason_en, suggestion/suggestion_en); occurrences[] with a valid primaryOccurrenceId; and evidenceChain (rootStepId, connected primaryPath, full steps/edges, explicit breaks, impactStepIds, budgets).
+当前生产者输出 `schemaVersion=3.0`；保留 2.0 读取。3.0 增加 `conclusion.evidenceLevel` 并允许 confidence=null；未验证候选为 info、非阻断、待核实。每项保留 id/scopeId/semanticDigest、fact、conclusion、occurrences/primaryOccurrenceId、evidenceChain。完整的新旧版本、inconclusive 集合和历史适配规则见[中文协议说明](MEMORY_ORDER_FINDING_SCHEMA.zh-CN.md#30-与历史-20-的兼容)。
 
 Stable IDs/digests exclude absolute paths, time, backend task IDs, scheduling order, and translation text. Provenance fixes kind/id/producer/schemaVersion/digest; producer belongs to this tool's namespace. Schema/semantic validators reject unresolved step/occurrence/artifact references.
 

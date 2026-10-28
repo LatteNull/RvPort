@@ -15,6 +15,27 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 class ReportDocumentOrganizerTests {
+    @Test
+    void formalMemoryAndFloatingResultsRemainInCodeGroups() {
+        var memory = new ReportRepository.ReportInputSnapshot(ref(MigrationInputSourceType.MEMORY_ORDER_FINDING, "HIGH"),
+                Map.of("sourceDetail", Map.of("pendingVerification", false)), ReportInputProjection.none("MEMORY_ORDER_FINDING", "HIGH"));
+        var floating = new ReportRepository.ReportInputSnapshot(ref(MigrationInputSourceType.FLOATING_POINT_FINDING, "HIGH"),
+                Map.of("sourceDetail", Map.of()), ReportInputProjection.none("FLOATING_POINT_FINDING", "HIGH"));
+        var result = ReportDocumentOrganizer.organize(List.of(memory, floating));
+        assertThat(result.get("codeModules").toString()).contains("findingCount=2");
+        assertThat(result.get("pendingVerification")).isEqualTo(List.of());
+    }
+    @Test
+    void manuallyIncludedSourceCandidateRemainsSeparateFromFormalRisk() {
+        var ref = ref(MigrationInputSourceType.MEMORY_ORDER_FINDING, "HIGH");
+        var raw = Map.<String, Object>of("sourceDetail", Map.of("pendingVerification", true, "findingKind", "SOURCE_CANDIDATE"));
+        var candidate = new ReportRepository.ReportInputSnapshot(ref, raw, ReportInputProjection.none("MEMORY_ORDER_FINDING", "HIGH"));
+        var organization = ReportDocumentOrganizer.organize(List.of(candidate));
+        assertThat((List<?>) organization.get("codeModules")).isEmpty();
+        assertThat(organization.get("pendingVerification")).isEqualTo(List.of(raw));
+        assertThat(ref.status()).isEqualTo(MigrationInputStatus.CONFIRMED);
+        assertThat(ref.detectedLevel()).isEqualTo("HIGH");
+    }
 
     @Test
     void organizesCodeOnceAndGroupsDependencyEvidenceByPackage() {

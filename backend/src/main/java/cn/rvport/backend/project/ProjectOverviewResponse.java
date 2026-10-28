@@ -31,7 +31,11 @@ public record ProjectOverviewResponse(
         }
     }
 
-    public record WorkflowStageResponse(String id, WorkflowStageStatus status, String reasonCode) {
+    public record WorkflowStageResponse(String id, WorkflowStageStatus status, String reasonCode,
+            String analysisStatus, Boolean analysisComplete, String message, String messageEn) {
+        public WorkflowStageResponse(String id, WorkflowStageStatus status, String reasonCode) {
+            this(id, status, reasonCode, null, null, null, null);
+        }
     }
 
     public enum WorkflowStageStatus {

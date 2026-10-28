@@ -92,6 +92,21 @@ public class MigrationInputSourceResolver {
         };
     }
 
+    public Map<String, Object> memoryOrderAnalysisSummary(UUID projectId, UUID sourceRevisionId) {
+        if (specializedAnalysisRepository == null) return Map.of("analysisStatus", "UNAVAILABLE");
+        return specializedAnalysisRepository.latestPublished(projectId, sourceRevisionId, SpecializedAnalyzerType.MEMORY_ORDER)
+                .map(run -> {
+                    Map<String, Object> value = new LinkedHashMap<>(
+                            cn.rvport.backend.analysis.MemoryOrderResultPolicy.historicalSummary(run.summary()));
+                    value.put("analysisStatus", run.status().name());
+                    value.put("verdict", run.verdict());
+                    value.put("runId", run.id());
+                    value.put("limitations", "结论受已提供的证据和模型限制；零正式风险不代表迁移安全");
+                    value.put("limitationsEn", "Conclusions are limited by available evidence and models; zero formal findings does not establish migration safety");
+                    return value;
+                }).orElseGet(() -> Map.of("analysisStatus", "UNAVAILABLE"));
+    }
+
     private MigrationInputCandidate resolveSpecializedFinding(
             UUID projectId,
             UUID sourceRevisionId,
@@ -108,6 +123,9 @@ public class MigrationInputSourceResolver {
                     "专项分析 Finding 不属于当前源码版本或分析类型");
         }
         String detectedLevel = MigrationInputRiskPolicy.normalizedDetectedLevel(finding.severity());
+        boolean pending = finding.analyzerType() == SpecializedAnalyzerType.MEMORY_ORDER
+                && cn.rvport.backend.analysis.MemoryOrderResultPolicy.pending(
+                    cn.rvport.backend.analysis.MemoryOrderResultPolicy.kind(finding.findingKind(), finding.detail()));
         return new MigrationInputCandidate(
                 projectId,
                 sourceRevisionId,
@@ -123,7 +141,7 @@ public class MigrationInputSourceResolver {
                 firstNonBlank(finding.semanticDigest(), finding.externalFindingId()),
                 stableFingerprint(sourceType.name(), finding.findingCode(), normalizePath(finding.filePath()),
                         String.valueOf(finding.startLine()), firstNonBlank(finding.semanticDigest(), finding.externalFindingId())),
-                MigrationInputRiskPolicy.defaultStatus(detectedLevel)
+                pending ? MigrationInputStatus.CANDIDATE : MigrationInputRiskPolicy.defaultStatus(detectedLevel)
         );
     }
 
@@ -158,6 +176,11 @@ public class MigrationInputSourceResolver {
         detail.put("requiresHumanConfirmation", finding.requiresHumanConfirmation());
         detail.put("semanticDigest", finding.semanticDigest());
         detail.put("analysisDetail", finding.detail());
+        if (finding.analyzerType() == SpecializedAnalyzerType.MEMORY_ORDER) {
+            String kind = cn.rvport.backend.analysis.MemoryOrderResultPolicy.kind(finding.findingKind(), finding.detail());
+            detail.put("findingKind", kind);
+            detail.put("pendingVerification", cn.rvport.backend.analysis.MemoryOrderResultPolicy.pending(kind));
+        }
         detail.put("createdAt", finding.createdAt());
         return detail;
     }

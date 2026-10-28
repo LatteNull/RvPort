@@ -108,8 +108,10 @@ def project_assessment(scope_id, assessment, provenance, *, category, location=N
         "inconclusive": ("证据不足，结论不确定", "Evidence is incomplete; conclusion is inconclusive"),
     }
     title, title_en = titles[category]
-    reason = str(assessment.get("reason") or assessment.get("assessment") or verdict)
-    reason_en = str(assessment.get("reason_en") or reason)
+    title = str(assessment.get("title") or title)
+    title_en = str(assessment.get("title_en") or title_en)
+    reason = str(assessment.get("reason") or titles[category][0])
+    reason_en = str(assessment.get("reason_en") or titles[category][1])
     source_kind = "source-candidate" if category == "source" else str(assessment.get("fact_kind") or "synchronization-gap")
     occurrence = {"id": occurrence_id, "kind": source_kind, "role": "primary",
                   "scopeId": scope_id, "physicalTuId": assessment.get("physical_tu_id"),
@@ -131,8 +133,10 @@ def project_assessment(scope_id, assessment, provenance, *, category, location=N
         fact={"kind": source_kind, "symbol": symbol, "matchedText": str(assessment.get("matched_text") or reason),
               "primaryLocation": deepcopy(location), "provenance": deepcopy(provenance)},
         conclusion={"title": title, "title_en": title_en,
-                    "severity": "high" if category == "formal" else "info" if category == "discharged" else "medium",
-                    "confidence": 1.0 if category in {"formal", "discharged"} else 0.5,
+                    "severity": assessment.get("severity", "high") if category == "formal" else "info",
+                    "confidence": None,
+                    "evidenceLevel": "bounded-model" if category in {"formal", "discharged"} else
+                                     "source-only" if category == "source" else "incomplete",
                     "findingType": finding_type, "verdict": verdict,
                     "actionable": category in {"formal", "source", "inconclusive"},
                     "blocking": category == "formal", "status": chain["status"],
@@ -238,7 +242,10 @@ def project_source_candidate(scope_id, candidate, provenance, *, location=None, 
     )
     builder.edge(source_step, conclusion, "supports-candidate", provenance, status="unknown",
                  reason_codes=["source-evidence-only"])
-    missing = sorted(set(candidate.get("missing_evidence", []))) or ["runtime-evidence"]
+    missing = set(candidate.get("missing_evidence", []))
+    if candidate.get("shape") != "atomic":
+        missing -= {"reads-from", "modification-order", "release-sequence"}
+    missing = sorted(missing) or ["runtime-evidence"]
     for reason in missing:
         builder.gap(
             f"missing-{reason}", "source-projection",
@@ -258,6 +265,21 @@ def project_source_candidate(scope_id, candidate, provenance, *, location=None, 
         )
     chain = builder.build(source_step, [source_step, conclusion], impacts=[conclusion],
                           force_status="unknown")
+    shape = candidate.get("shape", "unknown")
+    description = {"atomic": ("原子操作", "atomic operation"),
+                   "pthread-create": ("线程创建", "thread creation"),
+                   "pthread-join": ("线程等待", "thread join"),
+                   "pthread-mutex": ("互斥同步", "mutex synchronization"),
+                   "unknown-raii": ("RAII 锁生命周期", "RAII lock lifetime"),
+                   "unknown-sync-wrapper": ("可能的同步封装", "possible synchronization wrapper"),
+                   "memory-access": ("与并发构造关联的访问", "access related to a concurrency construct"),
+                   "control": ("与并发构造关联的控制流", "control flow related to a concurrency construct")}
+    label, label_en = description.get(shape, ("未识别源码形状", "unidentified source shape"))
+    candidate = {**candidate, "title": f"{label}待核实", "title_en": f"Verify {label_en}",
+                 "reason": f"源码包含{label}，尚未建立线程、对象与顺序证明",
+                 "reason_en": f"Source contains {label_en}; thread, object and ordering evidence is incomplete",
+                 "detail": f"该候选只有源码证据；需要补充：{', '.join(missing)}",
+                 "detail_en": f"This candidate has source evidence only; missing: {', '.join(missing)}"}
     return project_assessment(scope_id, candidate, provenance, category="source",
                               location=location, chain=chain, locations=locations,
                               finding_type="source-only-memory-order-candidate")

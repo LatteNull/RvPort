@@ -23,6 +23,7 @@ final class ReportDocumentOrganizer {
     static Map<String, Object> organize(List<ReportRepository.ReportInputSnapshot> snapshots) {
         List<ReportRepository.ReportInputSnapshot> code = snapshots.stream()
                 .filter(item -> item.projection() != null && isCodeFinding(item.projection().sourceType()))
+                .filter(item -> !pendingVerification(item))
                 .toList();
         List<ReportRepository.ReportInputSnapshot> dependencies = snapshots.stream()
                 .filter(item -> item.projection() != null && "DEPENDENCY_RESULT".equals(item.projection().sourceType()))
@@ -31,7 +32,14 @@ final class ReportDocumentOrganizer {
         result.put("codeModules", modules(code));
         result.put("dependencyPackages", dependencies(dependencies));
         result.put("rawEvidenceCount", snapshots.size());
+        result.put("pendingVerification", snapshots.stream().filter(ReportDocumentOrganizer::pendingVerification)
+                .map(ReportRepository.ReportInputSnapshot::snapshot).toList());
         return result;
+    }
+
+    static boolean pendingVerification(ReportRepository.ReportInputSnapshot input) {
+        return input.ref().sourceType() == cn.rvport.backend.migration.MigrationInputSourceType.MEMORY_ORDER_FINDING
+                && Boolean.TRUE.equals(detail(input).get("pendingVerification"));
     }
 
     private static boolean isCodeFinding(String sourceType) {

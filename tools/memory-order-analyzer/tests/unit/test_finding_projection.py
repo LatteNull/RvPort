@@ -41,6 +41,56 @@ def test_formal_projection_round_trip_and_bilingual_fields(tmp_path):
         read_finding(tmp_path / "missing")
 
 
+def test_v3_unassessed_confidence_and_immutable_v2_reading():
+    value = project_source_candidate("scope", {"id": "c", "shape": "pthread-mutex",
+        "missing_evidence": ["reads-from", "happens-before"]}, prov())
+    assert value["schemaVersion"] == "3.0"
+    assert value["conclusion"]["confidence"] is None
+    assert value["conclusion"]["evidenceLevel"] == "source-only"
+    assert value["conclusion"]["severity"] == "info" and not value["conclusion"]["blocking"]
+    assert "互斥" in value["conclusion"]["reason"]
+    assert all(item["expectedKind"] != "reads-from" for item in value["evidenceChain"]["breaks"])
+    legacy = deepcopy(value)
+    legacy["schemaVersion"] = "2.0"
+    legacy["conclusion"].pop("evidenceLevel")
+    legacy["conclusion"].update(confidence=0.5, severity="medium")
+    legacy["semanticDigest"] = finding_digest(legacy)
+    before = deepcopy(legacy)
+    assert validate_finding(legacy) == before
+    for field, replacement in (("severity", "medium"), ("blocking", True), ("confidence", 0.5)):
+        invalid = deepcopy(value)
+        invalid["conclusion"][field] = replacement
+        invalid["semanticDigest"] = finding_digest(invalid)
+        with pytest.raises(AnalysisError, match="Unproven"):
+            validate_finding(invalid)
+    invalid = deepcopy(value)
+    invalid["conclusion"]["evidenceLevel"] = "bounded-model"
+    invalid["semanticDigest"] = finding_digest(invalid)
+    with pytest.raises(AnalysisError, match="Evidence level"):
+        validate_finding(invalid)
+    invalid["schemaVersion"] = "future"
+    with pytest.raises(AnalysisError):
+        validate_finding(invalid)
+
+
+def test_digest_complete_chain_and_budget_claims_are_checked():
+    value = formal()
+    value["semanticDigest"] = "0" * 64
+    with pytest.raises(AnalysisError, match="digest"):
+        validate_finding(value)
+    for mutation, message in (
+        (lambda item: item["evidenceChain"].update(reasonCodes=["missing"]), "Complete evidence"),
+        (lambda item: item["evidenceChain"].update(status="partial"), "Incomplete evidence"),
+        (lambda item: item["evidenceChain"]["budget"].update(visited=9999), "budget"),
+        (lambda item: item["conclusion"].update(status="partial"), "must agree"),
+    ):
+        broken = formal()
+        mutation(broken)
+        broken["semanticDigest"] = finding_digest(broken)
+        with pytest.raises(AnalysisError, match=message):
+            validate_finding(broken)
+
+
 def test_source_candidate_requires_break_and_cannot_be_promoted():
     value = project_assessment("scope", {"id": "source", "reason": "candidate"}, prov(),
                                category="source")

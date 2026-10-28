@@ -1,4 +1,4 @@
-"""Strict, self-contained v2 projection contracts for memory-order findings."""
+"""Strict, self-contained v2/v3 projection contracts for memory-order findings."""
 
 from copy import deepcopy
 import json
@@ -85,6 +85,21 @@ def validate_finding(value):
         raise AnalysisError("schema_invalid", str(exc)) from exc
     if value.get("semanticDigest") != finding_digest(value):
         raise AnalysisError("semantic_digest", "Finding semantic digest does not match content")
+    conclusion = value["conclusion"]
+    if value["fact"]["kind"] == "source-candidate" and conclusion["verdict"] != "source-candidate":
+        raise AnalysisError("safety_claim", "AST-only facts cannot become formal risk or discharge conclusions")
+    if value["schemaVersion"] == "2.0":
+        if conclusion["confidence"] is None or "evidenceLevel" in conclusion:
+            raise AnalysisError("schema_invalid", "Version 2 requires numeric confidence and no evidenceLevel")
+    else:
+        expected = {"source-candidate": "source-only", "inconclusive": "incomplete",
+                    "risk": "bounded-model", "discharged-within-bounded-model": "bounded-model"}
+        if conclusion.get("evidenceLevel") != expected[conclusion["verdict"]]:
+            raise AnalysisError("schema_invalid", "Evidence level disagrees with verdict")
+        if conclusion["verdict"] in {"source-candidate", "inconclusive"} and (
+                conclusion["severity"] != "info" or conclusion["blocking"] or
+                conclusion["confidence"] is not None or conclusion["status"] not in {"unknown", "partial"}):
+            raise AnalysisError("safety_claim", "Unproven candidates cannot have a risk grade or probability")
     occurrences = _unique_sorted(value["occurrences"], lambda item: item["id"],
                                  "Occurrences must be unique and sorted")
     if value["primaryOccurrenceId"] not in occurrences:
@@ -136,7 +151,7 @@ def validate_finding(value):
 
 
 def finding_document(**fields):
-    result = {"schemaVersion": "2.0", "kind": "MemoryOrderFindingProjection", **deepcopy(fields)}
+    result = {"schemaVersion": "3.0", "kind": "MemoryOrderFindingProjection", **deepcopy(fields)}
     result["semanticDigest"] = finding_digest(result)
     return validate_finding(result)
 
