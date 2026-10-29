@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Isolation;
+import cn.rvport.backend.project.runtime.ProjectRuntimeEnvironmentService;
 
 @Service
 public class OptimizationCycleService {
@@ -24,26 +26,24 @@ public class OptimizationCycleService {
     private final SourceRepository sourceRepository;
     private final ProjectAccessService projectAccessService;
     private final ProjectContextService projectContextService;
+    private final ProjectRuntimeEnvironmentService runtimeService;
+    private final OptimizationValidationService validationService;
 
     @Autowired
     public OptimizationCycleService(
             OptimizationCycleRepository optimizationCycleRepository,
             SourceRepository sourceRepository,
             ProjectAccessService projectAccessService,
-            ProjectContextService projectContextService
+            ProjectContextService projectContextService,
+            ProjectRuntimeEnvironmentService runtimeService,
+            OptimizationValidationService validationService
     ) {
         this.optimizationCycleRepository = optimizationCycleRepository;
         this.sourceRepository = sourceRepository;
         this.projectAccessService = projectAccessService;
         this.projectContextService = projectContextService;
-    }
-
-    OptimizationCycleService(
-            OptimizationCycleRepository optimizationCycleRepository,
-            SourceRepository sourceRepository,
-            ProjectAccessService projectAccessService
-    ) {
-        this(optimizationCycleRepository, sourceRepository, projectAccessService, null);
+        this.runtimeService = runtimeService;
+        this.validationService = validationService;
     }
 
     @Transactional
@@ -54,22 +54,23 @@ public class OptimizationCycleService {
             throw new ApiException(HttpStatus.NOT_FOUND, "SOURCE_REVISION_NOT_FOUND", "源码版本不存在");
         }
         OptimizationCycleView cycle = optimizationCycleRepository.createOrReactivate(projectId, sourceRevisionId);
-        return response(cycle, sourceRevision);
+        return response(cycle, sourceRevision, projectContextService.snapshot(projectId));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public OptimizationOverviewResponse overview(UUID projectId, UUID actorUserId, boolean superAdmin) {
         projectAccessService.requireProjectAccess(projectId, actorUserId, superAdmin);
         long total = optimizationCycleRepository.count(projectId, new OptimizationCycleListRequest(
                 1, 1, null, null, null, null, null, null
         ));
-        OptimizationCycleResponse current = optimizationCycleRepository.findActive(projectId)
-                .map(cycle -> response(cycle, requireSource(cycle.sourceRevisionId())))
+        ProjectContextSnapshot context = projectContextService.snapshot(projectId);
+        OptimizationCycleResponse current = current(projectId, context)
+                .map(cycle -> response(cycle, requireSource(cycle.sourceRevisionId()), context))
                 .orElse(null);
         return new OptimizationOverviewResponse(current, total);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public PageResponse<OptimizationCycleResponse> list(
             UUID projectId,
             OptimizationCycleListRequest request,
@@ -79,11 +80,12 @@ public class OptimizationCycleService {
         projectAccessService.requireProjectAccess(projectId, actorUserId, superAdmin);
         int page = request.normalizedPage();
         int pageSize = request.normalizedPageSize();
+        ProjectContextSnapshot context = projectContextService.snapshot(projectId);
         try {
             long total = optimizationCycleRepository.count(projectId, request);
             List<OptimizationCycleResponse> items = optimizationCycleRepository.list(projectId, request)
                     .stream()
-                    .map(cycle -> response(cycle, requireSource(cycle.sourceRevisionId())))
+                    .map(cycle -> response(cycle, requireSource(cycle.sourceRevisionId()), context))
                     .toList();
             return PageResponse.of(items, page, pageSize, total);
         } catch (IllegalArgumentException ex) {
@@ -91,7 +93,7 @@ public class OptimizationCycleService {
         }
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public OptimizationCycleResponse get(UUID projectId, UUID cycleId, UUID actorUserId, boolean superAdmin) {
         projectAccessService.requireProjectAccess(projectId, actorUserId, superAdmin);
         OptimizationCycleView cycle = optimizationCycleRepository.findById(cycleId)
@@ -99,23 +101,33 @@ public class OptimizationCycleService {
         if (!Objects.equals(cycle.projectId(), projectId)) {
             throw notFound();
         }
-        return response(cycle, requireSource(cycle.sourceRevisionId()));
+        return response(cycle, requireSource(cycle.sourceRevisionId()), projectContextService.snapshot(projectId));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
     public DomainLatestResponse<OptimizationCycleResponse> latest(UUID projectId, UUID actorUserId, boolean superAdmin) {
         projectAccessService.requireProjectAccess(projectId, actorUserId, superAdmin);
         ProjectContextSnapshot context = projectContextService.snapshot(projectId);
-        return optimizationCycleRepository.findLatest(projectId, context.sourceRevisionId())
-                .map(cycle -> DomainLatestResponse.current(context, null, response(cycle, requireSource(cycle.sourceRevisionId()))))
+        return current(projectId, context)
+                .map(cycle -> DomainLatestResponse.current(context, null, response(cycle, requireSource(cycle.sourceRevisionId()), context)))
                 .orElseGet(() -> optimizationCycleRepository.findLatest(projectId, null)
-                        .map(cycle -> DomainLatestResponse.stale(context, null, response(cycle, requireSource(cycle.sourceRevisionId()))))
+                        .map(cycle -> DomainLatestResponse.stale(context, null, response(cycle, requireSource(cycle.sourceRevisionId()), context)))
                         .orElseGet(() -> DomainLatestResponse.empty(context)));
     }
 
-    private OptimizationCycleResponse response(OptimizationCycleView cycle, SourceRevisionView sourceRevision) {
+    private java.util.Optional<OptimizationCycleView> current(UUID projectId, ProjectContextSnapshot context) {
+        return context.sourceRevisionId() == null ? java.util.Optional.empty()
+                : optimizationCycleRepository.findBySourceRevision(projectId, context.sourceRevisionId());
+    }
+
+    private OptimizationCycleResponse response(OptimizationCycleView cycle, SourceRevisionView sourceRevision, ProjectContextSnapshot context) {
         SourceRevisionView previous = sourceRepository.findPrevious(cycle.projectId(), sourceRevision.id(), sourceRevision.createdAt())
                 .orElse(null);
+        var history = optimizationCycleRepository.summary(cycle.projectId(), cycle.sourceRevisionId(), previous == null ? null : previous.id());
+        boolean current = Objects.equals(cycle.sourceRevisionId(), context.sourceRevisionId());
+        var validation = current
+                ? validationService.resolve(cycle.projectId(), context, runtimeService.summary(cycle.projectId()))
+                : OptimizationValidation.unavailable("OPTIMIZATION_SOURCE_STALE", "历史轮次不适用于当前验证", "Historical cycle is not current validation");
         return new OptimizationCycleResponse(
                 cycle.id(),
                 cycle.projectId(),
@@ -127,7 +139,8 @@ public class OptimizationCycleService {
                 cycle.completedAt(),
                 cycle.createdAt(),
                 cycle.updatedAt(),
-                optimizationCycleRepository.summary(cycle.projectId(), cycle.sourceRevisionId(), previous == null ? null : previous.id())
+                current ? validation.applyTo(history) : history,
+                history, validation, validation.nextAction()
         );
     }
 

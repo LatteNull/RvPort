@@ -79,6 +79,25 @@ class ProjectWorkflowStatusServiceTests {
     @Mock private ProjectArchiveRepository archiveRepository;
 
     @Test
+    void optimizeUsesValidationInsteadOfCycleExistence() {
+        UUID project = UUID.randomUUID(), source = UUID.randomUUID();
+        var context = new ProjectContextSnapshot(source, 1L);
+        var resolver = org.mockito.Mockito.mock(cn.rvport.backend.optimization.OptimizationValidationService.class);
+        var instance = service();
+        ReflectionTestUtils.setField(instance, "optimizationValidationService", resolver);
+        when(optimizationCycleRepository.findBySourceRevision(project, source)).thenReturn(Optional.of(
+                new cn.rvport.backend.optimization.OptimizationCycleView(UUID.randomUUID(), project, source, 1,
+                        cn.rvport.backend.optimization.OptimizationCycleStatus.ACTIVE, Map.of(), null, null, null, null)));
+        var validation = cn.rvport.backend.optimization.OptimizationValidation.unavailable("OPTIMIZATION_BUILD_MISSING", "缺少构建", "Builds missing");
+        when(resolver.resolve(project, context, null)).thenReturn(validation);
+        WorkflowStageResponse result = ReflectionTestUtils.invokeMethod(instance, "optimize", project, context, null);
+        assertThat(result.status()).isEqualTo(WorkflowStageStatus.PENDING);
+        assertThat(result.reasonCode()).isEqualTo("OPTIMIZATION_BUILD_MISSING");
+        assertThat(result.message()).isEqualTo("缺少构建");
+        assertThat(result.messageEn()).isEqualTo("Builds missing");
+    }
+
+    @Test
     void kbMapsOnlyCurrentRunsAndKeepsHistoricalSuccessPending() {
         UUID project = UUID.randomUUID();
         UUID source = UUID.randomUUID();

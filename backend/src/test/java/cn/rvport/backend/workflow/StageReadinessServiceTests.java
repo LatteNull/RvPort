@@ -51,6 +51,20 @@ import org.springframework.test.util.ReflectionTestUtils;
 @ExtendWith(MockitoExtension.class)
 class StageReadinessServiceTests {
 
+    @Test
+    void optimizeRemainsViewableWithoutBuildOrTestEvidence() {
+        UUID project = UUID.randomUUID(), revision = UUID.randomUUID();
+        when(contextService.snapshot(project)).thenReturn(new ProjectContextSnapshot(revision, 1L));
+        when(runtimeEnvironmentService.summary(project)).thenReturn(runtime(project, 1L));
+        when(sourceRepository.findActive(project)).thenReturn(Optional.of(source(project, revision)));
+        var result = service().readiness(project, StageIds.OPTIMIZE, UUID.randomUUID(), false);
+        assertThat(result.prerequisites()).singleElement().satisfies(item -> {
+            assertThat(item.key()).isEqualTo(StagePrerequisiteKeys.ACTIVE_SOURCE);
+            assertThat(item.status()).isEqualTo(StagePrerequisiteStatus.SATISFIED);
+        });
+        org.mockito.Mockito.verifyNoInteractions(buildValidationRepository, automatedTestRepository);
+    }
+
     @Mock
     private ProjectAccessService projectAccessService;
     @Mock
