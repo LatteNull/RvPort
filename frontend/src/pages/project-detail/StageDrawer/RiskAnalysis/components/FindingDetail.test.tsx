@@ -128,3 +128,113 @@ describe('专项分析证据工作区', () => {
     ).toBeVisible()
   })
 })
+
+it('refreshes independent conclusions and supporting facts without retaining another result source', async () => {
+  let model = presentFinding({ ...finding, detail: {} })
+  let source: import('./FindingSource').FindingSourceState | undefined
+  let reportActions: React.ReactNode = <button>加入报告</button>
+  const draw = () => <FindingDetail finding={model} source={source} reportActions={reportActions} />
+  const view = render(draw())
+  const changes: Array<[Partial<typeof model>, string]> = [
+    [{ title: '新的迁移判断' }, '新的迁移判断'],
+    [{ detail: '更新判断说明' }, '更新判断说明'],
+    [{ impact: '影响新目标架构' }, '迁移影响：影响新目标架构'],
+    [{ validation: '复核运行结果' }, '验证建议：复核运行结果'],
+    [{ validationPlan: [{ label: '编译验证', value: '重新构建' }] }, '编译验证：重新构建'],
+    [{ requiresHumanConfirmation: true }, '需人工确认'],
+    [{ resultStatus: '已复核' }, '已复核']
+  ]
+  for (const [patch, text] of changes) {
+    model = { ...model, ...patch }
+    view.rerender(draw())
+    expect(screen.getByText(text)).toBeInTheDocument()
+  }
+  fireEvent.click(screen.getByText('扫描事实'))
+  for (const [patch, text] of [
+    [{ code: 'RULE_NEXT' }, 'RULE_NEXT'],
+    [{ confidence: '新的可信度说明' }, '新的可信度说明'],
+    [{ evidenceOrigin: '补充静态证据' }, '补充静态证据'],
+    [{ assumptions: ['依赖编译选项'] }, '依赖编译选项']
+  ] as Array<[Partial<typeof model>, string]>) {
+    model = { ...model, ...patch }
+    view.rerender(draw())
+    expect(await screen.findByText(text)).toBeInTheDocument()
+  }
+  source = {
+    data: {
+      findingId: model.id,
+      filePath: 'new.cpp',
+      lines: [{ lineNumber: 3, text: 'current result', highlighted: false }]
+    }
+  }
+  view.rerender(draw())
+  expect(screen.getByLabelText('源码证据')).toHaveTextContent('current result')
+  expect(screen.getByText('new.cpp')).toBeInTheDocument()
+  source = { data: { ...source.data!, findingId: 'different-result' } }
+  view.rerender(draw())
+  expect(screen.queryByLabelText('源码证据')).not.toBeInTheDocument()
+  reportActions = <button>从报告移除</button>
+  view.rerender(draw())
+  expect(screen.getByRole('button', { name: '从报告移除' })).toBeInTheDocument()
+})
+
+it('rejects incomplete cached multiline source when switching occurrences', async () => {
+  const model = presentFinding({
+    ...finding,
+    detail: {
+      primaryOccurrenceId: 'main',
+      occurrences: [
+        { id: 'main', location: { file: 'a.cpp', line: 10 } },
+        {
+          id: 'range',
+          location: {
+            file: 'a.cpp',
+            span: { start: { line: 20, column: 1 }, end: { line: 22, column: 2 } }
+          }
+        }
+      ]
+    }
+  })
+  const user = userEvent.setup()
+  const view = render(
+    <FindingDetail
+      finding={model}
+      source={{
+        data: {
+          findingId: model.id,
+          filePath: 'a.cpp',
+          lines: [20, 22].map((lineNumber) => ({
+            lineNumber,
+            text: `line ${lineNumber}`,
+            highlighted: false
+          }))
+        }
+      }}
+    />
+  )
+  await user.click(screen.getByRole('combobox', { name: '选择分析命中位置' }))
+  await user.click(
+    screen.getByText(/位置 2 · a.cpp:20/, { selector: '.ant-select-item-option-content' })
+  )
+  expect(screen.queryByLabelText('源码证据')).not.toBeInTheDocument()
+  view.rerender(
+    <FindingDetail
+      finding={model}
+      source={{
+        data: {
+          findingId: model.id,
+          filePath: 'a.cpp',
+          lines: [20, 21, 22].map((lineNumber) => ({
+            lineNumber,
+            text: `line ${lineNumber}`,
+            highlighted: false
+          }))
+        }
+      }}
+    />
+  )
+  expect(screen.getByLabelText('源码证据')).toHaveTextContent('line 21')
+  expect(editor).toHaveBeenLastCalledWith(
+    expect.objectContaining({ highlightedLineNumbers: [1, 2, 3] })
+  )
+})

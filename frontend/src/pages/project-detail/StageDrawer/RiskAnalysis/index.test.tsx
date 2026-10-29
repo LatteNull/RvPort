@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 import * as api from '@/api/project/specialized-analysis'
 import { cancelProjectTask } from '@/api/project/task'
 import { getProjectStageReadiness } from '@/api/project/workflow'
-import { renderWithQueryClient } from '@/test/test-utils'
+import { renderWithStrictQueryClient as renderWithQueryClient } from '@/test/strict-mode-utils'
 
 import { StagePresentationContext } from '../components/StagePresentationContext'
 import { finding, latest, readiness, run } from './fixtures.test-support'
