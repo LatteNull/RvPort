@@ -47,7 +47,8 @@ describe('analysis result summary', () => {
     }
     expect(screen.getByText('7')).toBeInTheDocument()
     expect(screen.getByText('9')).toBeInTheDocument()
-    expect(screen.getByText('3 项分析诊断，请查看 JSON 结果或审计包。')).toBeInTheDocument()
+    expect(within(screen.getByText('分析诊断').parentElement!).getByText('3')).toBeInTheDocument()
+    expect(screen.queryByText('3 项分析诊断，请查看 JSON 结果或审计包。')).not.toBeInTheDocument()
     expect(screen.getByText('2.5')).toBeInTheDocument()
     expect(screen.getByText('2026-10-28 08:02')).toBeInTheDocument()
     summary = '补充扫描范围不完整'

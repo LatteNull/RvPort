@@ -30,6 +30,44 @@ const defaultProps = {
 }
 
 describe('MigrationInputActions', () => {
+  it('内存序候选纳入只改变报告选择，仍待核实，新 Finding 不继承确认', async () => {
+    const key = ['memory-order-candidate']
+    const candidate = {
+      id: 'result-1',
+      runId: 'run-1',
+      findingKind: 'SOURCE_CANDIDATE',
+      severity: 'INFO',
+      confidence: null,
+      detail: { conclusion: { verdict: 'source-candidate' } },
+      reportInclusion: { confirmedForNextReport: false, migrationInputStatus: null }
+    }
+    updateProjectMigrationInput.mockResolvedValue({ id: 'migration-input-1', status: 'CONFIRMED' })
+    const props = {
+      ...defaultProps,
+      sourceType: 'MEMORY_ORDER_FINDING' as const,
+      pendingVerification: true,
+      invalidateQueryKeys: [key]
+    }
+    const view = renderWithQueryClient(<MigrationInputDetailFooter {...props} status={null} />)
+    view.queryClient.setQueryData(key, candidate)
+    await userEvent.click(screen.getByRole('button', { name: '纳入报告' }))
+    await screen.findByRole('button', { name: /排\s*除/ })
+    expect(view.queryClient.getQueryData(key)).toMatchObject({
+      findingKind: 'SOURCE_CANDIDATE',
+      severity: 'INFO',
+      confidence: null,
+      detail: candidate.detail,
+      reportInclusion: { confirmedForNextReport: true, migrationInputStatus: 'CONFIRMED' }
+    })
+    view.rerender(<MigrationInputDetailFooter {...props} status="CONFIRMED" />)
+    expect(screen.getByText('已纳入，仍待核实')).toBeVisible()
+    view.rerender(
+      <MigrationInputDetailFooter {...props} sourceRefId="result-new-run" status={null} />
+    )
+    expect(screen.getByText('待核实项，默认待确认')).toBeVisible()
+    expect(screen.queryByText('已纳入，仍待核实')).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '纳入报告' })).toBeVisible()
+  })
   it('patches nested report inclusion metadata while preserving unrelated and malformed cached entries', async () => {
     updateProjectMigrationInput.mockResolvedValue({ id: 'migration-input-1', status: 'CONFIRMED' })
     const key = ['source-results']

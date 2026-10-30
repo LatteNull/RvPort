@@ -7,6 +7,7 @@ describe('analysis result fallback contracts', () => {
   it('uses the supplied English fields when Chinese fields are absent and preserves unknown enumerations', () => {
     const result = presentFinding({
       ...finding,
+      analyzerType: 'FLOATING_POINT',
       title: null,
       titleEn: 'English title',
       message: null,
@@ -56,6 +57,7 @@ describe('analysis result fallback contracts', () => {
     (conclusion) => {
       const result = presentFinding({
         ...finding,
+        analyzerType: 'FLOATING_POINT',
         title: null,
         titleEn: null,
         findingCode: null,

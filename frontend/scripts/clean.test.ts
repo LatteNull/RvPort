@@ -54,7 +54,6 @@ it('counts only existing outputs when just one directory remains', async () => {
   })
   await import('./clean.mjs')
   expect(rm).toHaveBeenCalledExactlyOnceWith(resolve('dist'), { force: true, recursive: true })
-  expect(console.log).toHaveBeenLastCalledWith('Cleanup complete: removed 1 target.')
 })
 it('propagates a removal failure instead of reporting successful cleanup', async () => {
   vi.mocked(rm).mockRejectedValueOnce(

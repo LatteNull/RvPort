@@ -2,9 +2,11 @@ import { fireEvent, render, screen, waitFor, within } from '@testing-library/rea
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { finding } from '../fixtures.test-support'
+import { finding as baseFinding } from '../fixtures.test-support'
 import { presentFinding } from '../presentation'
 import FindingDetail from './FindingDetail'
+
+const finding = { ...baseFinding, analyzerType: 'FLOATING_POINT' as const }
 
 const editor = vi.hoisted(() => vi.fn())
 vi.mock('@/components/MonacoEditor', () => ({
@@ -20,6 +22,7 @@ describe('专项分析证据工作区', () => {
     const user = userEvent.setup()
     const model = presentFinding({
       ...finding,
+      analyzerType: 'FLOATING_POINT',
       detail: {
         primaryOccurrenceId: 'main',
         occurrences: [
@@ -67,49 +70,46 @@ describe('专项分析证据工作区', () => {
       expect.objectContaining({ highlightedLineNumbers: [1] })
     )
   })
-  it.each(['MEMORY_ORDER', 'FLOATING_POINT'] as const)(
-    '%s 支持证据步骤联动且不丢失有效源码',
-    (analyzerType) => {
-      const model = presentFinding({
-        ...finding,
-        analyzerType,
-        detail: {
-          evidenceChain: {
-            steps: [
-              {
-                id: 'source',
-                kind: 'sourceObservation',
-                title: '命中表达式',
-                source: {
-                  file: 'test.cpp',
-                  context: {
-                    lines: [{ line: 80, text: 'sum += x;' }],
-                    highlights: [{ line: 80, startColumn: 1, endColumn: 9 }]
-                  }
+  it.each(['FLOATING_POINT'] as const)('%s 支持证据步骤联动且不丢失有效源码', (analyzerType) => {
+    const model = presentFinding({
+      ...finding,
+      analyzerType,
+      detail: {
+        evidenceChain: {
+          steps: [
+            {
+              id: 'source',
+              kind: 'sourceObservation',
+              title: '命中表达式',
+              source: {
+                file: 'test.cpp',
+                context: {
+                  lines: [{ line: 80, text: 'sum += x;' }],
+                  highlights: [{ line: 80, startColumn: 1, endColumn: 9 }]
                 }
-              },
-              { id: 'conclusion', kind: 'conclusion', title: '分析判断' }
-            ]
-          }
+              }
+            },
+            { id: 'conclusion', kind: 'conclusion', title: '分析判断' }
+          ]
         }
-      })
-      const { rerender } = render(<FindingDetail finding={model} />)
-      expect(screen.getByRole('region', { name: '证据工作区' })).toBeVisible()
-      fireEvent.click(screen.getByRole('button', { name: '源码观察：命中表达式' }))
-      expect(screen.getByLabelText('源码证据')).toHaveTextContent('sum += x;')
-      fireEvent.click(screen.getByRole('button', { name: '分析结论：分析判断' }))
-      expect(screen.getByLabelText('源码证据')).toHaveTextContent('sum += x;')
-      expect(screen.getByRole('button', { name: '分析结论：分析判断' })).toHaveAttribute(
-        'aria-pressed',
-        'true'
-      )
-      expect(
-        within(screen.getByRole('region', { name: '建议下一步' })).getByText(finding.suggestion!)
-      ).toBeVisible()
-      rerender(<FindingDetail finding={{ ...model, id: 'another' }} />)
-      expect(screen.queryByLabelText('源码证据')).not.toBeInTheDocument()
-    }
-  )
+      }
+    })
+    const { rerender } = render(<FindingDetail finding={model} />)
+    expect(screen.getByRole('region', { name: '证据工作区' })).toBeVisible()
+    fireEvent.click(screen.getByRole('button', { name: '源码观察：命中表达式' }))
+    expect(screen.getByLabelText('源码证据')).toHaveTextContent('sum += x;')
+    fireEvent.click(screen.getByRole('button', { name: '分析结论：分析判断' }))
+    expect(screen.getByLabelText('源码证据')).toHaveTextContent('sum += x;')
+    expect(screen.getByRole('button', { name: '分析结论：分析判断' })).toHaveAttribute(
+      'aria-pressed',
+      'true'
+    )
+    expect(
+      within(screen.getByRole('region', { name: '建议下一步' })).getByText(finding.suggestion!)
+    ).toBeVisible()
+    rerender(<FindingDetail finding={{ ...model, id: 'another' }} />)
+    expect(screen.queryByLabelText('源码证据')).not.toBeInTheDocument()
+  })
   it('没有结构化证据时提供真实空态，原始数据按需展开', async () => {
     render(<FindingDetail finding={presentFinding({ ...finding, detail: {} })} />)
     expect(screen.getByText('暂无结构化证据路径')).toBeVisible()

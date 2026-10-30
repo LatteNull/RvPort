@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import type { ReactNode } from 'react'
 import { describe, expect, it, vi } from 'vitest'
@@ -44,9 +44,6 @@ vi.mock('./FindingList', () => ({
     </div>
   )
 }))
-vi.mock('./ResultSummary', () => ({
-  default: ({ summary }: { summary: string }) => <div>{summary}</div>
-}))
 
 type State = ReturnType<typeof useRiskAnalysis>
 
@@ -86,19 +83,12 @@ describe('specialized analysis overview', () => {
     const view = render(
       <AnalysisOverview state={current} stageId="memory-order-analysis" projectId="project-1" />
     )
-    const updates: Array<[Partial<SpecializedAnalysis>, string]> = [
-      [
-        { findingCount: 8 },
-        '8 项分析结果，0 项源码候选，0 项诊断。结果仍需结合源码与业务条件确认。'
-      ],
-      [
-        { candidateCount: 4 },
-        '8 项分析结果，4 项源码候选，0 项诊断。结果仍需结合源码与业务条件确认。'
-      ],
-      [
-        { diagnosticCount: 3 },
-        '8 项分析结果，4 项源码候选，3 项诊断。结果仍需结合源码与业务条件确认。'
-      ],
+    const updates: Array<
+      [Partial<SpecializedAnalysis>, string | { label: string; value: string }]
+    > = [
+      [{ findingCount: 8 }, { label: '正式风险', value: '8' }],
+      [{ candidateCount: 4 }, { label: '源码候选', value: '4' }],
+      [{ diagnosticCount: 3 }, { label: '分析诊断', value: '3' }],
       [{ taskId: 'task-new' }, '日志 task-new'],
       [{ id: 'run-new' }, 'run-new']
     ]
@@ -108,7 +98,11 @@ describe('specialized analysis overview', () => {
       view.rerender(
         <AnalysisOverview state={current} stageId="memory-order-analysis" projectId="project-1" />
       )
-      expect(screen.getByText(expected)).toBeInTheDocument()
+      if (typeof expected === 'string') expect(screen.getByText(expected)).toBeInTheDocument()
+      else
+        expect(
+          within(screen.getByText(expected.label).parentElement!).getByText(expected.value)
+        ).toBeInTheDocument()
     }
     const nextSearch = vi.fn(),
       nextSeverity = vi.fn(),

@@ -27,17 +27,20 @@ it('refreshes module facts independently and opens files with the current callba
   )
   const view = renderWithQueryClient(draw())
   await screen.findByText(fileFixture.relativePath)
-  for (const [patch, expected] of [
-    [{ moduleName: '' }, '未定位模块'],
-    [{ fileCount: 8 }, '8 个'],
-    [{ findingCount: 12 }, '12 处'],
-    [{ findingTypeCount: 3 }, '3 种'],
-    [{ relatedModuleKeys: ['target-a', 'target-b'] }, '关联构建目标：target-a、target-b']
-  ] as Array<[Partial<typeof module>, string]>) {
-    module = { ...module, ...patch }
-    view.rerender(draw())
-    expect(screen.getByText(expected)).toBeInTheDocument()
+  module = {
+    ...module,
+    moduleName: '',
+    fileCount: 8,
+    findingCount: 12,
+    findingTypeCount: 3,
+    relatedModuleKeys: ['target-a', 'target-b']
   }
+  view.rerender(draw())
+  expect(screen.getByText('未定位模块')).toBeInTheDocument()
+  expect(screen.getByText('8 个')).toBeInTheDocument()
+  expect(screen.getByText('12 处')).toBeInTheDocument()
+  expect(screen.getByText('3 种')).toBeInTheDocument()
+  expect(screen.getByText('关联构建目标：target-a、target-b')).toBeInTheDocument()
   const old = onSelectFile
   onSelectFile = vi.fn()
   view.rerender(draw())

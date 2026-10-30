@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { renderWithStrictQueryClient as renderWithQueryClient } from '@/test/strict-mode-utils'
-import { renderWithQueryClient as renderApiContract } from '@/test/test-utils'
 import type { User } from '@/types'
 
 const {
@@ -160,7 +159,7 @@ describe('admin user page', () => {
   it('creates a user from the table action', async () => {
     createAdminUser.mockResolvedValue(user)
     const actor = userEvent.setup()
-    renderApiContract(<AdminUsersPage />)
+    renderWithQueryClient(<AdminUsersPage />)
 
     await actor.click(screen.getByRole('button', { name: /新增用户/ }))
     const dialog = screen.getByRole('dialog')
@@ -194,7 +193,7 @@ describe('admin user page', () => {
   it('edits account details and clears an empty display name', async () => {
     updateAdminUser.mockResolvedValue(user)
     const actor = userEvent.setup()
-    renderApiContract(<AdminUsersPage />)
+    renderWithQueryClient(<AdminUsersPage />)
 
     await actor.click(screen.getByRole('button', { name: '编辑用户' }))
     const dialog = screen.getByRole('dialog')

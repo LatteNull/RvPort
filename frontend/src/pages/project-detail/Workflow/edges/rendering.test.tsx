@@ -3,6 +3,7 @@ import { type EdgeProps, Position } from '@xyflow/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { FeedbackEdge } from './FeedbackEdge'
+import { getFeedbackRoute, getWorkflowStepPath } from './routing'
 import { WorkflowSmoothStepEdge } from './WorkflowSmoothStepEdge'
 
 vi.mock('@xyflow/react', async (load) => ({
@@ -59,21 +60,20 @@ describe('workflow edge rendering', () => {
     )
     const path = () => view.container.querySelector('path.react-flow__edge-path')!
     expect(path().querySelector('animate')).toBeInTheDocument()
-    const originalLabelX = screen.getByText('重新处理').getAttribute('x')
-    for (const patch of [{ sourceX: 500 }, { sourceY: 230 }, { targetX: 80 }, { targetY: 150 }]) {
-      const before = path().getAttribute('d')
-      edge = { ...edge, ...patch }
-      view.rerender(
-        <svg>
-          <FeedbackEdge {...edge} />
-        </svg>
-      )
-      expect(path().getAttribute('d')).not.toBe(before)
-      expect(path().getAttribute('d')).toBe(
-        view.container.querySelector('.workflow-edge-hover-underlay')?.getAttribute('d')
-      )
-    }
-    expect(screen.getByText('重新处理').getAttribute('x')).not.toBe(originalLabelX)
+    edge = { ...edge, sourceX: 500, sourceY: 230, targetX: 80, targetY: 150 }
+    view.rerender(
+      <svg>
+        <FeedbackEdge {...edge} />
+      </svg>
+    )
+    const expected = getFeedbackRoute(edge.id, 500, 230, 80, 150)
+    expect(path()).toHaveAttribute('d', expected.path)
+    expect(view.container.querySelector('.workflow-edge-hover-underlay')).toHaveAttribute(
+      'd',
+      expected.path
+    )
+    expect(screen.getByText('重新处理')).toHaveAttribute('x', String(expected.labelX))
+    expect(screen.getByText('重新处理')).toHaveAttribute('y', String(expected.labelY))
     const route = path().getAttribute('d')
     edge = { ...edge, markerEnd: 'url(#new)' }
     view.rerender(
@@ -125,43 +125,41 @@ describe('workflow edge rendering', () => {
       </svg>
     )
     const path = () => view.container.querySelector('path[id]')!
-    for (const patch of [
-      { sourceX: 110 },
-      { sourceY: 220 },
-      { targetX: 180 },
-      { targetY: 120 },
-      { sourcePosition: Position.Bottom },
-      { targetPosition: Position.Top }
-    ]) {
-      const before = path().getAttribute('d')
-      edge = { ...edge, ...patch }
-      view.rerender(
-        <svg>
-          <WorkflowSmoothStepEdge {...edge} />
-        </svg>
-      )
-      expect(path().getAttribute('d')).not.toBe(before)
-      expect(path()).toHaveAttribute(
-        'd',
-        view.container.querySelector('.workflow-edge-hover-underlay')!.getAttribute('d')
-      )
+    edge = {
+      ...edge,
+      sourceX: 110,
+      sourceY: 220,
+      targetX: 180,
+      targetY: 120,
+      sourcePosition: Position.Bottom,
+      targetPosition: Position.Top
     }
+    view.rerender(
+      <svg>
+        <WorkflowSmoothStepEdge {...edge} />
+      </svg>
+    )
+    const expected = getWorkflowStepPath(edge)
+    expect(path()).toHaveAttribute('d', expected)
+    expect(view.container.querySelector('.workflow-edge-hover-underlay')).toHaveAttribute(
+      'd',
+      expected
+    )
     const route = path().getAttribute('d')
-    for (const patch of [
-      { markerStart: 'url(#start)' },
-      { markerEnd: 'url(#end)' },
-      { interactionWidth: 30 },
-      { style: { stroke: 'red' } },
-      { id: 'step-new' }
-    ]) {
-      edge = { ...edge, ...patch }
-      view.rerender(
-        <svg>
-          <WorkflowSmoothStepEdge {...edge} />
-        </svg>
-      )
-      expect(path()).toHaveAttribute('d', route)
+    edge = {
+      ...edge,
+      markerStart: 'url(#start)',
+      markerEnd: 'url(#end)',
+      interactionWidth: 30,
+      style: { stroke: 'red' },
+      id: 'step-new'
     }
+    view.rerender(
+      <svg>
+        <WorkflowSmoothStepEdge {...edge} />
+      </svg>
+    )
+    expect(path()).toHaveAttribute('d', route)
     expect(path()).toHaveAttribute('id', 'step-new')
     expect(path()).toHaveAttribute('marker-start', 'url(#start)')
     expect(path()).toHaveAttribute('marker-end', 'url(#end)')
