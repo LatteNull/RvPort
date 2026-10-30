@@ -59,6 +59,8 @@ public class ProjectWorkflowStatusService {
     private final SpecializedAnalysisRepository specializedAnalysisRepository;
     @Autowired
     private cn.rvport.backend.kb.KbScanContextService scanContextService;
+    @Autowired
+    private cn.rvport.backend.optimization.OptimizationValidationService optimizationValidationService;
 
     @Autowired
     public ProjectWorkflowStatusService(
@@ -117,7 +119,7 @@ public class ProjectWorkflowStatusService {
         stages.add(manual(report, activeSource));
         stages.add(build(projectId, runtime, context));
         stages.add(test(projectId, context));
-        stages.add(optimize(projectId, context));
+        stages.add(optimize(projectId, context, runtime));
         stages.add(archive(projectId, context));
         return new WorkflowResponse(recommended(stages), stages);
     }
@@ -287,13 +289,16 @@ public class ProjectWorkflowStatusService {
                 .orElseGet(() -> pending(TEST, "AUTOMATED_TEST_MISSING"));
     }
 
-    private WorkflowStageResponse optimize(UUID projectId, ProjectContextSnapshot context) {
+    private WorkflowStageResponse optimize(UUID projectId, ProjectContextSnapshot context, ProjectRuntimeEnvironmentResponse runtime) {
         if (context.sourceRevisionId() == null) {
             return pending(OPTIMIZE, "ACTIVE_SOURCE_MISSING");
         }
-        return optimizationCycleRepository.findLatest(projectId, context.sourceRevisionId())
-                .map(cycle -> done(OPTIMIZE, "OPTIMIZATION_CYCLE_READY"))
-                .orElseGet(() -> pending(OPTIMIZE, "OPTIMIZATION_CYCLE_MISSING"));
+        if (optimizationCycleRepository.findBySourceRevision(projectId, context.sourceRevisionId()).isEmpty()) {
+            return pending(OPTIMIZE, "OPTIMIZATION_CYCLE_MISSING");
+        }
+        var validation = optimizationValidationService.resolve(projectId, context, runtime);
+        return new WorkflowStageResponse(OPTIMIZE, validation.status(), validation.reasonCode(),
+                null, null, validation.reason(), validation.reasonEn());
     }
 
     private WorkflowStageResponse archive(UUID projectId, ProjectContextSnapshot context) {

@@ -15,6 +15,9 @@ public record OptimizationCycleResponse(
         OffsetDateTime completedAt,
         OffsetDateTime createdAt,
         OffsetDateTime updatedAt,
-        OptimizationCycleSummaryResponse summary
+        OptimizationCycleSummaryResponse summary,
+        OptimizationCycleSummaryResponse historicalSummary,
+        OptimizationValidation validation,
+        OptimizationValidation.NextAction nextAction
 ) {
 }

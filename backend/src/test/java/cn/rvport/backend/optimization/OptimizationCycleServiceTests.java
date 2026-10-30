@@ -23,17 +23,28 @@ class OptimizationCycleServiceTests {
     private final OptimizationCycleRepository optimizationCycleRepository = org.mockito.Mockito.mock(OptimizationCycleRepository.class);
     private final SourceRepository sourceRepository = org.mockito.Mockito.mock(SourceRepository.class);
     private final ProjectAccessService projectAccessService = org.mockito.Mockito.mock(ProjectAccessService.class);
+    private final cn.rvport.backend.workflow.ProjectContextService contexts = org.mockito.Mockito.mock(cn.rvport.backend.workflow.ProjectContextService.class);
+    private final cn.rvport.backend.project.runtime.ProjectRuntimeEnvironmentService runtimes = org.mockito.Mockito.mock(cn.rvport.backend.project.runtime.ProjectRuntimeEnvironmentService.class);
+    private final OptimizationValidationService validations = org.mockito.Mockito.mock(OptimizationValidationService.class);
     private final OptimizationCycleService service = new OptimizationCycleService(
             optimizationCycleRepository,
             sourceRepository,
-            projectAccessService
+            projectAccessService, contexts, runtimes, validations
     );
+
+    @org.junit.jupiter.api.BeforeEach
+    void contextDefaults() {
+        when(contexts.snapshot(org.mockito.ArgumentMatchers.any())).thenReturn(new cn.rvport.backend.workflow.ProjectContextSnapshot(null, 1L));
+        when(validations.resolve(org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any(), org.mockito.ArgumentMatchers.any()))
+                .thenReturn(OptimizationValidation.unavailable("OPTIMIZATION_BUILD_MISSING", "缺少构建", "Builds missing"));
+    }
 
     @Test
     void createsOrReusesCycleForSourceRevision() {
         UUID projectId = UUID.randomUUID();
         UUID sourceRevisionId = UUID.randomUUID();
         SourceRevisionView sourceRevision = sourceRevision(projectId, sourceRevisionId, "v1", true);
+        when(contexts.snapshot(projectId)).thenReturn(new cn.rvport.backend.workflow.ProjectContextSnapshot(sourceRevisionId, 1L));
         OptimizationCycleView cycle = cycle(projectId, sourceRevisionId, 1, OptimizationCycleStatus.ACTIVE);
         when(sourceRepository.findById(sourceRevisionId)).thenReturn(Optional.of(sourceRevision));
         when(sourceRepository.findPrevious(projectId, sourceRevisionId, sourceRevision.createdAt())).thenReturn(Optional.empty());
@@ -68,10 +79,11 @@ class OptimizationCycleServiceTests {
         UUID actorId = UUID.randomUUID();
         UUID sourceRevisionId = UUID.randomUUID();
         SourceRevisionView sourceRevision = sourceRevision(projectId, sourceRevisionId, "v2", true);
+        when(contexts.snapshot(projectId)).thenReturn(new cn.rvport.backend.workflow.ProjectContextSnapshot(sourceRevisionId, 1L));
         OptimizationCycleView cycle = cycle(projectId, sourceRevisionId, 2, OptimizationCycleStatus.ACTIVE);
         when(optimizationCycleRepository.count(projectId, new OptimizationCycleListRequest(1, 1, null, null, null, null, null, null)))
                 .thenReturn(2L);
-        when(optimizationCycleRepository.findActive(projectId)).thenReturn(Optional.of(cycle));
+        when(optimizationCycleRepository.findBySourceRevision(projectId, sourceRevisionId)).thenReturn(Optional.of(cycle));
         when(sourceRepository.findById(sourceRevisionId)).thenReturn(Optional.of(sourceRevision));
         when(sourceRepository.findPrevious(projectId, sourceRevisionId, sourceRevision.createdAt()))
                 .thenReturn(Optional.of(sourceRevision(projectId, UUID.randomUUID(), "v1", false)));
@@ -140,6 +152,62 @@ class OptimizationCycleServiceTests {
 
         assertThat(response.id()).isEqualTo(cycleId);
         verify(projectAccessService).requireProjectAccess(projectId, actorId, false);
+    }
+
+    @Test
+    void latestDistinguishesCurrentHistoricalAndEmptyWithoutNullCurrentFilter() {
+        UUID project = UUID.randomUUID(), revision = UUID.randomUUID(), actor = UUID.randomUUID();
+        var source = sourceRevision(project, revision, "v1", true);
+        when(contexts.snapshot(project)).thenReturn(new cn.rvport.backend.workflow.ProjectContextSnapshot(revision, 1L));
+        var cycle = cycle(project, revision, 1, OptimizationCycleStatus.ACTIVE);
+        when(sourceRepository.findById(revision)).thenReturn(Optional.of(source));
+        when(optimizationCycleRepository.summary(project, revision, null)).thenReturn(OptimizationCycleSummaryResponse.empty());
+        when(optimizationCycleRepository.findBySourceRevision(project, revision)).thenReturn(Optional.of(cycle));
+        var current = service.latest(project, actor, false);
+        assertThat(current.freshness().name()).isEqualTo("CURRENT");
+        assertThat(current.result().validation().status().name()).isEqualTo("PENDING");
+        assertThat(current.result().summary().build().latestStatus()).isNull();
+        assertThat(current.execution()).isNull();
+        when(contexts.snapshot(project)).thenReturn(new cn.rvport.backend.workflow.ProjectContextSnapshot(null, 1L));
+        when(optimizationCycleRepository.findLatest(project, null)).thenReturn(Optional.of(cycle));
+        var historical = service.latest(project, actor, false);
+        assertThat(historical.freshness().name()).isEqualTo("STALE");
+        assertThat(historical.result().validation().reasonCode()).isEqualTo("OPTIMIZATION_SOURCE_STALE");
+        assertThat(historical.result().nextAction()).isNull();
+        org.mockito.Mockito.verify(optimizationCycleRepository, org.mockito.Mockito.never()).findBySourceRevision(project, null);
+        assertThat(service.overview(project, actor, false).currentCycle()).isNull();
+        when(optimizationCycleRepository.findLatest(project, null)).thenReturn(Optional.empty());
+        assertThat(service.latest(project, actor, false).freshness().name()).isEqualTo("EMPTY");
+        when(contexts.snapshot(project)).thenReturn(new cn.rvport.backend.workflow.ProjectContextSnapshot(UUID.randomUUID(), 2L));
+        when(optimizationCycleRepository.findLatest(project, null)).thenReturn(Optional.of(cycle));
+        assertThat(service.latest(project, actor, false).freshness().name()).isEqualTo("STALE");
+    }
+
+    @Test
+    void errorsPreservePermissionsAndDoNotWriteAnyCycleFacts() {
+        UUID project = UUID.randomUUID(), actor = UUID.randomUUID(), id = UUID.randomUUID();
+        assertThatThrownBy(() -> service.createOrReuseActiveCycle(project, id)).isInstanceOf(ApiException.class);
+        assertThatThrownBy(() -> service.get(project, id, actor, false)).isInstanceOf(ApiException.class);
+        var cycle = cycle(project, id, 1, OptimizationCycleStatus.ACTIVE);
+        when(optimizationCycleRepository.findById(cycle.id())).thenReturn(Optional.of(cycle));
+        assertThatThrownBy(() -> service.get(project, cycle.id(), actor, false)).hasMessage("源码版本不存在");
+        var query = new OptimizationCycleListRequest(1, 20, null, null, null, null, "unsafe", null);
+        when(optimizationCycleRepository.list(project, query)).thenThrow(new IllegalArgumentException());
+        assertThatThrownBy(() -> service.list(project, query, actor, false)).hasMessage("优化轮次查询参数不正确");
+        org.mockito.Mockito.doThrow(new ApiException(org.springframework.http.HttpStatus.FORBIDDEN, "FORBIDDEN", "无权限"))
+                .when(projectAccessService).requireProjectAccess(project, actor, false);
+        assertThatThrownBy(() -> service.latest(project, actor, false)).hasMessage("无权限");
+    }
+
+    @Test
+    void allReadEntryPointsDeclareRepeatableRead() {
+        for (var method : OptimizationCycleService.class.getDeclaredMethods()) {
+            if (List.of("overview", "latest", "list", "get").contains(method.getName())) {
+                var transaction = method.getAnnotation(org.springframework.transaction.annotation.Transactional.class);
+                assertThat(transaction.readOnly()).isTrue();
+                assertThat(transaction.isolation()).isEqualTo(org.springframework.transaction.annotation.Isolation.REPEATABLE_READ);
+            }
+        }
     }
 
     private OptimizationCycleView cycle(UUID projectId, UUID sourceRevisionId, int cycleNumber, OptimizationCycleStatus status) {
